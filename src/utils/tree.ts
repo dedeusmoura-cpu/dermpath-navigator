@@ -7,7 +7,7 @@ export function getNode(nodeId: string): AlgorithmNode {
 
 export function buildPathToNode(nodeId: string): AlgorithmNode[] {
   const path: AlgorithmNode[] = [];
-  let current = algorithmTree.nodes[nodeId];
+  let current: AlgorithmNode | undefined = algorithmTree.nodes[nodeId];
 
   while (current) {
     path.unshift(current);

@@ -43,6 +43,7 @@ function TreeBranch({ nodeId, childMap, expanded, onToggle, onOpenNode, depth }:
   const node = algorithmTree.nodes[nodeId];
   const children = childMap.get(nodeId) ?? [];
   const isExpanded = expanded[nodeId] ?? depth < 2;
+  const nodeTypeLabel = String(node.type).split("_").join(" ");
 
   return (
     <div className={`${depth > 0 ? "ml-4 border-l border-slate-200 pl-4" : ""} space-y-3`}>
@@ -55,7 +56,7 @@ function TreeBranch({ nodeId, childMap, expanded, onToggle, onOpenNode, depth }:
         <button type="button" onClick={() => onOpenNode(nodeId)} className="text-left font-semibold text-ink underline decoration-slate-300 underline-offset-4">
           {node.title}
         </button>
-        <span className="text-xs uppercase tracking-[0.18em] text-steel">{node.type.replaceAll("_", " ")}</span>
+        <span className="text-xs uppercase tracking-[0.18em] text-steel">{nodeTypeLabel}</span>
       </div>
 
       {isExpanded ? (

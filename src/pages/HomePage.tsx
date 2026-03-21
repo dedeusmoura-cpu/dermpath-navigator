@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-
-const homeHighlightImage = new URL("../assets/foto.png.png", import.meta.url).href;
+import homeHighlightImage from "../assets/foto.png.png";
 
 export function HomePage() {
   return (

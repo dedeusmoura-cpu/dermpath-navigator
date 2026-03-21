@@ -24,38 +24,38 @@ interface TreeNavigatorProps {
 }
 
 const dermatiteCategoryImages: Record<string, string> = {
-  "Dermatites perivasculares": perivascularImage,
-  "Dermatites nodulares / difusas": nodulaDifusaImage,
-  "Dermatites vésico-bolhosas": vesicoBolhosaImage,
-  Vasculites: vasculiteImage,
-  Pustulosas: pustulosaImage,
-  "Foliculites / perifoliculites": foliculitePerifoliculiteImage,
-  Fibrosantes: fibrosanteImage,
-  Paniculites: paniculiteImage,
+  perivascular: perivascularImage,
+  "nodular-difusa": nodulaDifusaImage,
+  "vesico-bolhosa": vesicoBolhosaImage,
+  vasculites: vasculiteImage,
+  pustulosas: pustulosaImage,
+  "foliculite-perifoliculite": foliculitePerifoliculiteImage,
+  fibrosantes: fibrosanteImage,
+  paniculites: paniculiteImage,
 };
 
 const perivascularCategoryImages: Record<string, string> = {
-  "Sem alteração epidérmica": perivascularSemAlteracaoEpidermicaImage,
-  Interface: perivascularInterfaceImage,
-  Balonizante: perivascularBalonizanteImage,
-  Espongiótica: perivascularEspongioticaImage,
-  Psoriasiforme: perivascularPsoriasiformeImage,
+  "perivascular-sem-epiderme": perivascularSemAlteracaoEpidermicaImage,
+  "perivascular-interface": perivascularInterfaceImage,
+  "perivascular-balonizante": perivascularBalonizanteImage,
+  "perivascular-espongiotica": perivascularEspongioticaImage,
+  "perivascular-psoriasiforme": perivascularPsoriasiformeImage,
 };
 
 const processCategoryImages: Record<string, string> = {
-  Dermatite: processoDermatiteImage,
-  Neoplasia: processoNeoplasiaImage,
-  Cisto: processoCistoImage,
-  "Doença de depósito": processoDepositoImage,
-  "Hamartoma / malformação": processoHamartomaMalformacaoImage,
+  dermatite: processoDermatiteImage,
+  "placeholder-neoplasia": processoNeoplasiaImage,
+  "placeholder-cisto": processoCistoImage,
+  deposito: processoDepositoImage,
+  "placeholder-hamartoma": processoHamartomaMalformacaoImage,
 };
 
 const processCircularPositions: Record<string, { angle: number; radius: number }> = {
-  Dermatite: { angle: -90, radius: 35.5 },
-  Neoplasia: { angle: -18, radius: 35.5 },
-  Cisto: { angle: 54, radius: 35.5 },
-  "Doença de depósito": { angle: 126, radius: 35.5 },
-  "Hamartoma / malformação": { angle: 198, radius: 35.5 },
+  dermatite: { angle: -90, radius: 35.5 },
+  "placeholder-neoplasia": { angle: -18, radius: 35.5 },
+  "placeholder-cisto": { angle: 54, radius: 35.5 },
+  deposito: { angle: 126, radius: 35.5 },
+  "placeholder-hamartoma": { angle: 198, radius: 35.5 },
 };
 
 export function TreeNavigator({ node, onNavigate }: TreeNavigatorProps) {
@@ -78,7 +78,7 @@ export function TreeNavigator({ node, onNavigate }: TreeNavigatorProps) {
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:hidden">
             {node.options.map((option) => {
-              const imageSrc = processCategoryImages[option.label];
+              const imageSrc = processCategoryImages[option.nextNodeId];
 
               return (
                 <button
@@ -114,8 +114,8 @@ export function TreeNavigator({ node, onNavigate }: TreeNavigatorProps) {
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[690px] w-[690px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5px] border-[#7F5FB3]/90 shadow-[0_0_0_10px_rgba(127,95,179,0.08)]" />
 
             {node.options.map((option) => {
-              const imageSrc = processCategoryImages[option.label];
-              const position = processCircularPositions[option.label] ?? { angle: -90, radius: 0 };
+              const imageSrc = processCategoryImages[option.nextNodeId];
+              const position = processCircularPositions[option.nextNodeId] ?? { angle: -90, radius: 0 };
               const angleInRadians = (position.angle * Math.PI) / 180;
               const orbitX = Math.cos(angleInRadians) * position.radius;
               const orbitY = Math.sin(angleInRadians) * position.radius;
@@ -157,7 +157,7 @@ export function TreeNavigator({ node, onNavigate }: TreeNavigatorProps) {
       ) : isDermatiteHub ? (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {node.options.map((option) => {
-            const imageSrc = dermatiteCategoryImages[option.label];
+            const imageSrc = dermatiteCategoryImages[option.nextNodeId];
 
             return (
               <button
@@ -190,7 +190,7 @@ export function TreeNavigator({ node, onNavigate }: TreeNavigatorProps) {
       ) : isPerivascularHub ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {node.options.map((option) => {
-            const imageSrc = perivascularCategoryImages[option.label];
+            const imageSrc = perivascularCategoryImages[option.nextNodeId];
 
             return (
               <button

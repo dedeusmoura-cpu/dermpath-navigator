@@ -63,16 +63,18 @@ export function ContextPanel({ node, favorite, onToggleFavorite }: ContextPanelP
 }
 
 function RichContent({ block }: { block: ContentBlock }) {
+  const links = block.links ?? [];
+
   return (
     <p>
       {block.text}
-      {block.links?.length ? " " : null}
-      {block.links?.map((link, index) => (
+      {links.length ? " " : null}
+      {links.map((link, index) => (
         <span key={link.url}>
           <a href={link.url} target="_blank" rel="noreferrer" className="font-semibold text-accent underline decoration-accent/40">
             {link.label}
           </a>
-          {index < block.links.length - 1 ? ", " : ""}
+          {index < links.length - 1 ? ", " : ""}
         </span>
       ))}
     </p>
