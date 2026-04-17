@@ -224,6 +224,16 @@ body {
   animation: focused-tree-map-connection-draw 460ms ease-out forwards;
 }
 
+.focused-tree-map-connection-pulse {
+  stroke-dasharray: 0.18 10;
+  stroke-dashoffset: 0;
+  animation: focused-tree-map-pulse 680ms ease-in forwards;
+}
+
+.focused-tree-map-column-enter {
+  animation: focused-tree-map-column-enter 460ms ease-out both;
+}
+
 @keyframes mobile-landscape-hint-pulse {
   0%,
   100% {
@@ -255,6 +265,35 @@ body {
 
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes focused-tree-map-pulse {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  78% {
+    stroke-dashoffset: -0.82;
+    opacity: 0.65;
+  }
+
+  100% {
+    stroke-dashoffset: -1.0;
+    opacity: 0;
+  }
+}
+
+@keyframes focused-tree-map-column-enter {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -337,6 +376,16 @@ body {
     animation: none;
     stroke-dasharray: none;
     stroke-dashoffset: 0;
+  }
+
+  .focused-tree-map-connection-pulse {
+    display: none;
+  }
+
+  .focused-tree-map-column-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 
   .quiz-tree-line-base--enter {

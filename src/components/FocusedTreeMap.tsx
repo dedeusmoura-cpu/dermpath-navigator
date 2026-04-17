@@ -37,6 +37,12 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
   const nodeWrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<PositionedLine[]>([]);
   const [enteringLineKeys, setEnteringLineKeys] = useState<string[]>([]);
+  const [pulsingLineKeys, setPulsingLineKeys] = useState<string[]>([]);
+  const pulseTimerRef = useRef<number | null>(null);
+  const [enteringColumnIndex, setEnteringColumnIndex] = useState<number | null>(null);
+  const prevColumnCountRef = useRef<number>(0);
+  const columnEnterTimerRef = useRef<number | null>(null);
+  const isFirstColumnRunRef = useRef<boolean>(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const previousVisibleLineKeysRef = useRef<Set<string>>(new Set());
 
@@ -111,8 +117,11 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
     const previousVisibleLineKeys = previousVisibleLineKeysRef.current;
 
     if (prefersReducedMotion) {
-      if (enteringLineKeys.length > 0) {
-        setEnteringLineKeys([]);
+      if (enteringLineKeys.length > 0) setEnteringLineKeys([]);
+      if (pulseTimerRef.current !== null) {
+        window.clearTimeout(pulseTimerRef.current);
+        pulseTimerRef.current = null;
+        setPulsingLineKeys([]);
       }
       previousVisibleLineKeysRef.current = visibleLineKeys;
       return;
@@ -123,8 +132,49 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
       .filter((lineKey) => !previousVisibleLineKeys.has(lineKey));
 
     setEnteringLineKeys(nextEnteringLineKeys);
+
+    if (nextEnteringLineKeys.length > 0) {
+      if (pulseTimerRef.current !== null) window.clearTimeout(pulseTimerRef.current);
+      setPulsingLineKeys(nextEnteringLineKeys);
+      pulseTimerRef.current = window.setTimeout(() => {
+        setPulsingLineKeys([]);
+        pulseTimerRef.current = null;
+      }, 850);
+    }
+
     previousVisibleLineKeysRef.current = visibleLineKeys;
   }, [enteringLineKeys.length, lines, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (isFirstColumnRunRef.current) {
+      isFirstColumnRunRef.current = false;
+      prevColumnCountRef.current = columns.length;
+      return;
+    }
+
+    if (prefersReducedMotion) {
+      prevColumnCountRef.current = columns.length;
+      return;
+    }
+
+    if (columns.length > prevColumnCountRef.current) {
+      if (columnEnterTimerRef.current !== null) window.clearTimeout(columnEnterTimerRef.current);
+      setEnteringColumnIndex(columns.length - 1);
+      columnEnterTimerRef.current = window.setTimeout(() => {
+        setEnteringColumnIndex(null);
+        columnEnterTimerRef.current = null;
+      }, 500);
+    }
+
+    prevColumnCountRef.current = columns.length;
+  }, [columns.length, prefersReducedMotion]);
+
+  useEffect(() => {
+    return () => {
+      if (pulseTimerRef.current !== null) window.clearTimeout(pulseTimerRef.current);
+      if (columnEnterTimerRef.current !== null) window.clearTimeout(columnEnterTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const scrollArea = scrollAreaRef.current;
@@ -153,6 +203,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
                 const circleX = line.x2 - circleGap;
                 const pathEndX = circleX - circleRadius - 1.5;
                 const shouldAnimateLine = enteringLineKeys.includes(lineKey);
+                const shouldPulseLine = pulsingLineKeys.includes(lineKey);
 
                 return (
                   <g key={lineKey}>
@@ -165,6 +216,18 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
                       strokeWidth={isActiveLine ? "2.25" : "1.55"}
                       strokeLinecap="round"
                     />
+                    {shouldPulseLine ? (
+                      <path
+                        d={`M ${line.x1} ${line.y1} C ${line.x1 + 34} ${line.y1}, ${pathEndX - 34} ${line.y2}, ${pathEndX} ${line.y2}`}
+                        fill="none"
+                        stroke="rgba(200, 100, 255, 0.90)"
+                        strokeWidth="3.2"
+                        strokeLinecap="round"
+                        pathLength={1}
+                        className="focused-tree-map-connection-pulse"
+                        style={{ filter: "drop-shadow(0 0 4px rgba(160, 50, 255, 0.80))" }}
+                      />
+                    ) : null}
                     <circle
                       cx={circleX}
                       cy={line.y2}
@@ -185,7 +248,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
               ref={(element) => {
                 columnRefs.current[columnIndex] = element;
               }}
-              className="relative z-10 flex w-[270px] min-w-[270px] shrink-0 flex-col justify-center gap-3 py-4"
+              className={`relative z-10 flex w-[270px] min-w-[270px] shrink-0 flex-col justify-center gap-3 py-4${columnIndex === enteringColumnIndex ? " focused-tree-map-column-enter" : ""}`}
             >
               {column.map((item) => {
                 const node = algorithmTree.nodes[item.nodeId];
