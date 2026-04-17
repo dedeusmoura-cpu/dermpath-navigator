@@ -136,10 +136,11 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
     if (nextEnteringLineKeys.length > 0) {
       if (pulseTimerRef.current !== null) window.clearTimeout(pulseTimerRef.current);
       setPulsingLineKeys(nextEnteringLineKeys);
+      console.log("pulsing lines:", nextEnteringLineKeys);
       pulseTimerRef.current = window.setTimeout(() => {
         setPulsingLineKeys([]);
         pulseTimerRef.current = null;
-      }, 850);
+      }, 1050);
     }
 
     previousVisibleLineKeysRef.current = visibleLineKeys;
@@ -220,12 +221,12 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
                       <path
                         d={`M ${line.x1} ${line.y1} C ${line.x1 + 34} ${line.y1}, ${pathEndX - 34} ${line.y2}, ${pathEndX} ${line.y2}`}
                         fill="none"
-                        stroke="rgba(200, 100, 255, 0.90)"
-                        strokeWidth="3.2"
+                        stroke="rgba(255, 255, 255, 0.98)"
+                        strokeWidth="4"
                         strokeLinecap="round"
                         pathLength={1}
                         className="focused-tree-map-connection-pulse"
-                        style={{ filter: "drop-shadow(0 0 4px rgba(160, 50, 255, 0.80))" }}
+                        style={{ filter: "drop-shadow(0 0 6px rgba(255, 220, 255, 0.95)) drop-shadow(0 0 12px rgba(200, 100, 255, 0.70))" }}
                       />
                     ) : null}
                     <circle

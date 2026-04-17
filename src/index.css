@@ -225,9 +225,9 @@ body {
 }
 
 .focused-tree-map-connection-pulse {
-  stroke-dasharray: 0.18 10;
+  stroke-dasharray: 0.25 10;
   stroke-dashoffset: 0;
-  animation: focused-tree-map-pulse 680ms ease-in forwards;
+  animation: focused-tree-map-pulse 900ms ease-in forwards;
 }
 
 .focused-tree-map-column-enter {
@@ -280,7 +280,7 @@ body {
   }
 
   100% {
-    stroke-dashoffset: -1.0;
+    stroke-dashoffset: -10.25;
     opacity: 0;
   }
 }
