@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
+import { useLanguage } from "../context/LanguageContext";
+import { getTranslatedTerminalLabel, translateNodeResultTitle } from "../i18n/translations";
 import { searchNodes } from "../utils/search";
-import { getTerminalLabel } from "../utils/tree";
 
 interface SearchPanelProps {
   initialQuery?: string;
@@ -8,38 +9,48 @@ interface SearchPanelProps {
 }
 
 export function SearchPanel({ initialQuery = "", onOpenNode }: SearchPanelProps) {
+  const { language, t } = useLanguage();
   const [query, setQuery] = useState(initialQuery);
-  const results = useMemo(() => searchNodes(query), [query]);
+  const results = useMemo(() => searchNodes(query, language), [language, query]);
 
   return (
-    <section className="space-y-5 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+    <section id="search-panel" className="scroll-mt-28 space-y-5 rounded-[24px] border border-sand bg-white/95 p-5 shadow-panel">
       <div className="space-y-2">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Busca</p>
-        <h2 className="font-serif text-2xl text-ink">Diagnósticos, padrões e sinônimos</h2>
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("search_panel_kicker")}</p>
+        <h2 className="font-serif text-2xl text-ink">{t("search_panel_title")}</h2>
       </div>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-steel">Buscar na árvore</span>
+        <span className="mb-2 block text-sm font-medium text-steel">{t("search_panel_label")}</span>
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Ex.: amiloidose maculosa, vasculite, mucina, líquen..."
-          className="w-full rounded-2xl border border-slate-200 bg-paper px-4 py-3 text-sm outline-none transition focus:border-accent focus:bg-white"
+          placeholder={t("search_panel_placeholder")}
+          className="w-full rounded-2xl border border-sand bg-paper px-4 py-3 text-sm outline-none transition focus:border-accent focus:bg-white"
         />
       </label>
 
       <div className="space-y-3">
         {results.length === 0 ? (
-          <div className="rounded-2xl bg-paper p-4 text-sm text-steel">{query ? "Nenhum resultado encontrado para esta busca." : "Digite um termo para pesquisar na árvore."}</div>
+          <div className="rounded-2xl border border-sand/70 bg-paper p-4 text-sm text-steel">
+            {query ? t("search_empty_results") : t("search_empty_query")}
+          </div>
         ) : (
           results.map(({ node, excerpt }) => (
-            <button key={node.id} type="button" onClick={() => onOpenNode(node.id)} className="w-full rounded-[22px] border border-slate-200 p-4 text-left transition hover:border-accent/30 hover:bg-slate-50">
+            <button
+              key={node.id}
+              type="button"
+              onClick={() => onOpenNode(node.id)}
+              className="w-full rounded-[22px] border border-sand bg-white/88 p-4 text-left transition hover:border-accent/30 hover:bg-[#fffaf0]"
+            >
               <div className="flex items-start justify-between gap-3">
                 <div className="space-y-1">
-                  <h3 className="font-semibold text-ink">{node.title}</h3>
+                  <h3 className="font-semibold text-ink">{translateNodeResultTitle(node, language)}</h3>
                   <p className="text-sm text-steel">{excerpt}</p>
                 </div>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-steel">{getTerminalLabel(node)}</span>
+                <span className="rounded-full border border-sand bg-paper px-3 py-1 text-xs font-semibold text-steel">
+                  {getTranslatedTerminalLabel(node.type, language)}
+                </span>
               </div>
             </button>
           ))

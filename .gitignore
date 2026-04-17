@@ -2,3 +2,14 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Android build artifacts and local config
+android/local.properties
+android/app/build/
+android/build/
+
+# Claude Code local config
+.claude/settings.local.json

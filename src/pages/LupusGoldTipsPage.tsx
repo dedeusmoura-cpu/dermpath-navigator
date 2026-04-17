@@ -1,10 +1,14 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
+import { useLanguage } from "../context/LanguageContext";
 
 export function LupusGoldTipsPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, tx } = useLanguage();
   const returnToNodeId = (location.state as { returnToNodeId?: string } | null)?.returnToNodeId;
+  const favoriteNodeId = returnToNodeId ?? "group-lupus-dermatomiosite-interface";
 
   function goBackToDiagnosis() {
     navigate("/diagnostico", returnToNodeId ? { state: { nodeId: returnToNodeId } } : undefined);
@@ -12,27 +16,30 @@ export function LupusGoldTipsPage() {
 
   return (
     <Layout
-      title="Dicas Que Valem Ouro"
+      title={t("gold_tips")}
       subtitle="Resumo Lúpus Cutâneo"
       actions={
         <>
-          <button
-            type="button"
-            onClick={goBackToDiagnosis}
-            className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent"
-          >
-            Voltar ao diagnóstico
+          <button type="button" onClick={goBackToDiagnosis} className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent">
+            {t("return_to_diagnosis")}
           </button>
-          <Link
-            to="/diagnostico"
-            className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:bg-slate-50"
-          >
-            Voltar
+          <Link to="/diagnostico" className="rounded-full border border-sand bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-accent/30 hover:bg-[#fffaf0]">
+            {t("back")}
           </Link>
         </>
       }
     >
       <div className="mx-auto max-w-5xl">
+        <div className="mb-4 flex flex-wrap gap-3">
+          <button type="button" onClick={goBackToDiagnosis} className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent">
+            {t("return_to_diagnosis")}
+          </button>
+          <Link to="/diagnostico" className="rounded-full border border-sand bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-accent/30 hover:bg-[#fffaf0]">
+            {t("back")}
+          </Link>
+          <FavoriteToggleButton nodeId={favoriteNodeId} />
+        </div>
+
         <section className="overflow-hidden rounded-[32px] border border-amber-200/80 bg-gradient-to-br from-amber-50 via-stone-50 to-yellow-100 shadow-[0_28px_60px_rgba(120,90,20,0.14)]">
           <div className="border-b border-amber-200/80 bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.26),_transparent_40%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.14),_transparent_42%)] px-6 py-7 sm:px-8">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -41,15 +48,15 @@ export function LupusGoldTipsPage() {
                   <GoldBarsHero />
                 </div>
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">Aula premium</p>
-                  <h2 className="font-serif text-3xl text-stone-900 sm:text-4xl">Resumo Lúpus Cutâneo</h2>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-700">{t("premium_lesson")}</p>
+                  <h2 className="font-serif text-3xl text-stone-900 sm:text-4xl">{tx("Resumo Lúpus Cutâneo")}</h2>
                   <p className="max-w-2xl text-sm leading-6 text-stone-600 sm:text-base">
-                    Visão de apoio para consolidar classificação, padrões clínicos e lesões inespecíficas relacionadas ao lúpus.
+                    {tx("Visão de apoio para consolidar classificação, padrões clínicos e lesões inespecíficas relacionadas ao lúpus.")}
                   </p>
                 </div>
               </div>
               <div className="rounded-full border border-amber-300/70 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-amber-800">
-                Dicas de especialista
+                {t("specialist_tips")}
               </div>
             </div>
           </div>
@@ -84,7 +91,7 @@ export function LupusGoldTipsPage() {
                   items: [
                     "Lúpus discoide, tipo localizado, apenas no polo cefálico, com 5% de associação com lúpus sistêmico; e tipo generalizado, presente em 2 segmentos corporais, saindo do polo cefálico, com 15% de associação.",
                     "Geralmente epiderme muito atrófica, espessamento de membrana basal e alopécia em couro cabeludo.",
-                    "Lúpus túmido: subtipo de lúpus discoide sem acometimento da epiderme.",
+                    "Lúpus tímido: subtipo de lúpus discoide sem acometimento da epiderme.",
                     "Paniculite lúpica: 3 topografias clássicas, rosto, ombro e nádegas.",
                     "Paniculite lúpica: ocorre de forma isolada, com acometimento apenas de hipoderme.",
                     "Lúpus profundo: associado a alterações de lúpus na pele sobrejacente.",
@@ -143,20 +150,22 @@ function ContentSection({
   items: string[];
   topics: Array<{ title: string; items: string[] }>;
 }) {
+  const { tx } = useLanguage();
+
   return (
     <section className="rounded-[26px] border border-amber-200/80 bg-white/78 p-5 shadow-sm">
       <div className="mb-4 flex items-center gap-3">
         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-yellow-500 text-sm font-bold text-amber-950">
           {badge}
         </span>
-        <h3 className="font-serif text-2xl text-stone-900">{title}</h3>
+        <h3 className="font-serif text-2xl text-stone-900">{tx(title)}</h3>
       </div>
 
       <div className="space-y-5 text-sm leading-6 text-stone-700">
         <BulletList items={items} />
         {topics.map((topic) => (
           <div key={topic.title} className="space-y-2 border-t border-amber-100 pt-4">
-            <p className="font-semibold text-stone-900">{topic.title}</p>
+            <p className="font-semibold text-stone-900">{tx(topic.title)}</p>
             <BulletList items={topic.items} />
           </div>
         ))}
@@ -166,12 +175,14 @@ function ContentSection({
 }
 
 function BulletList({ items }: { items: string[] }) {
+  const { tx } = useLanguage();
+
   return (
     <ul className="space-y-2">
       {items.map((item) => (
         <li key={item} className="flex items-start gap-3">
           <span className="mt-2 h-2.5 w-2.5 flex-none rounded-full bg-gradient-to-br from-amber-400 to-yellow-600" />
-          <span>{item}</span>
+          <span>{tx(item)}</span>
         </li>
       ))}
     </ul>

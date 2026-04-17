@@ -4,18 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#10243b",
-        steel: "#46566b",
-        mist: "#dfe7f0",
-        paper: "#f7f8fb",
-        sand: "#ece8e1",
-        accent: "#204b74"
+        ink: "#141b2b",
+        steel: "#556070",
+        mist: "#e7e0d0",
+        paper: "#fcfaf4",
+        sand: "#efe7d8",
+        accent: "#a97a1f"
       },
       boxShadow: {
-        panel: "0 20px 45px -30px rgba(16, 36, 59, 0.35)"
+        panel: "0 24px 60px -34px rgba(20, 27, 43, 0.22)"
       },
       backgroundImage: {
-        grid: "linear-gradient(to right, rgba(16, 36, 59, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(16, 36, 59, 0.06) 1px, transparent 1px)"
+        grid: "linear-gradient(to right, rgba(169, 122, 31, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(20, 27, 43, 0.04) 1px, transparent 1px)"
       },
       fontFamily: {
         sans: ['\"Manrope\"', "ui-sans-serif", "system-ui"],

@@ -1,58 +1,74 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+﻿import { Link, useLocation, useNavigate } from "react-router-dom";
+import image1 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide1.PNG";
+import image2 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide2.PNG";
+import image3 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide3.PNG";
+import image4 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide4.PNG";
+import image5 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide5.PNG";
+import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
+import { HistopathologyReportCard } from "../components/HistopathologyReportCard";
 import { Layout } from "../components/Layout";
-import prpImage from "../assets/Dermatites/Perivasculares/Psoriasiforme/PRP.png";
+import { useLanguage } from "../context/LanguageContext";
+
+const images = [
+  { src: image1, alt: "Pitiríase rubra pilar 1" },
+  { src: image2, alt: "Pitiríase rubra pilar 2" },
+  { src: image3, alt: "Pitiríase rubra pilar 3" },
+  { src: image4, alt: "Pitiríase rubra pilar 4" },
+  { src: image5, alt: "Pitiríase rubra pilar 5" },
+];
 
 export function PrpHistopathologyPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, tx } = useLanguage();
   const returnToNodeId = (location.state as { returnToNodeId?: string } | null)?.returnToNodeId;
+  const favoriteNodeId = returnToNodeId ?? "dx-pitiríase-rubra-pilar";
 
   function goBackToDiagnosis() {
     navigate("/diagnostico", returnToNodeId ? { state: { nodeId: returnToNodeId } } : undefined);
   }
 
   return (
-    <Layout
-      title="Histopatológico"
-      subtitle="Pitiríase rubra pilar"
-      actions={
-        <>
+    <Layout>
+      <div className="mx-auto max-w-[120rem] space-y-4">
+        <div className="flex flex-wrap gap-3">
           <button
             type="button"
             onClick={goBackToDiagnosis}
             className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent"
           >
-            Voltar ao diagnóstico
+            {t("return_to_diagnosis")}
           </button>
           <Link
             to="/diagnostico"
-            className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:bg-slate-50"
+            className="rounded-full border border-sand bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-accent/30 hover:bg-[#fffaf0]"
           >
-            Voltar
+            {t("back")}
           </Link>
-        </>
-      }
-    >
-      <div className="mx-auto max-w-[96rem]">
-        <section className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
-          <div className="border-b border-slate-200 bg-[radial-gradient(circle_at_top_left,_rgba(217,70,239,0.16),_transparent_32%),radial-gradient(circle_at_top_right,_rgba(139,92,246,0.14),_transparent_38%)] px-6 py-6 sm:px-8">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-fuchsia-700">Lâmina didática</p>
-                <h2 className="font-serif text-3xl text-ink sm:text-4xl">Histopatológico — Pitiríase rubra pilar</h2>
-                <p className="max-w-3xl text-sm leading-6 text-steel">
-                  Visualização ampliada da imagem histopatológica, com foco total no conteúdo principal.
-                </p>
-              </div>
+          <FavoriteToggleButton nodeId={favoriteNodeId} />
+        </div>
+
+        <section className="overflow-hidden rounded-[30px] border border-sand bg-white shadow-panel">
+          <div className="border-b border-sand bg-[radial-gradient(circle_at_top_left,_rgba(169,122,31,0.16),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(20,27,43,0.08),_transparent_38%)] px-6 py-6 sm:px-8">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("didactic_slides")}</p>
+              <h2 className="font-serif text-3xl text-ink sm:text-4xl">{tx("Histopatológico — Pitiríase rubra pilar")}</h2>
             </div>
           </div>
 
-          <div className="bg-slate-50 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
-            <div className="overflow-auto rounded-[24px] border border-slate-200 bg-white p-3 sm:p-4">
-              <img
-                src={prpImage}
-                alt="Histopatológico — Pitiríase rubra pilar"
-                className="mx-auto h-auto max-h-none w-full object-contain"
+          <div className="bg-paper px-3 py-3 sm:px-4 sm:py-4 lg:px-6">
+            <div className="space-y-6">
+              {images.map((image) => (
+                <figure key={image.alt} className="overflow-hidden rounded-[24px] border border-sand bg-white p-3 shadow-panel sm:p-4">
+                  <img src={image.src} alt={image.alt} className="h-auto w-full rounded-[18px] object-contain" />
+                </figure>
+              ))}
+
+              <HistopathologyReportCard
+                subtitle="Dermatite psoriasiforme"
+                paragraphs={[
+                  "Trata-se de pele com epiderme exibindo alternância de orto e paraceratose horizontal e verticalmente (padrão em \"tabuleiro de xadrez\"), hiperplasia psoriasiforme e plug folicular. Em derme superficial, há leve infiltrado linfocitário perivascular. Os achados são consistentes com Pitiríase Rubra Pilar. Correlação clínica indicada para corroborar esse diagnóstico.",
+                ]}
               />
             </div>
           </div>
@@ -61,3 +77,6 @@ export function PrpHistopathologyPage() {
     </Layout>
   );
 }
+
+
+
