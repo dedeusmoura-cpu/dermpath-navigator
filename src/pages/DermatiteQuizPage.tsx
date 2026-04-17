@@ -1059,7 +1059,7 @@ export function DermatiteQuizPage() {
                       </div>
 
                       {showSixthColumn ? (
-                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-column--wide quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5">
+                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-column--wide quiz-tree-card flex shrink-0 flex-col gap-5">
                           {sixthColumnOptions.map((option) => {
                             const status = getFinalTreeNodeStatus(option.id);
                             return (

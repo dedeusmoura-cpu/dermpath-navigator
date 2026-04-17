@@ -1,5 +1,5 @@
 ﻿import { Link, useLocation, useNavigate } from "react-router-dom";
-import image1 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide1.PNG";
+import image1 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide1.png";
 import image2 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide2.PNG";
 import image3 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide3.PNG";
 import image4 from "../assets/Dermatites/Perivasculares/Psoriasiforme/Psoriasiforme apenas/PRP/Slide4.PNG";

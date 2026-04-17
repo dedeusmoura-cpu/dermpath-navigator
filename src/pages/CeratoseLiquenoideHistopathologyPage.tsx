@@ -1,7 +1,7 @@
 ﻿import { Link, useLocation, useNavigate } from "react-router-dom";
 import image1 from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Ceratose Liquenoide/Slide1.PNG";
 import image2 from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Ceratose Liquenoide/Slide2.PNG";
-import image3 from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Ceratose Liquenoide/Slide3.PNG";
+import image3 from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Ceratose Liquenoide/Slide3.png";
 import image4 from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Ceratose Liquenoide/Slide4.PNG";
 import image5 from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Ceratose Liquenoide/Slide5.PNG";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";

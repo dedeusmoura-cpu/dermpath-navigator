@@ -5,7 +5,7 @@ import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
 const images = [
-  { src: new URL("../assets/Dermatites/Nodular-Difusa/DNGP/Slide1.PNG", import.meta.url).href, alt: "Histopatológico 1" },
+  { src: new URL("../assets/Dermatites/Nodular-Difusa/DNGP/Slide1.png", import.meta.url).href, alt: "Histopatológico 1" },
   { src: new URL("../assets/Dermatites/Nodular-Difusa/DNGP/Slide2.PNG", import.meta.url).href, alt: "Histopatológico 2" },
   { src: new URL("../assets/Dermatites/Nodular-Difusa/DNGP/Slide3.PNG", import.meta.url).href, alt: "Histopatológico 3" },
   { src: new URL("../assets/Dermatites/Nodular-Difusa/DNGP/Slide4.PNG", import.meta.url).href, alt: "Histopatológico 4" },
