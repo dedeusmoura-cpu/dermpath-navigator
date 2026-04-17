@@ -1,5 +1,6 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { QuizTreeLine, useEnteringLines } from "../components/QuizTreeLine";
 import pk1Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK1.jpg";
 import pk2Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK2.jpg";
 import pk3Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK3.jpg";
@@ -193,6 +194,9 @@ export function DermatiteQuizPage() {
   const showSixthColumn = selectedFifthColumn === "lymphocytes-predominate";
   const showSeventhColumn = stage === "final-pk5" && selectedSixthColumn === "cornoid-lamella";
   const showTransitionBanner = transitionNoticeStage === stage;
+
+  const allTreeLines = useMemo(() => [...treeLines, ...finalTreeLines], [treeLines, finalTreeLines]);
+  const enteringIds = useEnteringLines(allTreeLines);
 
   const visibleTreeEdges = useMemo(() => {
     const edges = secondColumnOptions.map((option) => ({ from: "dermatitis-root", to: option.id }));
@@ -703,28 +707,6 @@ export function DermatiteQuizPage() {
     );
   }
 
-  function renderTreeLine(line: TreeLine) {
-    const strokeColor = "rgba(78, 191, 114, 0.44)";
-    const circleRadius = 3;
-    const circleGap = 18;
-    const circleX = line.x2 - circleGap;
-    const pathEndX = circleX - circleRadius - 1.5;
-    const horizontalSpan = Math.max(pathEndX - line.x1, 24);
-    const controlOffset = Math.max(14, Math.min(44, horizontalSpan * 0.42));
-
-    return (
-      <g key={line.id}>
-        <path
-          d={`M ${line.x1} ${line.y1} C ${line.x1 + controlOffset} ${line.y1}, ${pathEndX - controlOffset} ${line.y2}, ${pathEndX} ${line.y2}`}
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="2.1"
-          strokeLinecap="round"
-        />
-        <circle cx={circleX} cy={line.y2} r={circleRadius} fill="white" stroke={strokeColor} strokeWidth="1.7" />
-      </g>
-    );
-  }
 
   return (
     <Layout title="Quiz Dermatite" subtitle="Quiz Dermatite">
@@ -740,7 +722,7 @@ export function DermatiteQuizPage() {
                 <div className="quiz-mobile-scroll overflow-x-auto overflow-y-hidden">
                 <div ref={initialConnectorAreaRef} className="quiz-tree-track quiz-tree-columns-spacious relative flex min-w-max flex-nowrap items-start">
                   <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                    {treeLines.map((line) => renderTreeLine(line))}
+                    {treeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
                   </svg>
 
                   <div className="quiz-tree-column quiz-tree-column--root-desktop quiz-tree-card relative z-10 flex shrink-0 flex-col gap-3">
@@ -806,7 +788,7 @@ export function DermatiteQuizPage() {
                 <div ref={treeScrollAreaRef} className="quiz-mobile-scroll relative overflow-x-auto overflow-y-hidden">
                   <div ref={treeContainerRef} className="quiz-tree-track relative min-w-max">
                   <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                    {treeLines.map((line) => renderTreeLine(line))}
+                    {treeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
                   </svg>
 
                   <div className="quiz-tree-columns-spacious relative z-10 inline-flex min-w-max items-start pb-2">
@@ -869,7 +851,7 @@ export function DermatiteQuizPage() {
                     </div>
 
                     {selectedSecondColumn === "perivascular" ? (
-                      <div className="quiz-tree-column quiz-tree-column--standard-desktop quiz-tree-card flex shrink-0 flex-col gap-5">
+                      <div className="quiz-tree-column quiz-tree-column--standard-desktop quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5">
                         {thirdColumnOptions.map((option) => {
                           const status = getTreeNodeStatus(option.id);
                           return (
@@ -891,7 +873,7 @@ export function DermatiteQuizPage() {
                     ) : null}
 
                     {showFourthColumn ? (
-                      <div ref={fourthColumnRef} className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card flex shrink-0 flex-col gap-5">
+                      <div ref={fourthColumnRef} className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5">
                         {fourthColumnOptions.map((option) => {
                           const status = getTreeNodeStatus(option.id);
                           return (
@@ -931,7 +913,7 @@ export function DermatiteQuizPage() {
                 <div ref={finalTreeScrollAreaRef} className="quiz-mobile-scroll relative overflow-x-auto overflow-y-hidden">
                   <div ref={finalTreeContainerRef} className="quiz-tree-track relative min-w-max">
                     <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                      {finalTreeLines.map((line) => renderTreeLine(line))}
+                      {finalTreeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
                     </svg>
 
                     <div className="quiz-tree-columns-spacious relative z-10 inline-flex min-w-max items-start pb-2">
@@ -984,7 +966,7 @@ export function DermatiteQuizPage() {
                       </div>
 
                       {showSixthColumn ? (
-                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card flex shrink-0 flex-col gap-5">
+                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5">
                           {sixthColumnOptions.map((option) => {
                             const status = getFinalTreeNodeStatus(option.id);
                             return (
@@ -1024,7 +1006,7 @@ export function DermatiteQuizPage() {
                 <div ref={finalTreeScrollAreaRef} className="quiz-mobile-scroll relative overflow-x-auto overflow-y-hidden">
                   <div ref={finalTreeContainerRef} className="quiz-tree-track relative min-w-max">
                     <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                      {finalTreeLines.map((line) => renderTreeLine(line))}
+                      {finalTreeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
                     </svg>
 
                     <div className="quiz-tree-columns-spacious relative z-10 inline-flex min-w-max items-start pb-2">
@@ -1077,7 +1059,7 @@ export function DermatiteQuizPage() {
                       </div>
 
                       {showSixthColumn ? (
-                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-column--wide quiz-tree-card flex shrink-0 flex-col gap-5">
+                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-column--wide quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5">
                           {sixthColumnOptions.map((option) => {
                             const status = getFinalTreeNodeStatus(option.id);
                             return (
@@ -1105,7 +1087,7 @@ export function DermatiteQuizPage() {
                       {showSeventhColumn ? (
                         <div
                           ref={seventhColumnRef}
-                          className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card relative shrink-0 self-start"
+                          className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card quiz-tree-column-enter relative shrink-0 self-start"
                         >
                           <div
                             ref={seventhColumnLayoutRef}

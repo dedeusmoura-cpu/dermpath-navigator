@@ -258,6 +258,64 @@ body {
   }
 }
 
+/* Quiz tree line: base draw on enter */
+.quiz-tree-line-base--enter {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: quiz-tree-line-draw 420ms ease-out forwards;
+}
+
+/* Quiz tree line: light pulse traveling from parent to child */
+.quiz-tree-line-pulse {
+  stroke-dasharray: 0.18 10;
+  stroke-dashoffset: 0;
+  animation: quiz-tree-line-pulse 680ms ease-in forwards;
+}
+
+/* Quiz tree column: slide in from right on mount */
+.quiz-tree-column-enter {
+  animation: quiz-tree-column-enter 460ms ease-out both;
+}
+
+@keyframes quiz-tree-line-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes quiz-tree-line-pulse {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  78% {
+    stroke-dashoffset: -0.82;
+    opacity: 0.65;
+  }
+
+  100% {
+    stroke-dashoffset: -1.0;
+    opacity: 0;
+  }
+}
+
+@keyframes quiz-tree-column-enter {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes correct-answer-banner-enter {
   from {
     opacity: 0;
@@ -279,6 +337,22 @@ body {
     animation: none;
     stroke-dasharray: none;
     stroke-dashoffset: 0;
+  }
+
+  .quiz-tree-line-base--enter {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+
+  .quiz-tree-line-pulse {
+    display: none;
+  }
+
+  .quiz-tree-column-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 

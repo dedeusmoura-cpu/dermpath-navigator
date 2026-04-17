@@ -1,5 +1,6 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { QuizTreeLine, useEnteringLines } from "../components/QuizTreeLine";
 import nb1Image from "../assets/Dermatites/Nodular-Difusa/Casos/Necrobiose Lipoidica/NB1.jpg";
 import nb2Image from "../assets/Dermatites/Nodular-Difusa/Casos/Necrobiose Lipoidica/NB2.jpg";
 import nb3Image from "../assets/Dermatites/Nodular-Difusa/Casos/Necrobiose Lipoidica/NB3.jpg";
@@ -125,6 +126,7 @@ export function DermatiteQuizCase2Page() {
   const [transitionSuccessSelection, setTransitionSuccessSelection] = useState<QuizTransitionSuccessSelection<QuizStage> | null>(null);
   const [transitionNoticeStage, setTransitionNoticeStage] = useState<QuizStage | null>(null);
   const showTransitionBanner = transitionNoticeStage === stage;
+  const enteringIds = useEnteringLines(treeLines);
 
   const timeoutRef = useRef<number | null>(null);
   const treeContainerRef = useRef<HTMLDivElement | null>(null);
@@ -494,29 +496,6 @@ export function DermatiteQuizCase2Page() {
     return getQuizTransitionSuccessClass(transitionSuccessSelection, stage, nodeId, getTreeOptionButtonClass(status));
   }
 
-  function renderTreeLine(line: TreeLine) {
-    const strokeColor = "rgba(78, 191, 114, 0.44)";
-    const circleRadius = 3;
-    const circleGap = 18;
-    const circleX = line.x2 - circleGap;
-    const pathEndX = circleX - circleRadius - 1.5;
-    const horizontalSpan = Math.max(pathEndX - line.x1, 24);
-    const controlOffset = Math.max(14, Math.min(44, horizontalSpan * 0.42));
-
-    return (
-      <g key={line.id}>
-        <path
-          d={`M ${line.x1} ${line.y1} C ${line.x1 + controlOffset} ${line.y1}, ${pathEndX - controlOffset} ${line.y2}, ${pathEndX} ${line.y2}`}
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="2.1"
-          strokeLinecap="round"
-        />
-        <circle cx={circleX} cy={line.y2} r={circleRadius} fill="white" stroke={strokeColor} strokeWidth="1.7" />
-      </g>
-    );
-  }
-
   function renderImageCard(src: string, alt: string) {
     return <QuizTransitionImageCard key={alt} src={src} alt={alt} maxHeightClass="max-h-[560px]" />;
   }
@@ -569,7 +548,7 @@ export function DermatiteQuizCase2Page() {
             <div ref={treeScrollAreaRef} className="quiz-mobile-scroll overflow-x-auto overflow-y-hidden">
               <div ref={treeContainerRef} className="quiz-tree-track quiz-tree-columns-spacious relative flex min-w-max flex-nowrap items-start">
                 <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                  {treeLines.map((line) => renderTreeLine(line))}
+                  {treeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
                 </svg>
 
                 {stage !== "deposit" && stage !== "diagnosis" ? (
@@ -627,7 +606,7 @@ export function DermatiteQuizCase2Page() {
                 </div>
 
                 {stage !== "initial" ? (
-                  <div className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card relative z-10 flex shrink-0 flex-col gap-5">
+                  <div className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card quiz-tree-column-enter relative z-10 flex shrink-0 flex-col gap-5">
                     {histiocytePatternOptions.map((option) => {
                       const status = stage === "histiocytes" ? getNodeStatus(option.id) : option.id === "histiocitos" ? "path" : "default";
                       const isActiveCurrent = stage === "histiocytes";
@@ -656,7 +635,7 @@ export function DermatiteQuizCase2Page() {
                 ) : null}
 
                 {stage === "palisaded" || stage === "deposit" || stage === "diagnosis" ? (
-                  <div className="quiz-tree-column quiz-tree-column--mid-desktop quiz-tree-card relative z-10 flex shrink-0 flex-col gap-5">
+                  <div className="quiz-tree-column quiz-tree-column--mid-desktop quiz-tree-card quiz-tree-column-enter relative z-10 flex shrink-0 flex-col gap-5">
                     {granulomatousOptions.map((option) => {
                       const status = stage === "palisaded" ? getNodeStatus(option.id) : option.id === "palicada" ? "path" : "default";
                       const isActiveCurrent = stage === "palisaded";
@@ -685,7 +664,7 @@ export function DermatiteQuizCase2Page() {
                 ) : null}
 
                 {stage === "deposit" || stage === "diagnosis" ? (
-                  <div className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card relative z-10 flex shrink-0 flex-col gap-5">
+                  <div className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card quiz-tree-column-enter relative z-10 flex shrink-0 flex-col gap-5">
                     {depositOptions.map((option) => {
                       const status = getNodeStatus(option.id);
 
@@ -713,7 +692,7 @@ export function DermatiteQuizCase2Page() {
                 ) : null}
 
                 {stage === "deposit" && selectedFifthColumn === "colageno-degenerado" ? (
-                  <div className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card relative z-10 shrink-0 self-start">
+                  <div className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card quiz-tree-column-enter relative z-10 shrink-0 self-start">
                     <div
                       ref={diagnosisColumnLayoutRef}
                       className="relative"
