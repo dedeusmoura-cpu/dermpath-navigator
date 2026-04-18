@@ -1,6 +1,10 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { QuizTreeLine, useEnteringLines } from "../components/QuizTreeLine";
+import {
+  createHorizontalEdgeIds,
+  useQuizTreeLines,
+} from "../hooks/useQuizTreeLines";
 import nb1Image from "../assets/Dermatites/Nodular-Difusa/Casos/Necrobiose Lipoidica/NB1.jpg";
 import nb2Image from "../assets/Dermatites/Nodular-Difusa/Casos/Necrobiose Lipoidica/NB2.jpg";
 import nb3Image from "../assets/Dermatites/Nodular-Difusa/Casos/Necrobiose Lipoidica/NB3.jpg";
@@ -21,16 +25,6 @@ interface TreeOption {
   id: string;
   label: { pt: string; en: string };
   isCorrect?: boolean;
-}
-
-interface TreeLine {
-  id: string;
-  from: string;
-  to: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
 }
 
 const rootColumnOptions: TreeOption[] = [
@@ -120,18 +114,17 @@ export function DermatiteQuizCase2Page() {
   const [wrongFourthColumn, setWrongFourthColumn] = useState<string | null>(null);
   const [selectedFifthColumn, setSelectedFifthColumn] = useState<string | null>(null);
   const [wrongFifthColumn, setWrongFifthColumn] = useState<string | null>(null);
+  const [revealedFifthColumns, setRevealedFifthColumns] = useState<string[]>([]);
   const [selectedDiagnosisColumn, setSelectedDiagnosisColumn] = useState<string | null>(null);
   const [wrongDiagnosisColumn, setWrongDiagnosisColumn] = useState<string | null>(null);
-  const [treeLines, setTreeLines] = useState<TreeLine[]>([]);
   const [transitionSuccessSelection, setTransitionSuccessSelection] = useState<QuizTransitionSuccessSelection<QuizStage> | null>(null);
   const [transitionNoticeStage, setTransitionNoticeStage] = useState<QuizStage | null>(null);
   const showTransitionBanner = transitionNoticeStage === stage;
-  const enteringIds = useEnteringLines(treeLines);
 
   const timeoutRef = useRef<number | null>(null);
   const treeContainerRef = useRef<HTMLDivElement | null>(null);
   const treeScrollAreaRef = useRef<HTMLDivElement | null>(null);
-  const treeNodeRefs = useRef<Record<string, HTMLDivElement | HTMLButtonElement | null>>({});
+  const treeNodeRefs = useRef<Record<string, HTMLElement | null>>({});
   const diagnosisColumnLayoutRef = useRef<HTMLDivElement | null>(null);
   const [diagnosisColumnLayout, setDiagnosisColumnLayout] = useState<Record<string, { top: number; height: number }>>({});
 
@@ -155,26 +148,6 @@ export function DermatiteQuizCase2Page() {
 
     setStage(nextStage);
   }, [location.state, stage]);
-
-  useEffect(() => {
-    const scrollArea = treeScrollAreaRef.current;
-    if (!scrollArea) {
-      return;
-    }
-
-    const frame = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        scrollArea.scrollTo({
-          left: Math.max(0, scrollArea.scrollWidth - scrollArea.clientWidth),
-          behavior: stage === "deposit" || stage === "diagnosis" ? "smooth" : "auto",
-        });
-      });
-    });
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-    };
-  }, [stage, treeLines.length, selectedFifthColumn]);
 
   const diagnosisColumnHeight = useMemo(() => {
     const values = Object.values(diagnosisColumnLayout);
@@ -209,15 +182,9 @@ export function DermatiteQuizCase2Page() {
         ...histiocytePatternOptions.map((option) => ({ from: "nodular-root", to: option.id })),
         ...granulomatousOptions.map((option) => ({ from: "histiocitos-root", to: option.id })),
         ...depositOptions.map((option) => ({ from: "palicada-root", to: option.id })),
-        ...(selectedFifthColumn === "colageno-degenerado"
-          ? [
-              { from: "mucina", to: "granuloma-anular" },
-              { from: "colageno-degenerado", to: "necrobiose-lipoidica" },
-              { from: "colageno-fendas", to: "xantogranuloma" },
-              { from: "fibrina", to: "nodulo-reumatoide" },
-              { from: "outros", to: "outros-granulomas" },
-            ]
-          : []),
+        ...quiz2FinalColumnPairs
+          .filter(({ from }) => revealedFifthColumns.includes(from))
+          .map(({ from, to }) => ({ from, to })),
       ];
     }
 
@@ -228,64 +195,45 @@ export function DermatiteQuizCase2Page() {
       ...depositOptions.map((option) => ({ from: "palicada-root", to: option.id })),
       ...diagnosisOptions.map((option) => ({ from: "colageno-root", to: option.id })),
     ];
-  }, [stage, selectedFifthColumn]);
+  }, [stage, selectedFifthColumn, revealedFifthColumns]);
 
-  useLayoutEffect(() => {
-    function measureTreeLines() {
-      const container = treeContainerRef.current;
-      if (!container) {
-        return;
-      }
+  // Conjunto estável de edges que devem ficar estritamente horizontais
+  // (pareamento penúltima → última coluna). Ver docs/QUIZ_TREE_LINE_PATTERN.md.
+  const horizontalFinalEdgeIds = useMemo(
+    () => createHorizontalEdgeIds(quiz2FinalColumnPairs),
+    [],
+  );
 
-      const containerRect = container.getBoundingClientRect();
-      const nextLines = visibleEdges
-        .map((edge) => {
-          const fromElement = treeNodeRefs.current[edge.from];
-          const toElement = treeNodeRefs.current[edge.to];
-          if (!fromElement || !toElement) {
-            return null;
-          }
+  const treeLines = useQuizTreeLines({
+    containerRef: treeContainerRef,
+    nodeRefs: treeNodeRefs,
+    edges: visibleEdges,
+    horizontalEdgeIds: horizontalFinalEdgeIds,
+  });
+  const enteringIds = useEnteringLines(treeLines);
 
-          const fromRect = fromElement.getBoundingClientRect();
-          const toRect = toElement.getBoundingClientRect();
-
-          return {
-            id: `${edge.from}-${edge.to}`,
-            from: edge.from,
-            to: edge.to,
-            x1: fromRect.right - containerRect.left,
-            y1: fromRect.top - containerRect.top + fromRect.height / 2,
-            x2: toRect.left - containerRect.left,
-            y2: toRect.top - containerRect.top + toRect.height / 2,
-          };
-        })
-        .filter((line): line is TreeLine => Boolean(line));
-
-      setTreeLines(nextLines);
+  useEffect(() => {
+    const scrollArea = treeScrollAreaRef.current;
+    if (!scrollArea) {
+      return;
     }
 
-    measureTreeLines();
-
-    const observer = new ResizeObserver(() => measureTreeLines());
-    if (treeContainerRef.current) {
-      observer.observe(treeContainerRef.current);
-    }
-
-    Object.values(treeNodeRefs.current).forEach((element) => {
-      if (element) {
-        observer.observe(element);
-      }
+    const frame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        scrollArea.scrollTo({
+          left: Math.max(0, scrollArea.scrollWidth - scrollArea.clientWidth),
+          behavior: stage === "deposit" || stage === "diagnosis" ? "smooth" : "auto",
+        });
+      });
     });
 
-    window.addEventListener("resize", measureTreeLines);
     return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measureTreeLines);
+      window.cancelAnimationFrame(frame);
     };
-  }, [visibleEdges, stage]);
+  }, [stage, treeLines.length, selectedFifthColumn, revealedFifthColumns]);
 
   useLayoutEffect(() => {
-    if (!(stage === "deposit" && selectedFifthColumn === "colageno-degenerado")) {
+    if (!(stage === "deposit" && revealedFifthColumns.length > 0)) {
       setDiagnosisColumnLayout({});
       return;
     }
@@ -299,18 +247,19 @@ export function DermatiteQuizCase2Page() {
       const containerRect = container.getBoundingClientRect();
       const nextLayout: Record<string, { top: number; height: number }> = {};
 
-      quiz2FinalColumnPairs.forEach(({ from, to }) => {
-        const parentElement = treeNodeRefs.current[from];
-        const targetElement = treeNodeRefs.current[to];
-        if (!parentElement || !targetElement) return;
+      quiz2FinalColumnPairs
+        .filter(({ from }) => revealedFifthColumns.includes(from))
+        .forEach(({ from, to }) => {
+          const parentElement = treeNodeRefs.current[from];
+          if (!parentElement) return;
 
-        const parentRect = parentElement.getBoundingClientRect();
+          const parentRect = parentElement.getBoundingClientRect();
 
-        nextLayout[to] = {
-          top: parentRect.top - containerRect.top,
-          height: parentRect.height,
-        };
-      });
+          nextLayout[to] = {
+            top: parentRect.top - containerRect.top,
+            height: parentRect.height,
+          };
+        });
 
       setDiagnosisColumnLayout(nextLayout);
     }
@@ -335,7 +284,7 @@ export function DermatiteQuizCase2Page() {
       observer.disconnect();
       window.removeEventListener("resize", measureDiagnosisColumnLayout);
     };
-  }, [stage, selectedFifthColumn, treeLines.length]);
+  }, [stage, selectedFifthColumn, revealedFifthColumns, treeLines.length]);
 
   function handleSecondColumnClick(option: TreeOption) {
     setWrongSecondColumn(null);
@@ -382,6 +331,9 @@ export function DermatiteQuizCase2Page() {
       setTransitionSuccessSelection({ stage: "palisaded", nodeId: option.id });
       timeoutRef.current = window.setTimeout(() => {
         setTransitionNoticeStage("deposit");
+        setSelectedFifthColumn(null);
+        setWrongFifthColumn(null);
+        setRevealedFifthColumns([]);
         setStage("deposit");
         navigate(".", { state: { quizStage: "deposit" } });
       }, 900);
@@ -393,6 +345,11 @@ export function DermatiteQuizCase2Page() {
 
   function handleFifthColumnClick(option: TreeOption) {
     setWrongFifthColumn(null);
+
+    // Reveal the corresponding last-column item cumulatively on every click
+    setRevealedFifthColumns((previous) =>
+      previous.includes(option.id) ? previous : [...previous, option.id],
+    );
 
     if (option.isCorrect) {
       setSelectedFifthColumn(option.id);
@@ -691,7 +648,7 @@ export function DermatiteQuizCase2Page() {
                   </div>
                 ) : null}
 
-                {stage === "deposit" && selectedFifthColumn === "colageno-degenerado" ? (
+                {stage === "deposit" && revealedFifthColumns.length > 0 ? (
                   <div className="quiz-tree-column quiz-tree-column--narrow-desktop quiz-tree-column--narrow quiz-tree-card quiz-tree-column-enter relative z-10 shrink-0 self-start">
                     <div
                       ref={diagnosisColumnLayoutRef}
@@ -699,6 +656,8 @@ export function DermatiteQuizCase2Page() {
                       style={diagnosisColumnHeight ? { height: `${diagnosisColumnHeight}px` } : undefined}
                     >
                       {diagnosisOptions.map((option) => {
+                        const pair = quiz2FinalColumnPairs.find((entry) => entry.to === option.id);
+                        if (!pair || !revealedFifthColumns.includes(pair.from)) return null;
                         const status = getNodeStatus(option.id);
                         const layout = diagnosisColumnLayout[option.id];
 
