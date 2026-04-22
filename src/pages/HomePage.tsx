@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import mapTreeImage from "../assets/Mapa-da-Arvore.png";
-import quizImage from "../assets/Quiz-cropped.png";
-import quizHoverTopImage from "../assets/Quiz-cropped-hover-top.png";
+import quizImage from "../assets/Quiz-branco.png";
 import authorImage from "../assets/Rafael.png.png";
+import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
+import treinamentoTedIcon from "../assets/diploma-clean-icon.svg";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -31,27 +32,33 @@ export function HomePage() {
             </div>
 
             <div className="rounded-[32px] bg-white/92 p-5 shadow-[0_24px_52px_-30px_rgba(20,27,43,0.45)] sm:p-6">
-              <div className="grid gap-4 text-left md:grid-cols-3">
+              <div className="grid grid-cols-2 gap-4 text-left">
               <HomeActionCard
                 to="/diagnostico"
                 title={t("home_start")}
                 body={t("home_card_start_body")}
-                accentClassName="from-[#111111] via-[#2a2110] to-[#c9972b]"
-                hoverAccentClassName="group-hover:bg-white group-hover:bg-none"
-                hoverTextClassName="group-hover:bg-gradient-to-r group-hover:from-[#111111] group-hover:via-[#2a2110] group-hover:to-[#c9972b] group-hover:bg-clip-text group-hover:text-transparent"
+                imageSrc={navegacaoDiagnosticaCompassIcon}
+                imageAlt={t("home_start")}
+                badgeLabel={t("home_start")}
+                accentClassName="from-[#1A47BF] to-[#245FE7]"
+                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#245FE7]"
+                hoverTextClassName="group-hover:text-[#245FE7]"
+                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(31%)_sepia(95%)_saturate(2824%)_hue-rotate(222deg)_brightness(94%)_contrast(92%)]"
                 badgeTextClassName="text-[1.22rem] font-bold sm:text-[1.38rem]"
-                hoverForegroundImageSrc="__text-only-border__"
                 hideTitle
-                compactText={false}
+                compactText
               />
               <HomeActionCard
                 to="/mapa-da-arvore"
                 title={t("home_tree_map")}
-                body="Visualize a estrutura geral algorítmica da árvore diagnóstica"
+                body={t("home_card_tree_map_body")}
                 imageSrc={mapTreeImage}
                 imageAlt={t("home_tree_map")}
-                accentClassName="from-[#1c2233] via-[#24314b] to-[#635f85]"
-                hoverAccentClassName="group-hover:from-[#8b5cf6] group-hover:via-[#7c5ce0] group-hover:to-[#6f57d4]"
+                badgeLabel={t("home_tree_map")}
+                accentClassName="from-[#7B1EE6] via-[#B82EDC] to-[#F050C7]"
+                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#B82EDC]"
+                hoverTextClassName="group-hover:text-[#B82EDC]"
+                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(30%)_sepia(79%)_saturate(3008%)_hue-rotate(282deg)_brightness(96%)_contrast(88%)]"
                 hideTitle
                 compactText
               />
@@ -60,11 +67,24 @@ export function HomePage() {
                 title={t("home_quiz")}
                 body={t("home_card_quiz_body")}
                 imageSrc={quizImage}
-                hoverForegroundImageSrc={quizHoverTopImage}
                 imageAlt={t("home_quiz")}
+                accentClassName="from-[#0A5C3B] to-[#1DBA6C]"
+                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#1DBA6C]"
+                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(57%)_sepia(64%)_saturate(1641%)_hue-rotate(103deg)_brightness(93%)_contrast(86%)]"
+              />
+              <HomeActionCard
+                to="/treinamento-ted"
+                title="Treinamento TED"
+                body="Treine com questões comentadas no formato TED para desenvolver seu raciocínio diagnóstico."
+                imageSrc={treinamentoTedIcon}
+                imageAlt="Treinamento TED"
+                badgeLabel="Treinamento TED"
+                accentClassName="from-[#EE8A00] to-[#FFB000]"
+                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#EE8A00]"
+                hoverTextClassName="group-hover:text-[#EE8A00]"
+                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(58%)_sepia(95%)_saturate(1460%)_hue-rotate(2deg)_brightness(102%)_contrast(102%)]"
                 hideTitle
                 compactText
-                imageFill
               />
               </div>
             </div>
@@ -131,8 +151,8 @@ interface HomeActionCardProps {
   title: string;
   body: string;
   imageSrc?: string;
-  hoverImageSrc?: string;
-  hoverForegroundImageSrc?: string;
+  badgeLabel?: string;
+  hoverIconClassName?: string;
   imageAlt?: string;
   accentClassName?: string;
   hoverAccentClassName?: string;
@@ -140,7 +160,6 @@ interface HomeActionCardProps {
   badgeTextClassName?: string;
   hideTitle?: boolean;
   compactText?: boolean;
-  imageFill?: boolean;
 }
 
 function HomeActionCard({
@@ -148,8 +167,8 @@ function HomeActionCard({
   title,
   body,
   imageSrc,
-  hoverImageSrc,
-  hoverForegroundImageSrc,
+  badgeLabel,
+  hoverIconClassName = "",
   imageAlt,
   accentClassName = "",
   hoverAccentClassName = "",
@@ -157,60 +176,45 @@ function HomeActionCard({
   badgeTextClassName = "",
   hideTitle = false,
   compactText = false,
-  imageFill = false,
 }: HomeActionCardProps) {
+  const resolvedHideTitle = badgeLabel ? hideTitle : imageSrc ? true : hideTitle;
+  const resolvedCompactText = badgeLabel ? compactText : imageSrc ? true : compactText;
+
   return (
     <Link
       to={to}
       className="group flex h-full min-h-[260px] flex-col rounded-[28px] border border-sand/90 bg-white px-5 py-5 shadow-[0_22px_48px_-30px_rgba(20,27,43,0.28)] transition hover:-translate-y-1 hover:shadow-[0_30px_62px_-28px_rgba(20,27,43,0.4)]"
     >
       <div
-        className={`relative mb-5 mx-auto flex h-20 w-full max-w-[278px] items-center justify-center overflow-hidden rounded-full shadow-[0_26px_54px_-24px_rgba(20,27,43,0.8)] ring-1 ring-accent/20 transition-colors ${imageFill ? "" : `bg-gradient-to-r px-5 py-4 ${accentClassName} ${hoverAccentClassName}`}`}
+        className={`relative mb-5 mx-auto box-border flex h-20 w-full max-w-[278px] items-center justify-center overflow-hidden rounded-full shadow-[0_26px_54px_-24px_rgba(20,27,43,0.8)] ring-1 ring-accent/20 transition-colors bg-gradient-to-r px-5 py-4 ${accentClassName} ${hoverAccentClassName}`}
       >
         {imageSrc ? (
-          <>
+          badgeLabel ? (
+            <div className="flex w-full items-center justify-center gap-3 px-6 text-white">
+              <img
+                src={imageSrc}
+                alt={imageAlt ?? title}
+                className={`block h-14 w-14 shrink-0 object-contain transition-[filter] duration-200 ${hoverIconClassName}`}
+              />
+              <span className={`text-lg font-semibold leading-tight transition-colors duration-200 sm:text-[1.35rem] ${hoverTextClassName}`}>
+                {badgeLabel}
+              </span>
+            </div>
+          ) : (
             <img
               src={imageSrc}
               alt={imageAlt ?? title}
-              className={`${imageFill ? "h-full w-full object-cover" : "h-14 w-full max-w-full object-contain"} transition-opacity duration-200 ${hoverImageSrc || hoverForegroundImageSrc ? "group-hover:opacity-0" : ""}`}
+              className={`h-14 w-full max-w-full object-contain transition-[filter] duration-200 ${hoverIconClassName}`}
             />
-            {hoverImageSrc ? (
-              <img
-                src={hoverImageSrc}
-                alt=""
-                aria-hidden="true"
-                className={`${imageFill ? "absolute inset-0 h-full w-full object-cover" : "absolute h-14 w-full max-w-full object-contain"} opacity-0 transition-opacity duration-200 group-hover:opacity-100`}
-              />
-            ) : null}
-            {hoverForegroundImageSrc ? (
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                {hoverForegroundImageSrc === "__text-only-border__" ? (
-                  <>
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#111111] via-[#2a2110] to-[#c9972b]" />
-                    <div className="absolute inset-[1px] rounded-full bg-white" />
-                  </>
-                ) : (
-                  <>
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#6b11d8] via-[#b315da] to-[#ff51c8]" />
-                    <img
-                      src={hoverForegroundImageSrc}
-                      alt=""
-                      aria-hidden="true"
-                      className="absolute inset-[2px] h-[calc(100%-4px)] w-[calc(100%-4px)] object-fill"
-                    />
-                  </>
-                )}
-              </div>
-            ) : null}
-          </>
+          )
         ) : (
           <div className={`flex h-full w-full items-center justify-center text-center text-[1.05rem] leading-tight font-semibold text-white sm:text-xl ${badgeTextClassName} ${hoverTextClassName}`}>
             {title}
           </div>
         )}
       </div>
-      <div className={`space-y-3 ${compactText ? "text-center" : "text-left"}`}>
-        {!hideTitle ? <h2 className="font-serif text-2xl text-ink">{title}</h2> : null}
+      <div className={`space-y-3 ${resolvedCompactText ? "text-center" : "text-left"}`}>
+        {!resolvedHideTitle ? <h2 className="font-serif text-2xl text-ink">{title}</h2> : null}
         <p className="text-sm leading-6 text-steel">{body}</p>
       </div>
     </Link>

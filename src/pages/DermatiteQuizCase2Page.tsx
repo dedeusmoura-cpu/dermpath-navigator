@@ -431,7 +431,7 @@ export function DermatiteQuizCase2Page() {
 
   function getTreeOptionButtonClass(status: NodeStatus) {
     if (status === "correct") {
-      return "border-[#d9caf7] bg-[linear-gradient(180deg,#f4efff_0%,#ece4ff_100%)] text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]";
+      return "border-[#b7dfc8] bg-[linear-gradient(180deg,#f2fbf6_0%,#e3f5eb_100%)] text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]";
     }
 
     if (status === "wrong") {
@@ -439,10 +439,10 @@ export function DermatiteQuizCase2Page() {
     }
 
     if (status === "path") {
-      return "border-[#d9caf7] bg-[linear-gradient(180deg,#f4efff_0%,#ece4ff_100%)] text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]";
+      return "border-[#b7dfc8] bg-[linear-gradient(180deg,#f2fbf6_0%,#e3f5eb_100%)] text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]";
     }
 
-    return "border-[#d7c8ea] bg-white text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)] hover:border-[#cdb5eb] hover:-translate-y-0.5";
+    return "border-[#cde9d8] bg-white text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)] hover:border-[#9fd6b8] hover:-translate-y-0.5";
   }
 
   function getTreeOptionStyle(_status: NodeStatus) {
@@ -501,7 +501,7 @@ export function DermatiteQuizCase2Page() {
             </div>
           ) : null}
 
-          <div className="rounded-[28px] border border-[#d7c8ea] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
+          <div className="rounded-[28px] border border-[#cde9d8] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
             <div ref={treeScrollAreaRef} className="quiz-mobile-scroll overflow-x-auto overflow-y-hidden">
               <div ref={treeContainerRef} className="quiz-tree-track quiz-tree-columns-spacious relative flex min-w-max flex-nowrap items-start">
                 <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
@@ -526,7 +526,7 @@ export function DermatiteQuizCase2Page() {
                       ) : (
                         <div
                           key={option.id}
-                          className="quiz-node-box border border-[#eadff3] bg-white text-left text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]"
+                          className="quiz-node-box border border-[#dceee4] bg-white text-left text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]"
                         >
                           {option.label[isPortuguese ? "pt" : "en"]}
                         </div>

@@ -1,11 +1,15 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuizTreeLine, useEnteringLines } from "../components/QuizTreeLine";
+import {
+  createHorizontalEdgeIds,
+  useQuizTreeLines,
+  type QuizTreeLineData,
+} from "../hooks/useQuizTreeLines";
 import pk1Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK1.jpg";
 import pk2Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK2.jpg";
 import pk3Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK3.jpg";
 import pk4Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK4.jpg";
-import pk5Image from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Poroceratose/PK5.jpg";
 import { CorrectAnswerBanner } from "../components/CorrectAnswerBanner";
 import { Layout } from "../components/Layout";
 import { QuizTransitionImageCard } from "../components/QuizTransitionImageCard";
@@ -13,7 +17,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { getFinalColumnNodeClass, getFinalColumnNodeStyle } from "../utils/quizFinalColumnLayout";
 import { getQuizTransitionSuccessClass, type QuizTransitionSuccessSelection, quizTransitionSuccessButtonClass } from "../utils/quizTransitionSuccess";
 
-type QuizStage = "initial-question" | "interface-question" | "final-images" | "final-pk5";
+type QuizStage = "initial-question" | "interface-question" | "final-images";
 type QuizAnswerState = "idle" | "correct" | "wrong";
 type TreeNodeStatus = "default" | "correct" | "wrong";
 
@@ -35,15 +39,7 @@ interface TreeOption {
   isCorrect?: boolean;
 }
 
-interface TreeLine {
-  id: string;
-  from: string;
-  to: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-}
+type TreeLine = QuizTreeLineData;
 
 const initialQuizOptions: QuizOption[] = [
   { id: "perivascular", label: { pt: "Dermatites perivasculares", en: "Perivascular dermatitis" }, isCorrect: true },
@@ -161,14 +157,13 @@ export function DermatiteQuizPage() {
   const [wrongSecondColumn, setWrongSecondColumn] = useState<string | null>(null);
   const [wrongThirdColumn, setWrongThirdColumn] = useState<string | null>(null);
   const [wrongFourthColumn, setWrongFourthColumn] = useState<string | null>(null);
-  const [treeLines, setTreeLines] = useState<TreeLine[]>([]);
+  const [initialTreeLines, setInitialTreeLines] = useState<TreeLine[]>([]);
   const [selectedFifthColumn, setSelectedFifthColumn] = useState<string | null>(null);
-  const [selectedSixthColumn, setSelectedSixthColumn] = useState<string | null>(null);
+  const [revealedSixthColumns, setRevealedSixthColumns] = useState<string[]>([]);
+  const [lastClickedSixth, setLastClickedSixth] = useState<string | null>(null);
   const [wrongFifthColumn, setWrongFifthColumn] = useState<string | null>(null);
-  const [wrongSixthColumn, setWrongSixthColumn] = useState<string | null>(null);
   const [selectedSeventhColumn, setSelectedSeventhColumn] = useState<string | null>(null);
   const [wrongSeventhColumn, setWrongSeventhColumn] = useState<string | null>(null);
-  const [finalTreeLines, setFinalTreeLines] = useState<TreeLine[]>([]);
   const [transitionSuccessSelection, setTransitionSuccessSelection] = useState<QuizTransitionSuccessSelection<QuizStage> | null>(null);
   const [transitionNoticeStage, setTransitionNoticeStage] = useState<QuizStage | null>(null);
 
@@ -180,11 +175,11 @@ export function DermatiteQuizPage() {
 
   const treeContainerRef = useRef<HTMLDivElement | null>(null);
   const treeScrollAreaRef = useRef<HTMLDivElement | null>(null);
-  const treeNodeRefs = useRef<Record<string, HTMLDivElement | HTMLButtonElement | null>>({});
+  const treeNodeRefs = useRef<Record<string, HTMLElement | null>>({});
   const fourthColumnRef = useRef<HTMLDivElement | null>(null);
   const finalTreeContainerRef = useRef<HTMLDivElement | null>(null);
   const finalTreeScrollAreaRef = useRef<HTMLDivElement | null>(null);
-  const finalTreeNodeRefs = useRef<Record<string, HTMLDivElement | HTMLButtonElement | null>>({});
+  const finalTreeNodeRefs = useRef<Record<string, HTMLElement | null>>({});
   const sixthColumnRef = useRef<HTMLDivElement | null>(null);
   const seventhColumnRef = useRef<HTMLDivElement | null>(null);
   const seventhColumnLayoutRef = useRef<HTMLDivElement | null>(null);
@@ -192,11 +187,13 @@ export function DermatiteQuizPage() {
 
   const showFourthColumn = selectedThirdColumn === "interface";
   const showSixthColumn = selectedFifthColumn === "lymphocytes-predominate";
-  const showSeventhColumn = stage === "final-pk5" && selectedSixthColumn === "cornoid-lamella";
+  const showSeventhColumn = stage === "final-images" && revealedSixthColumns.length > 0;
   const showTransitionBanner = transitionNoticeStage === stage;
 
-  const allTreeLines = useMemo(() => [...treeLines, ...finalTreeLines], [treeLines, finalTreeLines]);
-  const enteringIds = useEnteringLines(allTreeLines);
+  const revealedFinalColumnPairs = useMemo(
+    () => quiz1FinalColumnPairs.filter((pair) => revealedSixthColumns.includes(pair.from)),
+    [revealedSixthColumns],
+  );
 
   const visibleTreeEdges = useMemo(() => {
     const edges = secondColumnOptions.map((option) => ({ from: "dermatitis-root", to: option.id }));
@@ -221,11 +218,37 @@ export function DermatiteQuizPage() {
     }
 
     if (showSeventhColumn) {
-      edges.push(...quiz1FinalColumnPairs);
+      edges.push(...revealedFinalColumnPairs);
     }
 
     return edges;
-  }, [showSeventhColumn, showSixthColumn]);
+  }, [showSeventhColumn, showSixthColumn, revealedFinalColumnPairs]);
+
+  const horizontalFinalEdgeIds = useMemo(
+    () => createHorizontalEdgeIds(quiz1FinalColumnPairs),
+    [],
+  );
+
+  const treeLines = useQuizTreeLines({
+    enabled: stage === "interface-question",
+    containerRef: treeContainerRef,
+    nodeRefs: treeNodeRefs,
+    edges: visibleTreeEdges,
+  });
+
+  const finalTreeLines = useQuizTreeLines({
+    enabled: stage === "final-images",
+    containerRef: finalTreeContainerRef,
+    nodeRefs: finalTreeNodeRefs,
+    edges: finalVisibleTreeEdges,
+    horizontalEdgeIds: horizontalFinalEdgeIds,
+  });
+
+  const allTreeLines = useMemo(
+    () => [...initialTreeLines, ...treeLines, ...finalTreeLines],
+    [initialTreeLines, treeLines, finalTreeLines],
+  );
+  const enteringIds = useEnteringLines(allTreeLines);
 
   useEffect(() => {
     return () => {
@@ -260,7 +283,7 @@ export function DermatiteQuizPage() {
   }, [stage, visibleTreeEdges.length, selectedSecondColumn, selectedThirdColumn]);
 
   useEffect(() => {
-    if (stage !== "final-images" && stage !== "final-pk5") return;
+    if (stage !== "final-images") return;
 
     const scrollArea = finalTreeScrollAreaRef.current;
     if (!scrollArea) return;
@@ -277,7 +300,7 @@ export function DermatiteQuizPage() {
     return () => {
       window.cancelAnimationFrame(frame);
     };
-  }, [stage, finalVisibleTreeEdges.length, selectedFifthColumn, selectedSixthColumn, selectedSeventhColumn]);
+  }, [stage, finalVisibleTreeEdges.length, selectedFifthColumn, revealedSixthColumns, selectedSeventhColumn]);
 
   const seventhColumnHeight = useMemo(() => {
     const values = Object.values(seventhColumnLayout);
@@ -319,7 +342,7 @@ export function DermatiteQuizPage() {
         })
         .filter((line): line is TreeLine => Boolean(line));
 
-      setTreeLines(initialLinesRef.current);
+      setInitialTreeLines(initialLinesRef.current);
     }
 
     measureInitialLines();
@@ -339,108 +362,6 @@ export function DermatiteQuizPage() {
   }, [stage]);
 
   useLayoutEffect(() => {
-    if (stage !== "interface-question") {
-      return;
-    }
-
-    function measureTreeLines() {
-      const container = treeContainerRef.current;
-      if (!container) return;
-
-      const containerRect = container.getBoundingClientRect();
-      const nextLines = visibleTreeEdges
-        .map((edge) => {
-          const fromElement = treeNodeRefs.current[edge.from];
-          const toElement = treeNodeRefs.current[edge.to];
-          if (!fromElement || !toElement) return null;
-
-          const fromRect = fromElement.getBoundingClientRect();
-          const toRect = toElement.getBoundingClientRect();
-
-          return {
-            id: `${edge.from}-${edge.to}`,
-            from: edge.from,
-            to: edge.to,
-            x1: fromRect.right - containerRect.left,
-            y1: fromRect.top - containerRect.top + fromRect.height / 2,
-            x2: toRect.left - containerRect.left,
-            y2: toRect.top - containerRect.top + toRect.height / 2,
-          };
-        })
-        .filter((line): line is TreeLine => Boolean(line));
-
-      setTreeLines(nextLines);
-    }
-
-    measureTreeLines();
-
-    const observer = new ResizeObserver(() => measureTreeLines());
-    if (treeContainerRef.current) {
-      observer.observe(treeContainerRef.current);
-    }
-    Object.values(treeNodeRefs.current).forEach((element) => {
-      if (element) observer.observe(element);
-    });
-
-    window.addEventListener("resize", measureTreeLines);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measureTreeLines);
-    };
-  }, [stage, visibleTreeEdges]);
-
-  useLayoutEffect(() => {
-    if (stage !== "final-images" && stage !== "final-pk5") {
-      return;
-    }
-
-    function measureFinalTreeLines() {
-      const container = finalTreeContainerRef.current;
-      if (!container) return;
-
-      const containerRect = container.getBoundingClientRect();
-      const nextLines = finalVisibleTreeEdges
-        .map((edge) => {
-          const fromElement = finalTreeNodeRefs.current[edge.from];
-          const toElement = finalTreeNodeRefs.current[edge.to];
-          if (!fromElement || !toElement) return null;
-
-          const fromRect = fromElement.getBoundingClientRect();
-          const toRect = toElement.getBoundingClientRect();
-
-          return {
-            id: `${edge.from}-${edge.to}`,
-            from: edge.from,
-            to: edge.to,
-            x1: fromRect.right - containerRect.left,
-            y1: fromRect.top - containerRect.top + fromRect.height / 2,
-            x2: toRect.left - containerRect.left,
-            y2: toRect.top - containerRect.top + toRect.height / 2,
-          };
-        })
-        .filter((line): line is TreeLine => Boolean(line));
-
-      setFinalTreeLines(nextLines);
-    }
-
-    measureFinalTreeLines();
-
-    const observer = new ResizeObserver(() => measureFinalTreeLines());
-    if (finalTreeContainerRef.current) {
-      observer.observe(finalTreeContainerRef.current);
-    }
-    Object.values(finalTreeNodeRefs.current).forEach((element) => {
-      if (element) observer.observe(element);
-    });
-
-    window.addEventListener("resize", measureFinalTreeLines);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measureFinalTreeLines);
-    };
-  }, [stage, finalVisibleTreeEdges]);
-
-  useLayoutEffect(() => {
     if (!showSeventhColumn) {
       setSeventhColumnLayout({});
       return;
@@ -453,7 +374,7 @@ export function DermatiteQuizPage() {
       const containerRect = container.getBoundingClientRect();
       const nextLayout: Record<string, { top: number; height: number }> = {};
 
-      quiz1FinalColumnPairs.forEach(({ from, to }) => {
+      revealedFinalColumnPairs.forEach(({ from, to }) => {
         const parentElement = finalTreeNodeRefs.current[from];
         if (!parentElement) return;
 
@@ -471,7 +392,7 @@ export function DermatiteQuizPage() {
 
     const observer = new ResizeObserver(() => measureSeventhColumnLayout());
     if (seventhColumnLayoutRef.current) observer.observe(seventhColumnLayoutRef.current);
-    quiz1FinalColumnPairs.forEach(({ from }) => {
+    revealedFinalColumnPairs.forEach(({ from }) => {
       const element = finalTreeNodeRefs.current[from];
       if (element) observer.observe(element);
     });
@@ -481,7 +402,7 @@ export function DermatiteQuizPage() {
       observer.disconnect();
       window.removeEventListener("resize", measureSeventhColumnLayout);
     };
-  }, [showSeventhColumn, stage, finalTreeLines.length]);
+  }, [showSeventhColumn, stage, finalTreeLines.length, revealedFinalColumnPairs]);
 
   function handleInitialOptionClick(option: QuizOption) {
     if (initialAnswerState === "correct") return;
@@ -556,10 +477,10 @@ export function DermatiteQuizPage() {
       timeoutRef.current = window.setTimeout(() => {
         setTransitionNoticeStage("final-images");
         setSelectedFifthColumn(null);
-        setSelectedSixthColumn(null);
+        setRevealedSixthColumns([]);
+        setLastClickedSixth(null);
         setSelectedSeventhColumn(null);
         setWrongFifthColumn(null);
-        setWrongSixthColumn(null);
         setWrongSeventhColumn(null);
         setStage("final-images");
       }, 900);
@@ -574,9 +495,9 @@ export function DermatiteQuizPage() {
 
     if (option.isCorrect) {
       setSelectedFifthColumn(option.id);
-      setSelectedSixthColumn(null);
+      setRevealedSixthColumns([]);
+      setLastClickedSixth(null);
       setSelectedSeventhColumn(null);
-      setWrongSixthColumn(null);
       setWrongSeventhColumn(null);
       return;
     }
@@ -587,33 +508,14 @@ export function DermatiteQuizPage() {
   function handleSixthColumnClick(option: TreeOption) {
     if (!showSixthColumn) return;
 
-    setWrongSixthColumn(null);
     setTransitionSuccessSelection(null);
+    setSelectedSeventhColumn(null);
+    setWrongSeventhColumn(null);
+    setLastClickedSixth(option.id);
 
-    if (option.isCorrect) {
-      setSelectedSixthColumn(option.id);
-
-      if (stage === "final-pk5") {
-        setSelectedSeventhColumn(null);
-        setWrongSeventhColumn(null);
-        return;
-      }
-
-      setTransitionSuccessSelection({ stage: "final-images", nodeId: option.id });
-      timeoutRef.current = window.setTimeout(() => {
-        setTransitionNoticeStage("final-pk5");
-        setSelectedFifthColumn("lymphocytes-predominate");
-        setSelectedSixthColumn("cornoid-lamella");
-        setSelectedSeventhColumn(null);
-        setWrongFifthColumn(null);
-        setWrongSixthColumn(null);
-        setWrongSeventhColumn(null);
-        setStage("final-pk5");
-      }, 900);
-      return;
-    }
-
-    setWrongSixthColumn(option.id);
+    setRevealedSixthColumns((previous) =>
+      previous.includes(option.id) ? previous : [...previous, option.id],
+    );
   }
 
   function handleSeventhColumnClick(option: TreeOption) {
@@ -654,7 +556,7 @@ export function DermatiteQuizPage() {
       return "border-transparent bg-[linear-gradient(135deg,#ff5a6f_0%,#f54e8a_45%,#a855f7_100%)] text-white shadow-[0_16px_34px_-22px_rgba(160,45,120,0.42)]";
     }
 
-    return "border-[#d7c8ea] bg-white text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)] hover:border-[#cdb5eb] hover:-translate-y-0.5";
+    return "border-[#cde9d8] bg-white text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)] hover:border-[#9fd6b8] hover:-translate-y-0.5";
   }
 
   function getTreeNodeStatus(nodeId: string): TreeNodeStatus {
@@ -666,8 +568,13 @@ export function DermatiteQuizPage() {
 
   function getFinalTreeNodeStatus(nodeId: string): TreeNodeStatus {
     if (nodeId === "interface-root" || nodeId === "lichenoid-root") return "correct";
-    if (selectedFifthColumn === nodeId || selectedSixthColumn === nodeId || selectedSeventhColumn === nodeId) return "correct";
-    if (wrongFifthColumn === nodeId || wrongSixthColumn === nodeId || wrongSeventhColumn === nodeId) return "wrong";
+    if (
+      selectedFifthColumn === nodeId ||
+      lastClickedSixth === nodeId ||
+      selectedSeventhColumn === nodeId
+    )
+      return "correct";
+    if (wrongFifthColumn === nodeId || wrongSeventhColumn === nodeId) return "wrong";
     return "default";
   }
 
@@ -679,14 +586,14 @@ export function DermatiteQuizPage() {
 
   function getTreeOptionButtonClass(status: TreeNodeStatus) {
     if (status === "correct") {
-      return "border-[#d9caf7] bg-[linear-gradient(180deg,#f4efff_0%,#ece4ff_100%)] text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]";
+      return "border-[#b7dfc8] bg-[linear-gradient(180deg,#f2fbf6_0%,#e3f5eb_100%)] text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]";
     }
 
     if (status === "wrong") {
       return "border-transparent bg-[linear-gradient(135deg,#ff5a6f_0%,#f54e8a_45%,#a855f7_100%)] text-white shadow-[0_16px_34px_-22px_rgba(160,45,120,0.42)]";
     }
 
-    return "border-[#d7c8ea] bg-white text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)] hover:border-[#cdb5eb] hover:-translate-y-0.5";
+    return "border-[#cde9d8] bg-white text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)] hover:border-[#9fd6b8] hover:-translate-y-0.5";
   }
 
   function getTreeOptionStyle(_status: TreeNodeStatus) {
@@ -718,11 +625,11 @@ export function DermatiteQuizPage() {
                 <QuizTransitionImageCard src={pk1Image} alt="PK1" maxHeightClass="max-h-[520px]" />
               </div>
 
-              <div className="rounded-[28px] border border-[#d7c8ea] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
+              <div className="rounded-[28px] border border-[#cde9d8] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
                 <div className="quiz-mobile-scroll overflow-x-auto overflow-y-hidden">
                 <div ref={initialConnectorAreaRef} className="quiz-tree-track quiz-tree-columns-spacious relative flex min-w-max flex-nowrap items-start">
                   <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                    {treeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
+                    {initialTreeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
                   </svg>
 
                   <div className="quiz-tree-column quiz-tree-column--root-desktop quiz-tree-card relative z-10 flex shrink-0 flex-col gap-3">
@@ -733,7 +640,7 @@ export function DermatiteQuizPage() {
                           ref={initialSourceCardRef}
                           type="button"
                           onClick={handleInitialPrimaryClick}
-                          className="quiz-node-box--root group relative pr-16 border border-[#d9caf7] bg-[linear-gradient(180deg,#f4efff_0%,#ece4ff_100%)] text-left text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)] transition duration-200 hover:-translate-y-0.5 active:scale-[0.985]"
+                          className="quiz-node-box--root group relative pr-16 border border-[#b7dfc8] bg-[linear-gradient(180deg,#f2fbf6_0%,#e3f5eb_100%)] text-left text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)] transition duration-200 hover:-translate-y-0.5 active:scale-[0.985]"
                           aria-label={isPortuguese ? "Abrir etapa Dermatite" : "Open Dermatitis step"}
                         >
                           {item.label[isPortuguese ? "pt" : "en"]}
@@ -744,7 +651,7 @@ export function DermatiteQuizPage() {
                       ) : (
                         <div
                           key={item.id}
-                          className="quiz-node-box border border-[#eadff3] bg-white text-left text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]"
+                          className="quiz-node-box border border-[#dceee4] bg-white text-left text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]"
                         >
                           {item.label[isPortuguese ? "pt" : "en"]}
                         </div>
@@ -784,7 +691,7 @@ export function DermatiteQuizPage() {
                 {renderTransitionImageFrame(pk2Image, "PK2", "max-h-[720px]")}
               </div>
 
-              <div className="rounded-[28px] border border-[#d7c8ea] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
+              <div className="rounded-[28px] border border-[#cde9d8] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
                 <div ref={treeScrollAreaRef} className="quiz-mobile-scroll relative overflow-x-auto overflow-y-hidden">
                   <div ref={treeContainerRef} className="quiz-tree-track relative min-w-max">
                   <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
@@ -800,14 +707,14 @@ export function DermatiteQuizPage() {
                             ref={(element) => {
                               treeNodeRefs.current["dermatitis-root"] = element;
                             }}
-                            className="quiz-node-box--root border border-[#d9caf7] bg-[linear-gradient(180deg,#f4efff_0%,#ece4ff_100%)] text-left text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]"
+                            className="quiz-node-box--root border border-[#b7dfc8] bg-[linear-gradient(180deg,#f2fbf6_0%,#e3f5eb_100%)] text-left text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]"
                           >
                             {item.label[isPortuguese ? "pt" : "en"]}
                           </div>
                         ) : (
                           <div
                             key={item.id}
-                            className="quiz-node-box border border-[#eadff3] bg-white text-left text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]"
+                            className="quiz-node-box border border-[#dceee4] bg-white text-left text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]"
                           >
                             {item.label[isPortuguese ? "pt" : "en"]}
                           </div>
@@ -825,7 +732,7 @@ export function DermatiteQuizPage() {
                               ref={(element) => {
                                 treeNodeRefs.current[option.id] = element;
                               }}
-                              className="quiz-node-box relative border border-[#d9caf7] bg-[linear-gradient(180deg,#f4efff_0%,#ece4ff_100%)] text-left text-[#7b5fd1] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16)]"
+                              className="quiz-node-box relative border border-[#b7dfc8] bg-[linear-gradient(180deg,#f2fbf6_0%,#e3f5eb_100%)] text-left text-[#16724a] shadow-[0_18px_28px_-24px_rgba(10,57,37,0.14)]"
                               style={{ opacity: 1, filter: "none" }}
                             >
                               {option.label[isPortuguese ? "pt" : "en"]}
@@ -909,7 +816,7 @@ export function DermatiteQuizPage() {
                 {renderTransitionImageFrame(pk4Image, "PK4", "max-h-[460px]")}
               </div>
 
-              <div className="rounded-[28px] border border-[#d7c8ea] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
+              <div className="rounded-[28px] border border-[#cde9d8] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
                 <div ref={finalTreeScrollAreaRef} className="quiz-mobile-scroll relative overflow-x-auto overflow-y-hidden">
                   <div ref={finalTreeContainerRef} className="quiz-tree-track relative min-w-max">
                     <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
@@ -966,7 +873,10 @@ export function DermatiteQuizPage() {
                       </div>
 
                       {showSixthColumn ? (
-                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5">
+                        <div
+                          ref={sixthColumnRef}
+                          className={`quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-card quiz-tree-column-enter flex shrink-0 flex-col gap-5${showSeventhColumn ? " quiz-tree-column--wide" : ""}`}
+                        >
                           {sixthColumnOptions.map((option) => {
                             const status = getFinalTreeNodeStatus(option.id);
                             return (
@@ -977,105 +887,8 @@ export function DermatiteQuizPage() {
                                   finalTreeNodeRefs.current[option.id] = element;
                                 }}
                                 onClick={() => handleSixthColumnClick(option)}
-                              className={`quiz-node-box border text-left transition duration-200 ${getTransitionTreeButtonClass(status, option.id)}`}
+                              className={`quiz-node-box border text-left transition duration-200 ${getTreeOptionButtonClass(status)}`}
                                 style={getTreeOptionStyle(status)}
-                              >
-                                {option.label[isPortuguese ? "pt" : "en"]}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : null}
-
-          {stage === "final-pk5" ? (
-            <div className="space-y-5">
-              {showTransitionBanner ? <CorrectAnswerBanner isPortuguese={isPortuguese} /> : null}
-
-              <div className="quiz-images-row quiz-images-row--two">
-                {renderTransitionImageFrame(pk2Image, "PK2", "max-h-[460px]")}
-                {renderTransitionImageFrame(pk5Image, "PK5", "max-h-[460px]")}
-              </div>
-
-              <div className="rounded-[28px] border border-[#d7c8ea] bg-[radial-gradient(circle_at_top,_rgba(95,190,120,0.16),_transparent_38%),linear-gradient(180deg,_rgba(255,255,255,0.98)_0%,_rgba(244,248,244,0.98)_100%)] p-5 shadow-[0_26px_64px_-42px_rgba(16,30,20,0.42)]">
-                <div ref={finalTreeScrollAreaRef} className="quiz-mobile-scroll relative overflow-x-auto overflow-y-hidden">
-                  <div ref={finalTreeContainerRef} className="quiz-tree-track relative min-w-max">
-                    <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
-                      {finalTreeLines.map((line) => <QuizTreeLine key={line.id} line={line} isEntering={enteringIds.has(line.id)} />)}
-                    </svg>
-
-                    <div className="quiz-tree-columns-spacious relative z-10 inline-flex min-w-max items-start pb-2">
-                      <div className="quiz-tree-column quiz-tree-column--mid-desktop quiz-tree-column--compact quiz-tree-card flex shrink-0 flex-col gap-5">
-                        <div
-                          ref={(element) => {
-                            finalTreeNodeRefs.current["interface-root"] = element;
-                          }}
-                          className="hidden"
-                        />
-                        {fourthColumnOptions.map((option) => {
-                          const status = option.id === "lichenoid" ? "correct" : "default";
-                          return (
-                            <div
-                              key={option.id}
-                              ref={(element) => {
-                                registerFinalTreeNodeRef(element, option.id, ...(option.id === "lichenoid" ? ["lichenoid-root"] : []));
-                              }}
-                              className={`quiz-node-box border text-left ${getTreeOptionButtonClass(status)}`}
-                              style={getTreeOptionStyle(status)}
-                            >
-                              {option.label[isPortuguese ? "pt" : "en"]}
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <div className="quiz-tree-column quiz-tree-column--standard-desktop quiz-tree-column--mid quiz-tree-card flex shrink-0 flex-col gap-5">
-                        {fifthColumnOptions.map((option) => {
-                          const status = getFinalTreeNodeStatus(option.id);
-                          return (
-                            <button
-                              key={option.id}
-                              type="button"
-                              ref={(element) => {
-                                registerFinalTreeNodeRef(
-                                  element,
-                                  option.id,
-                                  ...(option.id === "lymphocytes-predominate" ? ["lymphocytes-root"] : []),
-                                );
-                              }}
-                              onClick={() => handleFifthColumnClick(option)}
-                              className={`quiz-node-box border text-left transition duration-200 ${getTreeOptionButtonClass(status)}`}
-                              style={getTreeOptionStyle(status)}
-                            >
-                              {option.label[isPortuguese ? "pt" : "en"]}
-                            </button>
-                          );
-                        })}
-                      </div>
-
-                      {showSixthColumn ? (
-                        <div ref={sixthColumnRef} className="quiz-tree-column quiz-tree-column--wide-desktop quiz-tree-column--wide quiz-tree-card flex shrink-0 flex-col gap-5">
-                          {sixthColumnOptions.map((option) => {
-                            const status = getFinalTreeNodeStatus(option.id);
-                            return (
-                              <button
-                              key={option.id}
-                              type="button"
-                              ref={(element) => {
-                                  registerFinalTreeNodeRef(
-                                    element,
-                                    option.id,
-                                    ...(option.id === "cornoid-lamella" ? ["cornoid-lamella-root"] : []),
-                                  );
-                              }}
-                              onClick={() => handleSixthColumnClick(option)}
-                              className={`quiz-node-box border text-left transition duration-200 ${getTreeOptionButtonClass(status)}`}
-                              style={getTreeOptionStyle(status)}
                               >
                                 {option.label[isPortuguese ? "pt" : "en"]}
                               </button>
@@ -1095,6 +908,8 @@ export function DermatiteQuizPage() {
                             style={seventhColumnHeight ? { height: `${seventhColumnHeight}px` } : undefined}
                           >
                             {seventhColumnOptions.map((option) => {
+                              const pair = quiz1FinalColumnPairs.find((entry) => entry.to === option.id);
+                              if (!pair || !revealedSixthColumns.includes(pair.from)) return null;
                               const status = getFinalTreeNodeStatus(option.id);
                               const layout = seventhColumnLayout[option.id];
                               return (
@@ -1124,6 +939,7 @@ export function DermatiteQuizPage() {
               </div>
             </div>
           ) : null}
+
         </div>
       </section>
     </Layout>

@@ -16,9 +16,10 @@ interface QuizTreeLineProps {
 export function QuizTreeLine({ line, isEntering }: QuizTreeLineProps) {
   const strokeColor = "rgba(78, 191, 114, 0.44)";
   const circleRadius = 3;
-  const circleGap = 18;
-  const circleX = line.x2 - circleGap;
-  const pathEndX = circleX - circleRadius - 1.5;
+  // Distância fixa entre a borda direita do círculo e a borda esquerda da caixa-destino.
+  const circleEdgeGap = 4;
+  const circleX = line.x2 - circleEdgeGap - circleRadius;
+  const pathEndX = circleX - circleRadius - 0.5;
   const horizontalSpan = Math.max(pathEndX - line.x1, 24);
   const controlOffset = Math.max(14, Math.min(44, horizontalSpan * 0.42));
   const d = `M ${line.x1} ${line.y1} C ${line.x1 + controlOffset} ${line.y1}, ${pathEndX - controlOffset} ${line.y2}, ${pathEndX} ${line.y2}`;

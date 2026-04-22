@@ -4,20 +4,15 @@ import { algorithmTree } from "../data/algorithm";
 import { useLanguage } from "../context/LanguageContext";
 import { translateNodeTitle, translateOptionLabel } from "../i18n/translations";
 import { buildPathToNode, getChildMap } from "../utils/tree";
+import {
+  createHorizontalEdgeIds,
+  useQuizTreeLines,
+} from "../hooks/useQuizTreeLines";
 
 interface FocusedTreeMapProps {
   selectedPath: string[];
   openedFinalNodeIds: string[];
   onSelectNode: (item: ColumnItem, level: number) => void;
-}
-
-interface PositionedLine {
-  from: string;
-  to: string;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
 }
 
 interface ColumnItem {
@@ -33,11 +28,11 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const columnRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const nodeRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const nodeRefs = useRef<Record<string, HTMLElement | null>>({});
   const nodeWrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [lines, setLines] = useState<PositionedLine[]>([]);
   const [enteringLineKeys, setEnteringLineKeys] = useState<string[]>([]);
   const [pulsingLineKeys, setPulsingLineKeys] = useState<string[]>([]);
+  const enterTimerRef = useRef<number | null>(null);
   const pulseTimerRef = useRef<number | null>(null);
   const [enteringColumnIndex, setEnteringColumnIndex] = useState<number | null>(null);
   const prevColumnCountRef = useRef<number>(0);
@@ -52,6 +47,15 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
   );
   const edges = useMemo(() => buildEdges(columns, childMap), [columns, childMap]);
 
+  // Pares penúltima → última coluna (terminal-bridge → result). São
+  // posicionados via `applyFinalColumnAlignment` para casar alturas, então
+  // a linha deve ter inclinação zero — padrão descrito em
+  // docs/QUIZ_TREE_LINE_PATTERN.md.
+  const horizontalEdgeIds = useMemo(
+    () => createHorizontalEdgeIds(collectFinalColumnPairs(columns)),
+    [columns],
+  );
+
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
@@ -64,60 +68,31 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
     };
   }, []);
 
+  // Aplica translateY na última coluna antes da medição das linhas para que
+  // o `getBoundingClientRect()` leia a posição já alinhada. Executar em um
+  // useLayoutEffect separado garante que o transform esteja no DOM antes
+  // do hook `useQuizTreeLines` medir.
   useLayoutEffect(() => {
-    function measureLines() {
-      const container = containerRef.current;
-      if (!container) return;
-
-      applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current);
-
-      const containerRect = container.getBoundingClientRect();
-      const nextLines = edges
-        .map((edge) => {
-          const fromElement = nodeRefs.current[edge.from];
-          const toElement = nodeRefs.current[edge.to];
-          if (!fromElement || !toElement) return null;
-
-          const fromRect = fromElement.getBoundingClientRect();
-          const toRect = toElement.getBoundingClientRect();
-
-          return {
-            ...edge,
-            x1: fromRect.right - containerRect.left,
-            y1: fromRect.top - containerRect.top + fromRect.height / 2,
-            x2: toRect.left - containerRect.left,
-            y2: toRect.top - containerRect.top + toRect.height / 2,
-          };
-        })
-        .filter((line): line is PositionedLine => Boolean(line));
-
-      setLines(nextLines);
-    }
-
-    measureLines();
-
-    const observer = new ResizeObserver(() => measureLines());
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    Object.values(nodeRefs.current).forEach((element) => {
-      if (element) observer.observe(element);
-    });
-
-    window.addEventListener("resize", measureLines);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measureLines);
-    };
+    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current);
   }, [columns]);
 
+  const lines = useQuizTreeLines({
+    containerRef,
+    nodeRefs,
+    edges,
+    horizontalEdgeIds,
+  });
+
   useEffect(() => {
-    const visibleLineKeys = new Set(lines.map((line) => `${line.from}-${line.to}`));
+    const visibleLineKeys = new Set(lines.map((line) => line.id));
     const previousVisibleLineKeys = previousVisibleLineKeysRef.current;
 
     if (prefersReducedMotion) {
       if (enteringLineKeys.length > 0) setEnteringLineKeys([]);
+      if (enterTimerRef.current !== null) {
+        window.clearTimeout(enterTimerRef.current);
+        enterTimerRef.current = null;
+      }
       if (pulseTimerRef.current !== null) {
         window.clearTimeout(pulseTimerRef.current);
         pulseTimerRef.current = null;
@@ -128,23 +103,30 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
     }
 
     const nextEnteringLineKeys = lines
-      .map((line) => `${line.from}-${line.to}`)
+      .map((line) => line.id)
       .filter((lineKey) => !previousVisibleLineKeys.has(lineKey));
 
-    setEnteringLineKeys(nextEnteringLineKeys);
-
-    if (nextEnteringLineKeys.length > 0) {
-      if (pulseTimerRef.current !== null) window.clearTimeout(pulseTimerRef.current);
-      setPulsingLineKeys(nextEnteringLineKeys);
-      console.log("pulsing lines:", nextEnteringLineKeys);
-      pulseTimerRef.current = window.setTimeout(() => {
-        setPulsingLineKeys([]);
-        pulseTimerRef.current = null;
-      }, 1050);
-    }
-
     previousVisibleLineKeysRef.current = visibleLineKeys;
-  }, [enteringLineKeys.length, lines, prefersReducedMotion]);
+
+    // Guard: o hook `useQuizTreeLines` re-mede várias vezes via rAF durante
+    // a animação de entrada da coluna. Não queremos resetar as classes de
+    // entrada a cada tick — só quando há ids realmente novos.
+    if (nextEnteringLineKeys.length === 0) return;
+
+    if (enterTimerRef.current !== null) window.clearTimeout(enterTimerRef.current);
+    setEnteringLineKeys(nextEnteringLineKeys);
+    enterTimerRef.current = window.setTimeout(() => {
+      setEnteringLineKeys([]);
+      enterTimerRef.current = null;
+    }, 620);
+
+    if (pulseTimerRef.current !== null) window.clearTimeout(pulseTimerRef.current);
+    setPulsingLineKeys(nextEnteringLineKeys);
+    pulseTimerRef.current = window.setTimeout(() => {
+      setPulsingLineKeys([]);
+      pulseTimerRef.current = null;
+    }, 1050);
+  }, [lines, prefersReducedMotion, enteringLineKeys.length]);
 
   useEffect(() => {
     if (isFirstColumnRunRef.current) {
@@ -172,6 +154,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
 
   useEffect(() => {
     return () => {
+      if (enterTimerRef.current !== null) window.clearTimeout(enterTimerRef.current);
       if (pulseTimerRef.current !== null) window.clearTimeout(pulseTimerRef.current);
       if (columnEnterTimerRef.current !== null) window.clearTimeout(columnEnterTimerRef.current);
     };
@@ -196,13 +179,18 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
           <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
             {lines.map((line) => (
               (() => {
-                const lineKey = `${line.from}-${line.to}`;
+                const lineKey = line.id;
                 const isActiveLine = selectedPathIds.includes(line.from) && selectedPathIds.includes(line.to);
                 const strokeColor = isActiveLine ? "rgba(255, 88, 109, 0.86)" : "rgba(192, 132, 252, 0.36)";
                 const circleRadius = isActiveLine ? 3.4 : 3;
-                const circleGap = 10;
-                const circleX = line.x2 - circleGap;
-                const pathEndX = circleX - circleRadius - 1.5;
+                // Padrão oficial: `circleEdgeGap` = distância entre a borda
+                // direita do círculo e a borda esquerda da caixa-destino.
+                // Subtrair o raio mantém a distância visível constante
+                // independentemente do raio (active vs não-active).
+                // Ver docs/QUIZ_TREE_LINE_PATTERN.md.
+                const circleEdgeGap = 4;
+                const circleX = line.x2 - circleEdgeGap - circleRadius;
+                const pathEndX = circleX - circleRadius - 0.5;
                 const shouldAnimateLine = enteringLineKeys.includes(lineKey);
                 const shouldPulseLine = pulsingLineKeys.includes(lineKey);
 
@@ -441,9 +429,29 @@ function buildResultItems(
     .map((nodeId) => buildResultItem(nodeId, language));
 }
 
+function collectFinalColumnPairs(columns: ColumnItem[][]): Array<{ from: string; to: string }> {
+  if (columns.length < 2) return [];
+
+  const lastColumn = columns[columns.length - 1];
+  const sourceColumn = columns[columns.length - 2];
+  const pairs: Array<{ from: string; to: string }> = [];
+
+  lastColumn.forEach((item) => {
+    if (item.kind !== "result") return;
+    const source = sourceColumn.find(
+      (entry) => entry.kind === "terminal-bridge" && entry.nodeId === item.nodeId,
+    );
+    if (source) {
+      pairs.push({ from: source.mapId, to: item.mapId });
+    }
+  });
+
+  return pairs;
+}
+
 function applyFinalColumnAlignment(
   columns: ColumnItem[][],
-  nodeElements: Record<string, HTMLButtonElement | null>,
+  nodeElements: Record<string, HTMLElement | null>,
   wrapperElements: Record<string, HTMLDivElement | null>,
 ) {
   if (columns.length < 2) {

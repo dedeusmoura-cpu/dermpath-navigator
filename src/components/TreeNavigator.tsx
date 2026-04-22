@@ -62,6 +62,7 @@ import processoDepositoImage from "../assets/ProcessoPatologico/processo-deposit
 import processoDermatiteImage from "../assets/ProcessoPatologico/processo-dermatite.png";
 import processoHamartomaMalformacaoImage from "../assets/ProcessoPatologico/processo-hamartoma-malformacao.png";
 import processoNeoplasiaImage from "../assets/ProcessoPatologico/processo-neoplasia.png";
+import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
 import pustulosaImage from "../assets/Dermatites/pustulosa.png";
 import vasculiteImage from "../assets/Dermatites/vasculite.png";
 import vesicoBolhosaImage from "../assets/Dermatites/vesico-bolhosa.png";
@@ -229,6 +230,14 @@ const processCircularPositions: Record<string, { angle: number; radius: number }
   "placeholder-hamartoma": { angle: 198, radius: 35.5 },
 };
 
+const processTitleWrapperClasses: Record<string, string> = {
+  dermatite: "px-2",
+  "placeholder-neoplasia": "px-2",
+  "placeholder-cisto": "px-2",
+  deposito: "px-2",
+  "placeholder-hamartoma": "px-2",
+};
+
 export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: TreeNavigatorProps) {
   const { language, t } = useLanguage();
 
@@ -278,19 +287,52 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
       {isProcessHub ? (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:hidden">
-            {node.options.map((option) =>
-              renderImageCard(
-                translateOptionLabel(node.id, option, language),
-                translateOptionHint(node.id, option, language) || undefined,
-                processCategoryImages[option.nextNodeId],
-                () => onNavigate(option.nextNodeId),
-              ),
-            )}
+            {node.options.map((option) => (
+              <button
+                key={`${node.id}-${option.nextNodeId}`}
+                type="button"
+                onClick={() => onNavigate(option.nextNodeId)}
+                className="group flex flex-col items-stretch gap-0 overflow-visible bg-transparent text-center transition duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+              >
+                <div className="-mb-1 w-full overflow-visible bg-transparent">
+                  {processCategoryImages[option.nextNodeId] ? (
+                    <img
+                      src={processCategoryImages[option.nextNodeId]}
+                      alt={translateOptionLabel(node.id, option, language)}
+                      className="block h-auto w-full object-contain object-center transition duration-300 group-hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-steel">
+                      {translateOptionLabel(node.id, option, language)}
+                    </div>
+                  )}
+                </div>
+                <div className="mt-0 w-full rounded-b-[22px] bg-white px-3 py-2 text-center">
+                  <h3 className="text-base font-semibold leading-6 text-ink">
+                    {translateOptionLabel(node.id, option, language)}
+                  </h3>
+                </div>
+              </button>
+            ))}
           </div>
 
-          <div className="relative hidden min-h-[900px] overflow-hidden rounded-[36px] border border-sand bg-[radial-gradient(circle_at_center,_rgba(169,122,31,0.08),_transparent_55%)] px-8 py-8 xl:block">
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-sand/90 bg-[radial-gradient(circle,_rgba(255,255,255,0.98)_0%,_rgba(252,248,240,0.9)_58%,_rgba(247,242,231,0.35)_100%)] shadow-inner" />
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[690px] w-[690px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5px] border-[#7F5FB3]/90 shadow-[0_0_0_10px_rgba(127,95,179,0.08)]" />
+          <div className="relative hidden min-h-[900px] overflow-hidden rounded-[36px] border border-sand bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 py-8 xl:block">
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a9c5ff]/80 bg-[radial-gradient(circle,_rgba(255,255,255,0.99)_0%,_rgba(236,243,255,0.94)_56%,_rgba(208,223,255,0.42)_100%)] shadow-[inset_0_18px_42px_rgba(255,255,255,0.62),0_34px_90px_-50px_rgba(36,95,231,0.38)]" />
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[690px] w-[690px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5px] border-[#6d96ff]/75 shadow-[0_0_0_10px_rgba(109,150,255,0.08)]" />
+            <div
+              className="pointer-events-none absolute left-1/2 top-1/2 z-[0] flex h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle at center, #2563EB 0%, rgba(37, 99, 235, 0.45) 45%, rgba(37, 99, 235, 0) 85%)",
+              }}
+            >
+                <img
+                  src={navegacaoDiagnosticaCompassIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-[228px] w-[228px] object-contain drop-shadow-lg"
+                />
+            </div>
 
             {node.options.map((option) => {
               const imageSrc = processCategoryImages[option.nextNodeId];
@@ -299,34 +341,39 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
               const orbitX = Math.cos(angleInRadians) * position.radius;
               const orbitY = Math.sin(angleInRadians) * position.radius;
 
-              return (
-                <button
-                  key={`${node.id}-${option.label}`}
-                  type="button"
+                return (
+                  <button
+                    key={`${node.id}-${option.label}`}
+                    type="button"
                   onClick={() => onNavigate(option.nextNodeId)}
-                  style={{
-                    left: `calc(50% + ${orbitX.toFixed(2)}%)`,
-                    top: `calc(50% + ${orbitY.toFixed(2)}%)`,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                  className="group absolute w-[228px] overflow-hidden rounded-[28px] border border-sand bg-white text-left shadow-sm transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.04] hover:border-accent/30 hover:shadow-xl focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
-                >
-                  <div className="aspect-[5/4] overflow-hidden bg-paper">
-                    {imageSrc ? (
-                      <img src={imageSrc} alt={translateOptionLabel(node.id, option, language)} className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.06]" />
-                    ) : (
-                      <div className="flex h-full items-center justify-center bg-paper text-sm text-steel">{translateOptionLabel(node.id, option, language)}</div>
-                    )}
-                  </div>
-                  <div className="flex min-h-[84px] items-center justify-center px-4 py-3.5 text-center">
-                    <div className="space-y-1">
-                      <h3 className="text-[0.98rem] font-semibold leading-6 text-ink">{translateOptionLabel(node.id, option, language)}</h3>
-                      {option.hint ? <p className="text-sm text-steel">{translateOptionHint(node.id, option, language)}</p> : null}
+                    style={{
+                      left: `calc(50% + ${orbitX.toFixed(2)}%)`,
+                      top: `calc(50% + ${orbitY.toFixed(2)}%)`,
+                      transform: "translate(-50%, -50%)",
+                    }}
+                    className="group absolute flex w-[228px] flex-col items-stretch gap-0 overflow-visible bg-transparent text-center transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                  >
+                    <div className="-mb-1 w-full overflow-visible bg-transparent">
+                      {imageSrc ? (
+                        <img
+                          src={imageSrc}
+                          alt={translateOptionLabel(node.id, option, language)}
+                          className="block h-auto w-full object-contain object-center transition duration-300 group-hover:scale-[1.03]"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-sm text-steel">
+                          {translateOptionLabel(node.id, option, language)}
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+                    <div className={`mt-0 w-full rounded-b-[28px] bg-white py-2 ${processTitleWrapperClasses[option.nextNodeId] ?? "px-2"}`}>
+                      <h3 className="text-[1.05rem] font-bold uppercase leading-6 tracking-[0.04em] text-[#1A47BF]">
+                        {translateOptionLabel(node.id, option, language)}
+                      </h3>
+                    </div>
+                  </button>
+                );
+              })}
           </div>
         </>
       ) : isDermatiteHub ? (

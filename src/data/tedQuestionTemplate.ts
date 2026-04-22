@@ -1,0 +1,33 @@
+export const tedQuestionTemplate = `{
+  id: "ted-area-000",
+  slug: "ted-area-000",
+  questionNumber: 0,
+  sourceType: "custom",
+  sourceLabel: "Treinamento TED",
+  area: "Nome da área",
+  subarea: "Subárea",
+  difficulty: "intermediaria",
+  tags: ["tag-1", "tag-2"],
+  statementType: "text_only",
+  statement: "Enunciado da questão.",
+  postStatement: null,
+  matchingColumns: undefined,
+  promptImageUrl: null,
+  supportImageUrl: null,
+  options: [
+    { id: "A", text: "Alternativa A" },
+    { id: "B", text: "Alternativa B" },
+    { id: "C", text: "Alternativa C" },
+    { id: "D", text: "Alternativa D" }
+  ],
+  correctOption: "A",
+  explanationShort: "Explicação curta e objetiva após o acerto.",
+  keyPoint: "Ponto-chave a ser memorizado.",
+  teacherComment: "Comentário didático do professor para aprofundar o raciocínio diagnóstico da questão.",
+  videoCommentTitle: "Título do comentário em vídeo",
+  videoCommentUrl: "PREENCHER_LINK_VIDEO",
+  videoProvider: "youtube",
+  isProvisional: false,
+  sourceConfidence: "high",
+  tempoEstimado: 90
+}`;

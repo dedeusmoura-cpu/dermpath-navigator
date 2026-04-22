@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import dermPathNavigatorBrandImage from "./assets/DermpathNavigator.png";
-import quizPretoButtonImage from "./assets/Quiz-preto1.png";
+import quizButtonImage from "./assets/Quiz-branco.png";
 import { MobileLandscapeHint } from "./components/MobileLandscapeHint";
 import { useLanguage } from "./context/LanguageContext";
 import { CeratoseLiquenoideHistopathologyPage } from "./pages/CeratoseLiquenoideHistopathologyPage";
@@ -30,6 +30,12 @@ import { PrpHistopathologyPage } from "./pages/PrpHistopathologyPage";
 import { QuizPage } from "./pages/QuizPage";
 import { RosaceaGoldTipsPage } from "./pages/RosaceaGoldTipsPage";
 import { SearchPage } from "./pages/SearchPage";
+import { TedAreasPage } from "./pages/TedAreasPage";
+import { TedLandingPage } from "./pages/TedLandingPage";
+import { TedPerformancePage } from "./pages/TedPerformancePage";
+import { TedRandomPage } from "./pages/TedRandomPage";
+import { TedReviewPage } from "./pages/TedReviewPage";
+import { TedSessionPage } from "./pages/TedSessionPage";
 import { WelcomeVideoPage } from "./pages/WelcomeVideoPage";
 
 export default function App() {
@@ -91,9 +97,9 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => navigate("/quiz")}
-                className="hidden shrink-0 rounded-full bg-[linear-gradient(90deg,#6410d8_0%,#c02cf4_52%,#ff67d7_100%)] px-5 py-2 shadow-[0_16px_28px_-20px_rgba(140,26,217,0.6)] transition hover:-translate-y-0.5 lg:block"
+                className="hidden shrink-0 rounded-full bg-[linear-gradient(90deg,#0A5C3B_0%,#118854_52%,#1DBA6C_100%)] px-5 py-2 shadow-[0_16px_28px_-20px_rgba(17,136,84,0.42)] transition hover:-translate-y-0.5 lg:block"
               >
-                <img src={quizPretoButtonImage} alt="Quiz" className="h-8 w-auto object-contain" />
+                <img src={quizButtonImage} alt="Quiz" className="h-8 w-auto object-contain" />
               </button>
             ) : null}
 
@@ -189,6 +195,12 @@ export default function App() {
           <Route path="/quiz/dermatite" element={<DermatiteQuizListPage />} />
           <Route path="/quiz/dermatite/1" element={<DermatiteQuizPage />} />
           <Route path="/quiz/dermatite/2" element={<DermatiteQuizCase2Page />} />
+          <Route path="/treinamento-ted" element={<TedLandingPage />} />
+          <Route path="/treinamento-ted/areas" element={<TedAreasPage />} />
+          <Route path="/treinamento-ted/aleatorio" element={<TedRandomPage />} />
+          <Route path="/treinamento-ted/desempenho" element={<TedPerformancePage />} />
+          <Route path="/treinamento-ted/revisao" element={<TedReviewPage />} />
+          <Route path="/treinamento-ted/sessao" element={<TedSessionPage />} />
         </Routes>
       </main>
     </div>

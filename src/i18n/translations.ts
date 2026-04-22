@@ -18,11 +18,11 @@ const uiTranslations = {
     home_hero_heading: "Um caminho mais claro até o diagnóstico.",
     home_hero_body:
       "Navegue por uma árvore diagnóstica visual, objetiva e organizada para apoiar a leitura do HE sem transformar a experiência em um painel técnico.",
-    home_start: "Iniciar diagnóstico",
+    home_start: "Navegação diagnóstica",
     home_tree_map: "Mapa da árvore",
     home_quiz: "Quiz",
     home_search: "Buscar",
-    home_card_start_body: "Siga o fluxo morfológico por meio de imagens ilustradas até o desfecho mais provável.",
+    home_card_start_body: "Percorra um fluxo algorítmico guiado por desenhos histológicos até o diagnóstico mais provável.",
     home_card_tree_map_body: "Visualize a estrutura geral da árvore diagnóstica",
     home_card_quiz_body: "Acesse o módulo Quiz utilizando o método algorítmico para revisar conteúdos do aplicativo de forma guiada.",
     home_about_kicker: "Sobre o método",

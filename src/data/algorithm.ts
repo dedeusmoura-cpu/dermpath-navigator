@@ -545,7 +545,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Neutrófilos predominam", nextNodeId: "nodular-neutrofilos" },
     { label: "Neutrófilos, poeira nuclear, eosinófilos e plasmócitos", nextNodeId: "group-nodular-misto-cariofagocitose" },
     { label: "Eosinófilos predominam", nextNodeId: "placeholder-nodular-eosinofilico" },
-    { label: "Histiócitos predominam", nextNodeId: "nodular-hisítiocitos" },
+    { label: "Histiócitos predominam", nextNodeId: "nodular-histiocitos" },
   ], tags: ["nodular", "difusa"] }),
   node({ id: "pustulosas", title: "Dermatites pustulosas", type: "decision", parentId: "dermatite", description: "Classifique o tipo principal de pústula para navegar no algoritmo.", options: [
     { label: "pústula", nextNodeId: "pustula" },
@@ -720,14 +720,14 @@ const nodesArray: AlgorithmNode[] = [
   diagnosisGroup("group-nodular-neutrofilos-supurativo", "Dermatite nodular/difusa supurativa", "nodular-neutrofilos", "Este ponto do algoritmo abre um grupo de dermatoses supurativas.", ["Cistos rotos", "Acne conglobata", "Acne queloidiana", "Celulite dissecante", "Hidradenite supurativa"], blocks("Correlacionar com topografia, anexos e presença de material cístico."), ["cistos rotos", "acne conglobata", "acne queloidiana", "celulite dissecante", "hidradenite supurativa"]),
   diagnosisGroup("group-nodular-misto-cariofagocitose", "Vasculites Tórpidas", "nodular-difusa", "Este ponto do algoritmo inclui vasculites tórpidas, de evoluão lenta e progressiva.", ["Granuloma facial", "Eritema elevatum diutinum"], blocks("Mantido como lista de diagnósticos possíveis conforme o slide."), ["granuloma facial", "eritema elevatum diutinum", "vasculites torpidas"]),
   diagnosisGroup("placeholder-nodular-eosinofilico", "Dermatite Eosinofílica", "nodular-difusa", "Dermatite nodular/difusa rica em eosinófilos, por vezes com \\\"figuras em chama\\\". Necessário correlação clínica para diagnóstico específico.", ["Insulto por artrpode", "síndrome de Wells (Lembra celulite ou erisipela, clinicamente).", "Eritema anular eosinofílico (clínica de lesão em formato anular)", "Farmacodermia", "síndrome hipereosinofílica (aumento de eosinófilos em sangue periférico)"], blocks("A definição etiológica depende da correlação clínico-laboratorial."), ["dermatite eosinofílica", "insulto por artrópode", "síndrome de Wells", "eritema anular eosinofílico", "farmacodermia", "síndrome hipereosinofílica"]),
-  node({ id: "nodular-hisítiocitos", title: "Histiócitos predominam", type: "decision", parentId: "nodular-difusa", description: "Subdivida em Sarcoídico, tuberculoide, Paliçada, intersticial ou supurativo.", options: [
+  node({ id: "nodular-histiocitos", title: "Histiócitos predominam", type: "decision", parentId: "nodular-difusa", description: "Subdivida em Sarcoídico, tuberculoide, Paliçada, intersticial ou supurativo.", options: [
     { label: "Sarcoídico", nextNodeId: "sarcoidico" },
     { label: "Tuberculoide", nextNodeId: "tuberculoide" },
     { label: "Paliçada", nextNodeId: "palicada" },
     { label: "Intersticial", nextNodeId: "intersticial-granulomatoso" },
     { label: "Supurativo", nextNodeId: "placeholder-granulomatoso-supurativo" },
   ]}),
-  node({ id: "sarcoidico", title: "Sarcoídico", type: "decision", parentId: "nodular-hisítiocitos", description: "Subdivida pelo padrão topográfico predominante.", options: [
+  node({ id: "sarcoidico", title: "Sarcoídico", type: "decision", parentId: "nodular-histiocitos", description: "Subdivida pelo padrão topográfico predominante.", options: [
     { label: "Derme/Subcutâneo", nextNodeId: "sarcoidico-derme-subcutaneo" },
     { label: "Interface", nextNodeId: "sarcoidico-interface" },
     { label: "Perifolicular", nextNodeId: "dx-rosacea-granulomatosa" },
@@ -737,13 +737,13 @@ const nodesArray: AlgorithmNode[] = [
   diagnosisGroup("sarcoidico-interface", "Interface", "sarcoidico", "Neste ponto do algoritmo, o padrão Sarcoídico de interface abre trs possibilidades.", ["Líquen nitidus", "Líquen estriado", "Sarcoidose"], blocks("A interface e a topografia ajudam a separar essas entidades."), ["líquen nitidus", "líquen estriado", "sarcoidose"]),
   terminal("dx-rosacea-granulomatosa", "Rosácea granulomatosa", "diagnosis", "sarcoidico", "padrão Sarcoídico perifolicular compatível com rosácea granulomatosa.", blocks("A correlação clínica centrofacial costuma ser importante."), ["rosácea granulomatosa", "rosácea granulomatosa"]),
   diagnosisGroup("group-hanseniase-perineural", "Perineural", "sarcoidico", "padrão Sarcoídico perineural com duas possibilidades principais.", ["Hanseníase tuberculoide", "Hanseníase dimorfa"], blocks("A avaliaão neural e o contexto clínico são centrais."), ["hanseníase tuberculoide", "hanseníase dimorfa"], ["hanseniase tuberculoide", "hanseniase dimorfa"]),
-  node({ id: "tuberculoide", title: "Tuberculoide", type: "decision", parentId: "nodular-hisítiocitos", description: "Este ponto do algoritmo abre um grupo de diagnósticos infecciosos e um terminal morfológico quando o fechamento etiológico não seguro.", options: [
+  node({ id: "tuberculoide", title: "Tuberculoide", type: "decision", parentId: "nodular-histiocitos", description: "Este ponto do algoritmo abre um grupo de diagnósticos infecciosos e um terminal morfológico quando o fechamento etiológico não seguro.", options: [
     { label: "Diagnósticos infecciosos e afins", nextNodeId: "group-tuberculoide-diagnosticos" },
     { label: "Quando o fechamento não for seguro", nextNodeId: "term-granuloma-tuberculoide" },
   ]}),
   diagnosisGroup("group-tuberculoide-diagnosticos", "Diagnósticos infecciosos e afins", "tuberculoide", "Este ponto do algoritmo rene as principais possibilidades granulomatosas infecciosas e afins.", ["Tuberculose", "Sífilis secundária", "Leishmaniose crônica", "Brucelose", "infecções micobacterianas profundas"], blocks("Quando o fechamento não for seguro, o padrão pode ser expresso como granuloma tuberculoide."), ["tuberculose", "sífilis secundária", "leishmaniose crônica", "brucelose", "infecções micobacterianas profundas"]),
   terminal("term-granuloma-tuberculoide", "Granuloma tuberculoide", "morphologic_terminal", "tuberculoide", "Granuloma tuberculoide.", blocks("Terminal morfológico para situações em que o fechamento etiológico não seguro."), ["granuloma tuberculoide"]),
-  node({ id: "palicada", title: "Paliçada", type: "decision", parentId: "nodular-hisítiocitos", description: "Subdivisão baseada no material depositado.", notes: [{ text: "Comparativo: granuloma anular = granulomas focais, circundam mucina, infiltrado linfocitário; necrobiose lipodica = acometimento mais extenso da derme, colágeno degenerado em camadas, infiltrado com plasmócitos; xantogranuloma necrobitico = colágeno degenerado + fendas de colesterol + lipófagos; nódulo reumatoide = fibrina." }], options: [
+  node({ id: "palicada", title: "Paliçada", type: "decision", parentId: "nodular-histiocitos", description: "Subdivisão baseada no material depositado.", notes: [{ text: "Comparativo: granuloma anular = granulomas focais, circundam mucina, infiltrado linfocitário; necrobiose lipodica = acometimento mais extenso da derme, colágeno degenerado em camadas, infiltrado com plasmócitos; xantogranuloma necrobitico = colágeno degenerado + fendas de colesterol + lipófagos; nódulo reumatoide = fibrina." }], options: [
     { label: "Mucina", nextNodeId: "dx-granuloma-anular" },
     { label: "Col?geno degenerado", nextNodeId: "dx-necrobiose-lipoidica" },
     { label: "Col?geno degenerado + fendas de colesterol + lipófagos", nextNodeId: "dx-xantogranuloma-necrobiotico" },
@@ -755,13 +755,13 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-xantogranuloma-necrobiotico", "Xantogranuloma necrobiótico", "diagnosis", "palicada", "Colágeno degenerado associado a fendas de colesterol e lipófagos.", blocks("Expressa o ramo específico solicitado para granuloma em Paliçada."), ["xantogranuloma necrobiótico", "xantogranuloma necrobiotico"]),
   terminal("dx-nodulo-reumatoide", "Nódulo reumatoide", "diagnosis", "palicada", "padrão em Paliçada com fibrina.", blocks("No bloco comparativo, representa o polo fibrinoide."), ["nódulo reumatoide", "nodulo reumatoide"]),
   terminal("placeholder-palicada-outros", "Gota", "placeholder", "palicada", "Gota ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "paliçada", "palicada"]),
-  node({ id: "intersticial-granulomatoso", title: "Intersticial", type: "decision", parentId: "nodular-hisítiocitos", description: "Subdivida entre mucina e outros padrões intersticiais.", options: [
+  node({ id: "intersticial-granulomatoso", title: "Intersticial", type: "decision", parentId: "nodular-histiocitos", description: "Subdivida entre mucina e outros padrões intersticiais.", options: [
     { label: "Mucina", nextNodeId: "dx-granuloma-anular-intersticial" },
     { label: "Outros", nextNodeId: "group-intersticial-outros" },
   ]}),
   terminal("dx-granuloma-anular-intersticial", "Granuloma anular", "diagnosis", "intersticial-granulomatoso", "padrão granulomatoso intersticial com mucina, compatível com granuloma anular.", blocks("Este ramo repete explicitamente o comportamento do algoritmo da aula."), ["granuloma anular", "mucina"]),
   terminal("group-intersticial-outros", "Dermatite Neutrofílica e Granulomatosa de Paliçada (Dermatite Granulomatosa Intersticial com Cordões e Artrite)", "diagnosis", "intersticial-granulomatoso", "Clinicamente se apresenta como pápulas umbilicadas ou lesões infiltradas e mais lineares, formando cordões clinicamente.", blocks("Clinicamente se apresenta como pápulas umbilicadas ou lesões infiltradas e mais lineares, formando cordões clinicamente."), ["dermatite neutrofílica e granulomatosa de paliçada", "dermatite granulomatosa intersticial com cordões e artrite", "dermatite granulomatosa intersticial", "cordões", "artrite"], ["dermatite neutrofilica e granulomatosa de palicada", "dermatite granulomatosa intersticial com cordoes e artrite"]),
-  terminal("placeholder-granulomatoso-supurativo", "Supurativo", "placeholder", "nodular-hisítiocitos", "Ramo supurativo granulomatoso ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "supurativo granulomatoso"]),
+  terminal("placeholder-granulomatoso-supurativo", "Supurativo", "placeholder", "nodular-histiocitos", "Ramo supurativo granulomatoso ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "supurativo granulomatoso"]),
 
   node({ id: "alopecia-sem-inflamacao", title: "Alopécia sem infiltração inflamatória", type: "decision", parentId: "foliculite-perifoliculite", description: "Alopecias sem infiltrado inflamatório significativo.", options: [
     { label: "Alopécia androgenética", nextNodeId: "dx-alopecia-androgenetica" },
