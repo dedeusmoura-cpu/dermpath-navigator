@@ -4,7 +4,7 @@ import processoDepositoImage from "../assets/ProcessoPatologico/processo-deposit
 import processoDermatiteImage from "../assets/ProcessoPatologico/processo-dermatite.png";
 import processoHamartomaMalformacaoImage from "../assets/ProcessoPatologico/processo-hamartoma-malformacao.png";
 import processoNeoplasiaImage from "../assets/ProcessoPatologico/processo-neoplasia.png";
-import microscopioBrancoImage from "../assets/Microscopio-branco.png";
+import microscopioBrancoImage from "../assets/microscopio-branco.png";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
