@@ -3,7 +3,7 @@ import mapTreeImage from "../assets/Mapa-da-Arvore.png";
 import quizImage from "../assets/Quiz-branco.png";
 import authorImage from "../assets/Rafael.png.png";
 import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
-import treinamentoTedIcon from "../assets/diploma-clean-icon.svg";
+import treinamentoTedIcon from "../assets/Diploma-clean-icon.svg";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
