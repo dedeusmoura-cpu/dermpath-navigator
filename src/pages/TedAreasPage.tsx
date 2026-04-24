@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AreaCard } from "../components/ted/AreaCard";
 import { TedHeader } from "../components/ted/TedHeader";
 import { Layout } from "../components/Layout";
@@ -5,7 +6,7 @@ import { tedAreas } from "../data/ted";
 import { loadTedProgress } from "../utils/tedProgress";
 
 export function TedAreasPage() {
-  const progress = loadTedProgress();
+  const [progress] = useState(loadTedProgress);
 
   return (
     <Layout>

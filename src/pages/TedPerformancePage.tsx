@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PerformanceBar } from "../components/ted/PerformanceBar";
 import { PerformanceCard } from "../components/ted/PerformanceCard";
@@ -9,7 +10,7 @@ import { getAverageTedTime, getTedAreaStatus, loadTedProgress } from "../utils/t
 export function TedPerformancePage() {
   const [searchParams] = useSearchParams();
   const highlightedArea = searchParams.get("area");
-  const progress = loadTedProgress();
+  const [progress] = useState(loadTedProgress);
 
   const areaRows = tedAreas.map((area) => ({
     area,

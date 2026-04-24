@@ -6,7 +6,8 @@ interface TedVideoCommentCardProps {
 }
 
 export function TedVideoCommentCard({ videoCommentTitle, videoCommentUrl, videoProvider, helperText }: TedVideoCommentCardProps) {
-  const hasEmbeddableVideo = /^https?:\/\//.test(videoCommentUrl);
+  const hasEmbeddableVideo =
+    /youtube\.com\/embed\/|player\.vimeo\.com\/video\//.test(videoCommentUrl);
 
   return (
     <section className="overflow-hidden rounded-[28px] border border-[#f0c889] bg-white shadow-[0_22px_48px_-34px_rgba(80,42,0,0.18)]">

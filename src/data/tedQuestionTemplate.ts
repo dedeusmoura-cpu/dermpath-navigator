@@ -2,6 +2,7 @@ export const tedQuestionTemplate = `{
   id: "ted-area-000",
   slug: "ted-area-000",
   questionNumber: 0,
+  shortTitle: "TED SBD 2023 – Tema da questão",
   sourceType: "custom",
   sourceLabel: "Treinamento TED",
   area: "Nome da área",
@@ -24,10 +25,12 @@ export const tedQuestionTemplate = `{
   explanationShort: "Explicação curta e objetiva após o acerto.",
   keyPoint: "Ponto-chave a ser memorizado.",
   teacherComment: "Comentário didático do professor para aprofundar o raciocínio diagnóstico da questão.",
-  videoCommentTitle: "Título do comentário em vídeo",
+  notes: null,
+  videoCommentTitle: "TED SBD 2023 – Tema da questão",
   videoCommentUrl: "PREENCHER_LINK_VIDEO",
   videoProvider: "youtube",
   isProvisional: false,
+  isAnnulled: false,
   sourceConfidence: "high",
   tempoEstimado: 90
 }`;

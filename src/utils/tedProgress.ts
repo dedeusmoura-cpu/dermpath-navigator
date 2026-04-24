@@ -104,7 +104,11 @@ export function saveTedProgress(progress: TedUserProgress) {
     return;
   }
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  } catch {
+    // QuotaExceededError em storage cheio ou modo privado iOS
+  }
 }
 
 export function getTedAreaStatus(totalRespondidas: number, acuracia: number) {
@@ -154,26 +158,32 @@ export function getQuestionsByArea(areaId: string) {
   return tedQuestions.filter((question) => matchesTedArea(question.area, areaId));
 }
 
-function updateGlobalMetrics(progress: TedUserProgress) {
+function updateGlobalMetrics(progress: TedUserProgress): TedUserProgress {
   const outcomes = Object.values(progress.outcomesByQuestion);
-  progress.totalRespondidas = outcomes.length;
-  progress.totalCorretas = outcomes.filter((outcome) => outcome.firstAttemptCorrect).length;
-  progress.totalErradas = outcomes.filter((outcome) => !outcome.firstAttemptCorrect).length;
-  progress.acuraciaGlobal = progress.totalRespondidas
-    ? Math.round((progress.totalCorretas / progress.totalRespondidas) * 100)
+  const totalRespondidas = outcomes.length;
+  const totalCorretas = outcomes.filter((outcome) => outcome.firstAttemptCorrect).length;
+  const totalErradas = outcomes.filter((outcome) => !outcome.firstAttemptCorrect).length;
+  const acuraciaGlobal = totalRespondidas
+    ? Math.round((totalCorretas / totalRespondidas) * 100)
     : 0;
+  return { ...progress, totalRespondidas, totalCorretas, totalErradas, acuraciaGlobal };
 }
 
-function updateAreaMetrics(progress: TedUserProgress, areaId: string) {
+function updateAreaMetrics(progress: TedUserProgress, areaId: string): TedUserProgress {
   const areaOutcomes = Object.values(progress.outcomesByQuestion).filter((outcome) => outcome.areaId === areaId);
-  const areaPerformance = progress.desempenhoPorArea[areaId] ?? createEmptyAreaPerformance(areaId);
-  areaPerformance.totalRespondidas = areaOutcomes.length;
-  areaPerformance.totalCorretas = areaOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length;
-  areaPerformance.totalErradas = areaOutcomes.filter((outcome) => !outcome.firstAttemptCorrect).length;
-  areaPerformance.acuracia = areaPerformance.totalRespondidas
-    ? Math.round((areaPerformance.totalCorretas / areaPerformance.totalRespondidas) * 100)
+  const totalRespondidas = areaOutcomes.length;
+  const totalCorretas = areaOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length;
+  const totalErradas = areaOutcomes.filter((outcome) => !outcome.firstAttemptCorrect).length;
+  const acuracia = totalRespondidas
+    ? Math.round((totalCorretas / totalRespondidas) * 100)
     : 0;
-  progress.desempenhoPorArea[areaId] = areaPerformance;
+  return {
+    ...progress,
+    desempenhoPorArea: {
+      ...progress.desempenhoPorArea,
+      [areaId]: { areaId, totalRespondidas, totalCorretas, totalErradas, acuracia },
+    },
+  };
 }
 
 export function recordTedQuestionFirstAttempt(params: {
@@ -182,7 +192,7 @@ export function recordTedQuestionFirstAttempt(params: {
   selectedOptionId: string;
   tempoSegundos?: number;
 }) {
-  const next = cloneProgress(params.progress);
+  let next = cloneProgress(params.progress);
   const existing = next.outcomesByQuestion[params.question.id];
 
   if (existing) {
@@ -220,8 +230,8 @@ export function recordTedQuestionFirstAttempt(params: {
   });
   next.historicoRecente = next.historicoRecente.slice(0, 20);
 
-  updateAreaMetrics(next, canonicalAreaId);
-  updateGlobalMetrics(next);
+  next = updateAreaMetrics(next, canonicalAreaId);
+  next = updateGlobalMetrics(next);
   saveTedProgress(next);
   return next;
 }
@@ -240,7 +250,7 @@ export function markTedQuestionResolved(params: {
     return recordTedQuestionFirstAttempt({
       progress: next,
       question: params.question,
-      selectedOptionId: params.question.correctOption,
+      selectedOptionId: params.question.correctOption ?? "",
       tempoSegundos: params.tempoSegundos,
     });
   }

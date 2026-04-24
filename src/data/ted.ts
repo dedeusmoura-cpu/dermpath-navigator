@@ -1,148 +1,6 @@
 import type { TedArea, TedQuestion, TedUserProgress } from "../types/ted";
 
-export const tedAreas: TedArea[] = [
-  {
-    id: "dermatopatologia",
-    nome: "Dermatopatologia",
-    descricao: "Métodos complementares, doenças de depósito e integração morfológica aplicada ao diagnóstico dermatopatológico.",
-    numeroQuestoes: 3,
-    subareas: ["Métodos complementares / Colorações", "Tricopatologia", "Doenças de depósito"],
-  },
-  {
-    id: "dermatopatologia-doencas-metabolicas",
-    nome: "Dermatopatologia / Doenças metabólicas",
-    descricao: "Depósitos teciduais e correlação histopatológica nas doenças metabólicas cutâneas e sistêmicas.",
-    numeroQuestoes: 1,
-    subareas: ["Amiloidoses"],
-  },
-  {
-    id: "dermatopatologia-infectologia",
-    nome: "Dermatopatologia / Infectologia",
-    descricao: "Doenças infecciosas com grande correlação clínico-patológica no exame histopatológico.",
-    numeroQuestoes: 1,
-    subareas: ["Hanseníase"],
-  },
-  {
-    id: "doencas-bolhosas",
-    nome: "Doenças bolhosas",
-    descricao: "Imunopatologia, clivagem e correlação clínico-patológica das principais dermatoses bolhosas.",
-    numeroQuestoes: 4,
-    subareas: ["Imunopatologia / Pênfigos", "Pênfigos", "IgA linear", "Imunopatologia / Histopatologia"],
-  },
-  {
-    id: "dermatites-inflamatorias",
-    nome: "Dermatites inflamatórias",
-    descricao: "Padrões inflamatórios com ênfase em dermatoses neutrofílicas e leitura integrada da histopatologia.",
-    numeroQuestoes: 1,
-    subareas: ["Dermatoses neutrofílicas"],
-  },
-  {
-    id: "dermatoses-inflamatorias",
-    nome: "Dermatoses inflamatórias",
-    descricao: "Dermatoses acantolíticas e farmacodermias com correlação anatomopatológica essencial.",
-    numeroQuestoes: 2,
-    subareas: ["Dermatoses acantolíticas", "Correlação anatomopatológica"],
-  },
-  {
-    id: "dermatoses-inflamatorias-farmacodermias",
-    nome: "Dermatoses inflamatÃ³rias / Farmacodermias",
-    descricao: "ReaÃ§Ãµes cutÃ¢neas a fÃ¡rmacos com foco didÃ¡tico na correlaÃ§Ã£o anatomopatolÃ³gica.",
-    numeroQuestoes: 1,
-    subareas: ["CorrelaÃ§Ã£o anatomopatolÃ³gica"],
-  },
-  {
-    id: "tumores-cutaneos",
-    nome: "Tumores cutâneos",
-    descricao: "Tumores neuroendócrinos e anexiais com foco em morfologia, imunofenotipagem e diferenciação diagnóstica.",
-    numeroQuestoes: 2,
-    subareas: ["Tumores neuroendócrinos", "Tumores anexiais"],
-  },
-  {
-    id: "tumores-cutaneos-infectologia",
-    nome: "Tumores cutâneos / Infectologia",
-    descricao: "Lesões proliferativas vasculares e diferenciais infecciosos em contexto de imunossupressão.",
-    numeroQuestoes: 1,
-    subareas: ["Proliferações vasculares"],
-  },
-  {
-    id: "tumores-cutaneos-patologia-vascular",
-    nome: "Tumores cutâneos / Patologia vascular",
-    descricao: "Proliferações vasculares reativas e neoplásicas na prática da dermatopatologia vascular.",
-    numeroQuestoes: 1,
-    subareas: ["Correlação anatomopatológica"],
-  },
-  {
-    id: "paniculites",
-    nome: "Paniculites",
-    descricao: "Raciocínio arquitetural da hipoderme, com foco em septo, lóbulo, vasculite e colagenoses.",
-    numeroQuestoes: 2,
-    subareas: ["Histopatologia da hipoderme", "Doenças do colágeno"],
-  },
-  {
-    id: "doencas-sistemicas",
-    nome: "Doenças sistêmicas",
-    descricao: "Marcadores histológicos cutâneos que ajudam a reconhecer síndromes sistêmicas relevantes.",
-    numeroQuestoes: 1,
-    subareas: ["Marcadores histológicos"],
-  },
-  {
-    id: "doencas-infecciosas",
-    nome: "Doenças infecciosas",
-    descricao: "Borreliose, micoses profundas e outras pistas histopatológicas de infecções dermatológicas.",
-    numeroQuestoes: 2,
-    subareas: ["Borreliose de Lyme", "Micoses profundas"],
-  },
-  {
-    id: "micoses-cutaneas",
-    nome: "Micoses cutâneas",
-    descricao: "Fungos demáceos, estruturas diagnósticas e correlação clínico-patológica nas micoses cutâneas.",
-    numeroQuestoes: 1,
-    subareas: ["Fungos demáceos"],
-  },
-  {
-    id: "paraneoplasias",
-    nome: "Paraneoplasias",
-    descricao: "Dermatoses paraneoplásicas com grande peso clínico e histopatologia muitas vezes inespecífica.",
-    numeroQuestoes: 1,
-    subareas: ["Dermatoses paraneoplásicas"],
-  },
-];
-
-export const tedQuestionTemplate: TedQuestion = {
-  id: "ted-area-000",
-  slug: "ted-area-000",
-  questionNumber: 0,
-  sourceType: "custom",
-  sourceLabel: "Treinamento TED",
-  area: "Nome da área",
-  subarea: "Subárea",
-  difficulty: "intermediaria",
-  tags: ["tag-1", "tag-2"],
-  statementType: "text_only",
-  statement: "Enunciado da questão.",
-  postStatement: null,
-  matchingColumns: undefined,
-  promptImageUrl: null,
-  supportImageUrl: null,
-  options: [
-    { id: "A", text: "Alternativa A" },
-    { id: "B", text: "Alternativa B" },
-    { id: "C", text: "Alternativa C" },
-    { id: "D", text: "Alternativa D" },
-  ],
-  correctOption: "A",
-  explanationShort: "Explicação curta e objetiva após o acerto.",
-  keyPoint: "Ponto-chave a ser memorizado.",
-  teacherComment: "Comentário didático do professor para aprofundar o raciocínio diagnóstico da questão.",
-  videoCommentTitle: "Título do comentário em vídeo",
-  videoCommentUrl: "PREENCHER_LINK_VIDEO",
-  videoProvider: "youtube",
-  isProvisional: false,
-  sourceConfidence: "high",
-  tempoEstimado: 90,
-};
-
-export const tedQuestions: TedQuestion[] = [
+export const tedQuestionBank: TedQuestion[] = [
   {
     id: "ted-dermatopatologia-001",
     slug: "coloracoes-especiais-em-dermatopatologia-q01",
@@ -168,13 +26,16 @@ export const tedQuestions: TedQuestion[] = [
       { id: "A", text: "2, 1, 3, 4" },
       { id: "B", text: "1, 3, 2, 4" },
       { id: "C", text: "4, 1, 2, 3" },
-      { id: "D", text: "4, 1, 2, 4" },
+      { id: "D", text: "4, 1, 3, 2" },
     ],
     correctOption: "C",
     explanationShort: "O Alcian blue cora mucina; Verhoeff evidencia fibras elásticas; Azul de Toluidina evidencia mastócitos; Vermelho do Congo cora amiloide.",
     keyPoint: "Correlações clássicas de colorações especiais ajudam a reconhecer mucina, fibras elásticas, mastócitos e amiloide.",
     teacherComment: "É uma questão básica, mas muito útil para consolidar a leitura de métodos complementares em dermatopatologia.",
     videoCommentTitle: "Questão 01 comentada - Colorações especiais em dermatopatologia",
+    // TEMP_DEMO_QUESTION_START
+    // TODO: inserir vídeo comentado da Questão teste
+    // TEMP_DEMO_QUESTION_END
     videoCommentUrl: "PREENCHER_LINK_VIDEO",
     videoProvider: "youtube",
     isProvisional: false,
@@ -255,7 +116,7 @@ export const tedQuestions: TedQuestion[] = [
       "Por integrar o grupo dos penfigoides, a patologia cursa com clivagem abaixo do epitélio, configurando bolha subepitelial.",
     keyPoint: "Penfigoides cursam com bolha subepitelial por clivagem na zona da membrana basal.",
     teacherComment:
-      "Mesmo com discussão semântica sobre a redação da alternativa, esse foi o gabarito oficial e a base histopatológica está correta.",
+      "A questão deveria ser anulada, pois a alternativa considerada correta está formulada de modo impreciso. Apenas a histopatologia da bolha intacta demonstra diretamente uma bolha subepitelial. Já a biópsia perilesional é indicada exclusivamente para imunofluorescência direta, e não para avaliação histopatológica da bolha. Portanto, a redação da alternativa D torna a questão passível de anulação.",
     videoCommentTitle: "Questão 06 comentada - Penfigoide benigno das membranas mucosas",
     videoCommentUrl: "PREENCHER_LINK_VIDEO",
     videoProvider: "youtube",
@@ -826,38 +687,39 @@ export const tedQuestions: TedQuestion[] = [
     questionNumber: 74,
     sourceType: "sbd_exam",
     sourceLabel: "TED SBD 2025",
-    area: "Tumores cutâneos",
-    subarea: "Tumores anexiais",
+    area: "Tumores anexiais",
+    subarea: null,
     difficulty: "avancada",
-    tags: ["disqueratoma verrucoso", "tricolemoma", "tricoblastoma", "pilomatricoma", "células fantasmas", "glicogênio"],
+    tags: ["disceratoma verrucoso", "tricolemoma", "tricoblastoma", "pilomatricoma", "células fantasmas", "glicogênio"],
     statementType: "matching_columns",
-    statement: "Correlacione a coluna 1 com os achados histológicos da coluna 2.",
+    statement: "Correlacione a coluna I com os achados histológicos da coluna II.",
     postStatement: "Assinale a sequência correta.",
     matchingColumns: {
       leftTitle: "COLUNA I",
-      leftItems: ["1 - Disqueratoma verrucoso", "2 - Tricolemoma", "3 - Tricoblastoma", "4 - Pilomatricoma"],
+      leftItems: ["1 – Disceratoma verrucoso", "2 – Tricolemoma", "3 – Tricoblastoma", "4 – Pilomatricoma"],
       rightTitle: "COLUNA II",
       rightItems: [
-        "( ) Lesão papulosa com invaginação central preenchida por queratina e lacunas com células acantolíticas",
-        "( ) Lesão papulosa oriunda da camada externa do folículo piloso com células pálidas ricas em glicogênio",
-        "( ) Lesão com predominância de diferenciação germinativa folicular",
-        "( ) Lesão nodular pétrea com células basófilas e células fantasmas",
+        "1 – Lesão papulosa da cor da pele, oriunda da camada externa do folículo piloso, com células pálidas ricas em glicogênio.",
+        "2 – Lesão com predominância de diferenciação germinativa folicular marcadora de síndromes genéticas.",
+        "3 – Lesão nodular pétrea, com células basófilas nas lesões iniciais e células fantasmas nas lesões mais antigas, podendo sofrer áreas de calcificação.",
+        "4 – Lesão papulosa com invaginação central preenchida por queratina e lacunas com células acantolíticas no epitélio.",
       ],
     },
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
-      { id: "A", text: "Sequência alternativa A do exame original" },
-      { id: "B", text: "Sequência alternativa B do exame original" },
-      { id: "C", text: "1, 2, 3, 4" },
-      { id: "D", text: "Sequência alternativa D do exame original" },
+      { id: "A", text: "1-2-3-4" },
+      { id: "B", text: "3-1-4-2" },
+      { id: "C", text: "2-3-4-1" },
+      { id: "D", text: "4-2-3-1" },
     ],
     correctOption: "C",
     explanationShort:
-      "A correlação é direta: disqueratoma verrucoso com acantólise e invaginação queratósica; tricolemoma com células claras ricas em glicogênio; tricoblastoma com diferenciação germinativa; pilomatricoma com células fantasmas.",
-    keyPoint: "Células fantasmas remetem a pilomatricoma; células claras ricas em glicogênio remetem a tricolemoma.",
-    teacherComment: "Essa questão é ótima para consolidar morfologia dos tumores anexiais foliculares.",
-    videoCommentTitle: "Questão 74 comentada - Tumores anexiais foliculares",
+      "Tricolemoma corresponde à lesão oriunda da camada externa do folículo piloso com células pálidas ricas em glicogênio. Tricoblastoma corresponde à neoplasia com diferenciação germinativa folicular. Pilomatricoma corresponde à lesão nodular pétrea com células basófilas e células fantasmas. Disceratoma verrucoso corresponde à lesão com invaginação central preenchida por queratina e acantólise.",
+    keyPoint:
+      "Tricolemoma → células claras ricas em glicogênio / bainha externa do folículo; Tricoblastoma → diferenciação germinativa folicular; Pilomatricoma → células basófilas e células fantasmas, frequentemente com calcificação; Disceratoma verrucoso → invaginação central com queratina e acantólise.",
+    teacherComment: "Questão excelente para consolidar o reconhecimento morfológico dos tumores anexiais foliculares.",
+    videoCommentTitle: "Questão 74 comentada - Tumores anexiais",
     videoCommentUrl: "PREENCHER_LINK_VIDEO",
     videoProvider: "youtube",
     isProvisional: false,
@@ -966,7 +828,1335 @@ export const tedQuestions: TedQuestion[] = [
     isProvisional: false,
     sourceConfidence: "high",
   },
+  {
+    id: "ted-tumores-cutaneos-002",
+    slug: "hidradenoma-papilifero-q02",
+    questionNumber: 2,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Tumores cutâneos",
+    subarea: "Tumores anexiais apócrinos",
+    difficulty: "intermediaria",
+    tags: ["hidradenoma papilífero", "tumor anexial", "vulva", "papilas arboriformes"],
+    statementType: "text_only",
+    statement:
+      "Analise o caso clínico a seguir. Paciente do sexo feminino, 40 anos de idade, apresenta nódulo liso, móvel e não doloroso localizado na vulva, medindo 1,5 cm. Sem outras queixas ou lesões. O anatomopatológico da lesão excisada evidenciou um nódulo bem delimitado dentro da derme, sem conexão com a epiderme e composto por estruturas papilares arboriformes / labirínticas anastomosantes. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Siringoma." },
+      { id: "B", text: "Cisto pilar." },
+      { id: "C", text: "Hidradenoma papilífero." },
+      { id: "D", text: "Siringocistoadenoma papilífero." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A descrição de nódulo dérmico bem delimitado, sem conexão epidérmica, com estruturas papilares arboriformes/labirínticas, é clássica de hidradenoma papilífero.",
+    keyPoint: "Tumor anexial apócrino vulvar com arquitetura papilar intradérmica favorece hidradenoma papilífero.",
+    teacherComment: "A ausência de conexão com a epiderme é uma pista importante para afastar siringocistoadenoma papilífero.",
+    videoCommentTitle: "Questão 02 comentada - Hidradenoma papilífero",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatites-inflamatorias-007",
+    slug: "hidradenite-ecrina-neutrofilica-q07",
+    questionNumber: 7,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatites inflamatórias",
+    subarea: "Dermatoses neutrofílicas / Toxicidade por quimioterapia",
+    difficulty: "intermediaria",
+    tags: ["hidradenite écrina neutrofílica", "citarabina", "glândulas écrinas", "neutrófilos"],
+    statementType: "text_only",
+    statement:
+      "Analise o caso clínico a seguir. Paciente branca, sexo feminino, 50 anos de idade, em tratamento para leucemia mielocítica aguda com citarabina, apresenta placas eritemato violáceas no tronco e dorso das mãos, dolorosas e hipertermia. O exame anatomopatológico revela denso infiltrado neutrofílico dentro e ao redor das glândulas écrinas e necrose do epitélio écrino. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Hidradenite écrina neutrofílica." },
+      { id: "B", text: "Doença de Fabry." },
+      { id: "C", text: "Erupção cutânea de reação linfocitária." },
+      { id: "D", text: "Periporite estafilocócica." },
+    ],
+    correctOption: "A",
+    explanationShort:
+      "O infiltrado neutrofílico écrino com necrose do epitélio écrino em paciente em uso de citarabina é típico de hidradenite écrina neutrofílica.",
+    keyPoint: "Neutrófilos dentro e ao redor das glândulas écrinas em contexto de quimioterapia sugerem hidradenite écrina neutrofílica.",
+    teacherComment: "É um padrão histológico clássico de toxicidade cutânea associada a quimioterápicos.",
+    videoCommentTitle: "Questão 07 comentada - Hidradenite écrina neutrofílica",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-doencas-bolhosas-013",
+    slug: "penfigo-foliaceo-endemico-q13",
+    questionNumber: 13,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Doenças bolhosas",
+    subarea: "Pênfigos / Imunopatologia",
+    difficulty: "avancada",
+    tags: ["pênfigo foliáceo endêmico", "imunopatologia", "desmogleína", "IgG4", "IgG1"],
+    statementType: "text_only",
+    statement:
+      "Com relação ao pênfigo foliáceo endêmico, analise as afirmativas a seguir. I. Os alelos DRB1*01, 0404, 1402 e 1406 estão relacionados à susceptibilidade à doença. II. Dermatite seborreica, lúpus eritematoso, impetigo bolhoso são diagnósticos diferenciais da forma frustra da doença. III. Os autoanticorpos IgG4 são encontrados na fase de involução e os autoanticorpos IgG1 na fase ativa da doença. Estão corretas as afirmativas",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "II e III, apenas." },
+      { id: "B", text: "I e II, apenas." },
+      { id: "C", text: "I e III, apenas." },
+      { id: "D", text: "I, II e III." },
+    ],
+    correctOption: "B",
+    explanationShort:
+      "As assertivas I e II estão corretas. A III está incorreta ao inverter a associação entre subclasses de IgG e atividade da doença.",
+    keyPoint: "Questão de imunopatologia e epidemiologia do pênfigo foliáceo endêmico, com foco em suscetibilidade e diferenciais.",
+    teacherComment: "Vale mais pelo raciocínio imunopatológico do que pela histomorfologia pura.",
+    videoCommentTitle: "Questão 13 comentada - Pênfigo foliáceo endêmico",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-doencas-infecciosas-015",
+    slug: "lobomicose-q15",
+    questionNumber: 15,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Doenças infecciosas",
+    subarea: "Micoses cutâneas",
+    difficulty: "intermediaria",
+    tags: ["lobomicose", "leveduras em cadeia", "microscopia", "micoses cutâneas"],
+    statementType: "text_only",
+    statement: "Com relação à lobomicose, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "A cultura de fragmento de lesão cutânea em meio Saboraud é diagnóstica e tem alta sensibilidade." },
+      { id: "B", text: "À microscopia observam-se abundantes organismos leveduriformes, isolados ou formando cadeias." },
+      { id: "C", text: "O mecanismo de aquisição da doença é por via respiratória com posterior disseminação linfática." },
+      { id: "D", text: "A distribuição é semelhante entre homens e mulheres e predomina na faixa etária de 40 a 60 anos de idade." },
+    ],
+    correctOption: "B",
+    explanationShort:
+      "O diagnóstico da lobomicose repousa na microscopia, com leveduras abundantes, frequentemente em cadeias. A cultura não é rotineiramente positiva.",
+    keyPoint: "Leveduras em cadeia à microscopia são a pista central da lobomicose.",
+    teacherComment: "É uma questão clássica de micologia/histopatologia.",
+    videoCommentTitle: "Questão 15 comentada - Lobomicose",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-023",
+    slug: "tecnica-de-biopsia-em-dermatoses-q23",
+    questionNumber: 23,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatopatologia",
+    subarea: "Técnicas de biópsia / Imunopatologia cutânea",
+    difficulty: "avancada",
+    tags: ["biópsia", "imunofluorescência direta", "vasculites", "paniculites", "tecido conectivo"],
+    statementType: "text_only",
+    statement:
+      "Com relação às associações entre dermatoses, escolha da lesão e técnica de biópsia, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Para hematoxilina-eosina das dermatoses vesicobolhosas, lesões mais antigas, biópsia por fuso." },
+      { id: "B", text: "Para imunofluorescência direta das vasculites cutâneas, região central de lesões purpúricas com mais de 72 horas de evolução, biópsia por fuso." },
+      { id: "C", text: "Para imunofluorescência direta das doenças do tecido conectivo, área da lesão propriamente dita, biópsia por punch." },
+      { id: "D", text: "Para hematoxilina-eosina das paniculites, área da lesão propriamente dita, biópsia por punch." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "Nas doenças do tecido conectivo, a imunofluorescência direta pode ser feita em área lesional por punch. As demais alternativas associam técnica e sítio de forma inadequada.",
+    keyPoint: "Questão muito importante de técnica dermatopatológica e escolha correta do sítio de biópsia.",
+    teacherComment: "Ótima para o app, porque ensina prática real de coleta.",
+    videoCommentTitle: "Questão 23 comentada - Técnica de biópsia em dermatoses",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-tumores-cutaneos-025",
+    slug: "criterios-histologicos-de-alto-risco-tumoral-q25",
+    questionNumber: 25,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Tumores cutâneos",
+    subarea: "Estratificação de risco / Cânceres queratinocíticos",
+    difficulty: "intermediaria",
+    tags: ["cbc", "cec", "alto risco", "recidiva", "oncologia cutânea"],
+    statementType: "text_only",
+    statement: "Qual dos critérios clínicos ou histológicos a seguir classifica um tumor de pele em alto risco para recidiva?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Carcinomas basocelulares em áreas de alto risco com 6 mm de diâmetro." },
+      { id: "B", text: "Carcinoma espinocelular com grau de diferenciação moderado." },
+      { id: "C", text: "Carcinoma espinocelular com índice de Breslow de 1,5 mm." },
+      { id: "D", text: "Carcinoma basocelular do subtipo histológico infundibulocístico." },
+    ],
+    correctOption: "A",
+    explanationShort:
+      "Em áreas de alto risco, CBCs menores já entram em categorias de risco aumentado para recidiva. As demais alternativas não configuram alto risco da forma como foram formuladas.",
+    keyPoint: "Integração de critério clínico e anatomopatológico na estratificação de risco tumoral.",
+    teacherComment: "Boa questão para o raciocínio de risco oncológico baseado em patologia.",
+    videoCommentTitle: "Questão 25 comentada - Critérios de alto risco tumoral",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatites-inflamatorias-035",
+    slug: "dermatites-liquenoides-por-agentes-externos-q35",
+    questionNumber: 35,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatites inflamatórias",
+    subarea: "Reações liquenoides / Dermatite de contato",
+    difficulty: "intermediaria",
+    tags: ["liquenoide", "parafenilenodiamina", "tintura de cabelo", "reação liquenoide"],
+    statementType: "text_only",
+    statement:
+      "Com relação aos causadores das dermatites liquenoides por agentes ou procedimentos, assinale a alternativa que apresenta a associação correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Nos reveladores fotográficos, o cromo." },
+      { id: "B", text: "Nas tinturas de cabelo, a parafenilenodiamina." },
+      { id: "C", text: "Nas tatuagens, o pigmento amarelo." },
+      { id: "D", text: "Nos preenchedores, o ácido polilático." },
+    ],
+    correctOption: "B",
+    explanationShort:
+      "A parafenilenodiamina é associação clássica com reações liquenoides em tinturas de cabelo. As demais associações não correspondem ao padrão cobrado.",
+    keyPoint: "Questão de correlação entre agente exógeno e padrão inflamatório liquenoide.",
+    teacherComment: "Boa para integrar clínica, etiologia e histopatologia de interface.",
+    videoCommentTitle: "Questão 35 comentada - Dermatites liquenoides por agentes externos",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-doencas-bolhosas-036",
+    slug: "diagnostico-laboratorial-dos-penfigos-q36",
+    questionNumber: 36,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Doenças bolhosas",
+    subarea: "Imunopatologia / Pênfigos",
+    difficulty: "intermediaria",
+    tags: ["pênfigo", "elisa", "desmogleína 1", "desmogleína 3", "ifd"],
+    statementType: "text_only",
+    statement: "Com relação ao diagnóstico laboratorial dos pênfigos, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "O teste de Tzanck com o conteúdo da bolha mostra células acantolíticas em raspas de lápis e permite diferenciar o pênfigo vulgar do foliáceo." },
+      { id: "B", text: "O exame anatomopatológico mostra fenda intraepidérmica e células disqueratóticas, além de linfócitos e eosinófilos." },
+      { id: "C", text: "A imunofluorescência direta mostra depósitos de IgG e C3 intercelular na epiderme, no pênfigo vulgar, mas não no foliáceo." },
+      { id: "D", text: "O teste ELISA permite detectar anticorpos anti-desmogleína 1 no pênfigo foliáceo e anti-desmogleína 1 e 3 no pênfigo vulgar." },
+    ],
+    correctOption: "D",
+    explanationShort:
+      "O ELISA para desmogleínas ajuda a diferenciar os subtipos de pênfigo. O pênfigo foliáceo se relaciona com Dsg1, e o vulgar pode envolver Dsg1 e Dsg3.",
+    keyPoint: "Questão de imunopatologia pura com correlação sorológica dos pênfigos.",
+    teacherComment: "Excelente para consolidar o eixo Dsg1/Dsg3.",
+    videoCommentTitle: "Questão 36 comentada - Diagnóstico laboratorial dos pênfigos",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-doencas-bolhosas-037",
+    slug: "dermatose-por-iga-linear-induzida-por-vancomicina-q37",
+    questionNumber: 37,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Doenças bolhosas",
+    subarea: "IgA linear / Farmacodermias bolhosas",
+    difficulty: "intermediaria",
+    tags: ["IgA linear", "vancomicina", "bolha subepidérmica", "farmacodermia"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Paciente do sexo feminino, 62 anos de idade, estava internada em tratamento de infecção hospitalar SAMR com vancomicina e apresentou placas urticadas pruriginosas, pápulas, vesículas e bolhas, algumas hemorrágicas, outras com arranjo anular, no tronco e membros superiores. Havia acometimento das mucosas oral e conjuntival. O exame anatomopatológico mostrava bolha subepidérmica. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Dermatose por IgA linear." },
+      { id: "B", text: "Necrólise epidérmica tóxica." },
+      { id: "C", text: "Pênfigo induzido por droga." },
+      { id: "D", text: "Síndrome da pele escaldada." },
+    ],
+    correctOption: "A",
+    explanationShort:
+      "Vancomicina é gatilho clássico de dermatose por IgA linear. A bolha subepidérmica e o contexto clínico reforçam o diagnóstico.",
+    keyPoint: "Bolha subepidérmica + vancomicina + lesões anulares/urticadas = pensar em IgA linear.",
+    teacherComment: "Questão muito boa de correlação clínico-patológica em farmacodermias bolhosas.",
+    videoCommentTitle: "Questão 37 comentada - Dermatose por IgA linear",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-doencas-bolhosas-040",
+    slug: "sindrome-da-pele-escaldada-q40",
+    questionNumber: 40,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Doenças bolhosas",
+    subarea: "Bolhas infecciosas / Clivagem epidérmica",
+    difficulty: "intermediaria",
+    tags: ["pele escaldada", "desmogleína 1", "camada granulosa", "clivagem"],
+    statementType: "text_only",
+    statement: "Com relação à síndrome da pele escaldada, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "A demonstração da exotoxina é critério para o diagnóstico." },
+      { id: "B", text: "A mortalidade é maior no recém-nascido do que no adulto." },
+      { id: "C", text: "Isola-se o agente do conteúdo das bolhas e das escamas." },
+      { id: "D", text: "Ocorre clivagem na camada granulosa por ação na desmogleína." },
+    ],
+    correctOption: "D",
+    explanationShort:
+      "As toxinas esfoliativas causam clivagem epidérmica alta, na camada granulosa, por ação sobre a desmogleína 1.",
+    keyPoint: "Clivagem na camada granulosa por ação na Dsg1 diferencia pele escaldada de outras bolhosas.",
+    teacherComment: "Ótima questão para consolidar níveis de clivagem epidérmica.",
+    videoCommentTitle: "Questão 40 comentada - Síndrome da pele escaldada",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-tumores-cutaneos-041",
+    slug: "melanoma-e-linfonodo-sentinela-q41",
+    questionNumber: 41,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Tumores cutâneos",
+    subarea: "Melanoma / Estadiamento anatomopatológico",
+    difficulty: "intermediaria",
+    tags: ["melanoma", "linfonodo sentinela", "ulceração", "breslow"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Paciente do sexo feminino, 61 anos de idade, teve melanoma extensivo superficial com Breslow 0,85 mm na perna direita. Qual é o critério anatomopatológico para a indicação da pesquisa do linfonodo sentinela?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Crescimento vertical." },
+      { id: "B", text: "Índice mitótico zero." },
+      { id: "C", text: "Presença de ulceração." },
+      { id: "D", text: "Sinais de regressão." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "Em melanomas finos, a ulceração é um dos principais critérios anatomopatológicos que pesam na indicação de pesquisa de linfonodo sentinela.",
+    keyPoint: "Questão de interface entre anatomopatologia e conduta oncológica.",
+    teacherComment: "Muito útil para raciocínio prático em melanoma fino.",
+    videoCommentTitle: "Questão 41 comentada - Melanoma e linfonodo sentinela",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatites-inflamatorias-045",
+    slug: "granuloma-anular-q45",
+    questionNumber: 45,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatites inflamatórias",
+    subarea: "Dermatites granulomatosas / Granuloma anular",
+    difficulty: "intermediaria",
+    tags: ["granuloma anular", "mucina", "padrão intersticial", "histiócitos"],
+    statementType: "text_only",
+    statement: "Com relação ao granuloma anular, assinale a alternativa incorreta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Nas formas localizadas acomete principalmente o dorso das mãos, dedos, pés e superfície extensora das pernas e antebraços." },
+      { id: "B", text: "O substrato anatomopatológico nas formas intersticiais revela histiócitos epitelioides entre os feixes de colágeno separados por depósitos de mucina e linfócitos." },
+      { id: "C", text: "A forma subcutânea caracteriza-se por lesões em número variável, às vezes às dezenas, nodulares, endurecidas, dolorosas, de cor vermelho violácea de distribuição simétrica e acomete principalmente a região torácica e membros superiores." },
+      { id: "D", text: "Na forma generalizada as lesões ocorrem de maneira simétrica no pescoço, antebraços e coxas, predominando em pacientes do sexo feminino." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A alternativa C descreve inadequadamente a forma subcutânea. A B resume corretamente um dos padrões histopatológicos clássicos do granuloma anular.",
+    keyPoint: "Padrão intersticial com histiócitos entre feixes de colágeno separados por mucina é achado-chave.",
+    teacherComment: "Boa para conectar clínica e padrão histológico do granuloma anular.",
+    videoCommentTitle: "Questão 45 comentada - Granuloma anular",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatites-inflamatorias-046",
+    slug: "sarcoidose-cutanea-q46",
+    questionNumber: 46,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatites granulomatosas",
+    subarea: "Sarcoidose / Correlação anatomopatológica",
+    difficulty: "avancada",
+    tags: ["sarcoidose", "granuloma não caseoso", "corpos de schaumann", "corpúsculos asteroides"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Paciente do sexo feminino, 52 anos de idade, apresenta pequenos nódulos bem delimitados de 5 mm de diâmetro, de coloração rósea e superfície lisa e indolor, acometendo a face e terço superior do tórax, e que, à vitropressão, tornam-se amareladas, tumefação dolorosa de falanges distais dos dedos das mãos com espessamento e presença de estrias nas lâminas ungueais. Refere quadros repetidos de conjuntivite e diminuição de produção de lágrimas. O exame radiológico de tórax revela linfadenopatia hilar bilateral com presença de alveolite e presença de micronódulos. O substrato anatomopatológico da lesão de pele revela granuloma epitelioide não caseoso sem linfócitos com histiócitos epitelioides na derme que se infiltram entre os lóbulos do tecido gorduroso subcutâneo e presença de corpúsculos asteroides e corpos de Schaumann. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Sífilis maligna precoce." },
+      { id: "B", text: "Paracoccidioidomicose." },
+      { id: "C", text: "Sarcoidose." },
+      { id: "D", text: "Sífilis terciária." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "O conjunto clínico sistêmico e o granuloma sarcoidótico clássico, com poucos linfócitos e corpos de Schaumann/asteroides, favorece sarcoidose.",
+    keyPoint: "Granuloma epitelioide não caseoso 'nu' é pista clássica de sarcoidose.",
+    teacherComment: "Excelente correlação clínico-radiológico-anatomopatológica.",
+    videoCommentTitle: "Questão 46 comentada - Sarcoidose cutânea",
+    videoCommentUrl: "https://www.youtube.com/embed/Zah48IssafI",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-tumores-cutaneos-047",
+    slug: "acantoma-fissurado-q47",
+    questionNumber: 47,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Tumores cutâneos / Lesões reacionais",
+    subarea: "Acantoma fissurado / Hiperplasia pseudoepiteliomatosa",
+    difficulty: "intermediaria",
+    tags: ["acantoma fissurado", "hiperplasia pseudoepiteliomatosa", "óculos", "lesão reacional"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Paciente do sexo masculino, 56 anos de idade, escriturário, apresentando melanoses solares na face e dorso das mãos, leucodermia solar em ambos os braços, elastose solar na nuca, portador de alto grau de miopia e astigmatismo em uso de armação de óculos de alto grau há anos. Apresenta, há cerca de 15 meses, nódulo exofítico em região retroauricular esquerda, doloroso com o uso dos óculos, levemente eritematoso, fissurado, que apresenta discreta exsudação. A histopatologia da lesão revelou processo inflamatório linfo-histio-plasmocitário granulomatoso com fibrose e hiperplasia pseudoepiteliomatosa. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Carcinoma basocelular fissurado." },
+      { id: "B", text: "Carcinoma espinocelular nodular." },
+      { id: "C", text: "Acantoma fissurado." },
+      { id: "D", text: "Queratose seborreica fissurada." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A topografia por atrito da armação, associada ao padrão histológico reacional com hiperplasia pseudoepiteliomatosa, favorece acantoma fissurado.",
+    keyPoint: "Questão útil para diferenciar lesão reacional de carcinoma.",
+    teacherComment: "Muito boa para evitar overcalling de neoplasia em lesão traumática crônica.",
+    videoCommentTitle: "Questão 47 comentada - Acantoma fissurado",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-060-2022",
+    slug: "linfocitoma-cutis-q60",
+    questionNumber: 60,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatopatologia",
+    subarea: "Pseudolinfomas cutâneos",
+    difficulty: "avancada",
+    tags: ["linfocitoma cutis", "pseudolinfoma", "doença de lyme", "piercing", "acupuntura"],
+    statementType: "text_only",
+    statement:
+      "Com relação ao linfocitoma cútis, analise as afirmativas a seguir.\n\nI. O anatomopatológico demonstra infiltrado predominantemente de linfócitos T circundado por linfócitos B.\n\nII. Lesões papulonodulares da cor da pele ou eritemato violáceas localizadas na face é o quadro mais frequente.\n\nIII. Doença de Lyme, acupuntura e piercing estão entre os fatores desencadeantes.\n\nEstá(ão) correta(s) a(s) afirmativa(s)",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "I, apenas." },
+      { id: "B", text: "II, apenas." },
+      { id: "C", text: "III, apenas." },
+      { id: "D", text: "II e III, apenas." },
+    ],
+    correctOption: "D",
+    explanationShort:
+      "As afirmativas II e III estão corretas; a I descreve inadequadamente o padrão anatomopatológico do linfocitoma cútis.",
+    keyPoint: "Boa questão de correlação clínico-patológica em pseudolinfomas.",
+    teacherComment: "Separar as afirmativas em parágrafos melhora muito a leitura no app.",
+    videoCommentTitle: "Questão 60 comentada - Linfocitoma cútis",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-063",
+    slug: "achados-anatomopatologicos-da-hanseniase-q63",
+    questionNumber: 63,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatopatologia / Infectologia",
+    subarea: "Hanseníase / Reações hansênicas",
+    difficulty: "avancada",
+    tags: ["hanseníase", "reação tipo 2", "paniculite", "vasculite", "necrose fibrinoide"],
+    statementType: "text_only",
+    statement:
+      "Com relação aos achados anatomopatológicos das diversas formas clínicas, reações e recidiva da hanseníase, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Na forma tuberculoide, os granulomas não tocam a epiderme, a qual é comumente separada do infiltrado inflamatório por faixa de colágeno." },
+      { id: "B", text: "Na forma borderline tuberculoide, ocorre infiltrado linfo-histiocitário, com bacilos facilmente visíveis no interior dos histiócitos vacuolados." },
+      { id: "C", text: "Na reação tipo 2, há paniculite septal no início, que, posteriormente, pode tornar-se lobular, podendo ainda ocorrer vasculite e necrose fibrinoide dos vasos." },
+      { id: "D", text: "Na recidiva das formas borderline tuberculoides, pode-se encontrar novos histiócitos espumosos e bacilos íntegros." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A alternativa C descreve corretamente o espectro histopatológico da reação tipo 2 da hanseníase, com paniculite, possível vasculite e necrose fibrinoide.",
+    keyPoint: "Questão de anatomopatologia pura, altamente útil para o app.",
+    teacherComment: "Excelente para treinar leitura histológica das reações hansênicas.",
+    videoCommentTitle: "Questão 63 comentada - Achados anatomopatológicos da hanseníase",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatites-inflamatorias-080",
+    slug: "pioderma-gangrenoso-q80",
+    questionNumber: 80,
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2022",
+    area: "Dermatites inflamatórias",
+    subarea: "Dermatoses neutrofílicas / Pioderma gangrenoso",
+    difficulty: "intermediaria",
+    tags: ["pioderma gangrenoso", "patergia", "histopatologia", "úlceras neutrofílicas"],
+    statementType: "text_only",
+    statement: "Em relação ao pioderma gangrenoso, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "A lesão poupa a aréola mamária no tipo pós-cirúrgico na mamoplastia." },
+      { id: "B", text: "Os achados anatomopatológicos são patognomônicos da doença." },
+      { id: "C", text: "A etiologia exclui as doenças autoinflamatórias." },
+      { id: "D", text: "Patergia negativa exclui o diagnóstico." },
+    ],
+    correctOption: null,
+    explanationShort: "Não se aplica, pois a questão foi anulada no gabarito pós-recursos.",
+    keyPoint: "O diagnóstico do pioderma gangrenoso é clínico-patológico e não depende de achado histológico patognomônico isolado.",
+    teacherComment: "Manter esta questão marcada como anulada no banco.",
+    videoCommentTitle: "Questão 80 comentada - Pioderma gangrenoso",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: true,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-003",
+    slug: "sarcoidose-e-granulomas-q03",
+    questionNumber: 3,
+    shortTitle: "TED SBD 2023 – Sarcoidose e Granulomas",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Dermatoses Granulomatosas",
+    difficulty: "intermediaria",
+    tags: ["sarcoidose", "granulomas", "corpúsculos asteroides", "tatuagem"],
+    statementType: "text_only",
+    statement:
+      "Paciente do sexo masculino, negro, 30 anos de idade, apresenta lesão em placa sobre tatuagem feita há 30 dias no ombro direito e lesões eritemato-amarronzadas, distribuídas principalmente sobre as áreas de pigmento amarelo e vermelho. A diascopia foi prejudicada pela intensa pigmentação da pele. O exame histopatológico da lesão mostrou granulomas epitelioides superficiais e profundos com infiltrado linfocitário pouco exuberante e sem necrobiose do colágeno. Os histiócitos gigantes apresentam inclusões eosinofílicas estreladas. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Granuloma de corpo estranho." },
+      { id: "B", text: "Granuloma anular." },
+      { id: "C", text: "Sarcoidose." },
+      { id: "D", text: "Dermatite intersticial granulomatosa." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A descrição de granulomas epitelioides com pouca coroa linfocitária associada a corpúsculos asteroides em cicatrizes ou tatuagens é um achado clássico da sarcoidose.",
+    keyPoint: "Granulomas epitelioides nus com corpúsculos asteroides favorecem sarcoidose.",
+    teacherComment:
+      "A descrição de granulomas epitelioides com pouca coroa linfocitária associada a corpúsculos asteroides em cicatrizes ou tatuagens é um achado clássico da sarcoidose.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Sarcoidose e Granulomas",
+    videoCommentUrl: "https://www.youtube.com/embed/Zah48IssafI",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-004",
+    slug: "histiocitoma-eruptivo-generalizado-q04",
+    questionNumber: 4,
+    shortTitle: "TED SBD 2023 – Histiocitoma Eruptivo Generalizado",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Histiocitoses",
+    difficulty: "avancada",
+    tags: ["histiocitoses", "não-langerhans", "cd68", "fator XIIIa"],
+    statementType: "text_only",
+    statement:
+      "Paciente do sexo masculino, quatro anos de idade, apresenta pápulas eritemato-acastanhadas distribuídas simetricamente pelo corpo e nas mucosas oral e genital há 10 meses. Estado geral preservado. Foi realizada biópsia, com exame histopatológico evidenciando infiltrado monomórfico e denso de histiócitos, caracteristicamente vacuolados, ocupando papila e porção média da derme com poucos linfócitos. Os histiócitos marcam-se positivamente, na imunoistoquímica, para CD14b, lisozima, α1-antitripsina, CD11b, CD163, Mac387, CD68 e fator XIIIa. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Histiocitoma eruptivo generalizado." },
+      { id: "B", text: "Histiocitose cefálica benigna." },
+      { id: "C", text: "Xantogranuloma juvenil." },
+      { id: "D", text: "Reticulo-histiocitose multicêntrica." },
+    ],
+    correctOption: "ANULADA",
+    explanationShort:
+      "A questão descrevia uma histiocitose de células não-Langerhans, porém foi anulada pela banca examinadora após a fase de recursos.",
+    keyPoint: "Infiltrado histiocítico monomórfico não-X com CD68 e fator XIIIa positivos.",
+    teacherComment:
+      "A questão descrevia uma histiocitose de células não-Langerhans, porém foi anulada pela banca examinadora após a fase de recursos.",
+    notes: "O gabarito oficial pós-recurso confirma a anulação.",
+    videoCommentTitle: "TED SBD 2023 – Histiocitoma Eruptivo Generalizado",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: true,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-007",
+    slug: "doencas-do-tecido-subcutaneo-e-paniculites-q07",
+    questionNumber: 7,
+    shortTitle: "TED SBD 2023 – Doenças do Tecido Subcutâneo e Paniculites",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Paniculites",
+    difficulty: "intermediaria",
+    tags: ["paniculites", "tecido subcutâneo", "paniculite pancreática", "células fantasmas"],
+    statementType: "text_only",
+    statement:
+      "Com relação às doenças do tecido subcutâneo, assinale com V as afirmativas verdadeiras e com F as falsas.\n( ) Na paniculite pós-esteroide ocorre involução espontânea das lesões.\n( ) A paniculite lúpica ocorre somente na forma sistêmica do lúpus eritematoso.\n( ) Na histopatologia da paniculite pancreática são encontradas as \"células fantasma\".\n( ) A aparência da perna de \"garrafa invertida\" é característica do esclerema neonatal.\nAssinale a sequência correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "VFVF" },
+      { id: "B", text: "FVFV" },
+      { id: "C", text: "VFFV" },
+      { id: "D", text: "FVVF" },
+    ],
+    correctOption: "A",
+    explanationShort:
+      "A paniculite pós-esteroide é autolimitada; a pancreática exibe necrose gordurosa enzimática com células anucleadas; a perna em garrafa invertida é característica da lipodermatoesclerose; e a paniculite lúpica pode ocorrer de forma isolada.",
+    keyPoint: "Células fantasmas na paniculite pancreática são um achado histopatológico clássico.",
+    teacherComment:
+      "A paniculite pós-esteroide é autolimitada; a pancreática exibe necrose gordurosa enzimática com células anucleadas; a perna em garrafa invertida é característica da lipodermatoesclerose; e a paniculite lúpica pode ocorrer de forma isolada.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Doenças do Tecido Subcutâneo e Paniculites",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-013",
+    slug: "nevo-azul-e-variantes-q13",
+    questionNumber: 13,
+    shortTitle: "TED SBD 2023 – Nevo Azul e Variantes",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia / Tumores Cutâneos",
+    subarea: "Lesões Melanocíticas",
+    difficulty: "avancada",
+    tags: ["nevo azul", "gnaq", "gna11", "complexo de Carney"],
+    statementType: "text_only",
+    statement:
+      "Com relação ao nevo azul e suas variantes, assinale com V as afirmativas verdadeiras e com F as falsas.\n( ) O nevo azul epitelioide pode ser esporádico ou estar associado ao complexo de Carney.\n( ) A localização mais frequente do nevo azul maligno é a região sacra.\n( ) Lesões situadas na região lombossacra, com diâmetro maior do que 1 cm, devem ser excisadas.\n( ) As mutações somáticas GNA11 e GNAQ são encontradas em 50-85% dos nevos azuis.\nAssinale a sequência correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "VFFF" },
+      { id: "B", text: "FVFV" },
+      { id: "C", text: "VFVV" },
+      { id: "D", text: "FVVF" },
+    ],
+    correctOption: "ANULADA",
+    explanationShort:
+      "A questão foi anulada após recursos. Ela abordava o perfil genético de lesões melanocíticas dérmicas e a associação sindrômica do nevo azul epitelioide com o complexo de Carney.",
+    keyPoint: "Nevo azul epitelioide pode ter correlação sindrômica e alterações em GNAQ e GNA11.",
+    teacherComment:
+      "A questão foi anulada após recursos. Ela abordava o perfil genético de lesões melanocíticas dérmicas e a associação sindrômica do nevo azul epitelioide com o complexo de Carney.",
+    notes: "Anulação confirmada pelo gabarito pós-recursos.",
+    videoCommentTitle: "TED SBD 2023 – Nevo Azul e Variantes",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: true,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-017",
+    slug: "tumor-de-celulas-granulosas-q17",
+    questionNumber: 17,
+    shortTitle: "TED SBD 2023 – Tumor de Células Granulosas",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia / Tumores Cutâneos",
+    subarea: "Tumores de Origem Neural",
+    difficulty: "avancada",
+    tags: ["tumor de células granulosas", "abrikossoff", "s100", "língua"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Paciente do sexo feminino, 43 anos de idade, apresentando lesão papulosa com bordas mal delimitadas, superfície lisa, situada na língua, com evolução de aproximadamente seis meses, assintomática. Foi submetida à biópsia incisional, cujo exame histopatológico revelou a presença de células poligonais com citoplasma abundante levemente eosinofílico, granuloso, com núcleos redondos e pequenos grânulos eosinofílicos maiores envoltos por halo claro no citoplasma. Ao exame imunoistoquímico, foi observada a positividade para S100, antígeno CD68 e enolase neuronal específica (ENS). Considerando esse quadro clínico, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Carcinoma espinocelular." },
+      { id: "B", text: "Tumor de Merkel." },
+      { id: "C", text: "Tumor de células granulosas." },
+      { id: "D", text: "Carcinoma adenocístico." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A localização na língua e a histologia com citoplasma granular abundante associada à positividade para marcadores neurais confirmam o diagnóstico de tumor de Abrikossoff.",
+    keyPoint: "Células granulares S100 positivas em língua apontam para tumor de células granulosas.",
+    teacherComment:
+      "A localização na língua e a histologia com citoplasma granular abundante associada à positividade para marcadores neurais confirmam o diagnóstico de tumor de Abrikossoff.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Tumor de Células Granulosas",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-018",
+    slug: "histopatologia-de-neoplasias-anexiais-q18",
+    questionNumber: 18,
+    shortTitle: "TED SBD 2023 – Histopatologia de Neoplasias Anexiais",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Tumores Anexiais",
+    difficulty: "avancada",
+    tags: ["siringoma", "triquilemoma", "hidradenoma papilífero", "cilindroma"],
+    statementType: "matching_columns",
+    statement:
+      "Correlacione os achados histopatológicos das neoplasias anexiais da COLUNA II com os respectivos diagnósticos da COLUNA I.",
+    postStatement: "Assinale a sequência correta.",
+    matchingColumns: {
+      leftTitle: "COLUNA I",
+      leftItems: [
+        "1. Proliferação circunscrita lobulada composta por células claras, com paliçada periférica de pequenos queratinócitos basais.",
+        "2. Proliferação restrita à derme superficial composta por numerosos ductos revestidos por duas ou mais camadas de células claras, em meio a um estroma esclerótico.",
+        "3. Tumor bem circunscrito situado na derme revestido por cápsula fibrosa sem conexão com a epiderme. No seu interior observam-se estruturas tubulares e císticas em arranjo labiríntico.",
+        "4. Numerosas ilhas de células epiteliais separadas por escasso estroma encaixando-se em formato de quebra-cabeça, circundadas por membrana hialina.",
+      ],
+      rightTitle: "COLUNA II",
+      rightItems: ["( ) Siringoma", "( ) Triquilemoma", "( ) Hidradenoma papilífero", "( ) Cilindroma"],
+    },
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "2134" },
+      { id: "B", text: "1243" },
+      { id: "C", text: "4312" },
+      { id: "D", text: "1234" },
+    ],
+    correctOption: "A",
+    explanationShort:
+      "A sequência correta correlaciona o siringoma aos ductos escleróticos, o triquilemoma às células claras em paliçada, o hidradenoma ao arranjo labiríntico e o cilindroma ao padrão de quebra-cabeça.",
+    keyPoint:
+      "Ductos em estroma esclerótico sugerem Siringoma; células claras em paliçada sugerem Triquilemoma; padrão em quebra-cabeça sugere Cilindroma.",
+    teacherComment:
+      "A sequência correta correlaciona o siringoma aos ductos escleróticos, o triquilemoma às células claras em paliçada, o hidradenoma ao arranjo labiríntico e o cilindroma ao padrão de quebra-cabeça.",
+    notes: "Termo corrigido para \"Siringoma\" conforme solicitado.",
+    videoCommentTitle: "TED SBD 2023 – Histopatologia de Neoplasias Anexiais",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-033",
+    slug: "pseudoxantoma-elastico-q33",
+    questionNumber: 33,
+    shortTitle: "TED SBD 2023 – Pseudoxantoma Elástico",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia / Doenças Genéticas",
+    subarea: "Fibras Elásticas",
+    difficulty: "intermediaria",
+    tags: ["pseudoxantoma elástico", "estrias angioides", "fibras elásticas", "cálcio"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Mulher de 28 anos de idade foi admitida na emergência com hemorragia digestiva. Ao ser examinada, foram observadas lesões papulosas amareladas dispostas em fileira, na região cervical, axilas e dobras cubitais. O exame histopatológico de uma das lesões demonstrou alteração das fibras elásticas com depósito de cálcio. Qual órgão apresenta alterações patológicas associadas a esse quadro?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Mamas." },
+      { id: "B", text: "Ovários." },
+      { id: "C", text: "Olhos." },
+      { id: "D", text: "Pulmões." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "O pseudoxantoma elástico é uma doença sistêmica que altera fibras elásticas, manifestando-se ocularmente por estrias angioides na retina e dermatologicamente por pápulas amareladas em dobras.",
+    keyPoint: "Fragmentação e calcificação das fibras elásticas dérmicas se associam a alterações oculares no pseudoxantoma elástico.",
+    teacherComment:
+      "O pseudoxantoma elástico é uma doença sistêmica que altera fibras elásticas, manifestando-se ocularmente por estrias angioides na retina e dermatologicamente por pápulas amareladas em dobras.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Pseudoxantoma Elástico",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-036",
+    slug: "doenca-de-darier-e-histopatologia-q36",
+    questionNumber: 36,
+    shortTitle: "TED SBD 2023 – Doença de Darier e Histopatologia",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Dermatoses Acantolíticas / Genodermatoses",
+    difficulty: "intermediaria",
+    tags: ["doença de Darier", "corpos redondos", "grãos", "acantólise suprabasal"],
+    statementType: "text_only",
+    statement:
+      "Analise o quadro clínico a seguir. Paciente com dermatose caracterizada por alterações ungueais como fenda em V e faixas longitudinais eritematosas e brancas além de lesões cutâneas. O exame histopatológico da pele demonstra acantólise suprabasal, corpos redondos e grãos. Nesse caso, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Doença de Hailey-Hailey." },
+      { id: "B", text: "Pênfigo foliáceo." },
+      { id: "C", text: "Doença de Darier." },
+      { id: "D", text: "Pênfigo vegetante." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A presença de acantólise associada a células disqueratóticas na histologia, somada às distrofias ungueais em V, é patognomônica da Doença de Darier.",
+    keyPoint: "Corpos redondos e grãos identificam disqueratose acantolítica típica da Doença de Darier.",
+    teacherComment:
+      "A presença de acantólise associada a células disqueratóticas na histologia, somada às distrofias ungueais em V, é patognomônica da Doença de Darier.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Doença de Darier e Histopatologia",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-046",
+    slug: "diagnosticos-diferenciais-do-queloide-q46",
+    questionNumber: 46,
+    shortTitle: "TED SBD 2023 – Diagnósticos Diferenciais do Queloide",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia / Tumores Cutâneos",
+    subarea: "Fibroses e Neoplasias Melanocíticas",
+    difficulty: "avancada",
+    tags: ["queloide", "melanoma desmoplásico", "xantoma disseminado", "diferencial"],
+    statementType: "text_only",
+    statement: "São importantes diagnósticos diferenciais clínico e histopatológico dos queloides, respectivamente:",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Xantoma disseminado e melanoma desmoplásico." },
+      { id: "B", text: "Hanseníase tuberculoide e pênfigo vegetante." },
+      { id: "C", text: "Carcinoma de Merkel e eumicetoma." },
+      { id: "D", text: "Espiroadenoma écrino e sarcoidose." },
+    ],
+    correctOption: "A",
+    explanationShort:
+      "Histopatologicamente, o melanoma desmoplásico pode mimetizar lesões fibrosas como cicatrizes e queloides. Clinicamente, o xantoma disseminado pode se apresentar com pápulas agrupadas que lembram o aspecto de um queloide.",
+    keyPoint: "Melanoma desmoplásico é um diferencial histopatológico relevante de lesões fibrosas como queloide.",
+    teacherComment:
+      "Histopatologicamente, o melanoma desmoplásico pode mimetizar lesões fibrosas como cicatrizes e queloides. Clinicamente, o xantoma disseminado pode se apresentar com pápulas agrupadas que lembram o aspecto de um queloide.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Diagnósticos Diferenciais do Queloide",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-imunopatologia-cutanea-064",
+    slug: "imunopatologia-do-penfigoide-bolhoso-q64",
+    questionNumber: 64,
+    shortTitle: "TED SBD 2023 – Imunopatologia do Penfigoide Bolhoso",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Imunopatologia Cutânea",
+    subarea: "Doenças Bolhosas",
+    difficulty: "avancada",
+    tags: ["penfigoide bolhoso", "bp180", "salt-split skin", "imunofluorescência"],
+    statementType: "text_only",
+    statement:
+      "Uma mulher de 72 anos de idade apresenta prurido intenso há seis meses e, ao exame, placas eritematosas e edematosas, urticariformes. O exame histopatológico mostra edema na derme, espongiose com presença de polimorfonucleares. Um teste ELISA mostrou autoanticorpos BP180 circulantes. Sobre o quadro clínico apresentado, assinale com V as afirmativas verdadeiras e com F as falsas.\n( ) O infiltrado inflamatório dérmico é predominantemente composto por neutrófilos.\n( ) A imunofluorescência direta da pele perilesional mostra depósitos de IgG e C3 na zona da membrana basal.\n( ) O tratamento do fragmento de biópsia com cloreto de sódio causa clivagem na zona da membrana basal e o depósito de IgG é visto na porção superior da clivagem.\n( ) O depósito na zona da membrana basal é do tipo u-serrilhado.\nAssinale a sequência correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "VFVF" },
+      { id: "B", text: "FVFV" },
+      { id: "C", text: "VFFV" },
+      { id: "D", text: "FVVF" },
+    ],
+    correctOption: "D",
+    explanationShort:
+      "No penfigoide bolhoso, o infiltrado é predominantemente eosinofílico; a imunofluorescência direta mostra depósito linear na zona da membrana basal; o salt-split skin revela depósito no teto; e o padrão serrilhado não pertence a esta entidade.",
+    keyPoint: "No penfigoide bolhoso, o depósito de IgG fica no teto da clivagem do salt-split skin.",
+    teacherComment:
+      "No penfigoide bolhoso, o infiltrado é predominantemente eosinofílico; a imunofluorescência direta mostra depósito linear na zona da membrana basal; o salt-split skin revela depósito no teto; e o padrão serrilhado não pertence a esta entidade.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Imunopatologia do Penfigoide Bolhoso",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-066",
+    slug: "correlacao-em-pitiriase-rubra-pilar-q66",
+    questionNumber: 66,
+    shortTitle: "TED SBD 2023 – Correlação em Pitiríase Rubra Pilar",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Dermatoses Psoriasiformes",
+    difficulty: "intermediaria",
+    tags: ["pitiríase rubra pilar", "psoriasiforme", "tampão folicular", "paraceratose"],
+    statementType: "text_only",
+    statement:
+      "Um homem de 62 anos de idade procurou atendimento dermatológico apresentando eritrodermia de início na cabeça e no pescoço e progressão craniocaudal. Negava doenças prévias ou uso de medicações. Ao exame físico, apresentava ceratose folicular sobre base eritematosa no tronco e membros, coalescendo em placas amarelo-alaranjadas com áreas de pele poupada, ceratodermia palmoplantar e unhas espessadas de coloração amarelada. O exame histopatológico mostrou dermatite psoriasiforme com hiperceratose irregular, folículos pilosos preenchidos com tampão de ceratina, e paraceratose ao redor da abertura folicular. Considerando o quadro clínico e histopatológico descritos, qual é o diagnóstico?",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Psoríase eritrodérmica." },
+      { id: "B", text: "Pitiríase rubra pilar." },
+      { id: "C", text: "Micose fungoide." },
+      { id: "D", text: "Reação exantemática à droga." },
+    ],
+    correctOption: "B",
+    explanationShort:
+      "A combinação de clínica com eritrodermia alaranjada e ilhas de pele poupada, associada à paraceratose horizontal e vertical com tampões córneos, é característica da pitiríase rubra pilar.",
+    keyPoint: "Tampão folicular de queratina e paraceratose perifolicular favorecem pitiríase rubra pilar.",
+    teacherComment:
+      "A combinação de clínica com eritrodermia alaranjada e ilhas de pele poupada, associada à paraceratose horizontal e vertical com tampões córneos, é característica da pitiríase rubra pilar.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Correlação em Pitiríase Rubra Pilar",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-069",
+    slug: "eritema-indurado-de-bazin-q69",
+    questionNumber: 69,
+    shortTitle: "TED SBD 2023 – Eritema Indurado de Bazin",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Paniculites / Micobacterioses",
+    difficulty: "intermediaria",
+    tags: ["eritema indurado", "bazin", "paniculite lobular", "vasculite granulomatosa"],
+    statementType: "text_only",
+    statement: "Com relação ao eritema indurado, assinale a alternativa correta.",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "Caracteriza-se por paniculite septal sem ocorrência de vasculite." },
+      { id: "B", text: "Ocorre com maior frequência no sexo feminino." },
+      { id: "C", text: "As lesões são eritematosas, induradas e indolores." },
+      { id: "D", text: "A presença de necrose na histopatologia exclui o diagnóstico." },
+    ],
+    correctOption: "B",
+    explanationShort:
+      "O eritema indurado é uma paniculite lobular com vasculite que acomete predominantemente o sexo feminino e cujos achados histológicos incluem necrose gordurosa.",
+    keyPoint: "Paniculite lobular com vasculite granulomatosa e necrose favorece eritema indurado de Bazin.",
+    teacherComment:
+      "O eritema indurado é uma paniculite lobular com vasculite que acomete predominantemente o sexo feminino e cujos achados histológicos incluem necrose gordurosa.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Eritema Indurado de Bazin",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
+  {
+    id: "ted-dermatopatologia-072",
+    slug: "patogenese-das-amiloidoses-q72",
+    questionNumber: 72,
+    shortTitle: "TED SBD 2023 – Patogênese das Amiloidoses",
+    sourceType: "sbd_exam",
+    sourceLabel: "TED SBD 2023",
+    area: "Dermatopatologia",
+    subarea: "Doenças de Depósito",
+    difficulty: "intermediaria",
+    tags: ["amiloidose", "depósito", "queratinócitos", "cadeia leve"],
+    statementType: "text_only",
+    statement:
+      "Com relação às amiloidoses, analise as afirmativas a seguir.\nI. Na amiloidose cutânea primária, os depósitos de fibrilas amiloides derivam da necrose dos queratinócitos.\nII. Na amiloidose cutânea, o depósito de amiloide está limitado à parte superior da epiderme.\nIII. Na amiloidose nodular, os depósitos amiloides derivam de imunoglobulinas de cadeia leve.\nEstá(ão) correta(s) a(s) afirmativa(s)",
+    postStatement: null,
+    matchingColumns: undefined,
+    promptImageUrl: null,
+    supportImageUrl: null,
+    options: [
+      { id: "A", text: "I, apenas." },
+      { id: "B", text: "II e III, apenas." },
+      { id: "C", text: "I e III, apenas." },
+      { id: "D", text: "I e II, apenas." },
+    ],
+    correctOption: "C",
+    explanationShort:
+      "A amiloidose cutânea primária deriva da degeneração de queratinócitos na derme papilar, enquanto a amiloidose nodular é formada por depósitos de cadeias leves de imunoglobulinas.",
+    keyPoint: "Formas macular e liquenoide têm origem queratinocítica; a forma nodular deriva de cadeias leves.",
+    teacherComment:
+      "A amiloidose cutânea primária deriva da degeneração de queratinócitos na derme papilar, enquanto a amiloidose nodular é formada por depósitos de cadeias leves de imunoglobulinas.",
+    notes: "Nenhuma.",
+    videoCommentTitle: "TED SBD 2023 – Patogênese das Amiloidoses",
+    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoProvider: "youtube",
+    isProvisional: false,
+    isAnnulled: false,
+    sourceConfidence: "high",
+  },
 ];
+
+const tedAreaCatalog = [
+  {
+    id: "tricopatologia",
+    nome: "Tricopatologia",
+    descricao: "Biópsias do couro cabeludo, cortes transversais e verticais e correlação com alopecias.",
+  },
+  {
+    id: "metodos-complementares",
+    nome: "Métodos complementares",
+    descricao: "Colorações especiais, histoquímica e ferramentas auxiliares para a interpretação dermatopatológica.",
+  },
+  {
+    id: "doencas-de-deposito-metabolicas",
+    nome: "Doenças de depósito / metabólicas",
+    descricao: "Mucinas, amiloide e outros depósitos teciduais com impacto no diagnóstico dermatopatológico.",
+  },
+  {
+    id: "infectologia-cutanea",
+    nome: "Infectologia cutânea",
+    descricao: "Hanseníase, borreliose, micoses e outras infecções com forte correlação clínico-patológica.",
+  },
+  {
+    id: "doencas-bolhosas",
+    nome: "Doenças bolhosas",
+    descricao: "Clivagem, imunofluorescência e principais entidades bolhosas autoimunes.",
+  },
+  {
+    id: "dermatites-inflamatorias",
+    nome: "Dermatites inflamatórias",
+    descricao: "Dermatoses neutrofílicas, farmacodermias e outros padrões inflamatórios relevantes.",
+  },
+  {
+    id: "dermatites-psoriasiformes",
+    nome: "Dermatites psoriasiformes",
+    descricao: "Padrões psoriasiformes, eritrodermias e diferenciais histológicos associados.",
+  },
+  {
+    id: "dermatoses-granulomatosas",
+    nome: "Dermatoses granulomatosas",
+    descricao: "Granulomas, histiocitoses e entidades granulomatosas com leitura morfológica dirigida.",
+  },
+  {
+    id: "vasculopatias-vasculites",
+    nome: "Vasculopatias / vasculites",
+    descricao: "Proliferações vasculares reativas e diferenciais com vasculopatias e vasculites.",
+  },
+  {
+    id: "paniculites",
+    nome: "Paniculites",
+    descricao: "Hipoderme, padrão septal ou lobular, vasculite e correlação com doenças sistêmicas e infecciosas.",
+  },
+  {
+    id: "neoplasias-cutaneas",
+    nome: "Neoplasias cutâneas",
+    descricao: "Neoplasias cutâneas não anexiais ou melanocíticas, com foco em diferenciação morfológica.",
+  },
+  {
+    id: "tumores-anexiais",
+    nome: "Tumores anexiais",
+    descricao: "Tumores anexiais e padrões arquiteturais clássicos das neoplasias adnexais.",
+  },
+  {
+    id: "tumores-melanociticos",
+    nome: "Tumores melanocíticos",
+    descricao: "Lesões melanocíticas, genética molecular e correlações sindrômicas úteis para prova e prática.",
+  },
+  {
+    id: "paraneoplasias",
+    nome: "Paraneoplasias",
+    descricao: "Dermatoses paraneoplásicas com apresentação clínica marcante e histopatologia variável.",
+  },
+  {
+    id: "doencas-sistemicas-com-expressao-cutanea",
+    nome: "Doenças sistêmicas com expressão cutânea",
+    descricao: "Achados cutâneos e histopatológicos que sinalizam doenças sistêmicas relevantes.",
+  },
+  {
+    id: "hamartomas-malformacoes-genodermatoses",
+    nome: "Hamartomas / malformações / genodermatoses",
+    descricao: "Genodermatoses e alterações estruturais congênitas ou hereditárias com expressão cutânea.",
+  },
+] as const;
+
+function normalizeTedLabel(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function normalizeOptionalSubarea(subarea?: string | null) {
+  if (!subarea) {
+    return null;
+  }
+
+  const value = subarea.trim();
+  return value.length ? value : null;
+}
+
+function normalizeTedQuestionTaxonomy(question: TedQuestion): TedQuestion {
+  const rawArea = normalizeTedLabel(question.area);
+  const rawSubarea = normalizeTedLabel(question.subarea ?? "");
+
+  let area = question.area;
+  let subarea = normalizeOptionalSubarea(question.subarea);
+
+  if (rawArea === "dermatopatologia") {
+    if (rawSubarea === "tricopatologia") {
+      area = "Tricopatologia";
+      subarea = null;
+    } else if (rawSubarea === "metodos complementares / coloracoes") {
+      area = "Métodos complementares";
+      subarea = "Colorações especiais";
+    } else if (rawSubarea === "doencas de deposito" || rawSubarea === "doenças de depósito") {
+      area = "Doenças de depósito / metabólicas";
+      subarea = null;
+    } else if (rawSubarea === "dermatoses granulomatosas" || rawSubarea === "histiocitoses") {
+      area = "Dermatoses granulomatosas";
+      subarea = rawSubarea === "histiocitoses" ? "Histiocitoses" : null;
+    } else if (rawSubarea === "paniculites") {
+      area = "Paniculites";
+      subarea = null;
+    } else if (rawSubarea === "tumores anexiais") {
+      area = "Tumores anexiais";
+      subarea = null;
+    } else if (rawSubarea === "dermatoses acantoliticas / genodermatoses") {
+      area = "Hamartomas / malformações / genodermatoses";
+      subarea = "Dermatoses acantolíticas";
+    } else if (rawSubarea === "dermatoses psoriasiformes") {
+      area = "Dermatites psoriasiformes";
+      subarea = null;
+    } else if (rawSubarea === "paniculites / micobacterioses") {
+      area = "Paniculites";
+      subarea = "Micobacterioses";
+    }
+  } else if (rawArea === "dermatopatologia / tumores cutaneos") {
+    if (rawSubarea === "lesoes melanociticas") {
+      area = "Tumores melanocíticos";
+      subarea = null;
+    } else {
+      area = "Neoplasias cutâneas";
+      subarea = normalizeOptionalSubarea(question.subarea);
+    }
+  } else if (rawArea === "dermatopatologia / doencas geneticas") {
+    area = "Doenças de depósito / metabólicas";
+    subarea = normalizeOptionalSubarea(question.subarea);
+  } else if (rawArea === "dermatopatologia / doencas metabolicas") {
+    area = "Doenças de depósito / metabólicas";
+    subarea = normalizeOptionalSubarea(question.subarea);
+  } else if (rawArea === "dermatopatologia / infectologia" || rawArea === "doencas infecciosas" || rawArea === "micoses cutaneas") {
+    area = "Infectologia cutânea";
+    subarea = normalizeOptionalSubarea(question.subarea);
+  } else if (rawArea === "imunopatologia cutanea") {
+    area = "Doenças bolhosas";
+    subarea = "Imunopatologia";
+  } else if (rawArea === "dermatoses inflamatorias / farmacodermias") {
+    area = "Dermatites inflamatórias";
+    subarea = "Farmacodermias";
+  } else if (rawArea === "dermatoses inflamatorias") {
+    area = "Dermatites inflamatórias";
+    subarea = normalizeOptionalSubarea(question.subarea);
+  } else if (rawArea === "tumores cutaneos / infectologia") {
+    area = "Infectologia cutânea";
+    subarea = "Proliferações vasculares";
+  } else if (rawArea === "tumores cutaneos / patologia vascular") {
+    area = "Vasculopatias / vasculites";
+    subarea = "Proliferações vasculares reativas";
+  } else if (rawArea === "tumores cutaneos / lesoes reacionais") {
+    area = "Neoplasias cutâneas";
+    subarea = normalizeOptionalSubarea(question.subarea);
+  } else if (rawArea === "dermatites granulomatosas") {
+    area = "Dermatoses granulomatosas";
+    subarea = normalizeOptionalSubarea(question.subarea);
+  } else if (rawArea === "tumores cutaneos") {
+    if (rawSubarea === "tumores anexiais") {
+      area = "Tumores anexiais";
+      subarea = null;
+    } else {
+      area = "Neoplasias cutâneas";
+      subarea = normalizeOptionalSubarea(question.subarea);
+    }
+  }
+
+  return {
+    ...question,
+    area,
+    subarea,
+  };
+}
+
+const normalizedTedQuestionBank = tedQuestionBank.map(normalizeTedQuestionTaxonomy).sort((a, b) => a.questionNumber - b.questionNumber);
+
+function buildTedAreas(questions: TedQuestion[]): TedArea[] {
+  const activeAreaNames = new Set<string>(questions.map((question) => question.area));
+  const catalogRows = tedAreaCatalog
+    .filter((area) => activeAreaNames.has(area.nome))
+    .map((area) => ({
+      id: area.id,
+      nome: area.nome,
+      descricao: area.descricao,
+      numeroQuestoes: questions.filter((question) => question.area === area.nome).length,
+      subareas: Array.from(
+        new Set(
+          questions
+            .filter((question) => question.area === area.nome)
+            .map((question) => question.subarea)
+            .filter((value): value is string => Boolean(value)),
+        ),
+      ),
+    }));
+
+  const catalogAreaNames = new Set<string>(catalogRows.map((area) => area.nome));
+  const fallbackRows = Array.from(activeAreaNames)
+    .filter((areaName) => !catalogAreaNames.has(areaName))
+    .map((areaName) => ({
+      id: normalizeTedLabel(areaName).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      nome: areaName,
+      descricao: "Tema dermatopatológico normalizado automaticamente a partir do banco de questões.",
+      numeroQuestoes: questions.filter((question) => question.area === areaName).length,
+      subareas: Array.from(
+        new Set(
+          questions
+            .filter((question) => question.area === areaName)
+            .map((question) => question.subarea)
+            .filter((value): value is string => Boolean(value)),
+        ),
+      ),
+    }));
+
+  return [...catalogRows, ...fallbackRows];
+}
+
+export const tedAnnulledQuestions = normalizedTedQuestionBank.filter((question) => question.isAnnulled);
+export const tedQuestions = normalizedTedQuestionBank.filter((question) => !question.isAnnulled);
+export const tedAreas = buildTedAreas(tedQuestions);
 
 export const mockTedUserProgress: TedUserProgress = {
   totalRespondidas: 0,

@@ -13,6 +13,7 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: PropsWithChildren) {
   const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window === "undefined") return "pt";
     const stored = window.localStorage.getItem(languageStorageKey);
     return stored === "en" ? "en" : "pt";
   });

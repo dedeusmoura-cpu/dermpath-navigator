@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { PerformanceCard } from "../components/ted/PerformanceCard";
 import { TedHeader } from "../components/ted/TedHeader";
-import { TedHero } from "../components/ted/TedHero";
-import { TedModeCard } from "../components/ted/TedModeCard";
 import { Layout } from "../components/Layout";
-import { tedVideoHighlight } from "../data/ted";
 import { getAverageTedTime, loadTedProgress } from "../utils/tedProgress";
+
+const TED_TEST_QUESTION_ROUTE = "/treinamento-ted/sessao?modo=demo&questionId=ted-dermatopatologia-003";
 
 export function TedLandingPage() {
   const progress = loadTedProgress();
@@ -18,58 +17,6 @@ export function TedLandingPage() {
           subtitle="Escolha a área que deseja treinar ou resolva questões aleatórias, acompanhando sua evolução em cada tema."
           eyebrow="Treinamento comentado"
         />
-
-        <TedHero
-          title="Treine com orientação, feedback e comentário em vídeo."
-          subtitle="O TED foi desenhado para transformar cada questão em um momento de estudo guiado. Você responde, recebe explicação objetiva e aprofunda o raciocínio com o comentário do professor."
-          highlight={tedVideoHighlight}
-        />
-
-        <section className="grid gap-4 lg:grid-cols-4">
-          <TedModeCard
-            to="/treinamento-ted/areas"
-            title="Treinar por área"
-            body="Escolha um tema específico, acompanhe seu percentual de acerto e evolua com foco no que mais importa."
-            cta="Explorar áreas"
-            tone="primary"
-          />
-          <TedModeCard
-            to="/treinamento-ted/aleatorio"
-            title="Questões aleatórias"
-            body="Monte um treino sob medida com quantidade de questões, dificuldade, timer e seleção de áreas."
-            cta="Configurar treino"
-          />
-          <TedModeCard
-            to="/treinamento-ted/desempenho"
-            title="Meu desempenho"
-            body="Visualize sua acurácia global, fortalezas e temas que merecem reforço nas próximas sessões."
-            cta="Ver análise"
-          />
-          <TedModeCard
-            to="/treinamento-ted/revisao"
-            title="Revisar erros"
-            body="Retorne às questões erradas ou marcadas e use o vídeo comentado como ferramenta de consolidação."
-            cta="Revisar agora"
-          />
-        </section>
-
-        <section className="rounded-[28px] border border-[#f1bf72] bg-[linear-gradient(135deg,#f59e0b_0%,#f8b632_48%,#ffd57d_100%)] p-6 text-white shadow-[0_24px_58px_-34px_rgba(156,94,0,0.45)]">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/78">Aviso importante</p>
-              <h2 className="font-serif text-3xl leading-tight">{tedVideoHighlight}</h2>
-              <p className="max-w-3xl text-sm leading-7 text-white/88">
-                A proposta do TED é unir treino ativo e explicação guiada. O comentário em vídeo não é complementar: ele faz parte da experiência de aprendizagem.
-              </p>
-            </div>
-            <Link
-              to="/treinamento-ted/aleatorio"
-              className="rounded-full bg-[#1f2f4c] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#10203a]"
-            >
-              Iniciar uma sessão agora
-            </Link>
-          </div>
-        </section>
 
         <section className="grid gap-4 lg:grid-cols-3">
           <PerformanceCard
@@ -88,6 +35,55 @@ export function TedLandingPage() {
             helper="Tempo médio por questão para acompanhar ritmo e consistência."
           />
         </section>
+
+        <section className="grid gap-4 sm:grid-cols-2">
+          <Link
+            to="/treinamento-ted/areas"
+            className="group flex items-center justify-between gap-4 rounded-[24px] border border-[#f0ba69] bg-[linear-gradient(135deg,#fff9ec_0%,#fff1d3_100%)] p-6 shadow-[0_22px_48px_-34px_rgba(80,42,0,0.18)] transition hover:-translate-y-1 hover:shadow-[0_28px_58px_-32px_rgba(80,42,0,0.24)]"
+          >
+            <div className="space-y-1">
+              <h3 className="font-serif text-2xl text-ink">Treinar por área</h3>
+              <p className="text-sm leading-6 text-steel">Escolha um tema e evolua com foco no que mais importa.</p>
+            </div>
+            <span className="shrink-0 rounded-full bg-[#1f2f4c] px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-[#e98500]">
+              Explorar →
+            </span>
+          </Link>
+
+          <Link
+            to="/treinamento-ted/aleatorio"
+            className="group flex items-center justify-between gap-4 rounded-[24px] border border-[#efd9bb] bg-white/94 p-6 shadow-[0_22px_48px_-34px_rgba(80,42,0,0.18)] transition hover:-translate-y-1 hover:shadow-[0_28px_58px_-32px_rgba(80,42,0,0.24)]"
+          >
+            <div className="space-y-1">
+              <h3 className="font-serif text-2xl text-ink">Questões aleatórias</h3>
+              <p className="text-sm leading-6 text-steel">Monte um treino com dificuldade e áreas sob medida.</p>
+            </div>
+            <span className="shrink-0 rounded-full bg-[#1f2f4c] px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-[#e98500]">
+              Configurar →
+            </span>
+          </Link>
+        </section>
+
+        <div className="flex flex-wrap items-center justify-center gap-6 pt-2">
+          <Link
+            to="/treinamento-ted/desempenho"
+            className="text-sm font-medium text-[#b96d00] underline decoration-[#b96d00]/40 underline-offset-4 transition hover:text-ink"
+          >
+            Ver meu desempenho detalhado
+          </Link>
+          <Link
+            to="/treinamento-ted/revisao"
+            className="text-sm font-medium text-[#b96d00] underline decoration-[#b96d00]/40 underline-offset-4 transition hover:text-ink"
+          >
+            Revisar erros anteriores
+          </Link>
+          <Link
+            to={TED_TEST_QUESTION_ROUTE}
+            className="text-sm font-medium text-[#b96d00] underline decoration-[#b96d00]/40 underline-offset-4 transition hover:text-ink"
+          >
+            Ver questão de exemplo →
+          </Link>
+        </div>
       </div>
     </Layout>
   );

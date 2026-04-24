@@ -21,7 +21,27 @@ import {
 } from "../utils/tedProgress";
 
 function shuffleQuestions(questions: TedQuestion[]) {
-  return [...questions].sort(() => Math.random() - 0.5);
+  const shuffled = [...questions];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+const VALID_MODES = ["area", "aleatorio", "revisao", "demo"] as const;
+type SessionMode = typeof VALID_MODES[number];
+
+function parseSessionMode(raw: string | null): SessionMode {
+  const value = raw ?? "aleatorio";
+  return (VALID_MODES as readonly string[]).includes(value) ? (value as SessionMode) : "aleatorio";
+}
+
+const VALID_DIFFICULTIES = ["facil", "intermediaria", "avancada", "mista"] as const;
+
+function parseDifficulty(raw: string | null): string {
+  const value = raw ?? "mista";
+  return (VALID_DIFFICULTIES as readonly string[]).includes(value) ? value : "mista";
 }
 
 function getDifficultyLabel(difficulty: TedQuestion["difficulty"]) {
@@ -38,14 +58,19 @@ function getDifficultyLabel(difficulty: TedQuestion["difficulty"]) {
 export function TedSessionPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const mode = (searchParams.get("modo") ?? "aleatorio") as "area" | "aleatorio" | "revisao";
+  const mode = parseSessionMode(searchParams.get("modo"));
   const singleQuestionId = searchParams.get("questionId");
   const singleAreaId = searchParams.get("area");
-  const queryAreas = searchParams.get("areas")?.split(",").filter(Boolean) ?? [];
-  const selectedAreaIds = singleAreaId ? [singleAreaId] : queryAreas.length ? queryAreas : tedAreas.map((area) => area.id);
+  const areasParam = searchParams.get("areas") ?? "";
   const quantity = Number(searchParams.get("quantidade") ?? "5");
-  const difficulty = searchParams.get("dificuldade") ?? "mista";
+  const difficulty = parseDifficulty(searchParams.get("dificuldade"));
   const timerEnabled = searchParams.get("timer") === "1";
+  const sessionSignature = `${mode}|${singleQuestionId ?? ""}|${singleAreaId ?? ""}|${areasParam}|${quantity}|${difficulty}|${timerEnabled ? 1 : 0}`;
+
+  const selectedAreaIds = useMemo(() => {
+    const queryAreas = areasParam.split(",").filter(Boolean);
+    return singleAreaId ? [singleAreaId] : queryAreas.length ? queryAreas : tedAreas.map((area) => area.id);
+  }, [areasParam, singleAreaId]);
 
   const filteredQuestions = useMemo(() => {
     if (singleQuestionId) {
@@ -87,6 +112,12 @@ export function TedSessionPage() {
   useEffect(() => {
     setSecondsElapsed(0);
   }, [currentIndex]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+    setResolvedQuestionIds([]);
+    setSecondsElapsed(0);
+  }, [sessionSignature]);
 
   if (!filteredQuestions.length) {
     return (
@@ -161,6 +192,9 @@ export function TedSessionPage() {
   const currentAreaId = resolveTedAreaId(currentQuestion.area);
   const areaPerformance = progress.desempenhoPorArea[currentAreaId];
   const areaStatus = getTedAreaStatus(areaPerformance?.totalRespondidas ?? 0, areaPerformance?.acuracia ?? 0);
+  const currentQuestionResolved = resolvedQuestionIds.includes(currentQuestion.id);
+  const nextQuestionLabel = currentQuestionResolved ? "Próxima questão" : "Pular questão";
+  const isDemoMode = mode === "demo";
 
   function handleFirstAttempt(params: { selectedOptionId: string; firstAttemptCorrect: boolean }) {
     const alreadyRecorded = getTedQuestionOutcome(progress, currentQuestion.id);
@@ -210,8 +244,20 @@ export function TedSessionPage() {
     <Layout>
       <div className="space-y-8">
         <TedHeader
-          title={mode === "area" ? currentArea?.nome ?? "Treino por área" : mode === "revisao" ? "Revisão comentada" : "Sessão aleatória"}
-          subtitle="Agora o TED avalia imediatamente no clique, permite nova tentativa em caso de erro e libera o comentário em vídeo apenas após o acerto."
+          title={
+            mode === "area"
+              ? currentArea?.nome ?? "Treino por área"
+              : mode === "revisao"
+                ? "Revisão comentada"
+                : mode === "demo"
+                  ? "Questão teste"
+                  : "Sessão aleatória"
+          }
+          subtitle={
+            mode === "demo"
+              ? "Modo provisório para demonstração: a questão abre diretamente com o fluxo completo de resposta, explicação e comentário em vídeo."
+              : "Agora o TED avalia imediatamente no clique, permite nova tentativa em caso de erro e libera o comentário em vídeo apenas após o acerto."
+          }
         />
 
         <section className="grid gap-4 lg:grid-cols-[1.35fr_0.65fr]">
@@ -220,13 +266,18 @@ export function TedSessionPage() {
             question={currentQuestion}
             areaLabel={currentArea?.nome ?? currentQuestion.area}
             difficultyLabel={getDifficultyLabel(currentQuestion.difficulty)}
+            badgeLabel={isDemoMode ? "Questão teste" : undefined}
             onFirstAttempt={handleFirstAttempt}
             onResolved={handleResolved}
+            onNextQuestion={handleNextQuestion}
+            nextQuestionLabel={nextQuestionLabel}
           />
 
           <div className="space-y-4">
             <SessionSideCard label="Área atual" value={currentArea?.nome ?? currentQuestion.area} helper={`Status nesta área: ${areaStatus}`} />
-            <SessionSideCard label="Subárea" value={currentQuestion.subarea} helper="Útil para consolidar padrões específicos." />
+            {currentQuestion.subarea ? (
+              <SessionSideCard label="Subárea" value={currentQuestion.subarea} helper="Útil para consolidar padrões específicos." />
+            ) : null}
             <SessionSideCard
               label="Timer"
               value={timerEnabled ? formatTedDuration(secondsElapsed) : "Desativado"}
@@ -257,10 +308,9 @@ export function TedSessionPage() {
                   <button
                     type="button"
                     onClick={handleNextQuestion}
-                    disabled={!resolvedQuestionIds.includes(currentQuestion.id)}
-                    className="rounded-full bg-[#1f2f4c] px-4 py-2 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-full border border-[#efcc98] bg-[#fff7ea] px-4 py-2 text-sm font-semibold text-[#a16100] transition hover:bg-[#fff1dc] focus:outline-none focus:ring-2 focus:ring-[#f4a000]/30"
                   >
-                    Próxima questão
+                    {nextQuestionLabel}
                   </button>
                 </div>
               </div>

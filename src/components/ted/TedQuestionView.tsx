@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { TedQuestion } from "../../types/ted";
+import { formatTedStatement } from "../../utils/tedStatement";
 import { TedFeedbackMessage } from "./TedFeedbackMessage";
 import { TedOptionList } from "./TedOptionList";
 import { TedQuestionHeader } from "./TedQuestionHeader";
@@ -9,11 +10,25 @@ interface TedQuestionViewProps {
   question: TedQuestion;
   areaLabel: string;
   difficultyLabel: string;
+  badgeLabel?: string;
   onFirstAttempt: (params: { selectedOptionId: string; firstAttemptCorrect: boolean }) => void;
   onResolved: () => void;
+  onNextQuestion?: () => void;
+  nextQuestionDisabled?: boolean;
+  nextQuestionLabel?: string;
 }
 
-export function TedQuestionView({ question, areaLabel, difficultyLabel, onFirstAttempt, onResolved }: TedQuestionViewProps) {
+export function TedQuestionView({
+  question,
+  areaLabel,
+  difficultyLabel,
+  badgeLabel,
+  onFirstAttempt,
+  onResolved,
+  onNextQuestion,
+  nextQuestionDisabled,
+  nextQuestionLabel,
+}: TedQuestionViewProps) {
   const [selectedWrongOptionIds, setSelectedWrongOptionIds] = useState<string[]>([]);
   const [resolved, setResolved] = useState(false);
   const [feedbackVariant, setFeedbackVariant] = useState<"idle" | "error" | "success">("idle");
@@ -27,6 +42,7 @@ export function TedQuestionView({ question, areaLabel, difficultyLabel, onFirstA
     [question.correctOption, question.options],
   );
   const matchingColumns = question.statementType === "matching_columns" ? question.matchingColumns ?? null : null;
+  const formattedStatement = useMemo(() => formatTedStatement(question.statement), [question.statement]);
 
   function handleSelect(optionId: string) {
     if (resolved) {
@@ -61,12 +77,32 @@ export function TedQuestionView({ question, areaLabel, difficultyLabel, onFirstA
         area={areaLabel}
         subarea={question.subarea}
         difficulty={difficultyLabel}
+        badgeLabel={badgeLabel}
+        onNextQuestion={onNextQuestion}
+        nextQuestionDisabled={nextQuestionDisabled}
+        nextQuestionLabel={nextQuestionLabel}
       />
 
       <div className="space-y-6 px-6 py-6">
         <div className="rounded-[24px] border border-[#f2e2ca] bg-[#fffdfa] p-5">
           <div className="space-y-5">
-            <p className="text-base leading-8 text-steel">{question.statement}</p>
+            {formattedStatement.kind === "true_false" ? (
+              <div className="space-y-4">
+                {formattedStatement.intro ? <p className="text-base leading-8 text-steel">{formattedStatement.intro}</p> : null}
+                <div className="space-y-3">
+                  {formattedStatement.assertions.map((assertion, index) => (
+                    <p key={index} className="rounded-[18px] border border-[#f6e8cf] bg-white px-4 py-3 text-base leading-8 text-steel">
+                      {assertion}
+                    </p>
+                  ))}
+                </div>
+                {formattedStatement.closing ? (
+                  <p className="text-sm font-medium leading-7 text-ink">{formattedStatement.closing}</p>
+                ) : null}
+              </div>
+            ) : (
+              <p className="text-base leading-8 text-steel whitespace-pre-line">{formattedStatement.text}</p>
+            )}
 
             {matchingColumns ? (
               <div className="space-y-4 rounded-[22px] border border-[#f2dfc3] bg-white p-4 sm:p-5">
@@ -76,8 +112,8 @@ export function TedQuestionView({ question, areaLabel, difficultyLabel, onFirstA
                       {matchingColumns.leftTitle}
                     </p>
                     <div className="mt-3 space-y-3">
-                      {matchingColumns.leftItems.map((item) => (
-                        <p key={item} className="text-sm leading-7 text-steel">
+                      {matchingColumns.leftItems.map((item, index) => (
+                        <p key={index} className="text-sm leading-7 text-steel">
                           {item}
                         </p>
                       ))}
@@ -89,8 +125,8 @@ export function TedQuestionView({ question, areaLabel, difficultyLabel, onFirstA
                       {matchingColumns.rightTitle}
                     </p>
                     <div className="mt-3 space-y-3">
-                      {matchingColumns.rightItems.map((item) => (
-                        <p key={item} className="text-sm leading-7 text-steel">
+                      {matchingColumns.rightItems.map((item, index) => (
+                        <p key={index} className="text-sm leading-7 text-steel">
                           {item}
                         </p>
                       ))}
@@ -144,7 +180,7 @@ export function TedQuestionView({ question, areaLabel, difficultyLabel, onFirstA
           <TedOptionList
             options={question.options}
             selectedWrongOptionIds={selectedWrongOptionIds}
-            correctOptionId={resolved ? question.correctOption : undefined}
+            correctOptionId={resolved ? (question.correctOption ?? undefined) : undefined}
             resolved={resolved}
             onSelect={handleSelect}
           />

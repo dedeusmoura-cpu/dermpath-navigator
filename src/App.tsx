@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import dermPathNavigatorBrandImage from "./assets/DermpathNavigator.png";
 import quizButtonImage from "./assets/Quiz-branco.png";
 import { MobileLandscapeHint } from "./components/MobileLandscapeHint";
@@ -201,6 +201,7 @@ export default function App() {
           <Route path="/treinamento-ted/desempenho" element={<TedPerformancePage />} />
           <Route path="/treinamento-ted/revisao" element={<TedReviewPage />} />
           <Route path="/treinamento-ted/sessao" element={<TedSessionPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>

@@ -6,7 +6,7 @@ import { tedAreas, tedQuestions } from "../data/ted";
 import { loadTedProgress, matchesTedArea, resolveTedArea } from "../utils/tedProgress";
 
 export function TedReviewPage() {
-  const progress = loadTedProgress();
+  const [progress] = useState(loadTedProgress);
   const [areaFilter, setAreaFilter] = useState("todas");
 
   const reviewItems = tedQuestions
@@ -18,7 +18,7 @@ export function TedReviewPage() {
     })
     .map((question) => ({
       id: question.id,
-      titulo: `Questão ${question.questionNumber} • ${question.subarea}`,
+      titulo: `Questão ${question.questionNumber} • ${question.subarea ?? question.area}`,
       area: resolveTedArea(question.area)?.nome ?? question.area,
       comentarioCurto: question.teacherComment,
       tipo: (progress.questoesErradas.includes(question.id) ? "erro" : "marcada") as "erro" | "marcada",

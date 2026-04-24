@@ -23,10 +23,11 @@ export interface TedQuestion {
   id: string;
   slug: string;
   questionNumber: number;
+  shortTitle?: string;
   sourceType: TedSourceType;
   sourceLabel: string;
   area: string;
-  subarea: string;
+  subarea?: string | null;
   difficulty: Exclude<TedDifficulty, "mista">;
   tags: string[];
   statementType: TedStatementType;
@@ -39,14 +40,16 @@ export interface TedQuestion {
     id: string;
     text: string;
   }>;
-  correctOption: string;
+  correctOption: string | null;
   explanationShort: string;
   keyPoint: string;
   teacherComment: string;
+  notes?: string | null;
   videoCommentTitle: string;
   videoCommentUrl: string;
   videoProvider: TedVideoProvider;
   isProvisional: boolean;
+  isAnnulled?: boolean;
   sourceConfidence: TedSourceConfidence;
   tempoEstimado?: number;
 }

@@ -24,7 +24,7 @@ export function PerformanceBar({ nome, percentual, respondidas }: PerformanceBar
       <div className="h-3 overflow-hidden rounded-full bg-[#fff1d4]">
         <div
           className="h-full rounded-full bg-[linear-gradient(90deg,#f59e0b_0%,#ffbd39_100%)] transition-all"
-          style={{ width: `${Math.max(percentual, 4)}%` }}
+          style={{ width: `${Math.min(Math.max(percentual, 4), 100)}%` }}
         />
       </div>
     </div>
