@@ -4239,9 +4239,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise as imagens a seguir. Considerando que outros marcadores imunohistoquímicos, como TTF1 e S100, foram negativos, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q02_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q02_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q02_f1.jpg" },
+      { id: "f2", label: "Imunoistoquímica (CK20)", type: "ihc", src: "/images/ted/tp/2025/ted2025_tp_q02_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q02_f1.jpg" },
+      { id: "f2", label: "Imunoistoquímica (CK20)", type: "ihc", src: "/images/ted/tp/2025/ted2025_tp_q02_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4276,8 +4282,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q03_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q03_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q03_f1.jpg" }],
+    images: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q03_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4312,8 +4318,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q06_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q06_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q06_f1.jpg" }],
+    images: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q06_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4347,9 +4353,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise as imagens a seguir.",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q08_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q08_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q08_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q08_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q08_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q08_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4383,9 +4395,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise as imagens a seguir. Considerando as imagens apresentadas, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q10_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q10_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q10_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q10_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q10_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q10_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4419,9 +4437,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Paciente do sexo masculino, 36 anos de idade, apresenta lesões cutâneas há nove meses. Analise as imagens a seguir. Considerando as imagens apresentadas, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q13_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q13_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q13_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q13_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q13_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q13_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4456,8 +4480,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q15_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q15_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q15_f1.jpg" }],
+    images: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q15_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4491,9 +4515,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Paciente do sexo masculino, 27 anos de idade, há dois meses apresentando quadro progressivo de lesões cutâneas assintomáticas, com distribuição no membro superior, ombro e hemitórax esquerdos. Analise as imagens a seguir. Considerando as imagens apresentadas, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q16_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q16_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q16_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q16_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q16_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q16_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4527,9 +4557,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise as imagens a seguir. Considerando as imagens apresentadas, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q21_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q21_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Dermatoscopia", type: "dermoscopy", src: "/images/ted/tp/2025/ted2025_tp_q21_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q21_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Dermatoscopia", type: "dermoscopy", src: "/images/ted/tp/2025/ted2025_tp_q21_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q21_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4563,9 +4599,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise as imagens a seguir. Considerando as imagens apresentadas, assinale a alternativa que indica qual é o diagnóstico.",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q22_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q22_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q22_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q22_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q22_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q22_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4599,9 +4641,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise os exames histopatológicos a seguir, de carcinomas de células escamosas. Com relação aos exames histopatológicos apresentados, qual(is) representa(m) tumor(es) de alto risco?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q23_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q23_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Histopatologia – painel 1", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q23_f1.jpg" },
+      { id: "f2", label: "Histopatologia – painel 2", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q23_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Histopatologia – painel 1", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q23_f1.jpg" },
+      { id: "f2", label: "Histopatologia – painel 2", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q23_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4635,9 +4683,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Com relação as imagens histopatológicas apresentadas, analise as afirmativas a seguir.\nI. A imagem A corresponde a um subtipo de carcinoma basocelular classificado como de risco intermediário.\nII. A imagem B corresponde a um subtipo de carcinoma basocelular classificado como de alto risco.\nIII. A imagem C corresponde a um subtipo de carcinoma de células escamosas classificado como de baixo risco.\nEstá(ão) correta(s) a(s) afirmativa(s):",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q24_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q24_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Histopatologia – painel 1", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q24_f1.jpg" },
+      { id: "f2", label: "Histopatologia – painel 2", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q24_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Histopatologia – painel 1", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q24_f1.jpg" },
+      { id: "f2", label: "Histopatologia – painel 2", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q24_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4671,9 +4725,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Paciente do sexo feminino, 48 anos de idade, apresenta múltiplas lesões assintomáticas no corpo há dez anos. Apresenta, também, lesões uterinas e mutação no gene que codifica a enzima fumarato hidratase (FH). Analise as imagens a seguir. Considerando as imagens apresentadas, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q28_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q28_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q28_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q28_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q28_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q28_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4708,8 +4768,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q29_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q29_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q29_f1.jpg" }],
+    images: [{ id: "f1", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q29_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4744,8 +4804,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q31_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q31_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q31_f1.jpg" }],
+    images: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q31_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4780,8 +4840,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q34_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q34_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q34_f1.jpg" }],
+    images: [{ id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q34_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4815,9 +4875,15 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     statement: "Analise as imagens a seguir. Considerando as imagens apresentadas, qual é o diagnóstico?",
     postStatement: null,
     hasImages: true,
-    imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q39_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q39_clean.png" }],
+    imageMode: "multiple",
+    visualPanelImages: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q39_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q39_f2.jpg" },
+    ],
+    images: [
+      { id: "f1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q39_f1.jpg" },
+      { id: "f2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q39_f2.jpg" },
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -4852,8 +4918,8 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q40_clean.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q40_clean.png" }],
+    visualPanelImages: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q40_f1.jpg" }],
+    images: [{ id: "f1", label: "Painel clínico e histopatológico", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q40_f1.jpg" }],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
