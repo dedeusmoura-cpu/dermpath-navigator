@@ -3,11 +3,12 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { TedQuestionView } from "../components/ted/TedQuestionView";
 import { TedHeader } from "../components/ted/TedHeader";
 import { Layout } from "../components/Layout";
-import { tedAreas, tedQuestions } from "../data/ted";
-import type { TedQuestion } from "../types/ted";
+import { tedQuestions } from "../data/ted";
+import type { TedQuestion, TedSection } from "../types/ted";
 import {
   formatTedDuration,
   getAreaById,
+  getAreasBySection,
   getTedAreaStatus,
   getTedQuestionOutcome,
   incrementTedQuestionAttempts,
@@ -44,6 +45,14 @@ function parseDifficulty(raw: string | null): string {
   return (VALID_DIFFICULTIES as readonly string[]).includes(value) ? value : "mista";
 }
 
+function parseTedSection(raw: string | null): TedSection | undefined {
+  if (raw === "theoretical" || raw === "theoretical_practical") {
+    return raw;
+  }
+
+  return undefined;
+}
+
 function getDifficultyLabel(difficulty: TedQuestion["difficulty"]) {
   switch (difficulty) {
     case "facil":
@@ -65,26 +74,29 @@ export function TedSessionPage() {
   const quantity = Number(searchParams.get("quantidade") ?? "5");
   const difficulty = parseDifficulty(searchParams.get("dificuldade"));
   const timerEnabled = searchParams.get("timer") === "1";
-  const sessionSignature = `${mode}|${singleQuestionId ?? ""}|${singleAreaId ?? ""}|${areasParam}|${quantity}|${difficulty}|${timerEnabled ? 1 : 0}`;
+  const section = parseTedSection(searchParams.get("section"));
+  const availableAreas = useMemo(() => getAreasBySection(section), [section]);
+  const sessionSignature = `${mode}|${singleQuestionId ?? ""}|${singleAreaId ?? ""}|${areasParam}|${quantity}|${difficulty}|${timerEnabled ? 1 : 0}|${section ?? ""}`;
 
   const selectedAreaIds = useMemo(() => {
     const queryAreas = areasParam.split(",").filter(Boolean);
-    return singleAreaId ? [singleAreaId] : queryAreas.length ? queryAreas : tedAreas.map((area) => area.id);
-  }, [areasParam, singleAreaId]);
+    return singleAreaId ? [singleAreaId] : queryAreas.length ? queryAreas : availableAreas.map((area) => area.id);
+  }, [areasParam, availableAreas, singleAreaId]);
 
   const filteredQuestions = useMemo(() => {
     if (singleQuestionId) {
-      return tedQuestions.filter((question) => question.id === singleQuestionId);
+      return tedQuestions.filter((question) => question.id === singleQuestionId && (!section || question.section === section));
     }
 
     return shuffleQuestions(
       tedQuestions.filter((question) => {
         const areaMatch = selectedAreaIds.some((areaId) => matchesTedArea(question.area, areaId));
         const difficultyMatch = difficulty === "mista" || question.difficulty === difficulty;
-        return areaMatch && difficultyMatch;
+        const sectionMatch = !section || question.section === section;
+        return areaMatch && difficultyMatch && sectionMatch;
       }),
     ).slice(0, Math.max(1, quantity));
-  }, [difficulty, quantity, selectedAreaIds, singleQuestionId]);
+  }, [difficulty, quantity, section, selectedAreaIds, singleQuestionId]);
 
   const [progress, setProgress] = useState(loadTedProgress());
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -125,7 +137,7 @@ export function TedSessionPage() {
         <div className="space-y-8">
           <TedHeader
             title="Nenhuma questão encontrada"
-            subtitle="A combinação escolhida ainda não possui questões mockadas nesta primeira versão funcional do TED."
+            subtitle="A combinação escolhida ainda não possui questões mockadas com esse filtro nesta primeira versão funcional do TED."
           />
 
           <section className="rounded-[30px] border border-[#efd6b3] bg-white/95 p-6 shadow-panel">
@@ -137,7 +149,7 @@ export function TedSessionPage() {
                 <Link to="/treinamento-ted/aleatorio" className="rounded-full bg-[#1f2f4c] px-5 py-3 text-sm font-semibold text-white">
                   Voltar para questões aleatórias
                 </Link>
-                <Link to="/treinamento-ted/areas" className="rounded-full border border-[#efcc98] bg-[#fff8eb] px-5 py-3 text-sm font-semibold text-[#a16100]">
+                <Link to={section ? `/treinamento-ted/areas?section=${section}` : "/treinamento-ted/areas"} className="rounded-full border border-[#efcc98] bg-[#fff8eb] px-5 py-3 text-sm font-semibold text-[#a16100]">
                   Escolher uma área
                 </Link>
               </div>
@@ -172,12 +184,12 @@ export function TedSessionPage() {
               <Link to="/treinamento-ted/desempenho" className="rounded-full bg-[#1f2f4c] px-5 py-3 text-sm font-semibold text-white">
                 Ver meu desempenho
               </Link>
-              <Link to="/treinamento-ted/revisao" className="rounded-full border border-[#efcc98] bg-[#fff8eb] px-5 py-3 text-sm font-semibold text-[#a16100]">
+              <Link to={section ? `/treinamento-ted/revisao?section=${section}` : "/treinamento-ted/revisao"} className="rounded-full border border-[#efcc98] bg-[#fff8eb] px-5 py-3 text-sm font-semibold text-[#a16100]">
                 Revisar erros
               </Link>
               <button
                 type="button"
-                onClick={() => navigate("/treinamento-ted/aleatorio")}
+                onClick={() => navigate(section ? `/treinamento-ted/aleatorio?section=${section}` : "/treinamento-ted/aleatorio")}
                 className="rounded-full border border-[#efdfc6] bg-white px-5 py-3 text-sm font-semibold text-steel"
               >
                 Novo treino
@@ -256,7 +268,9 @@ export function TedSessionPage() {
           subtitle={
             mode === "demo"
               ? "Modo provisório para demonstração: a questão abre diretamente com o fluxo completo de resposta, explicação e comentário em vídeo."
-              : "Agora o TED avalia imediatamente no clique, permite nova tentativa em caso de erro e libera o comentário em vídeo apenas após o acerto."
+              : section === "theoretical_practical"
+                ? "Sessão filtrada para questões teórico-práticas, com imagens integradas ao enunciado quando disponíveis."
+                : "Agora o TED avalia imediatamente no clique, permite nova tentativa em caso de erro e libera o comentário em vídeo apenas após o acerto."
           }
         />
 
@@ -300,7 +314,7 @@ export function TedSessionPage() {
                     {isMarked ? "Remover da revisão" : "Marcar para revisão"}
                   </button>
                   <Link
-                    to={`/treinamento-ted/desempenho?area=${currentAreaId}`}
+                    to={`/treinamento-ted/desempenho?area=${currentAreaId}${section ? `&section=${section}` : ""}`}
                     className="rounded-full border border-[#efdfc6] bg-white px-4 py-2 text-sm font-semibold text-steel"
                   >
                     Ver desempenho da área

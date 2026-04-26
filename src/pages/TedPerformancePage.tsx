@@ -4,17 +4,20 @@ import { PerformanceBar } from "../components/ted/PerformanceBar";
 import { PerformanceCard } from "../components/ted/PerformanceCard";
 import { TedHeader } from "../components/ted/TedHeader";
 import { Layout } from "../components/Layout";
-import { tedAreas } from "../data/ted";
-import { getAverageTedTime, getTedAreaStatus, loadTedProgress } from "../utils/tedProgress";
+import type { TedSection } from "../types/ted";
+import { getAreasBySection, getAverageTedTime, getTedAreaPerformance, getTedAreaStatus, getTedSectionPerformance, loadTedProgress } from "../utils/tedProgress";
 
 export function TedPerformancePage() {
   const [searchParams] = useSearchParams();
   const highlightedArea = searchParams.get("area");
+  const section = (searchParams.get("section") as TedSection | null) ?? undefined;
   const [progress] = useState(loadTedProgress);
+  const availableAreas = getAreasBySection(section);
+  const sectionPerformance = section ? getTedSectionPerformance(progress, section) : null;
 
-  const areaRows = tedAreas.map((area) => ({
+  const areaRows = availableAreas.map((area) => ({
     area,
-    performance: progress.desempenhoPorArea[area.id],
+    performance: getTedAreaPerformance(progress, area.id, section),
   }));
 
   const strongerAreas = [...areaRows]
@@ -32,19 +35,23 @@ export function TedPerformancePage() {
       <div className="space-y-8">
         <TedHeader
           title="Meu desempenho"
-          subtitle="Acompanhe sua evolução global, compare áreas e identifique onde vale investir o próximo ciclo de estudo."
+          subtitle={
+            section
+              ? "Acompanhe sua evolução dentro da seção ativa, compare áreas e identifique onde vale investir o próximo ciclo de estudo."
+              : "Acompanhe sua evolução global, compare áreas e identifique onde vale investir o próximo ciclo de estudo."
+          }
         />
 
         <section className="grid gap-4 lg:grid-cols-4">
           <PerformanceCard
-            label="Acurácia global"
-            value={`${progress.acuraciaGlobal}%`}
-            helper="Taxa geral de acerto em todas as sessões do TED."
+            label={section ? "Acurácia da seção" : "Acurácia global"}
+            value={`${section ? sectionPerformance?.acuraciaGlobal ?? 0 : progress.acuraciaGlobal}%`}
+            helper={section ? "Taxa de acerto considerando apenas a seção ativa." : "Taxa geral de acerto em todas as sessões do TED."}
           />
           <PerformanceCard
-            label="Questões respondidas"
-            value={`${progress.totalRespondidas}`}
-            helper="Volume acumulado de treino comentado."
+            label={section ? "Respondidas na seção" : "Questões respondidas"}
+            value={`${section ? sectionPerformance?.totalRespondidas ?? 0 : progress.totalRespondidas}`}
+            helper={section ? "Volume acumulado de treino comentado nesta seção." : "Volume acumulado de treino comentado."}
           />
           <PerformanceCard
             label="Tempo médio"
@@ -52,9 +59,9 @@ export function TedPerformancePage() {
             helper="Tempo médio por questão nas sessões registradas."
           />
           <PerformanceCard
-            label="Questões para revisão"
-            value={`${progress.questoesErradas.length + progress.questoesFavoritasOuMarcadas.length}`}
-            helper="Erros recentes e questões marcadas para revisar com o vídeo."
+            label={section ? "Erros na seção" : "Questões para revisão"}
+            value={`${section ? sectionPerformance?.totalErradas ?? 0 : progress.questoesErradas.length + progress.questoesFavoritasOuMarcadas.length}`}
+            helper={section ? "Primeiros erros registrados nesta seção." : "Erros recentes e questões marcadas para revisar com o vídeo."}
           />
         </section>
 

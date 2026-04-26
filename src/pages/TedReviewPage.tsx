@@ -1,20 +1,26 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ReviewList } from "../components/ted/ReviewList";
 import { TedHeader } from "../components/ted/TedHeader";
 import { Layout } from "../components/Layout";
-import { tedAreas, tedQuestions } from "../data/ted";
-import { loadTedProgress, matchesTedArea, resolveTedArea } from "../utils/tedProgress";
+import { tedQuestions } from "../data/ted";
+import type { TedSection } from "../types/ted";
+import { getAreasBySection, loadTedProgress, matchesTedArea, resolveTedArea } from "../utils/tedProgress";
 
 export function TedReviewPage() {
+  const [searchParams] = useSearchParams();
+  const section = (searchParams.get("section") as TedSection | null) ?? undefined;
   const [progress] = useState(loadTedProgress);
   const [areaFilter, setAreaFilter] = useState("todas");
+  const availableAreas = getAreasBySection(section);
 
   const reviewItems = tedQuestions
     .filter((question) => {
       const marked = progress.questoesFavoritasOuMarcadas.some((item) => item.questionId === question.id);
       const erro = progress.questoesErradas.includes(question.id);
       const areaMatches = areaFilter === "todas" || matchesTedArea(question.area, areaFilter);
-      return areaMatches && (marked || erro);
+      const sectionMatches = !section || question.section === section;
+      return sectionMatches && areaMatches && (marked || erro);
     })
     .map((question) => ({
       id: question.id,
@@ -22,6 +28,7 @@ export function TedReviewPage() {
       area: resolveTedArea(question.area)?.nome ?? question.area,
       comentarioCurto: question.teacherComment,
       tipo: (progress.questoesErradas.includes(question.id) ? "erro" : "marcada") as "erro" | "marcada",
+      reviewHref: `/treinamento-ted/sessao?modo=revisao&questionId=${question.id}&quantidade=1&dificuldade=mista&timer=0${section ? `&section=${section}` : ""}`,
     }));
 
   return (
@@ -29,7 +36,11 @@ export function TedReviewPage() {
       <div className="space-y-8">
         <TedHeader
           title="Revisar erros"
-          subtitle="Revisite as questões erradas ou marcadas e use o comentário em vídeo para transformar erro em aprendizado consolidado."
+          subtitle={
+            section
+              ? "Revisite as questões erradas ou marcadas desta seção e use o comentário em vídeo para consolidar o raciocínio."
+              : "Revisite as questões erradas ou marcadas e use o comentário em vídeo para transformar erro em aprendizado consolidado."
+          }
         />
 
         <section className="rounded-[28px] border border-[#efd8b7] bg-white/94 p-6 shadow-panel">
@@ -44,7 +55,7 @@ export function TedReviewPage() {
               className="rounded-full border border-[#efcc98] bg-[#fff8eb] px-4 py-2 text-sm font-semibold text-[#8f5700] outline-none transition focus:border-[#e29b37]"
             >
               <option value="todas">Todas as áreas</option>
-              {tedAreas.map((area) => (
+              {availableAreas.map((area) => (
                 <option key={area.id} value={area.id}>
                   {area.nome}
                 </option>

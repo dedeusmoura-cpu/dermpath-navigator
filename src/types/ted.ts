@@ -3,12 +3,31 @@ export type TedSourceType = "sbd_exam" | "custom" | "adapted" | "mock_exam";
 export type TedStatementType = "text_only" | "text_with_image" | "matching_columns" | "clinical_case" | "histology_image";
 export type TedVideoProvider = "youtube" | "vimeo" | "internal" | "external";
 export type TedSourceConfidence = "high" | "medium" | "low";
+export type TedSection = "theoretical" | "theoretical_practical";
+export type TedImageType =
+  | "clinical"
+  | "histopathology"
+  | "dermoscopy"
+  | "ihc"
+  | "ifd"
+  | "mycology"
+  | "culture"
+  | "radiology"
+  | "composite";
+export type TedImageMode = "single" | "multiple";
 
 export interface TedMatchingColumns {
   leftTitle: string;
   leftItems: string[];
   rightTitle: string;
   rightItems: string[];
+}
+
+export interface TedQuestionImage {
+  id: string;
+  label: string;
+  type: TedImageType;
+  src: string;
 }
 
 export interface TedArea {
@@ -28,12 +47,21 @@ export interface TedQuestion {
   sourceLabel: string;
   area: string;
   subarea?: string | null;
+  section: TedSection;
   difficulty: Exclude<TedDifficulty, "mista">;
   tags: string[];
   statementType: TedStatementType;
   statement: string;
   postStatement?: string | null;
   matchingColumns?: TedMatchingColumns;
+  hasImages?: boolean;
+  imageMode?: TedImageMode;
+  // For theoretical-practical questions, this must contain only the visual panel
+  // needed to solve the case. Do not include the exam header, question number,
+  // statement, alternatives, or any text that the app already renders in HTML.
+  visualPanelImages?: TedQuestionImage[];
+  visualPanelCleanupPending?: boolean;
+  images?: TedQuestionImage[];
   promptImageUrl?: string | null;
   supportImageUrl?: string | null;
   options: Array<{
@@ -94,6 +122,12 @@ export interface TedUserProgress {
   totalErradas: number;
   acuraciaGlobal: number;
   totalTempoSegundos: number;
+  desempenhoPorSecao: Record<TedSection, {
+    totalRespondidas: number;
+    totalCorretas: number;
+    totalErradas: number;
+    acuraciaGlobal: number;
+  }>;
   desempenhoPorArea: Record<string, TedAreaPerformance>;
   questoesErradas: string[];
   questoesFavoritasOuMarcadas: TedQuestionBookmark[];
@@ -102,8 +136,9 @@ export interface TedUserProgress {
 }
 
 export interface TedSessionConfig {
-  modo: "area" | "aleatorio" | "revisao";
+  modo: "area" | "aleatorio" | "revisao" | "simulado";
   areaIds: string[];
+  section?: TedSection;
   quantidade: number;
   dificuldade: TedDifficulty;
   comTimer: boolean;

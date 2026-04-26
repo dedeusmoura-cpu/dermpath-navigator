@@ -1,10 +1,11 @@
-import { mockTedUserProgress, tedAreas, tedQuestions } from "../data/ted";
+import { getTedAreasBySection, mockTedUserProgress, tedAreas, tedQuestions } from "../data/ted";
 import type {
   TedArea,
   TedAreaPerformance,
   TedQuestion,
   TedQuestionBookmark,
   TedQuestionOutcome,
+  TedSection,
   TedUserProgress,
 } from "../types/ted";
 
@@ -21,6 +22,15 @@ function createEmptyAreaPerformance(areaId: string): TedAreaPerformance {
     totalCorretas: 0,
     totalErradas: 0,
     acuracia: 0,
+  };
+}
+
+function createEmptySectionPerformance() {
+  return {
+    totalRespondidas: 0,
+    totalCorretas: 0,
+    totalErradas: 0,
+    acuraciaGlobal: 0,
   };
 }
 
@@ -60,6 +70,17 @@ export function createInitialTedProgress(): TedUserProgress {
     seeded.outcomesByQuestion = {};
   }
 
+  seeded.desempenhoPorSecao = {
+    theoretical: {
+      ...createEmptySectionPerformance(),
+      ...(seeded.desempenhoPorSecao?.theoretical ?? {}),
+    },
+    theoretical_practical: {
+      ...createEmptySectionPerformance(),
+      ...(seeded.desempenhoPorSecao?.theoretical_practical ?? {}),
+    },
+  };
+
   return seeded;
 }
 
@@ -83,6 +104,16 @@ export function loadTedProgress(): TedUserProgress {
     return {
       ...merged,
       ...parsed,
+      desempenhoPorSecao: {
+        theoretical: {
+          ...merged.desempenhoPorSecao.theoretical,
+          ...(parsed.desempenhoPorSecao?.theoretical ?? {}),
+        },
+        theoretical_practical: {
+          ...merged.desempenhoPorSecao.theoretical_practical,
+          ...(parsed.desempenhoPorSecao?.theoretical_practical ?? {}),
+        },
+      },
       desempenhoPorArea: {
         ...merged.desempenhoPorArea,
         ...parsed.desempenhoPorArea,
@@ -154,8 +185,47 @@ export function getAreaById(areaId: string) {
   return resolveTedArea(areaId);
 }
 
-export function getQuestionsByArea(areaId: string) {
-  return tedQuestions.filter((question) => matchesTedArea(question.area, areaId));
+export function getQuestionsByArea(areaId: string, section?: TedSection) {
+  return tedQuestions.filter((question) => matchesTedArea(question.area, areaId) && (!section || question.section === section));
+}
+
+export function getAreasBySection(section?: TedSection) {
+  return getTedAreasBySection(section);
+}
+
+export function getQuestionSectionById(questionId: string): TedSection | undefined {
+  return getQuestionById(questionId)?.section;
+}
+
+export function getTedSectionPerformance(progress: TedUserProgress, section: TedSection) {
+  return progress.desempenhoPorSecao[section] ?? createEmptySectionPerformance();
+}
+
+export function getTedAreaPerformance(progress: TedUserProgress, areaId: string, section?: TedSection): TedAreaPerformance {
+  if (!section) {
+    return progress.desempenhoPorArea[areaId] ?? createEmptyAreaPerformance(areaId);
+  }
+
+  const filteredOutcomes = Object.values(progress.outcomesByQuestion).filter((outcome) => {
+    if (outcome.areaId !== areaId) {
+      return false;
+    }
+
+    return getQuestionSectionById(outcome.questionId) === section;
+  });
+
+  const totalRespondidas = filteredOutcomes.length;
+  const totalCorretas = filteredOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length;
+  const totalErradas = filteredOutcomes.filter((outcome) => !outcome.firstAttemptCorrect).length;
+  const acuracia = totalRespondidas ? Math.round((totalCorretas / totalRespondidas) * 100) : 0;
+
+  return {
+    areaId,
+    totalRespondidas,
+    totalCorretas,
+    totalErradas,
+    acuracia,
+  };
 }
 
 function updateGlobalMetrics(progress: TedUserProgress): TedUserProgress {
@@ -166,7 +236,35 @@ function updateGlobalMetrics(progress: TedUserProgress): TedUserProgress {
   const acuraciaGlobal = totalRespondidas
     ? Math.round((totalCorretas / totalRespondidas) * 100)
     : 0;
-  return { ...progress, totalRespondidas, totalCorretas, totalErradas, acuraciaGlobal };
+
+  const theoreticalOutcomes = outcomes.filter((outcome) => getQuestionSectionById(outcome.questionId) === "theoretical");
+  const theoreticalPracticalOutcomes = outcomes.filter((outcome) => getQuestionSectionById(outcome.questionId) === "theoretical_practical");
+
+  return {
+    ...progress,
+    totalRespondidas,
+    totalCorretas,
+    totalErradas,
+    acuraciaGlobal,
+    desempenhoPorSecao: {
+      theoretical: {
+        totalRespondidas: theoreticalOutcomes.length,
+        totalCorretas: theoreticalOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length,
+        totalErradas: theoreticalOutcomes.filter((outcome) => !outcome.firstAttemptCorrect).length,
+        acuraciaGlobal: theoreticalOutcomes.length
+          ? Math.round((theoreticalOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length / theoreticalOutcomes.length) * 100)
+          : 0,
+      },
+      theoretical_practical: {
+        totalRespondidas: theoreticalPracticalOutcomes.length,
+        totalCorretas: theoreticalPracticalOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length,
+        totalErradas: theoreticalPracticalOutcomes.filter((outcome) => !outcome.firstAttemptCorrect).length,
+        acuraciaGlobal: theoreticalPracticalOutcomes.length
+          ? Math.round((theoreticalPracticalOutcomes.filter((outcome) => outcome.firstAttemptCorrect).length / theoreticalPracticalOutcomes.length) * 100)
+          : 0,
+      },
+    },
+  };
 }
 
 function updateAreaMetrics(progress: TedUserProgress, areaId: string): TedUserProgress {

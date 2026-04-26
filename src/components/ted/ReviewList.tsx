@@ -6,6 +6,7 @@ interface ReviewListItem {
   area: string;
   comentarioCurto: string;
   tipo: "erro" | "marcada";
+  reviewHref?: string;
 }
 
 interface ReviewListProps {
@@ -38,7 +39,7 @@ export function ReviewList({ items }: ReviewListProps) {
             </div>
 
             <Link
-              to={`/treinamento-ted/sessao?modo=revisao&questionId=${item.id}&quantidade=1&dificuldade=mista&timer=0`}
+              to={item.reviewHref ?? `/treinamento-ted/sessao?modo=revisao&questionId=${item.id}&quantidade=1&dificuldade=mista&timer=0`}
               className="rounded-full bg-[#1f2f4c] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#ea8e00]"
             >
               Rever questão

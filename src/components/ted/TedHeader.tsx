@@ -1,12 +1,21 @@
+import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
+
+interface TedHeaderNavItem {
+  to: string;
+  label: string;
+  end?: boolean;
+}
 
 interface TedHeaderProps {
   title: string;
   subtitle: string;
   eyebrow?: string;
+  navItems?: TedHeaderNavItem[];
+  actionSlot?: ReactNode;
 }
 
-const tedNavItems = [
+const defaultTedNavItems: TedHeaderNavItem[] = [
   { to: "/treinamento-ted", label: "Início", end: true },
   { to: "/treinamento-ted/areas", label: "Treinar por área" },
   { to: "/treinamento-ted/aleatorio", label: "Questões aleatórias" },
@@ -14,7 +23,7 @@ const tedNavItems = [
   { to: "/treinamento-ted/revisao", label: "Revisar erros" },
 ];
 
-export function TedHeader({ title, subtitle, eyebrow = "Aprendizado guiado" }: TedHeaderProps) {
+export function TedHeader({ title, subtitle, eyebrow = "Aprendizado guiado", navItems = defaultTedNavItems, actionSlot }: TedHeaderProps) {
   return (
     <section className="relative overflow-hidden rounded-[32px] border border-[#f5c98b] bg-[linear-gradient(135deg,_rgba(255,249,240,0.98)_0%,_rgba(255,244,225,0.98)_42%,_rgba(255,238,210,0.98)_100%)] shadow-[0_28px_64px_-36px_rgba(80,42,0,0.24)]">
       <div className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top_left,_rgba(247,168,0,0.26),_transparent_56%)]" />
@@ -31,10 +40,10 @@ export function TedHeader({ title, subtitle, eyebrow = "Aprendizado guiado" }: T
           </div>
         </div>
 
-        <nav className="flex flex-wrap gap-2" aria-label="Navegação do Treinamento TED">
-          {tedNavItems.map((item) => (
+        <nav className="flex w-full flex-wrap items-center gap-2" aria-label="Navegação do Treinamento TED">
+          {navItems.map((item) => (
             <NavLink
-              key={item.to}
+              key={`${item.to}-${item.label}`}
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
@@ -48,6 +57,9 @@ export function TedHeader({ title, subtitle, eyebrow = "Aprendizado guiado" }: T
               {item.label}
             </NavLink>
           ))}
+          {actionSlot ? (
+            <div className="ml-auto flex items-center gap-2">{actionSlot}</div>
+          ) : null}
         </nav>
       </div>
     </section>

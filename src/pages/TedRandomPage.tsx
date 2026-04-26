@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { TedHeader } from "../components/ted/TedHeader";
 import { Layout } from "../components/Layout";
-import { tedAreas } from "../data/ted";
-import type { TedDifficulty } from "../types/ted";
+import type { TedDifficulty, TedSection } from "../types/ted";
+import { getAreasBySection } from "../utils/tedProgress";
 
 const quantityOptions = [5, 10, 20];
 const difficultyOptions: Array<{ value: TedDifficulty; label: string }> = [
@@ -15,10 +15,17 @@ const difficultyOptions: Array<{ value: TedDifficulty; label: string }> = [
 
 export function TedRandomPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const section = (searchParams.get("section") as TedSection | null) ?? undefined;
+  const availableAreas = useMemo(() => getAreasBySection(section), [section]);
   const [quantidade, setQuantidade] = useState(10);
   const [dificuldade, setDificuldade] = useState<TedDifficulty>("mista");
   const [comTimer, setComTimer] = useState(false);
-  const [selectedAreas, setSelectedAreas] = useState<string[]>(tedAreas.map((area) => area.id));
+  const [selectedAreas, setSelectedAreas] = useState<string[]>(availableAreas.map((area) => area.id));
+
+  useEffect(() => {
+    setSelectedAreas(availableAreas.map((area) => area.id));
+  }, [availableAreas]);
 
   function toggleArea(areaId: string) {
     setSelectedAreas((current) =>
@@ -27,9 +34,9 @@ export function TedRandomPage() {
   }
 
   function startRandomTraining() {
-    const areaParam = selectedAreas.length ? selectedAreas.join(",") : tedAreas.map((area) => area.id).join(",");
+    const areaParam = selectedAreas.length ? selectedAreas.join(",") : availableAreas.map((area) => area.id).join(",");
     navigate(
-      `/treinamento-ted/sessao?modo=aleatorio&areas=${areaParam}&quantidade=${quantidade}&dificuldade=${dificuldade}&timer=${comTimer ? 1 : 0}`,
+      `/treinamento-ted/sessao?modo=aleatorio&areas=${areaParam}&quantidade=${quantidade}&dificuldade=${dificuldade}&timer=${comTimer ? 1 : 0}${section ? `&section=${section}` : ""}`,
     );
   }
 
@@ -38,7 +45,11 @@ export function TedRandomPage() {
       <div className="space-y-8">
         <TedHeader
           title="Questões aleatórias"
-          subtitle="Monte uma sessão personalizada para desafiar o raciocínio em várias áreas e manter o treino sempre variado."
+          subtitle={
+            section
+              ? "Monte uma sessão personalizada dentro da seção escolhida, mantendo o treino variado sem perder o foco."
+              : "Monte uma sessão personalizada para desafiar o raciocínio em várias áreas e manter o treino sempre variado."
+          }
         />
 
         <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
@@ -125,7 +136,7 @@ export function TedRandomPage() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    onClick={() => setSelectedAreas(tedAreas.map((area) => area.id))}
+                    onClick={() => setSelectedAreas(availableAreas.map((area) => area.id))}
                     className="rounded-full border border-[#efcc98] bg-[#fff7e9] px-4 py-2 text-sm font-semibold text-[#a36300]"
                   >
                     Todas
@@ -141,7 +152,7 @@ export function TedRandomPage() {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                {tedAreas.map((area) => {
+                {availableAreas.map((area) => {
                   const active = selectedAreas.includes(area.id);
                   return (
                     <button

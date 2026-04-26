@@ -43,6 +43,13 @@ export function TedQuestionView({
   );
   const matchingColumns = question.statementType === "matching_columns" ? question.matchingColumns ?? null : null;
   const formattedStatement = useMemo(() => formatTedStatement(question.statement), [question.statement]);
+  const practicalImages =
+    question.section === "theoretical_practical" && question.hasImages
+      ? (question.visualPanelImages?.filter((image) => Boolean(image.src)).length
+          ? question.visualPanelImages
+          : question.images
+        )?.filter((image) => Boolean(image.src)) ?? []
+      : [];
 
   function handleSelect(optionId: string) {
     if (resolved) {
@@ -75,7 +82,7 @@ export function TedQuestionView({
         questionNumber={question.questionNumber}
         sourceLabel={question.sourceLabel}
         area={areaLabel}
-        subarea={question.subarea}
+        subarea={resolved ? question.subarea : undefined}
         difficulty={difficultyLabel}
         badgeLabel={badgeLabel}
         onNextQuestion={onNextQuestion}
@@ -169,6 +176,19 @@ export function TedQuestionView({
           </section>
         ) : null}
 
+        {practicalImages.length ? (
+          <section className="space-y-4">
+            <div className={question.imageMode === "multiple" ? "grid gap-4 md:grid-cols-2" : "mx-auto max-w-[640px]"}>
+              {practicalImages.map((image) => (
+                <figure key={image.id} className="overflow-hidden rounded-2xl border border-sand/80 bg-paper shadow-sm">
+                  <img src={image.src} alt={image.label} className="block h-auto w-full object-contain" />
+                  <figcaption className="mt-2 px-3 pb-3 text-center text-xs font-medium text-steel">{image.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <div className="space-y-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b56d00]">Alternativas</p>
@@ -198,6 +218,11 @@ export function TedQuestionView({
                     <h3 className="mt-2 font-serif text-2xl text-ink">
                       Alternativa correta: {correctOption?.id} {correctOption ? `• ${correctOption.text}` : ""}
                     </h3>
+                    {question.subarea ? (
+                      <p className="mt-2 text-xs text-emerald-700">
+                        <span className="font-semibold">Padrão morfológico:</span> {question.subarea}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
                 <div className="grid gap-4 lg:grid-cols-2">

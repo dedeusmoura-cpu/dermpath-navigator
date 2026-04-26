@@ -13,6 +13,10 @@ export const tedQuestionTemplate = `{
   statement: "Enunciado da questão.",
   postStatement: null,
   matchingColumns: undefined,
+  // Em questões teórico-práticas, use este campo apenas para o painel visual limpo
+  // da questão. Nunca inclua cabeçalho da prova, número, enunciado ou alternativas.
+  visualPanelImages: undefined,
+  visualPanelCleanupPending: false,
   promptImageUrl: null,
   supportImageUrl: null,
   options: [

@@ -8,10 +8,12 @@ interface AreaCardProps {
   numeroQuestoes: number;
   acuracia: number;
   totalRespondidas: number;
+  section?: "theoretical" | "theoretical_practical";
 }
 
-export function AreaCard({ areaId, nome, descricao, numeroQuestoes, acuracia, totalRespondidas }: AreaCardProps) {
+export function AreaCard({ areaId, nome, descricao, numeroQuestoes, acuracia, totalRespondidas, section }: AreaCardProps) {
   const status = getTedAreaStatus(totalRespondidas, acuracia);
+  const sectionSuffix = section ? `&section=${section}` : "";
 
   return (
     <article className="rounded-[26px] border border-[#f0dcc0] bg-white/94 p-5 shadow-[0_22px_48px_-34px_rgba(80,42,0,0.18)]">
@@ -31,13 +33,13 @@ export function AreaCard({ areaId, nome, descricao, numeroQuestoes, acuracia, to
 
         <div className="flex flex-wrap gap-3">
           <Link
-            to={`/treinamento-ted/sessao?modo=area&area=${areaId}&quantidade=5&dificuldade=mista&timer=0`}
+            to={`/treinamento-ted/sessao?modo=area&area=${areaId}&quantidade=5&dificuldade=mista&timer=0${sectionSuffix}`}
             className="rounded-full bg-[#ea8e00] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#d97f00]"
           >
             Treinar
           </Link>
           <Link
-            to={`/treinamento-ted/desempenho?area=${areaId}`}
+            to={`/treinamento-ted/desempenho?area=${areaId}${sectionSuffix}`}
             className="rounded-full border border-[#efcb97] bg-[#fff7ea] px-4 py-2 text-sm font-semibold text-[#9f6100] transition hover:bg-white"
           >
             Ver desempenho
