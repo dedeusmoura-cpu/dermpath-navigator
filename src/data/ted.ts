@@ -7208,9 +7208,14 @@ const tedAreaCatalog = [
     descricao: "Tumores queratinocíticos, anexiais, neuroendócrinos e lesões pré-malignas da epiderme.",
   },
   {
-    id: "neoplasias-mesenquimais-hematologicas",
-    nome: "Neoplasias mesenquimais e hematológicas",
-    descricao: "Tumores fibrosos, vasculares, neurais, linfomas cutâneos e histiocitoses neoplásicas.",
+    id: "neoplasias-mesenquimais",
+    nome: "Neoplasias mesenquimais",
+    descricao: "Tumores fibrosos, vasculares, neurais, musculares e outros tumores de origem mesenquimal.",
+  },
+  {
+    id: "neoplasias-hematopoieticas",
+    nome: "Neoplasias hematopoiéticas",
+    descricao: "Linfomas cutâneos, leucemias com expressão cutânea e histiocitoses neoplásicas.",
   },
   {
     id: "alopecias-tricopatologia",
@@ -7238,9 +7243,14 @@ const tedAreaCatalog = [
     descricao: "Princípios cirúrgicos, retalhos, enxertos, lasers e procedimentos dermatológicos.",
   },
   {
-    id: "dermatopatologia-metodos",
-    nome: "Dermatopatologia e métodos complementares",
+    id: "tecnicas-diagnosticas-complementares",
+    nome: "Técnicas diagnósticas complementares",
     descricao: "Técnicas de biópsia, colorações histoquímicas, imunohistoquímica, imunofluorescência e interpretação de exames.",
+  },
+  {
+    id: "alteracoes-histopatologicas-basicas",
+    nome: "Alterações histopatológicas básicas da pele",
+    descricao: "Terminologia e padrões histopatológicos fundamentais: paraceratose, espongiose, acantólise, balonização e outros.",
   },
 ] as const;
 
@@ -7254,7 +7264,7 @@ function normalizeTedLabel(value: string) {
 
 
 const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }> = {
-  "ted-dermatopatologia-001":         { area: "Dermatopatologia e métodos complementares", subarea: "Colorações histoquímicas especiais" },
+  "ted-dermatopatologia-001":         { area: "Técnicas diagnósticas complementares", subarea: "Colorações histoquímicas especiais" },
   "ted-doencas-bolhosas-005":         { area: "Dermatoses vésico-bolhosas", subarea: "Acantólise intraepidérmica / Pênfigos" },
   "ted-doencas-bolhosas-006":         { area: "Dermatoses vésico-bolhosas", subarea: "Clivagem subepidérmica / Penfigoides" },
   "ted-doencas-bolhosas-007":         { area: "Dermatoses vésico-bolhosas", subarea: "Acantólise intraepidérmica / Pênfigos" },
@@ -7281,7 +7291,7 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-dermatites-inflamatorias-007": { area: "Dermatoses pustulosas e neutrofílicas", subarea: "Hidradenite neutrofílica écrina" },
   "ted-doencas-bolhosas-013":         { area: "Dermatoses vésico-bolhosas", subarea: "Acantólise intraepidérmica / Pênfigos" },
   "ted-doencas-infecciosas-015":      { area: "Micoses", subarea: "Fungos dimórficos" },
-  "ted-dermatopatologia-023":         { area: "Dermatopatologia e métodos complementares", subarea: "Técnicas de biópsia / Imunofluorescência" },
+  "ted-dermatopatologia-023":         { area: "Técnicas diagnósticas complementares", subarea: "Técnicas de biópsia / Imunofluorescência" },
   "ted-tumores-cutaneos-025":         { area: "Neoplasias epiteliais e anexiais", subarea: "Tumores queratinocíticos / Estratificação" },
   "ted-dermatites-inflamatorias-035": { area: "Dermatoses de interface e liquenoides", subarea: "Reação liquenoide / Dermatite de contato" },
   "ted-doencas-bolhosas-036":         { area: "Dermatoses vésico-bolhosas", subarea: "Acantólise intraepidérmica / Pênfigos" },
@@ -7291,7 +7301,7 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-dermatites-inflamatorias-045": { area: "Dermatoses granulomatosas", subarea: "Granuloma em paliçada" },
   "ted-dermatites-inflamatorias-046": { area: "Dermatoses granulomatosas", subarea: "Granuloma epitelioide não caseoso" },
   "ted-tumores-cutaneos-047":         { area: "Neoplasias epiteliais e anexiais", subarea: "Hiperplasia pseudoepiteliomatosa" },
-  "ted-dermatopatologia-060-2022":    { area: "Neoplasias mesenquimais e hematológicas", subarea: "Linfoproliferações cutâneas" },
+  "ted-dermatopatologia-060-2022":    { area: "Neoplasias hematopoiéticas", subarea: "Linfoproliferações cutâneas" },
   "ted-dermatopatologia-063":         { area: "Hanseníase", subarea: "Reações hansênicas" },
   "ted-dermatites-inflamatorias-080": { area: "Dermatoses pustulosas e neutrofílicas", subarea: "Dermatoses neutrofílicas" },
   "ted-dermatopatologia-002":         { area: "Dermatoses granulomatosas", subarea: "Granuloma em paliçada" },
@@ -7302,11 +7312,11 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-dermatopatologia-015-2021":    { area: "Dermatoses sistêmicas e metabólicas", subarea: "Mucinoses cutâneas" },
   "ted-dermatites-inflamatorias-016": { area: "Dermatoses de interface e liquenoides", subarea: "Dermatite de interface / Padrão liquenoide" },
   "ted-doencas-bolhosas-022":         { area: "Dermatoses vésico-bolhosas", subarea: "Clivagem subepidérmica / Penfigoides" },
-  "ted-tumores-cutaneos-028":         { area: "Neoplasias mesenquimais e hematológicas", subarea: "Linfomas cutâneos / Epidermotropismo" },
+  "ted-tumores-cutaneos-028":         { area: "Neoplasias hematopoiéticas", subarea: "Linfomas cutâneos / Epidermotropismo" },
   "ted-doencas-infecciosas-029":      { area: "Infecções cutâneas", subarea: "Infecções bacterianas / Granulomatosa" },
   "ted-paniculites-032":              { area: "Paniculites", subarea: "Paniculite neonatal" },
-  "ted-dermatopatologia-035":         { area: "Dermatopatologia e métodos complementares", subarea: "Colorações para fungos" },
-  "ted-tumores-cutaneos-036":         { area: "Neoplasias mesenquimais e hematológicas", subarea: "Tumores fibrohistiocíticos" },
+  "ted-dermatopatologia-035":         { area: "Técnicas diagnósticas complementares", subarea: "Colorações para fungos" },
+  "ted-tumores-cutaneos-036":         { area: "Neoplasias mesenquimais", subarea: "Tumores fibrohistiocíticos" },
   "ted-tumores-cutaneos-045":         { area: "Neoplasias epiteliais e anexiais", subarea: "Tumores neuroendócrinos" },
   "ted-doencas-infecciosas-070":      { area: "Infecções cutâneas", subarea: "Micobacterioses não tuberculosas" },
   "ted-dermatites-inflamatorias-071": { area: "Dermatoses de interface e liquenoides", subarea: "Linfoproliferações benignas / Interface" },
@@ -7316,7 +7326,7 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-dermatopatologia-004":         { area: "Dermatoses sistêmicas e metabólicas", subarea: "Histiocitoses não neoplásicas" },
   "ted-dermatopatologia-007":         { area: "Paniculites", subarea: "Padrões histológicos da hipoderme" },
   "ted-dermatopatologia-013":         { area: "Neoplasias melanocíticas", subarea: "Lesões melanocíticas / Proliferação" },
-  "ted-dermatopatologia-017":         { area: "Neoplasias mesenquimais e hematológicas", subarea: "Tumores de origem neural" },
+  "ted-dermatopatologia-017":         { area: "Neoplasias mesenquimais", subarea: "Tumores de origem neural" },
   "ted-dermatopatologia-018":         { area: "Neoplasias epiteliais e anexiais", subarea: "Tumores anexiais" },
   "ted-dermatopatologia-033":         { area: "Dermatoses do tecido conjuntivo", subarea: "Elastopatias / Fibras elásticas" },
   "ted-dermatopatologia-036":         { area: "Genodermatoses e malformações", subarea: "Disceratoses hereditárias" },
@@ -7329,7 +7339,7 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-tp-2023-q01":                  { area: "Dermatoses pustulosas e neutrofílicas", subarea: "Pústulas estéreis / Padrão subcórnio" },
   "ted-tp-2023-q09":                  { area: "Neoplasias epiteliais e anexiais", subarea: "Tumores basaloides" },
   "ted-tp-2023-q20":                  { area: "Infecções cutâneas", subarea: "Protozooses / Ulceração granulomatosa" },
-  "ted-tp-2023-q21":                  { area: "Dermatoses sistêmicas e metabólicas", subarea: "Infiltrado histiocítico CD1a+" },
+  "ted-tp-2023-q21":                  { area: "Neoplasias hematopoiéticas", subarea: "Histiocitoses neoplásicas / LCH" },
   "ted-tp-2023-q22":                  { area: "Dermatoses do tecido conjuntivo", subarea: "Perda de fibras elásticas" },
   "ted-tp-2023-q23":                  { area: "Infecções cutâneas", subarea: "Infiltrado linfoplasmocitário perivascular" },
   "ted-tp-2023-q27":                  { area: "Hanseníase", subarea: "Granuloma histiocítico / Alta carga bacilar" },
@@ -7352,10 +7362,10 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-tp-2020-q17":                  { area: "Hanseníase", subarea: "Histopatologia / Classificação" },
   "ted-tp-2020-q18":                  { area: "Hanseníase", subarea: "Histopatologia / Classificação" },
   "ted-tp-2020-q19":                  { area: "Vasculites e vasculopatias", subarea: "Vasculite linfocítica / Púrpuras pigmentadas" },
-  "ted-tp-2020-q25":                  { area: "Neoplasias mesenquimais e hematológicas", subarea: "Tumores mesenquimais / Fibromixoma" },
+  "ted-tp-2020-q25":                  { area: "Neoplasias mesenquimais", subarea: "Tumores mesenquimais / Fibromixoma" },
   "ted-tp-2020-q28":                  { area: "Dermatoses pustulosas e neutrofílicas", subarea: "Síndrome de Sweet" },
   "ted-tp-2020-q29":                  { area: "Dermatoses sistêmicas e metabólicas", subarea: "Histiocitoses não neoplásicas / Mastocitose" },
-  "ted-tp-2020-q30":                  { area: "Dermatopatologia e métodos complementares", subarea: "Terminologia histopatológica básica" },
+  "ted-tp-2020-q30":                  { area: "Alterações histopatológicas básicas da pele", subarea: "Terminologia histopatológica básica" },
   "ted-tp-2020-q31":                  { area: "Dermatoses vésico-bolhosas", subarea: "Disceratose / Acantólise focal" },
   "ted-tp-2020-q34":                  { area: "Dermatoses vésico-bolhosas", subarea: "Clivagem subepidérmica / Lúpus bolhoso" },
   "ted-tp-2020-q35":                  { area: "Neoplasias epiteliais e anexiais", subarea: "Tumores queratinocíticos / Queratoacantoma" },
@@ -7363,14 +7373,73 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-tp-2020-q37":                  { area: "Neoplasias epiteliais e anexiais", subarea: "Cistos e tumores anexiais" },
   "ted-tp-2020-q38":                  { area: "Neoplasias epiteliais e anexiais", subarea: "Tumores neuroendócrinos" },
   "ted-tp-2020-q39":                  { area: "Dermatoses vésico-bolhosas", subarea: "Acantólise intraepidérmica / Pênfigos" },
+  // Xantoma — depósito metabólico
+  "ted-tp-2022-q12":                  { area: "Dermatoses sistêmicas e metabólicas", subarea: "Doenças de depósito / Xantomatoses" },
+  // Neoplasias melanocíticas — TP sem mapeamento anterior
+  "ted-tp-2021-q28":                  { area: "Neoplasias melanocíticas", subarea: "Nevo de Spitz / Diagnóstico diferencial" },
+  "ted-tp-2022-q03":                  { area: "Neoplasias melanocíticas", subarea: "Melanoma / Diagnóstico histopatológico" },
+  "ted-tp-2022-q34":                  { area: "Neoplasias melanocíticas", subarea: "Melanoma in situ" },
+  "ted-tp-2024-q40":                  { area: "Neoplasias melanocíticas", subarea: "Melanoma nodular" },
+  "ted-tp-2025-q21":                  { area: "Neoplasias melanocíticas", subarea: "Melanoma / Diagnóstico histopatológico" },
+  // Neoplasias mesenquimais — TP sem mapeamento anterior
+  "ted-tp-2021-q24":                  { area: "Neoplasias mesenquimais", subarea: "Tumores vasculares / Granuloma piogênico" },
+  "ted-tp-2024-q05":                  { area: "Neoplasias mesenquimais", subarea: "Tumores vasculares / Angiossarcoma" },
+  "ted-tp-2024-q38":                  { area: "Neoplasias mesenquimais", subarea: "Tumores fusocelulares / DFSP" },
+  "ted-tp-2025-q16":                  { area: "Neoplasias mesenquimais", subarea: "Tumores vasculares / Sarcoma de Kaposi" },
+  "ted-tp-2025-q28":                  { area: "Neoplasias mesenquimais", subarea: "Tumores dérmicos / Leiomioma cutâneo" },
+  // Neoplasias hematopoiéticas — TP sem mapeamento anterior
+  "ted-tp-2022-q21":                  { area: "Neoplasias hematopoiéticas", subarea: "Linfomas cutâneos / Micose fungoide" },
+};
+
+const LEGACY_AREA_MAP: Record<string, string> = {
+  "Doenças bolhosas":                          "Dermatoses vésico-bolhosas",
+  "Dermatoses bolhosas":                       "Dermatoses vésico-bolhosas",
+  "Dermatites inflamatórias":                  "Dermatoses inflamatórias",
+  "Dermatites granulomatosas":                 "Dermatoses granulomatosas",
+  "Dermatopatologia":                          "Técnicas diagnósticas complementares",
+  "Dermatopatologia / Tumores Cutâneos":       "Neoplasias epiteliais e anexiais",
+  "Dermatopatologia / Infectologia":           "Infecções cutâneas",
+  "Dermatopatologia / Doenças metabólicas":    "Dermatoses sistêmicas e metabólicas",
+  "Dermatopatologia / Doenças Genéticas":      "Genodermatoses e malformações",
+  "Histiocitoses":                             "Neoplasias hematopoiéticas",
+  "Linfomas cutâneos":                         "Neoplasias hematopoiéticas",
+  "Dermatoses de depósito":                    "Dermatoses sistêmicas e metabólicas",
+  "Micoses cutâneas":                          "Micoses",
+  "Micoses profundas":                         "Micoses",
+  "Paraneoplasias":                            "Dermatoses sistêmicas e metabólicas",
+  "Imunopatologia Cutânea":                    "Técnicas diagnósticas complementares",
+  "Métodos diagnósticos":                      "Técnicas diagnósticas complementares",
+  "Genodermatoses":                            "Genodermatoses e malformações",
+  "Dermatoses de queratinização":              "Genodermatoses e malformações",
+  "Dermatoses genéticas":                      "Genodermatoses e malformações",
+  "Unhas":                                     "Alopécias e tricopatologia",
+  "Doenças infecciosas":                       "Infecções cutâneas",
+  "Doenças infecciosas e parasitárias":        "Infecções cutâneas",
+  "IST / Doenças sexualmente transmissíveis":  "Infecções cutâneas",
+  "Doenças do colágeno":                       "Dermatoses do tecido conjuntivo",
+  "Doenças sistêmicas":                        "Dermatoses sistêmicas e metabólicas",
+  "Dermatoses inflamatórias / Farmacodermias": "Dermatoses inflamatórias",
+  "Dermatoses pruriginosas":                   "Dermatoses inflamatórias",
+  "Dermatoses eritematoescamosas":             "Dermatoses inflamatórias",
+  "Dermatoses de interface":                   "Dermatoses de interface e liquenoides",
+  "Paniculites / Hipoderme":                   "Paniculites",
+  "Tumores cutâneos":                          "Neoplasias epiteliais e anexiais",
+  "Tumores cutâneos / Lesões reacionais":      "Neoplasias epiteliais e anexiais",
+  "Tumores cutâneos / Infectologia":           "Infecções cutâneas",
+  "Tumores cutâneos / Patologia vascular":     "Vasculites e vasculopatias",
+  "Tumores anexiais":                          "Neoplasias epiteliais e anexiais",
 };
 
 function normalizeTedQuestionTaxonomy(question: TedQuestion): TedQuestion {
   const mapping = QUESTION_TAXONOMY[question.id];
-  if (!mapping) {
-    return question;
+  if (mapping) {
+    return { ...question, area: mapping.area, subarea: mapping.subarea };
   }
-  return { ...question, area: mapping.area, subarea: mapping.subarea };
+  const legacyArea = LEGACY_AREA_MAP[question.area];
+  if (legacyArea) {
+    return { ...question, area: legacyArea };
+  }
+  return question;
 }
 
 const normalizedTedQuestionBank = tedQuestionBank.map(normalizeTedQuestionTaxonomy).sort((a, b) => a.questionNumber - b.questionNumber);
