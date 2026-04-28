@@ -1,6 +1,6 @@
-export type TedDifficulty = "facil" | "intermediaria" | "avancada" | "mista";
+export type TedDifficulty = "facil" | "intermediaria" | "avancada" | "mista" | "basica";
 export type TedSourceType = "sbd_exam" | "custom" | "adapted" | "mock_exam";
-export type TedStatementType = "text_only" | "text_with_image" | "matching_columns" | "clinical_case" | "histology_image";
+export type TedStatementType = "text_only" | "text_with_image" | "matching_columns" | "clinical_case" | "histology_image" | "image_based";
 export type TedVideoProvider = "youtube" | "vimeo" | "internal" | "external";
 export type TedSourceConfidence = "high" | "medium" | "low";
 export type TedSection = "theoretical" | "theoretical_practical";
@@ -13,7 +13,8 @@ export type TedImageType =
   | "mycology"
   | "culture"
   | "radiology"
-  | "composite";
+  | "composite"
+  | "immunofluorescence";
 export type TedImageMode = "single" | "multiple";
 
 export interface TedMatchingColumns {
