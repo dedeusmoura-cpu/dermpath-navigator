@@ -71,12 +71,17 @@ export function TedSessionPage() {
   const singleQuestionId = searchParams.get("questionId");
   const singleAreaId = searchParams.get("area");
   const areasParam = searchParams.get("areas") ?? "";
+  const anosParam = searchParams.get("anos") ?? "";
   const quantity = Number(searchParams.get("quantidade") ?? "5");
   const difficulty = parseDifficulty(searchParams.get("dificuldade"));
   const timerEnabled = searchParams.get("timer") === "1";
   const section = parseTedSection(searchParams.get("section"));
   const availableAreas = useMemo(() => getAreasBySection(section), [section]);
-  const sessionSignature = `${mode}|${singleQuestionId ?? ""}|${singleAreaId ?? ""}|${areasParam}|${quantity}|${difficulty}|${timerEnabled ? 1 : 0}|${section ?? ""}`;
+  const yearFilters = useMemo(
+    () => anosParam.split(",").map(Number).filter((n) => n > 0),
+    [anosParam],
+  );
+  const sessionSignature = `${mode}|${singleQuestionId ?? ""}|${singleAreaId ?? ""}|${areasParam}|${quantity}|${difficulty}|${timerEnabled ? 1 : 0}|${section ?? ""}|${anosParam}`;
 
   const selectedAreaIds = useMemo(() => {
     const queryAreas = areasParam.split(",").filter(Boolean);
@@ -93,10 +98,12 @@ export function TedSessionPage() {
         const areaMatch = selectedAreaIds.some((areaId) => matchesTedArea(question.area, areaId));
         const difficultyMatch = difficulty === "mista" || question.difficulty === difficulty;
         const sectionMatch = !section || question.section === section;
-        return areaMatch && difficultyMatch && sectionMatch;
+        const questionYear = parseInt(question.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10);
+        const yearMatch = yearFilters.length === 0 || yearFilters.includes(questionYear);
+        return areaMatch && difficultyMatch && sectionMatch && yearMatch;
       }),
     ).slice(0, Math.max(1, quantity));
-  }, [difficulty, quantity, section, selectedAreaIds, singleQuestionId]);
+  }, [difficulty, quantity, section, selectedAreaIds, singleQuestionId, yearFilters]);
 
   const [progress, setProgress] = useState(loadTedProgress());
   const [currentIndex, setCurrentIndex] = useState(0);

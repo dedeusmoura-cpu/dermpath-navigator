@@ -4,6 +4,7 @@ import { TedHeader } from "../components/ted/TedHeader";
 import { Layout } from "../components/Layout";
 import type { TedDifficulty, TedSection } from "../types/ted";
 import { getAreasBySection } from "../utils/tedProgress";
+import { tedQuestions } from "../data/ted";
 
 const quantityOptions = [5, 10, 20];
 const difficultyOptions: Array<{ value: TedDifficulty; label: string }> = [
@@ -18,10 +19,22 @@ export function TedRandomPage() {
   const [searchParams] = useSearchParams();
   const section = (searchParams.get("section") as TedSection | null) ?? undefined;
   const availableAreas = useMemo(() => getAreasBySection(section), [section]);
+
+  const availableYears = useMemo(() => {
+    const pool = section ? tedQuestions.filter((q) => q.section === section) : tedQuestions;
+    const years = new Set(
+      pool
+        .map((q) => parseInt(q.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10))
+        .filter((y) => y > 0),
+    );
+    return Array.from(years).sort((a, b) => b - a);
+  }, [section]);
+
   const [quantidade, setQuantidade] = useState(10);
   const [dificuldade, setDificuldade] = useState<TedDifficulty>("mista");
   const [comTimer, setComTimer] = useState(false);
   const [selectedAreas, setSelectedAreas] = useState<string[]>(availableAreas.map((area) => area.id));
+  const [selectedYears, setSelectedYears] = useState<number[]>([]);
 
   useEffect(() => {
     setSelectedAreas(availableAreas.map((area) => area.id));
@@ -33,10 +46,17 @@ export function TedRandomPage() {
     );
   }
 
+  function toggleYear(year: number) {
+    setSelectedYears((current) =>
+      current.includes(year) ? current.filter((y) => y !== year) : [...current, year],
+    );
+  }
+
   function startRandomTraining() {
     const areaParam = selectedAreas.length ? selectedAreas.join(",") : availableAreas.map((area) => area.id).join(",");
+    const anosParam = selectedYears.length ? `&anos=${selectedYears.join(",")}` : "";
     navigate(
-      `/treinamento-ted/sessao?modo=aleatorio&areas=${areaParam}&quantidade=${quantidade}&dificuldade=${dificuldade}&timer=${comTimer ? 1 : 0}${section ? `&section=${section}` : ""}`,
+      `/treinamento-ted/sessao?modo=aleatorio&areas=${areaParam}&quantidade=${quantidade}&dificuldade=${dificuldade}&timer=${comTimer ? 1 : 0}${section ? `&section=${section}` : ""}${anosParam}`,
     );
   }
 
@@ -101,6 +121,40 @@ export function TedRandomPage() {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-sm font-semibold text-ink">Ano da prova</p>
+                  {selectedYears.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedYears([])}
+                      className="text-xs font-semibold text-[#a36300] underline underline-offset-2"
+                    >
+                      Todos os anos
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {availableYears.map((year) => (
+                    <button
+                      key={year}
+                      type="button"
+                      onClick={() => toggleYear(year)}
+                      className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                        selectedYears.includes(year)
+                          ? "bg-[#1f2f4c] text-white"
+                          : "border border-[#efcc98] bg-[#fff8ec] text-[#a36300] hover:bg-white"
+                      }`}
+                    >
+                      {year}
+                    </button>
+                  ))}
+                </div>
+                {selectedYears.length === 0 && (
+                  <p className="text-xs text-steel">Nenhum selecionado = todos os anos incluídos.</p>
+                )}
               </div>
 
               <label className="flex items-center justify-between gap-4 rounded-[22px] border border-[#efdcc1] bg-[#fffaf2] px-4 py-4">
