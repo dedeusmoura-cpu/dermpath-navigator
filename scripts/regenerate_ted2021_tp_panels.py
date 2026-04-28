@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageEnhance, ImageFilter
 
 
 SOURCE_DIR = Path(r"C:\Dev\DermpathNav\tmp\ted2021_single_pages_png")
@@ -32,9 +32,9 @@ QUESTION_PAGE_MAP = {
 
 PAGE_CROP = (18, 54, 380, 602)
 CONTENT_CROP = (55, 40, -18, -35)
-OUTER_PADDING = 12
-INNER_GAP = 18
-TARGET_WIDTH = 900
+OUTER_PADDING = 4
+INNER_GAP = 8
+TARGET_WIDTH = 1320
 
 
 def build_mask(region: Image.Image) -> Image.Image:
@@ -111,6 +111,50 @@ def detect_blocks(screenshot: Image.Image):
     return blocks
 
 
+def trim_white_space(image: Image.Image):
+    rgb = image.convert("RGB")
+    width, height = rgb.size
+
+    def row_is_content(y):
+        for x in range(width):
+            r, g, b = rgb.getpixel((x, y))
+            if min(r, g, b) < 246:
+                return True
+        return False
+
+    def col_is_content(x):
+        for y in range(height):
+            r, g, b = rgb.getpixel((x, y))
+            if min(r, g, b) < 246:
+                return True
+        return False
+
+    top = 0
+    while top < height and not row_is_content(top):
+        top += 1
+
+    bottom = height - 1
+    while bottom >= top and not row_is_content(bottom):
+        bottom -= 1
+
+    left = 0
+    while left < width and not col_is_content(left):
+        left += 1
+
+    right = width - 1
+    while right >= left and not col_is_content(right):
+        right -= 1
+
+    return rgb.crop((max(0, left - 2), max(0, top - 2), min(width, right + 3), min(height, bottom + 3)))
+
+
+def enhance_block(image: Image.Image):
+    trimmed = trim_white_space(image)
+    enhanced = ImageEnhance.Contrast(trimmed).enhance(1.05)
+    enhanced = enhanced.filter(ImageFilter.UnsharpMask(radius=1.2, percent=140, threshold=2))
+    return enhanced
+
+
 def compose_panel(images):
     max_width = max(image.width for image in images)
     scaled = []
@@ -153,7 +197,7 @@ def main():
         for page_number in page_numbers:
             screenshot_path = SOURCE_DIR / f"page_{page_number:02d}.png"
             screenshot = Image.open(screenshot_path)
-            blocks.extend(detect_blocks(screenshot))
+            blocks.extend(enhance_block(block) for block in detect_blocks(screenshot))
 
         if not blocks:
             print(f"q{question_number:02d}: no visual blocks found")
