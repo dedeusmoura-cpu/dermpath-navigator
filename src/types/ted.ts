@@ -79,6 +79,7 @@ export interface TedQuestion {
   videoProvider: TedVideoProvider;
   isProvisional: boolean;
   isAnnulled?: boolean;
+  wasAnnulled?: boolean;
   sourceConfidence: TedSourceConfidence;
   tempoEstimado?: number;
 }

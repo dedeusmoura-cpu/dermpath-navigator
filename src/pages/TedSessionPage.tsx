@@ -138,6 +138,12 @@ export function TedSessionPage() {
     setSecondsElapsed(0);
   }, [sessionSignature]);
 
+  useEffect(() => {
+    if (isFinished) {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  }, [isFinished]);
+
   if (!filteredQuestions.length) {
     return (
       <Layout>

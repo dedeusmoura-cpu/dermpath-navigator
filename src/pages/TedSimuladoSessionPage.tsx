@@ -127,6 +127,14 @@ function SimuladoQuestionCard({
         {/* Statement */}
         <div className="rounded-[24px] border border-[#f2e2ca] bg-[#fffdfa] p-5">
           <div className="space-y-5">
+            {question.wasAnnulled ? (
+              <div className="flex items-start gap-2 rounded-[12px] border border-amber-300 bg-amber-50 px-3 py-2.5">
+                <span className="mt-px text-amber-500">⚠️</span>
+                <p className="text-xs leading-5 text-amber-800">
+                  Esta questão foi <strong>anulada</strong> no gabarito oficial do TED SBD e reativada com gabarito adaptado para fins didáticos.
+                </p>
+              </div>
+            ) : null}
             {formattedStatement.kind === "true_false" ? (
               <div className="space-y-4">
                 {formattedStatement.intro ? (
@@ -340,6 +348,7 @@ export function TedSimuladoSessionPage() {
 
   function handleFinish() {
     setIsFinished(true);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     const id = activeSimuladoIdRef.current;
     if (!id) return;
     const sim = buscarSimulado(id);
