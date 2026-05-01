@@ -49,6 +49,7 @@ export default function App() {
   const showBackButton = location.pathname !== "/";
   const isDermatiteQuizPage = location.pathname.startsWith("/quiz/dermatite");
   const isQuizSection = location.pathname.startsWith("/quiz");
+  const isTedPage = location.pathname.startsWith("/treinamento-ted");
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -86,7 +87,7 @@ export default function App() {
         message={language === "pt" ? "Para visualizar melhor o quiz, gire o celular para a horizontal." : "For a better quiz view, rotate your phone to landscape."}
       />
 
-      <header className="fixed inset-x-0 top-0 z-30 border-b border-sand/90 bg-white/92 shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur">
+      {!isTedPage && <header className="fixed inset-x-0 top-0 z-30 border-b border-sand/90 bg-white/92 shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-start justify-between gap-3 px-4 py-1.5 sm:px-6 lg:items-center">
           <NavLink to="/" className="block shrink-0">
             <img
@@ -162,9 +163,9 @@ export default function App() {
             </div>
           </div>
         </div>
-      </header>
+      </header>}
 
-      <main className="mx-auto max-w-7xl px-4 pb-6 pt-16 sm:px-6 sm:pt-24 lg:px-8">
+      <main className={`mx-auto max-w-7xl px-4 pb-6 sm:px-6 lg:px-8 ${isTedPage ? "pt-4" : "pt-16 sm:pt-24"}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/video-de-boas-vindas" element={<WelcomeVideoPage />} />

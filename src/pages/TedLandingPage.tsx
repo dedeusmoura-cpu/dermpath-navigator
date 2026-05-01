@@ -68,16 +68,13 @@ export function TedLandingPage() {
           navItems={[
             { to: "/treinamento-ted", label: "Início", end: true },
             { to: tedActionRoutes.areas, label: "Treinar por área" },
-            { to: tedActionRoutes.random, label: "Questões aleatórias" },
-            { to: tedActionRoutes.performance, label: "Meu desempenho" },
-            { to: tedActionRoutes.review, label: "Revisar erros" },
           ]}
         />
 
+        {/* Seletor de seção */}
         <section className="grid gap-4 lg:grid-cols-2">
           {(Object.keys(SECTION_COPY) as TedSection[]).map((section) => {
             const active = selectedSection === section;
-
             return (
               <Link
                 key={section}
@@ -85,87 +82,100 @@ export function TedLandingPage() {
                 aria-current={active ? "true" : undefined}
                 className={`group relative overflow-hidden rounded-[28px] border p-6 transition hover:-translate-y-1 ${
                   active
-                    ? "border-[#a9c8ff] bg-[linear-gradient(135deg,#eff5ff_0%,#e4eeff_100%)] shadow-[0_26px_60px_-36px_rgba(50,109,235,0.35)] hover:shadow-[0_30px_68px_-34px_rgba(50,109,235,0.4)]"
-                    : "border-[#efd9bb] bg-[linear-gradient(135deg,#fffdf8_0%,#fff8ef_100%)] shadow-[0_22px_48px_-34px_rgba(80,42,0,0.14)] hover:border-[#f0c98a] hover:shadow-[0_28px_58px_-32px_rgba(80,42,0,0.2)]"
+                    ? "border-[#1a4a3a] bg-[#0f2a22] shadow-[0_26px_60px_-28px_rgba(15,42,34,0.5)] hover:shadow-[0_32px_68px_-26px_rgba(15,42,34,0.6)]"
+                    : "border-[#efd9bb] bg-white shadow-[0_22px_48px_-34px_rgba(80,42,0,0.14)] hover:border-[#f0c98a] hover:shadow-[0_28px_58px_-32px_rgba(80,42,0,0.20)]"
                 }`}
               >
+                {active && (
+                  <span className="mb-3 inline-block rounded-md border border-[#2a7a5a] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#4ecb91]">
+                    Seção ativa
+                  </span>
+                )}
                 <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="font-serif text-3xl text-ink">{SECTION_COPY[section].title}</h3>
-                    {active ? (
-                      <span className="rounded-full border border-[#adc8ff] bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1A47BF] shadow-[0_10px_24px_-18px_rgba(26,71,191,0.55)]">
-                        Seção ativa
-                      </span>
-                    ) : null}
-                  </div>
-                  <p className="max-w-2xl text-sm leading-7 text-steel">{SECTION_COPY[section].body}</p>
+                  <h3 className={`font-serif text-2xl ${active ? "text-white" : "text-ink"}`}>
+                    {SECTION_COPY[section].title}
+                  </h3>
+                  <p className={`text-sm leading-7 ${active ? "text-white/55" : "text-steel"}`}>
+                    {SECTION_COPY[section].body}
+                  </p>
                 </div>
                 <span
-                  className={`mt-5 inline-flex rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                  className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm font-semibold transition ${
                     active
-                      ? "border-[#1A47BF] bg-[#1A47BF] text-white group-hover:bg-[#245FE7]"
-                      : "border-[#f0ba69] bg-white/92 text-[#b96d00] group-hover:border-[#e79a31] group-hover:bg-[#fff3dc]"
+                      ? "bg-[#1d9e6a] text-white group-hover:bg-[#22b87a]"
+                      : "border border-[#d6c9b0] text-steel group-hover:border-[#b96d00] group-hover:text-[#b96d00]"
                   }`}
                 >
                   {active ? "Seção ativa" : "Selecionar seção"}
                 </span>
+                {/* Motivo decorativo — apenas no card ativo */}
+                {active && (
+                  <>
+                    <div className="pointer-events-none absolute bottom-[-20px] right-[-20px] h-28 w-28 rounded-full border-2 border-white/8" />
+                    <div className="pointer-events-none absolute bottom-[-6px] right-[-6px] h-14 w-14 rounded-full border border-white/6" />
+                  </>
+                )}
               </Link>
             );
           })}
         </section>
 
-        <section className="space-y-2 rounded-[24px] border border-[#e8edf7] bg-white/78 px-5 py-4 shadow-[0_18px_42px_-34px_rgba(31,47,76,0.22)]">
-          <h2 className="font-serif text-2xl text-ink">Como deseja treinar?</h2>
-          <p className="text-sm leading-7 text-steel">Escolha uma opção para começar usando a seção ativa.</p>
-        </section>
-
+        {/* Ações primárias */}
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <TedModeCard
-            to={tedActionRoutes.areas}
-            title="Treinar por área"
-            body="Escolha um tema e evolua com foco na seção ativa."
-            cta="Explorar"
-            tone="primary"
-          />
-          <TedModeCard
-            to={tedActionRoutes.random}
-            title="Questões aleatórias"
-            body="Monte um treino com dificuldade e áreas sob medida, usando a seção selecionada."
-            cta="Configurar"
-          />
           <TedModeCard
             to={tedActionRoutes.simulado}
             title="Mini-Simulado"
             body="Responda todas as questões sem feedback e veja o gabarito completo no final."
             cta="Simular"
-            tone="primary"
+            icon="📋"
+            tone="featured"
           />
           <TedModeCard
-            to="/treinamento-ted/meus-simulados"
-            title="Meus Simulados"
-            body="Retome simulados salvos, veja resultados anteriores ou refaça um treino."
-            cta="Ver salvos"
-            tone="primary"
+            to={tedActionRoutes.random}
+            title="Treinar"
+            body="Questões com feedback imediato. Configure a dificuldade e as áreas antes de começar."
+            cta="Treinar"
+            icon="⚡"
           />
           <TedModeCard
-            to={tedActionRoutes.performance}
-            title="Meu desempenho"
-            body="Acompanhe seu volume de treino e acurácia dentro da seção selecionada."
-            cta="Analisar"
-          />
-          <TedModeCard
-            to={tedActionRoutes.review}
-            title="Revisar erros"
-            body="Retome questões erradas ou marcadas mantendo o filtro da seção ativa."
-            cta="Revisar"
+            to={tedActionRoutes.areas}
+            title="Treinar por área"
+            body="Escolha um tema específico e evolua com foco na seção ativa."
+            cta="Explorar"
+            icon="🔬"
           />
         </section>
 
-        <section className="grid gap-4 lg:grid-cols-3">
+        {/* Ações secundárias */}
+        <section className="grid gap-3 sm:grid-cols-3">
+          {[
+            { to: "/treinamento-ted/meus-simulados", label: "Meus Simulados", sub: "Retome ou reveja salvos", icon: "💾" },
+            { to: tedActionRoutes.performance, label: "Meu desempenho", sub: "Acurácia e volume de treino", icon: "📈" },
+            { to: tedActionRoutes.review, label: "Revisar erros", sub: "Questões erradas ou marcadas", icon: "↩️" },
+          ].map(({ to, label, sub, icon }) => (
+            <Link
+              key={to}
+              to={to}
+              className="flex items-center gap-3 rounded-[18px] border border-[#efd9bb] bg-[#fffdf8] px-4 py-3 transition hover:-translate-y-0.5 hover:border-[#f0c98a] hover:shadow-[0_10px_28px_-18px_rgba(80,42,0,0.18)]"
+            >
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] bg-white/70 text-lg shadow-[0_2px_8px_-2px_rgba(80,42,0,0.12)]">
+                {icon}
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-ink">{label}</p>
+                <p className="text-xs text-steel">{sub}</p>
+              </div>
+            </Link>
+          ))}
+        </section>
+
+        <section className="grid gap-3 lg:grid-cols-3">
           <PerformanceCard
             label={`Acurácia ${sectionLabel}`}
             value={`${sectionProgress?.acuraciaGlobal ?? 0}%`}
             helper={`Visão rápida do seu desempenho em ${SECTION_COPY[selectedSection].shortLabel.toLowerCase()}.`}
+            currentNum={sectionProgress?.acuraciaGlobal ?? 0}
+            target={70}
           />
           <PerformanceCard
             label={`Respondidas ${sectionLabel}`}
