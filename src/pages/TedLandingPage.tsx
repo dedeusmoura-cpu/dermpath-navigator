@@ -28,7 +28,7 @@ const SECTION_COPY: Record<
   },
 };
 
-const TED_TEST_QUESTION_ROUTE = "/treinamento-ted/sessao?modo=demo&questionId=ted-tp-2023-q04&section=theoretical_practical";
+const TED_TEST_QUESTION_ROUTE = "/treinamento-ted/sessao?modo=demo&questionId=ted-dermatites-inflamatorias-046&section=theoretical";
 
 function parseTedSection(raw: string | null): TedSection | undefined {
   if (raw === "theoretical" || raw === "theoretical_practical") {
@@ -65,10 +65,6 @@ export function TedLandingPage() {
           title="Treinamento TED"
           subtitle={heroSubtitle}
           eyebrow="Treinamento comentado"
-          navItems={[
-            { to: "/treinamento-ted", label: "Início", end: true },
-            { to: tedActionRoutes.areas, label: "Treinar por área" },
-          ]}
         />
 
         {/* Seletor de seção */}
@@ -82,12 +78,12 @@ export function TedLandingPage() {
                 aria-current={active ? "true" : undefined}
                 className={`group relative overflow-hidden rounded-[28px] border p-6 transition hover:-translate-y-1 ${
                   active
-                    ? "border-[#1a4a3a] bg-[#0f2a22] shadow-[0_26px_60px_-28px_rgba(15,42,34,0.5)] hover:shadow-[0_32px_68px_-26px_rgba(15,42,34,0.6)]"
+                    ? "border-[#2a3f6a] bg-[#1a2640] shadow-[0_26px_60px_-28px_rgba(26,38,64,0.5)] hover:shadow-[0_32px_68px_-26px_rgba(26,38,64,0.6)]"
                     : "border-[#efd9bb] bg-white shadow-[0_22px_48px_-34px_rgba(80,42,0,0.14)] hover:border-[#f0c98a] hover:shadow-[0_28px_58px_-32px_rgba(80,42,0,0.20)]"
                 }`}
               >
                 {active && (
-                  <span className="mb-3 inline-block rounded-md border border-[#2a7a5a] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#4ecb91]">
+                  <span className="mb-3 inline-block rounded-md border border-[#3a5a9a] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7aabef]">
                     Seção ativa
                   </span>
                 )}
@@ -102,7 +98,7 @@ export function TedLandingPage() {
                 <span
                   className={`mt-5 inline-flex rounded-full px-4 py-2 text-sm font-semibold transition ${
                     active
-                      ? "bg-[#1d9e6a] text-white group-hover:bg-[#22b87a]"
+                      ? "bg-[#2e6fd4] text-white group-hover:bg-[#3a7fe0]"
                       : "border border-[#d6c9b0] text-steel group-hover:border-[#b96d00] group-hover:text-[#b96d00]"
                   }`}
                 >

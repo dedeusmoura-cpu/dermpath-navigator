@@ -40,6 +40,7 @@ import { TedSimuladoPage } from "./pages/TedSimuladoPage";
 import { TedSimuladoResultadoPage } from "./pages/TedSimuladoResultadoPage";
 import { TedSimuladoSessionPage } from "./pages/TedSimuladoSessionPage";
 import { MeusSimuladosPage } from "./pages/MeusSimuladosPage";
+import { TedBuscaPage } from "./pages/TedBuscaPage";
 import { WelcomeVideoPage } from "./pages/WelcomeVideoPage";
 
 export default function App() {
@@ -210,6 +211,7 @@ export default function App() {
           <Route path="/treinamento-ted/simulado/sessao" element={<TedSimuladoSessionPage />} />
           <Route path="/treinamento-ted/simulado/resultado" element={<TedSimuladoResultadoPage />} />
           <Route path="/treinamento-ted/meus-simulados" element={<MeusSimuladosPage />} />
+          <Route path="/treinamento-ted/busca" element={<TedBuscaPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
