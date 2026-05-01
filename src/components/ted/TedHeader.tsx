@@ -41,7 +41,7 @@ function normalize(s: string) {
     .replace(/[̀-ͯ]/g, "");
 }
 
-export function TedHeader({ title, subtitle, eyebrow = "Aprendizado guiado", navItems = defaultTedNavItems, actionSlot }: TedHeaderProps) {
+export function TedHeader({ title, navItems = defaultTedNavItems, actionSlot }: TedHeaderProps) {
   const { language, setLanguage } = useLanguage();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
