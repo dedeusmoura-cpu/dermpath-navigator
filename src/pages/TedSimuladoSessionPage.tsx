@@ -223,9 +223,11 @@ function SimuladoQuestionCard({
                   className="overflow-hidden rounded-2xl border border-sand/80 bg-paper shadow-sm"
                 >
                   <img src={image.src} alt={image.label} className="block h-auto w-full object-contain" />
-                  <figcaption className="mt-2 px-3 pb-3 text-center text-xs font-medium text-steel">
-                    {image.label}
-                  </figcaption>
+                  {image.label && (
+                    <figcaption className="mt-2 px-3 pb-3 text-center text-xs font-medium text-steel">
+                      {image.label}
+                    </figcaption>
+                  )}
                 </figure>
               ))}
             </div>

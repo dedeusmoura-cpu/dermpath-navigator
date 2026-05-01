@@ -8077,10 +8077,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q12_f1.jpg" },
+      { id: "f1", label: "Lesão clínica e histopatológico.", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q12_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q12_f1.jpg" },
+      { id: "f1", label: "Lesão clínica e histopatológico.", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q12_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8165,10 +8165,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q14_f1.jpg" },
+      { id: "f1", label: "Lesão clínica e histopatológico.", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q14_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q14_f1.jpg" },
+      { id: "f1", label: "Lesão clínica e histopatológico.", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q14_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8565,10 +8565,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão facial e histopatologia (HE — granuloma tuberculoide + nervo)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q10_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q10_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão facial e histopatologia (HE — granuloma tuberculoide + nervo)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q10_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q10_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8608,10 +8608,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Histopatologia (HE — melanócitos atípicos juncionais e pagetoide)", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q11_f1.jpg" },
+      { id: "f1", label: "", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q11_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Histopatologia (HE — melanócitos atípicos juncionais e pagetoide)", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q11_f1.jpg" },
+      { id: "f1", label: "", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q11_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8652,10 +8652,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica com teste da histamina e HE (infiltrado perineural/perivascular)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q20_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q20_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica com teste da histamina e HE (infiltrado perineural/perivascular)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q20_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q20_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8696,10 +8696,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica (lactente) e HE (hiperceratose com ácaros e ovos)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q21_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q21_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica (lactente) e HE (hiperceratose com ácaros e ovos)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q21_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q21_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8740,10 +8740,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesões clínicas — pênis e antebraço", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q22_f1.jpg" },
+      { id: "f1", label: "", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q22_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesões clínicas — pênis e antebraço", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q22_f1.jpg" },
+      { id: "f1", label: "", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q22_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8784,10 +8784,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica genital e HE (acantólise suprabasal)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q25_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q25_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica genital e HE (acantólise suprabasal)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q25_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q25_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8811,16 +8811,16 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
   },
   {
     id: "ted-tp-2016-q27",
-    slug: "nevo-epidermico-verrucoso-linear-inflamatorio-2016-q27",
+    slug: "pitiríase-rubra-pilar-crianca-mmii-2016-q27",
     questionNumber: 27,
-    shortTitle: "NEVIL — nevo epidérmico verrucoso linear inflamatório",
+    shortTitle: "Pitiríase rubra pilar — criança, lesões nos MMII",
     sourceType: "sbd_exam",
     sourceLabel: "TED SBD 2016 – Teórico-Prática",
     section: "theoretical_practical",
-    area: "Genodermatoses",
-    subarea: "Hamartomas epiteliais / Nevos epidérmicos",
+    area: "Dermatoses inflamatórias",
+    subarea: "Pitiríase rubra pilar",
     difficulty: "avancada",
-    tags: ["NEVIL", "ILVEN", "nevo epidérmico verrucoso linear inflamatório", "hiperceratose", "paraceratose alternada", "ortoceratos", "histopatologia", "criança"],
+    tags: ["pitiríase rubra pilar", "PRP", "hiperceratose folicular", "paraqueratose alternada", "histopatologia", "criança", "MMII"],
     statementType: "text_with_image",
     statement:
       "Considere o caso clínico a seguir.\n\nPaciente, sexo feminino, 12 anos de idade, com quadro clínico iniciado aos 10 anos de idade, apresentando lesões e exame histopatológico representados a seguir.\n\nQual é o diagnóstico mais provável?",
@@ -8828,26 +8828,26 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica (MMII) e HE (alternância paraceratose/ortoceratos, espongiose)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q27_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q27_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica (MMII) e HE (alternância paraceratose/ortoceratos, espongiose)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q27_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q27_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
-      { id: "A", text: "Nevo epidérmico verrucoso linear inflamatório (NEVIL)." },
-      { id: "B", text: "Psoríase linear." },
-      { id: "C", text: "Líquen estriado." },
+      { id: "A", text: "Pitiríase rubra pilar." },
+      { id: "B", text: "Líquen estriado." },
+      { id: "C", text: "Nevo epidérmico verrucoso." },
       { id: "D", text: "Ictiose lamelar." },
     ],
     correctOption: "A",
     wasAnnulled: true,
     explanationShort:
-      "O NEVIL (ILVEN) apresenta na HE alternância característica de áreas de paraceratose com hipogranulosa e áreas de ortoceratos com granulosa preservada — padrão em xadrez exclusivo dessa entidade. Clinicamente são placas verrucosas lineares pruriginosas, refratárias ao tratamento, de início na infância.",
-    keyPoint: "NEVIL/ILVEN: HE com alternância de paraceratose (hipogranulosa) e ortoceratos (granulosa normal) em padrão alternado — sinal histopatológico patognomônico. Clinicamente: nevo linear verrucoso pruriginoso, início infância, distribuição blaschkóide. Resistente a corticosteroide tópico. Diferencial: psoríase linear (sem alternância), líquen estriado (autolimitado).",
-    teacherComment: "Questão anulada no gabarito oficial do TED SBD 2016 e reativada com gabarito adaptado. O NEVIL é reconhecido pelo padrão em xadrez (alternância paraceratose/ortoceratos) na HE — achado que não é visto em psoríase linear nem em ictiose lamelar. A localização linear blaschkóide e o início na infância completam o diagnóstico.",
-    videoCommentTitle: "Q27 — NEVIL: histopatologia com alternância paraceratose/ortoceratos | TED SBD 2016",
+      "A pitiríase rubra pilar (PRP) apresenta na HE paraqueratose alternada vertical e horizontal (padrão em xadrez — alternância de paraceratose e ortoceratos nas direções vertical e horizontal), tampões córneos foliculares e acantose moderada. Na criança pode ter apresentação eritrodérmica com ilhas de pele sã (padrão clássico de tipo III/IV).",
+    keyPoint: "Pitiríase rubra pilar: HE com paraqueratose alternada em xadrez (vertical e horizontal), tampões córneos foliculares, acantose. Tipos: I (adulto clássico), II (adulto atípico), III (juvenil clássico), IV (juvenil circunscrito), V (atípico familiar), VI (associado a HIV). Diferencial: psoríase (sem alternância, sem tampões foliculares), ictiose lamelar (escama lamelar, sem alternância).",
+    teacherComment: "Questão anulada no gabarito oficial do TED SBD 2016 e reativada com gabarito adaptado. Pitiríase rubra pilar: o padrão de paraqueratose alternada em xadrez (horizontal e vertical) é o marco histopatológico diferencial da PRP. A associação clínica — eritrodermia com ilhas de pele sã + hiperceratose palmoplantar alaranjada — complementa o diagnóstico.",
+    videoCommentTitle: "Q27 — Pitiríase rubra pilar: histopatologia | TED SBD 2016",
     videoCommentUrl: "PREENCHER_LINK_VIDEO",
     videoProvider: "youtube",
     isProvisional: false,
@@ -8872,10 +8872,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica (MMII) e HE (paniculite septal — granuloma de Miescher)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q30_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q30_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica (MMII) e HE (paniculite septal — granuloma de Miescher)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q30_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q30_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8916,10 +8916,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica (couro cabeludo) e HE (glândulas sebáceas hiperplásicas + apócrinas ectópicas)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q37_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q37_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica (couro cabeludo) e HE (glândulas sebáceas hiperplásicas + apócrinas ectópicas)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q37_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q37_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8960,10 +8960,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica e HE (células-sombra + células basaloides + calcificação)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q38_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q38_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica e HE (células-sombra + células basaloides + calcificação)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q38_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q38_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -9004,10 +9004,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica — pápulas anulares nas mãos", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q39_f1.jpg" },
+      { id: "f1", label: "", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q39_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica — pápulas anulares nas mãos", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q39_f1.jpg" },
+      { id: "f1", label: "", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q39_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -9048,10 +9048,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica (máculas acastanhadas) e HE (mastócitos na derme)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q40_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q40_f1.jpg" },
     ],
     images: [
-      { id: "f1", label: "Lesão clínica (máculas acastanhadas) e HE (mastócitos na derme)", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q40_f1.jpg" },
+      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q40_f1.jpg" },
     ],
     promptImageUrl: null,
     supportImageUrl: null,
