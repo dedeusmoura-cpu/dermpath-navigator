@@ -13,3 +13,6 @@ android/build/
 
 # Claude Code local config
 .claude/settings.local.json
+
+# Arquivos intermediários de extração de imagens
+*_extracted_*
