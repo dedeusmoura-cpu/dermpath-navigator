@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
-const youtubeVideoUrl = "https://youtu.be/hOPIPuZTUH8";
-const youtubeThumbnailUrl = "https://img.youtube.com/vi/hOPIPuZTUH8/maxresdefault.jpg";
+const youtubeVideoUrl = "https://youtu.be/iFJevx18PsI";
+const youtubeThumbnailUrl = "https://img.youtube.com/vi/iFJevx18PsI/maxresdefault.jpg";
 
 export function WelcomeVideoPage() {
   const { language, t } = useLanguage();

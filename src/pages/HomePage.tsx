@@ -129,7 +129,7 @@ export function HomePage() {
             <div className="overflow-hidden rounded-[24px] border border-sand bg-paper shadow-sm">
               <div className="aspect-video w-full">
                 <iframe
-                  src="https://www.youtube.com/embed/hOPIPuZTUH8"
+                  src="https://www.youtube.com/embed/iFJevx18PsI"
                   title="Video de Boas Vindas - DermPath Navigator"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

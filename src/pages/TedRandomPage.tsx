@@ -6,7 +6,7 @@ import type { TedDifficulty, TedSection } from "../types/ted";
 import { getAreasBySection } from "../utils/tedProgress";
 import { tedQuestions } from "../data/ted";
 
-const quantityOptions = [5, 10, 20];
+const quantityOptions = [5, 10, 20, 40, 60, 80];
 const difficultyOptions: Array<{ value: TedDifficulty; label: string }> = [
   { value: "facil", label: "Fácil" },
   { value: "intermediaria", label: "Intermediária" },
