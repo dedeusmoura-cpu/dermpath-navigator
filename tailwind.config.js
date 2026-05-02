@@ -18,8 +18,8 @@ export default {
         grid: "linear-gradient(to right, rgba(169, 122, 31, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(20, 27, 43, 0.04) 1px, transparent 1px)"
       },
       fontFamily: {
-        sans: ['\"Manrope\"', "ui-sans-serif", "system-ui"],
-        serif: ['\"Source Serif 4\"', "ui-serif", "Georgia"]
+        sans: ['"Plus Jakarta Sans"', "ui-sans-serif", "system-ui"],
+        serif: ['"Fraunces"', "ui-serif", "Georgia"]
       }
     }
   },

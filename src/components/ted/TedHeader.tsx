@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, type FormEvent } from "react";
 import type { ReactNode } from "react";
 import { Link, useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
-import dermPathLogo from "../../assets/DermpathNavigator.png";
+import dermPathLogo from "../../assets/dermpath-logo-final.png";
 import type { TedSection } from "../../types/ted";
 
 interface TedHeaderProps {
@@ -79,7 +79,7 @@ export function TedHeader({ title, actionSlot }: TedHeaderProps) {
         {/* Esquerda: logo + separador + título + Início/Voltar */}
         <div className="flex min-w-0 items-center gap-2">
           <Link to="/" className="shrink-0 opacity-90 transition hover:opacity-100">
-            <img src={dermPathLogo} alt="DermPath Navigator" className="h-auto max-h-[28px] w-auto object-contain" />
+            <img src={dermPathLogo} alt="DermPath Navigator" className="h-[28px] w-auto" />
           </Link>
           <div className="h-4 w-px shrink-0 bg-[#f1c487]" aria-hidden="true" />
           <h1 className="truncate font-serif text-lg text-ink">{title}</h1>
@@ -156,20 +156,23 @@ export function TedHeader({ title, actionSlot }: TedHeaderProps) {
         <nav className="flex flex-wrap items-center gap-2" aria-label="Navegação do Treinamento TED">
           {/* Grupo 1: Treinar */}
           <div className="flex items-center gap-[2px] rounded-full border border-[#f1c487] bg-white/50 p-[3px]">
-            {navGroupTreinar.map((item) => {
+            {navGroupTreinar.map((item, i) => {
               const isActive = location.pathname === item.path;
               return (
-                <Link
-                  key={item.path}
-                  to={r(item.path)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                    isActive
-                      ? "bg-[#1f2f4c] text-white shadow-[0_10px_22px_-14px_rgba(31,47,76,0.7)]"
-                      : "text-[#8c5400] hover:bg-white/70"
-                  }`}
-                >
-                  {item.label}
-                </Link>
+                <>
+                  {i > 0 && <div key={`sep-t-${i}`} className="h-4 w-px bg-[#f1c487]" aria-hidden="true" />}
+                  <Link
+                    key={item.path}
+                    to={r(item.path)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                      isActive
+                        ? "bg-[#1f2f4c] text-white shadow-[0_10px_22px_-14px_rgba(31,47,76,0.7)]"
+                        : "text-[#8c5400] hover:bg-white/70"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </>
               );
             })}
           </div>
@@ -179,20 +182,23 @@ export function TedHeader({ title, actionSlot }: TedHeaderProps) {
 
           {/* Grupo 2: Histórico */}
           <div className="flex items-center gap-[2px] rounded-full border border-[#f1c487] bg-white/50 p-[3px]">
-            {navGroupHistorico.map((item) => {
+            {navGroupHistorico.map((item, i) => {
               const isActive = location.pathname === item.path;
               return (
-                <Link
-                  key={item.path}
-                  to={item.noSection ? item.path : r(item.path)}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
-                    isActive
-                      ? "bg-[#1f2f4c] text-white shadow-[0_10px_22px_-14px_rgba(31,47,76,0.7)]"
-                      : "text-[#8c5400] hover:bg-white/70"
-                  }`}
-                >
-                  {item.label}
-                </Link>
+                <>
+                  {i > 0 && <div key={`sep-h-${i}`} className="h-4 w-px bg-[#f1c487]" aria-hidden="true" />}
+                  <Link
+                    key={item.path}
+                    to={item.noSection ? item.path : r(item.path)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                      isActive
+                        ? "bg-[#1f2f4c] text-white shadow-[0_10px_22px_-14px_rgba(31,47,76,0.7)]"
+                        : "text-[#8c5400] hover:bg-white/70"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </>
               );
             })}
           </div>

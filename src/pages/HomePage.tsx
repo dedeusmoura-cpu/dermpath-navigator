@@ -183,10 +183,10 @@ function HomeActionCard({
   return (
     <Link
       to={to}
-      className="group flex h-full min-h-[180px] flex-col rounded-[28px] sm:min-h-[260px] border border-sand/90 bg-white px-5 py-5 shadow-[0_22px_48px_-30px_rgba(20,27,43,0.28)] transition hover:-translate-y-1 hover:shadow-[0_30px_62px_-28px_rgba(20,27,43,0.4)]"
+      className="group flex h-full min-h-[180px] flex-col rounded-[28px] sm:min-h-[260px] border border-sand/90 bg-white px-5 py-5 shadow-[0_22px_48px_-30px_rgba(20,27,43,0.28)] transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_34px_68px_-24px_rgba(20,27,43,0.44)]"
     >
       <div
-        className={`relative mb-5 mx-auto box-border flex h-20 w-full max-w-[278px] items-center justify-center overflow-hidden rounded-full shadow-[0_26px_54px_-24px_rgba(20,27,43,0.8)] ring-1 ring-accent/20 transition-colors bg-gradient-to-r px-5 py-4 ${accentClassName} ${hoverAccentClassName}`}
+        className={`relative mb-5 mx-auto box-border flex h-20 w-full max-w-[278px] items-center justify-center overflow-hidden rounded-full shadow-[0_26px_54px_-24px_rgba(20,27,43,0.8)] ring-1 ring-accent/20 transition-all duration-200 ease-out group-hover:scale-[1.04] group-hover:brightness-110 bg-gradient-to-r px-5 py-4 ${accentClassName} ${hoverAccentClassName}`}
       >
         {imageSrc ? (
           badgeLabel ? (

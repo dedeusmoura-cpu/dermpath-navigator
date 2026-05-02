@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { PerformanceCard } from "../components/ted/PerformanceCard";
 import { TedHeader } from "../components/ted/TedHeader";
@@ -106,10 +107,10 @@ export function TedLandingPage() {
                 </span>
                 {/* Motivo decorativo — apenas no card ativo */}
                 {active && (
-                  <>
-                    <div className="pointer-events-none absolute bottom-[-20px] right-[-20px] h-28 w-28 rounded-full border-2 border-white/8" />
-                    <div className="pointer-events-none absolute bottom-[-6px] right-[-6px] h-14 w-14 rounded-full border border-white/6" />
-                  </>
+                  <React.Fragment key={section}>
+                    <div className="section-circle-outer pointer-events-none absolute bottom-[-20px] right-[-20px] h-28 w-28 rounded-full border-2 border-white/8" style={{ transformOrigin: 'center' }} />
+                    <div className="section-circle-inner pointer-events-none absolute bottom-[-6px] right-[-6px] h-14 w-14 rounded-full border border-white/6" style={{ transformOrigin: 'center' }} />
+                  </React.Fragment>
                 )}
               </Link>
             );
