@@ -18,12 +18,6 @@ const SECTION_LABELS: Record<TedSection, string> = {
   theoretical_practical: "Teórico-Práticas",
 };
 
-function normalize(s: string) {
-  return s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "");
-}
 
 export function TedHeader({ title, actionSlot }: TedHeaderProps) {
   const { language, setLanguage } = useLanguage();
