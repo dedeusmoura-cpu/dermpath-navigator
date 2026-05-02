@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import dermPathNavigatorBrandImage from "./assets/DermpathNavigator.png";
+import dermPathLogo from "./assets/dermpath-logo-final.png";
 import quizButtonImage from "./assets/Quiz-branco.png";
 import { MobileLandscapeHint } from "./components/MobileLandscapeHint";
 import { useLanguage } from "./context/LanguageContext";
@@ -90,11 +90,11 @@ export default function App() {
 
       {!isTedPage && <header className="fixed inset-x-0 top-0 z-30 border-b border-sand/90 bg-white/92 shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-start justify-between gap-3 px-4 py-1.5 sm:px-6 lg:items-center">
-          <NavLink to="/" className="block shrink-0">
+          <NavLink to="/" className="shrink-0">
             <img
-              src={dermPathNavigatorBrandImage}
+              src={dermPathLogo}
               alt={t("home_title")}
-              className="h-auto max-h-[42px] w-auto object-contain sm:max-h-[58px] lg:max-h-[64px] xl:max-h-[68px]"
+              className="h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"
             />
           </NavLink>
 
@@ -113,7 +113,7 @@ export default function App() {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `rounded-full px-3 py-1 text-sm font-semibold transition ${
+                  `nav-link-hover rounded-full px-3 py-1 text-sm font-semibold transition ${
                     isActive
                       ? "bg-ink text-white shadow-[0_12px_28px_-18px_rgba(20,27,43,0.9)]"
                       : "text-steel hover:bg-white hover:text-accent"
@@ -125,7 +125,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={openSearchPanel}
-                className="rounded-full px-3 py-1 text-sm font-semibold text-steel transition hover:bg-white hover:text-accent"
+                className="nav-link-hover rounded-full px-3 py-1 text-sm font-semibold text-steel transition hover:bg-white hover:text-accent"
               >
                 {t("nav_search")}
               </button>
@@ -133,7 +133,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={goBack}
-                  className="rounded-full px-3 py-1 text-sm font-semibold text-steel transition hover:bg-white hover:text-accent"
+                  className="nav-link-hover rounded-full px-3 py-1 text-sm font-semibold text-steel transition hover:bg-white hover:text-accent"
                 >
                   {t("back")}
                 </button>
