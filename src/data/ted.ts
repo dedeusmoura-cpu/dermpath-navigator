@@ -12568,9 +12568,6 @@ const tedCompletoNewAreas = [
   },
 ] as const;
 
-// IDs of all new-area entries (none exist in the question bank yet)
-const TED_COMPLETO_NEW_IDS = new Set(tedCompletoNewAreas.map((a) => a.id));
-
 // Group definitions: each entry lists area IDs in display order.
 // IDs that exist in tedAreaCatalog will resolve from the real question bank;
 // IDs from tedCompletoNewAreas will render as "Em breve" (0 questions).
@@ -12656,7 +12653,7 @@ function buildComingSoonArea(def: { id: string; nome: string; descricao: string 
 export function getTedCompletoGroups(section?: TedSection): import("../types/ted").TedAreaGroup[] {
   const existingAreas = buildTedAreas(getTedQuestionsBySection(section));
   const existingById = new Map(existingAreas.map((a) => [a.id, a]));
-  const newAreasById = new Map(tedCompletoNewAreas.map((a) => [a.id, buildComingSoonArea(a)]));
+  const newAreasById = new Map<string, import("../types/ted").TedArea>(tedCompletoNewAreas.map((a) => [a.id, buildComingSoonArea(a)]));
 
   return TED_COMPLETO_GROUP_DEFS.map((groupDef) => ({
     id: groupDef.id,
