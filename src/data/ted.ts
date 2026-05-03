@@ -6415,7 +6415,7 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     keyPoint: "Esclerodermia linear: fibrose e espessamento colágeno com correlação topográfica em faixa.",
     teacherComment: "A histologia esclerodermiforme deve ser integrada ao padrão clínico linear.",
     videoCommentTitle: "Questão 10 comentada - Esclerodermia cutânea linear",
-    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoCommentUrl: "https://youtu.be/h5CkXRPzoBg",
     videoProvider: "youtube",
     isProvisional: false,
     sourceConfidence: "high",
