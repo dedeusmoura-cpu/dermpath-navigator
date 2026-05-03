@@ -322,17 +322,21 @@ export function TedSimuladoSessionPage() {
     const anosParam = searchParams.get("anos") ?? "";
     const yearFilters = anosParam.split(",").map(Number).filter((n) => n > 0);
 
-    return shuffleOnce(
-      tedQuestions.filter((q) => {
-        const areaMatch = areaIds.length === 0 || areaIds.some((id) => matchesTedArea(q.area, id));
-        const diffMatch = difficulty === "mista" || q.difficulty === difficulty;
-        const secMatch = !sec || q.section === sec;
-        const yearMatch =
-          yearFilters.length === 0 ||
-          yearFilters.includes(parseInt(q.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10));
-        return areaMatch && diffMatch && secMatch && yearMatch;
-      }),
-    ).slice(0, quantity);
+    const filtered = tedQuestions.filter((q) => {
+      const areaMatch = areaIds.length === 0 || areaIds.some((id) => matchesTedArea(q.area, id));
+      const diffMatch = difficulty === "mista" || q.difficulty === difficulty;
+      const secMatch = !sec || q.section === sec;
+      const yearMatch =
+        yearFilters.length === 0 ||
+        yearFilters.includes(parseInt(q.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10));
+      return areaMatch && diffMatch && secMatch && yearMatch;
+    });
+    // Um único ano selecionado E quantidade ≥ total disponível → ordem original da prova (Q1→Q40)
+    const useOriginalOrder = yearFilters.length === 1 && quantity >= filtered.length;
+    const ordered = useOriginalOrder
+      ? [...filtered].sort((a, b) => a.questionNumber - b.questionNumber)
+      : shuffleOnce(filtered);
+    return ordered.slice(0, quantity);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -93,16 +93,20 @@ export function TedSessionPage() {
       return tedQuestions.filter((question) => question.id === singleQuestionId && (!section || question.section === section));
     }
 
-    return shuffleQuestions(
-      tedQuestions.filter((question) => {
-        const areaMatch = selectedAreaIds.some((areaId) => matchesTedArea(question.area, areaId));
-        const difficultyMatch = difficulty === "mista" || question.difficulty === difficulty;
-        const sectionMatch = !section || question.section === section;
-        const questionYear = parseInt(question.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10);
-        const yearMatch = yearFilters.length === 0 || yearFilters.includes(questionYear);
-        return areaMatch && difficultyMatch && sectionMatch && yearMatch;
-      }),
-    ).slice(0, Math.max(1, quantity));
+    const filtered = tedQuestions.filter((question) => {
+      const areaMatch = selectedAreaIds.some((areaId) => matchesTedArea(question.area, areaId));
+      const difficultyMatch = difficulty === "mista" || question.difficulty === difficulty;
+      const sectionMatch = !section || question.section === section;
+      const questionYear = parseInt(question.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10);
+      const yearMatch = yearFilters.length === 0 || yearFilters.includes(questionYear);
+      return areaMatch && difficultyMatch && sectionMatch && yearMatch;
+    });
+    // Um único ano selecionado E quantidade ≥ total disponível → ordem original da prova (Q1→Q40)
+    const useOriginalOrder = yearFilters.length === 1 && quantity >= filtered.length;
+    const ordered = useOriginalOrder
+      ? [...filtered].sort((a, b) => a.questionNumber - b.questionNumber)
+      : shuffleQuestions(filtered);
+    return ordered.slice(0, Math.max(1, quantity));
   }, [difficulty, quantity, section, selectedAreaIds, singleQuestionId, yearFilters]);
 
   const [progress, setProgress] = useState(loadTedProgress());
