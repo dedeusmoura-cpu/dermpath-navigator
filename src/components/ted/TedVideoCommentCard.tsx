@@ -5,9 +5,23 @@ interface TedVideoCommentCardProps {
   helperText: string;
 }
 
+function toEmbedUrl(url: string): string | null {
+  // Already an embed URL
+  if (/youtube\.com\/embed\//.test(url)) return url;
+  if (/player\.vimeo\.com\/video\//.test(url)) return url;
+
+  // youtu.be/ID or youtube.com/watch?v=ID or youtube.com/shorts/ID
+  const ytMatch = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([A-Za-z0-9_-]{11})/,
+  );
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+
+  return null;
+}
+
 export function TedVideoCommentCard({ videoCommentTitle, videoCommentUrl, videoProvider, helperText }: TedVideoCommentCardProps) {
-  const hasEmbeddableVideo =
-    /youtube\.com\/embed\/|player\.vimeo\.com\/video\//.test(videoCommentUrl);
+  const embedUrl = toEmbedUrl(videoCommentUrl);
+  const hasEmbeddableVideo = embedUrl !== null;
 
   return (
     <section className="overflow-hidden rounded-[28px] border border-[#f0c889] bg-white shadow-[0_22px_48px_-34px_rgba(80,42,0,0.18)]">
@@ -24,7 +38,7 @@ export function TedVideoCommentCard({ videoCommentTitle, videoCommentUrl, videoP
           {hasEmbeddableVideo ? (
             <div className="aspect-video w-full">
               <iframe
-                src={videoCommentUrl}
+                src={embedUrl!}
                 title={videoCommentTitle}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
