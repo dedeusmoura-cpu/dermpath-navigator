@@ -12969,8 +12969,13 @@ export function getTedQuestionsBySection(section?: TedSection) {
   return section ? tedQuestions.filter((question) => question.section === section) : tedQuestions;
 }
 
+// Áreas excluídas do escopo "Dermatopatologia" — são clínicas/procedimentais,
+// acessíveis apenas via escopo "TED Completo" (getTedCompletoGroups).
+const AREAS_SOMENTE_TED_COMPLETO = new Set(["dermatologia-cirurgica"]);
+
 export function getTedAreasBySection(section?: TedSection) {
-  return buildTedAreas(getTedQuestionsBySection(section));
+  return buildTedAreas(getTedQuestionsBySection(section))
+    .filter((area) => !AREAS_SOMENTE_TED_COMPLETO.has(area.id));
 }
 
 // ── TED Completo – new clinical areas not yet in the question bank ─────────
