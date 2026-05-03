@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { TedHeader } from "../components/ted/TedHeader";
+import { TedVideoCommentCard } from "../components/ted/TedVideoCommentCard";
 import { tedQuestions } from "../data/ted";
 import type { TedQuestion } from "../types/ted";
 import { getAreaById } from "../utils/tedProgress";
@@ -127,6 +128,16 @@ function QuestionResultCard({ question, index, userOptionId }: QuestionResultCar
 
         {/* Explanation */}
         <p className="text-sm leading-7 text-steel">{question.explanationShort}</p>
+
+        {/* Video comment */}
+        {question.videoCommentUrl && question.videoCommentUrl !== "PREENCHER_LINK_VIDEO" && (
+          <TedVideoCommentCard
+            videoCommentTitle={question.videoCommentTitle}
+            videoCommentUrl={question.videoCommentUrl}
+            videoProvider={question.videoProvider}
+            helperText={question.teacherComment}
+          />
+        )}
       </div>
     </section>
   );
