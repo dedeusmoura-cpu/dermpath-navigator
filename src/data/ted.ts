@@ -6457,7 +6457,7 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     keyPoint: "Pênfigo foliáceo: acantólise superficial, sem bolha subepidérmica.",
     teacherComment: "A prova explora o diferencial entre pênfigo, escabiose crostosa e epidermólises agudas.",
     videoCommentTitle: "Questão 13 comentada - Pênfigo foliáceo",
-    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoCommentUrl: "https://youtu.be/1CkZdd0YBKU?si=3BI7oitGZvFwKe96",
     videoProvider: "youtube",
     isProvisional: false,
     sourceConfidence: "high",
