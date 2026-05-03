@@ -128,17 +128,19 @@ function QuestionResultCard({ question, index, userOptionId }: QuestionResultCar
 
         {/* Explanation */}
         <p className="text-sm leading-7 text-steel">{question.explanationShort}</p>
+      </div>
 
-        {/* Video comment */}
-        {question.videoCommentUrl && question.videoCommentUrl !== "PREENCHER_LINK_VIDEO" && (
+      {/* Video comment — inside the card, separated by a divider */}
+      {question.videoCommentUrl && question.videoCommentUrl !== "PREENCHER_LINK_VIDEO" && (
+        <div className="border-t border-[#f2dfc3] px-5 py-5">
           <TedVideoCommentCard
             videoCommentTitle={question.videoCommentTitle}
             videoCommentUrl={question.videoCommentUrl}
             videoProvider={question.videoProvider}
             helperText={question.teacherComment}
           />
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }
