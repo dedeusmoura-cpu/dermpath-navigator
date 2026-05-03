@@ -12849,9 +12849,27 @@ const QUESTION_TAXONOMY: Record<string, { area: string; subarea: string | null }
   "ted-teorica-2024-q66":  { area: "Doenças do tecido conjuntivo", subarea: "Artrite reumatoide / Manifestações cutâneas e histopatologia" },
   "ted-teorica-2024-q77":  { area: "Dermatoses vésico-bolhosas", subarea: "Pênfigo vulgar / Imunofluorescência e autoanticorpos" },
   "ted-teorica-2024-q78":  { area: "Dermatoses vésico-bolhosas", subarea: "Dermatite herpetiforme / Histopatologia e IFD" },
+  // TED 2025 TP — overrides de área específica
+  "ted-tp-2025-q17":  { area: "Micoses",                               subarea: "Micoses / Identificação de fungos" },
+  "ted-tp-2025-q26":  { area: "Hanseníase",                            subarea: "Hanseníase / Reações hansênicas" },
+  "ted-tp-2025-q27":  { area: "Micoses",                               subarea: "Micoses superficiais / Pitiríase versicolor" },
+  "ted-tp-2025-q30":  { area: "Micoses",                               subarea: "Dermatofitoses / Identificação" },
+  "ted-tp-2025-q33":  { area: "Micoses",                               subarea: "Micoses profundas / Cromomicose" },
+  "ted-tp-2025-q35":  { area: "Hanseníase",                            subarea: "Hanseníase / Testes diagnósticos" },
+  "ted-tp-2025-q37":  { area: "Infecções cutâneas",                    subarea: "Parasitoses / Tungíase" },
+  "ted-tp-2025-q11":  { area: "Dermatoses sistêmicas e metabólicas",   subarea: "Dermatoses nutricionais / Pelagra" },
+  "ted-tp-2025-q25":  { area: "Dermatologia cirúrgica e procedimentos", subarea: "Fototerapia / LASER e melanina" },
+  "ted-tp-2025-q36":  { area: "Dermatoses pustulosas e neutrofílicas",  subarea: "Dermatoses neutrofílicas / Sneddon-Wilkinson" },
+  "ted-tp-2025-q38":  { area: "Dermatoses sistêmicas e metabólicas",   subarea: "Síndromes paraneoplásicas / Carcinoide" },
 };
 
 const LEGACY_AREA_MAP: Record<string, string> = {
+  // Variações de capitalização de áreas do TED 2025 TP
+  "Tumores Cutâneos":                          "Neoplasias epiteliais e anexiais",
+  "Doenças Infecciosas":                       "Infecções cutâneas",
+  "Dermatologia Clínica":                      "Dermatoses inflamatórias",
+  "Cirurgia Dermatológica":                    "Dermatologia cirúrgica e procedimentos",
+  "Doenças do Tecido Conjuntivo":              "Dermatoses do tecido conjuntivo",
   "Doenças bolhosas":                          "Dermatoses vésico-bolhosas",
   "Dermatoses bolhosas":                       "Dermatoses vésico-bolhosas",
   "Dermatites inflamatórias":                  "Dermatoses inflamatórias",
