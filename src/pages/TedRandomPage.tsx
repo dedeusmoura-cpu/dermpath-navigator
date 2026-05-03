@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { TedHeader } from "../components/ted/TedHeader";
+import { ScopeSelector } from "../components/ted/ScopeSelector";
 import { Layout } from "../components/Layout";
-import type { TedDifficulty, TedSection } from "../types/ted";
+import type { TedDifficulty, TedQuestionScope, TedSection } from "../types/ted";
 import { getAreasBySection } from "../utils/tedProgress";
-import { tedQuestions } from "../data/ted";
+import { getTedCompletoGroups, tedQuestions } from "../data/ted";
 
 const quantityOptions = [5, 10, 20, 40, 60, 80];
 const difficultyOptions: Array<{ value: TedDifficulty; label: string }> = [
@@ -18,7 +19,18 @@ export function TedRandomPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const section = (searchParams.get("section") as TedSection | null) ?? undefined;
+
+  const [scope, setScope] = useState<TedQuestionScope>("dermatopatologia");
+
   const availableAreas = useMemo(() => getAreasBySection(section), [section]);
+
+  const tedCompletoAllAreas = useMemo(() => {
+    if (scope !== "ted_completo") return [];
+    return getTedCompletoGroups(section).flatMap((g) => g.areas);
+  }, [scope, section]);
+
+  const displayAreas = scope === "dermatopatologia" ? availableAreas : tedCompletoAllAreas;
+  const selectableAreas = displayAreas.filter((a) => !a.isComingSoon);
 
   const availableYears = useMemo(() => {
     const pool = section ? tedQuestions.filter((q) => q.section === section) : tedQuestions;
@@ -37,8 +49,11 @@ export function TedRandomPage() {
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
 
   useEffect(() => {
-    setSelectedAreas(availableAreas.map((area) => area.id));
-  }, [availableAreas]);
+    const ids = (scope === "dermatopatologia" ? availableAreas : tedCompletoAllAreas)
+      .filter((a) => !a.isComingSoon)
+      .map((a) => a.id);
+    setSelectedAreas(ids);
+  }, [scope, availableAreas, tedCompletoAllAreas]);
 
   function toggleArea(areaId: string) {
     setSelectedAreas((current) =>
@@ -53,7 +68,9 @@ export function TedRandomPage() {
   }
 
   function startRandomTraining() {
-    const areaParam = selectedAreas.length ? selectedAreas.join(",") : availableAreas.map((area) => area.id).join(",");
+    const areaParam = selectedAreas.length
+      ? selectedAreas.join(",")
+      : selectableAreas.map((area) => area.id).join(",");
     const anosParam = selectedYears.length ? `&anos=${selectedYears.join(",")}` : "";
     navigate(
       `/treinamento-ted/sessao?modo=aleatorio&areas=${areaParam}&quantidade=${quantidade}&dificuldade=${dificuldade}&timer=${comTimer ? 1 : 0}${section ? `&section=${section}` : ""}${anosParam}`,
@@ -71,6 +88,9 @@ export function TedRandomPage() {
               : "Monte uma sessão personalizada para desafiar o raciocínio em várias áreas e manter o treino sempre variado."
           }
         />
+
+        {/* Scope selector */}
+        <ScopeSelector value={scope} onChange={setScope} />
 
         <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[28px] border border-[#efd7b5] bg-white/94 p-6 shadow-panel">
@@ -190,7 +210,7 @@ export function TedRandomPage() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    onClick={() => setSelectedAreas(availableAreas.map((area) => area.id))}
+                    onClick={() => setSelectedAreas(selectableAreas.map((area) => area.id))}
                     className="rounded-full border border-[#efcc98] bg-[#fff7e9] px-4 py-2 text-sm font-semibold text-[#a36300]"
                   >
                     Todas
@@ -206,7 +226,25 @@ export function TedRandomPage() {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                {availableAreas.map((area) => {
+                {displayAreas.map((area) => {
+                  if (area.isComingSoon) {
+                    return (
+                      <div
+                        key={area.id}
+                        className="rounded-[22px] border border-dashed border-[#e8dfc8] bg-[#faf8f4] px-4 py-4 opacity-60"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="text-sm font-semibold text-steel">{area.nome}</h3>
+                            <span className="shrink-0 rounded-full bg-[#f0e8d8] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#a36300]">
+                              Em breve
+                            </span>
+                          </div>
+                          <p className="text-xs text-[#b8a890]">Questões em preparação</p>
+                        </div>
+                      </div>
+                    );
+                  }
                   const active = selectedAreas.includes(area.id);
                   return (
                     <button

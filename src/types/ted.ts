@@ -1,4 +1,5 @@
 export type TedDifficulty = "facil" | "intermediaria" | "avancada" | "mista" | "basica";
+export type TedQuestionScope = "dermatopatologia" | "ted_completo";
 export type TedSourceType = "sbd_exam" | "custom" | "adapted" | "mock_exam";
 export type TedStatementType = "text_only" | "text_with_image" | "matching_columns" | "clinical_case" | "histology_image" | "image_based";
 export type TedVideoProvider = "youtube" | "vimeo" | "internal" | "external";
@@ -37,6 +38,13 @@ export interface TedArea {
   descricao: string;
   numeroQuestoes: number;
   subareas: string[];
+  isComingSoon?: boolean;
+}
+
+export interface TedAreaGroup {
+  id: string;
+  nome: string;
+  areas: TedArea[];
 }
 
 export interface TedQuestion {

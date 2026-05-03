@@ -12488,6 +12488,189 @@ export function getTedAreasBySection(section?: TedSection) {
   return buildTedAreas(getTedQuestionsBySection(section));
 }
 
+// ── TED Completo – new clinical areas not yet in the question bank ─────────
+
+const tedCompletoNewAreas = [
+  // Grupo 1 – Dermatologia clínica / inflamação e alergia
+  {
+    id: "eczemas-urticaria-clinica",
+    nome: "Eczemas, urticária e dermatite de contato",
+    descricao: "Dermatite atópica, dermatite de contato alérgica e irritativa, urticária, angioedema e prurigos.",
+  },
+  {
+    id: "psoriase-papuloescamosas-clinica",
+    nome: "Psoríase e doenças papuloescamosas",
+    descricao: "Psoríase, pitiríase rósea, pitiríase rubra pilar, líquen plano clínico e doenças eritematoescamosas.",
+  },
+  {
+    id: "acne-rosácea-doencas-sebaceas",
+    nome: "Acne, rosácea e doenças sebáceas",
+    descricao: "Acne vulgar, rosácea, hidradenite supurativa, perifoliculite capitis e outros distúrbios sebáceos.",
+  },
+  {
+    id: "fotodermatologia-clinica",
+    nome: "Fotodermatologia e fotoproteção",
+    descricao: "Dermatoses fotoinduzidas, fotossensibilidade, fotoproteção e fototerapia clínica.",
+  },
+  {
+    id: "dermatologia-pediatrica",
+    nome: "Dermatologia pediátrica",
+    descricao: "Dermatoses específicas da infância, neonatais, exantemas virais e abordagem dermatológica pediátrica.",
+  },
+  // Grupo 2 – Infecções, parasitoses e IST
+  {
+    id: "infeccoes-bacterianas-ist",
+    nome: "Infecções bacterianas e IST",
+    descricao: "Piodermites, erisipela, celulite, sífilis, gonorreia, clamídia e outras infecções sexualmente transmissíveis.",
+  },
+  {
+    id: "infeccoes-virais-clinica",
+    nome: "Infecções virais",
+    descricao: "Herpes simples, varicela-zóster, HPV, molusco contagioso, exantemas virais e viroses emergentes.",
+  },
+  // Grupo 3 – Doenças autoimunes e sistêmicas
+  {
+    id: "lupus-doencas-colageno-clinica",
+    nome: "Lúpus e doenças do tecido conjuntivo – clínica",
+    descricao: "Lúpus eritematoso sistêmico e cutâneo, dermatomiosite, esclerodermia e síndrome de Sjögren do ponto de vista clínico.",
+  },
+  {
+    id: "farmacodermias-graves-clinica",
+    nome: "Farmacodermias graves",
+    descricao: "SSJ, NET, DRESS, pustulose exantemática aguda generalizada e outras reações graves a medicamentos.",
+  },
+  // Grupo 4 – Oncologia cutânea clínica
+  {
+    id: "dermatoscopia-diagnostico-clinico",
+    nome: "Dermatoscopia e diagnóstico clínico de tumores",
+    descricao: "Critérios dermatoscópicos, algoritmos diagnósticos e diagnóstico diferencial clínico de tumores cutâneos.",
+  },
+  {
+    id: "oncologia-cutanea-clinica",
+    nome: "Oncologia cutânea – abordagem clínica",
+    descricao: "Estadiamento, tratamento sistêmico, imunoterapia e seguimento de melanoma, CBC, CEC e linfomas cutâneos.",
+  },
+  // Grupo 5 – Cirurgia, procedimentos e estética
+  {
+    id: "cirurgia-tecnicas-retalhos",
+    nome: "Cirurgia dermatológica – técnicas e retalhos",
+    descricao: "Anestesia local, retalhos cutâneos, enxertos, curativos e princípios da reconstrução cirúrgica.",
+  },
+  {
+    id: "estetica-cosmetica-dermatologica",
+    nome: "Dermatologia cosmética e estética",
+    descricao: "Toxina botulínica, preenchedores, peelings químicos, microagulhamento e outros procedimentos estéticos.",
+  },
+  {
+    id: "farmacologia-terapeutica-dermatologica",
+    nome: "Farmacologia e terapêutica dermatológica",
+    descricao: "Corticosteroides tópicos e sistêmicos, imunossupressores, imunobiológicos e farmacologia aplicada à dermatologia.",
+  },
+] as const;
+
+// IDs of all new-area entries (none exist in the question bank yet)
+const TED_COMPLETO_NEW_IDS = new Set(tedCompletoNewAreas.map((a) => a.id));
+
+// Group definitions: each entry lists area IDs in display order.
+// IDs that exist in tedAreaCatalog will resolve from the real question bank;
+// IDs from tedCompletoNewAreas will render as "Em breve" (0 questions).
+const TED_COMPLETO_GROUP_DEFS = [
+  {
+    id: "clinica-inflamacao-alergia",
+    nome: "Dermatologia clínica – inflamação e alergia",
+    areaIds: [
+      "eczemas-urticaria-clinica",
+      "psoriase-papuloescamosas-clinica",
+      "acne-rosácea-doencas-sebaceas",
+      "fotodermatologia-clinica",
+      "dermatologia-pediatrica",
+      "dermatoses-inflamatorias",
+      "dermatoses-pustulosas-neutrofilicas",
+      "dermatoses-interface-liquenoides",
+    ],
+  },
+  {
+    id: "infeccoes-parasitoses",
+    nome: "Infecções, parasitoses e IST",
+    areaIds: [
+      "infeccoes-bacterianas-ist",
+      "infeccoes-virais-clinica",
+      "infeccoes-cutaneas",
+      "micoses",
+      "hanseniase",
+    ],
+  },
+  {
+    id: "autoimunes-sistemicas",
+    nome: "Doenças autoimunes, bolhosas e sistêmicas",
+    areaIds: [
+      "lupus-doencas-colageno-clinica",
+      "farmacodermias-graves-clinica",
+      "dermatoses-vesico-bolhosas",
+      "dermatoses-granulomatosas",
+      "vasculites-vasculopatias",
+      "paniculites",
+      "dermatoses-sistemicas-metabolicas",
+      "dermatoses-tecido-conjuntivo",
+    ],
+  },
+  {
+    id: "oncologia-cutanea",
+    nome: "Oncologia cutânea",
+    areaIds: [
+      "dermatoscopia-diagnostico-clinico",
+      "oncologia-cutanea-clinica",
+      "neoplasias-melanociticas",
+      "neoplasias-epiteliais-anexiais",
+      "neoplasias-mesenquimais",
+      "neoplasias-hematopoieticas",
+    ],
+  },
+  {
+    id: "cirurgia-procedimentos-fundamentos",
+    nome: "Cirurgia, procedimentos e fundamentos",
+    areaIds: [
+      "cirurgia-tecnicas-retalhos",
+      "estetica-cosmetica-dermatologica",
+      "farmacologia-terapeutica-dermatologica",
+      "dermatologia-cirurgica",
+      "alopecias-tricopatologia",
+      "genodermatoses-malformacoes",
+      "tecnicas-diagnosticas-complementares",
+      "alteracoes-histopatologicas-basicas",
+    ],
+  },
+] as const;
+
+function buildComingSoonArea(def: { id: string; nome: string; descricao: string }): import("../types/ted").TedArea {
+  return {
+    id: def.id,
+    nome: def.nome,
+    descricao: def.descricao,
+    numeroQuestoes: 0,
+    subareas: [],
+    isComingSoon: true,
+  };
+}
+
+export function getTedCompletoGroups(section?: TedSection): import("../types/ted").TedAreaGroup[] {
+  const existingAreas = buildTedAreas(getTedQuestionsBySection(section));
+  const existingById = new Map(existingAreas.map((a) => [a.id, a]));
+  const newAreasById = new Map(tedCompletoNewAreas.map((a) => [a.id, buildComingSoonArea(a)]));
+
+  return TED_COMPLETO_GROUP_DEFS.map((groupDef) => ({
+    id: groupDef.id,
+    nome: groupDef.nome,
+    areas: groupDef.areaIds
+      .map((areaId) => {
+        if (existingById.has(areaId)) return existingById.get(areaId)!;
+        if (newAreasById.has(areaId)) return newAreasById.get(areaId)!;
+        return null;
+      })
+      .filter((a): a is import("../types/ted").TedArea => a !== null),
+  }));
+}
+
 export const mockTedUserProgress: TedUserProgress = {
   totalRespondidas: 0,
   totalCorretas: 0,

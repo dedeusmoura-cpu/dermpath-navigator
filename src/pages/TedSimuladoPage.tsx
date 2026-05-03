@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { TedHeader } from "../components/ted/TedHeader";
+import { ScopeSelector } from "../components/ted/ScopeSelector";
 import { Layout } from "../components/Layout";
-import type { TedDifficulty, TedSection } from "../types/ted";
-import { tedQuestions } from "../data/ted";
+import type { TedDifficulty, TedQuestionScope, TedSection } from "../types/ted";
+import { getTedCompletoGroups, tedQuestions } from "../data/ted";
 import { getAreasBySection } from "../utils/tedProgress";
 
 const quantityOptions = [5, 10, 20, 40, 60, 80];
@@ -19,7 +20,20 @@ export function TedSimuladoPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const section = (searchParams.get("section") as TedSection | null) ?? undefined;
+
+  const [scope, setScope] = useState<TedQuestionScope>("dermatopatologia");
+
+  // Areas available to select (selectable = have questions in the bank)
   const availableAreas = useMemo(() => getAreasBySection(section), [section]);
+
+  // For TED Completo: flat list of all areas across groups (for the selector grid)
+  const tedCompletoAllAreas = useMemo(() => {
+    if (scope !== "ted_completo") return [];
+    return getTedCompletoGroups(section).flatMap((g) => g.areas);
+  }, [scope, section]);
+
+  const displayAreas = scope === "dermatopatologia" ? availableAreas : tedCompletoAllAreas;
+
   const availableYears = useMemo(() => {
     const pool = section ? tedQuestions.filter((q) => q.section === section) : tedQuestions;
     const years = new Set(
@@ -35,9 +49,13 @@ export function TedSimuladoPage() {
   const [selectedAreas, setSelectedAreas] = useState<string[]>(() => availableAreas.map((a) => a.id));
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
 
+  // Re-select only non-coming-soon areas when scope changes
   useEffect(() => {
-    setSelectedAreas(availableAreas.map((a) => a.id));
-  }, [availableAreas]);
+    const selectableIds = (scope === "dermatopatologia" ? availableAreas : tedCompletoAllAreas)
+      .filter((a) => !a.isComingSoon)
+      .map((a) => a.id);
+    setSelectedAreas(selectableIds);
+  }, [scope, availableAreas, tedCompletoAllAreas]);
 
   useEffect(() => {
     setSelectedYears([]);
@@ -56,14 +74,17 @@ export function TedSimuladoPage() {
   }
 
   function startSimulado() {
+    const selectableAreas = displayAreas.filter((a) => !a.isComingSoon);
     const areaParam = selectedAreas.length
       ? selectedAreas.join(",")
-      : availableAreas.map((a) => a.id).join(",");
+      : selectableAreas.map((a) => a.id).join(",");
     const anosParam = selectedYears.length > 0 ? `&anos=${selectedYears.join(",")}` : "";
     navigate(
       `/treinamento-ted/simulado/sessao?quantidade=${quantidade}&dificuldade=${dificuldade}&areas=${areaParam}${section ? `&section=${section}` : ""}${anosParam}`,
     );
   }
+
+  const selectableAreas = displayAreas.filter((a) => !a.isComingSoon);
 
   return (
     <Layout>
@@ -73,6 +94,9 @@ export function TedSimuladoPage() {
           subtitle="Responda todas as questões sem feedback imediato e veja o gabarito completo no final."
           eyebrow="Treinamento comentado"
         />
+
+        {/* Scope selector */}
+        <ScopeSelector value={scope} onChange={setScope} />
 
         <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           {/* Config panel */}
@@ -178,7 +202,7 @@ export function TedSimuladoPage() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    onClick={() => setSelectedAreas(availableAreas.map((a) => a.id))}
+                    onClick={() => setSelectedAreas(selectableAreas.map((a) => a.id))}
                     className="rounded-full border border-[#efcc98] bg-[#fff7e9] px-4 py-2 text-sm font-semibold text-[#a36300]"
                   >
                     Todas
@@ -194,7 +218,25 @@ export function TedSimuladoPage() {
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
-                {availableAreas.map((area) => {
+                {displayAreas.map((area) => {
+                  if (area.isComingSoon) {
+                    return (
+                      <div
+                        key={area.id}
+                        className="rounded-[22px] border border-dashed border-[#e8dfc8] bg-[#faf8f4] px-4 py-4 opacity-60"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between gap-3">
+                            <h3 className="text-sm font-semibold text-steel">{area.nome}</h3>
+                            <span className="shrink-0 rounded-full bg-[#f0e8d8] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#a36300]">
+                              Em breve
+                            </span>
+                          </div>
+                          <p className="text-xs text-[#b8a890]">Questões em preparação</p>
+                        </div>
+                      </div>
+                    );
+                  }
                   const active = selectedAreas.includes(area.id);
                   return (
                     <button
