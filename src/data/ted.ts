@@ -6259,7 +6259,7 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     keyPoint: "Merkel: tumor neuroendócrino primário cutâneo, classicamente CK20 positivo e TTF1 negativo.",
     teacherComment: "Caso útil para integrar morfologia de pequeno tumor azul e painel imunohistoquímico.",
     videoCommentTitle: "Questão 2 comentada - Carcinoma de Merkel",
-    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoCommentUrl: "https://youtu.be/kbIf_U9TxjA",
     videoProvider: "youtube",
     isProvisional: false,
     sourceConfidence: "high",
