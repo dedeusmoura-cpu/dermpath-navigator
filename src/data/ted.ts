@@ -6745,7 +6745,7 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     keyPoint: "Síndrome de Reed: leiomiomatose cutânea e uterina associada a mutação em FH.",
     teacherComment: "A pista genética do enunciado é decisiva e se integra ao tumor dérmico na histologia.",
     videoCommentTitle: "Questão 28 comentada - Síndrome de Reed",
-    videoCommentUrl: "PREENCHER_LINK_VIDEO",
+    videoCommentUrl: "https://youtu.be/bPnFmUZELvs",
     videoProvider: "youtube",
     isProvisional: false,
     sourceConfidence: "high",
