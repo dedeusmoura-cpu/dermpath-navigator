@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { TedHeader } from "../components/ted/TedHeader";
 import { TedOptionList } from "../components/ted/TedOptionList";
+import { TedVideoCommentCard } from "../components/ted/TedVideoCommentCard";
 import { Layout } from "../components/Layout";
 import { tedQuestions } from "../data/ted";
 import type { TedQuestion, TedQuestionImage, TedSection } from "../types/ted";
@@ -251,19 +252,30 @@ function SimuladoQuestionCard({
 
         {/* Post-finish explanation */}
         {isFinished ? (
-          <section
-            className={`rounded-[28px] border p-5 ${
-              isCorrect ? "border-emerald-200 bg-emerald-50/80" : "border-rose-200 bg-rose-50/80"
-            }`}
-          >
-            <div className="space-y-3">
-              <h3 className="font-serif text-xl text-ink">
-                Alternativa correta: {correctOption?.id}
-                {correctOption ? ` • ${correctOption.text}` : ""}
-              </h3>
-              <p className="text-sm leading-7 text-steel">{question.explanationShort}</p>
-            </div>
-          </section>
+          <div className="space-y-4">
+            <section
+              className={`rounded-[28px] border p-5 ${
+                isCorrect ? "border-emerald-200 bg-emerald-50/80" : "border-rose-200 bg-rose-50/80"
+              }`}
+            >
+              <div className="space-y-3">
+                <h3 className="font-serif text-xl text-ink">
+                  Alternativa correta: {correctOption?.id}
+                  {correctOption ? ` • ${correctOption.text}` : ""}
+                </h3>
+                <p className="text-sm leading-7 text-steel">{question.explanationShort}</p>
+              </div>
+            </section>
+
+            {question.videoCommentUrl && question.videoCommentUrl !== "PREENCHER_LINK_VIDEO" && (
+              <TedVideoCommentCard
+                videoCommentTitle={question.videoCommentTitle}
+                videoCommentUrl={question.videoCommentUrl}
+                videoProvider={question.videoProvider}
+                helperText={question.teacherComment}
+              />
+            )}
+          </div>
         ) : null}
       </div>
     </section>
