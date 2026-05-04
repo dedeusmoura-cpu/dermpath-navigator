@@ -441,7 +441,7 @@ export function TedSimuladoSessionPage() {
 
   return (
     <Layout>
-      <div className={`space-y-8 ${!isFinished ? "pb-24" : ""}`}>
+      <div className="space-y-8 pb-24">
         <TedHeader
           title="Mini-Simulado"
           eyebrow="Treinamento comentado"
@@ -643,14 +643,33 @@ export function TedSimuladoSessionPage() {
         </div>
       </div>
 
-      {/* Sticky footer — visible only before finishing */}
-      {!isFinished ? (
-        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-[#efd8b7] bg-white/95 shadow-[0_-8px_24px_-12px_rgba(20,27,43,0.18)] backdrop-blur">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      {/* Sticky footer — always visible */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-[#efd8b7] bg-white/95 shadow-[0_-8px_24px_-12px_rgba(20,27,43,0.18)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              title="Início do simulado"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-steel transition hover:border-stone-300 hover:bg-stone-50"
+            >
+              ↑
+            </button>
             <p className="text-sm text-steel">
-              <span className="font-semibold text-ink">{answeredCount}</span> de{" "}
-              <span className="font-semibold text-ink">{questions.length}</span> respondidas
+              {isFinished ? (
+                <>
+                  <span className="font-semibold text-ink">{correctCount}</span> de{" "}
+                  <span className="font-semibold text-ink">{questions.length}</span> acertos
+                </>
+              ) : (
+                <>
+                  <span className="font-semibold text-ink">{answeredCount}</span> de{" "}
+                  <span className="font-semibold text-ink">{questions.length}</span> respondidas
+                </>
+              )}
             </p>
+          </div>
+          {!isFinished && (
             <button
               type="button"
               onClick={handleFinish}
@@ -663,9 +682,9 @@ export function TedSimuladoSessionPage() {
             >
               Finalizar Simulado
             </button>
-          </div>
+          )}
         </div>
-      ) : null}
+      </div>
     </Layout>
   );
 }

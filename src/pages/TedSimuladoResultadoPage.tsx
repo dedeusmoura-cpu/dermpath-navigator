@@ -224,7 +224,7 @@ export function TedSimuladoResultadoPage() {
 
   return (
     <Layout>
-      <div className="space-y-8">
+      <div className="space-y-8 pb-20">
         <TedHeader
           title={simulado.nome}
           eyebrow="Resultado do Simulado"
@@ -307,6 +307,24 @@ export function TedSimuladoResultadoPage() {
               />
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Sticky footer with scroll-to-top */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-[#efd8b7] bg-white/95 shadow-[0_-8px_24px_-12px_rgba(20,27,43,0.18)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            title="Início do resultado"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-steel transition hover:border-stone-300 hover:bg-stone-50"
+          >
+            ↑
+          </button>
+          <p className="text-sm text-steel">
+            <span className="font-semibold text-ink">{correctCount}</span> de{" "}
+            <span className="font-semibold text-ink">{questions.length}</span> acertos
+          </p>
         </div>
       </div>
     </Layout>

@@ -44,7 +44,7 @@ export function TedSimuladoPage() {
     return Array.from(years).sort((a, b) => b - a);
   }, [section]);
 
-  const [quantidade, setQuantidade] = useState(20);
+  const [quantidade, setQuantidade] = useState(40);
   const [dificuldade, setDificuldade] = useState<TedDifficulty>("mista");
   const [selectedAreas, setSelectedAreas] = useState<string[]>(() => availableAreas.map((a) => a.id));
   const [selectedYears, setSelectedYears] = useState<number[]>([]);
