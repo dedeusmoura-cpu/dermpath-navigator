@@ -7002,10 +7002,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q19_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q19_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q19_img02.png" }
     ],
     images: [
-      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2025/ted2025_tp_q19_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2025/ted2025_tp_q19_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2025/ted2025_tp_q19_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -8010,8 +8012,14 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q05.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q05.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q05_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q05_img02.png" }
+    ],
+    images: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q05_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q05_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -8082,8 +8090,14 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q07.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q07.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q07_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q07_img02.png" }
+    ],
+    images: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q07_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q07_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -8154,8 +8168,14 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q11.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q11.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q11_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q11_img02.png" }
+    ],
+    images: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q11_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q11_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -8190,8 +8210,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q12.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q12.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q12_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q12_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -8262,8 +8284,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q16.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q16.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q16_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q16_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -8298,8 +8322,14 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q21.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q21.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q21_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q21_img02.png" }
+    ],
+    images: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q21_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q21_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -8406,8 +8436,10 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q28.png" }],
-    images: [{ id: "main", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2022/q28.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2022/ted2022_tp_q28_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2022/ted2022_tp_q28_img02.png" }
+    ],
     promptImageUrl: null,
     supportImageUrl: null,
     options: [
@@ -9153,8 +9185,14 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     postStatement: null,
     hasImages: true,
     imageMode: "single",
-    visualPanelImages: [{ id: "visual-panel", label: "Painel visual da questão", type: "composite", src: "/images/ted/tp/2023/q36-clean.png" }],
-    images: [{ id: "main", label: "Imagem da questão", type: "composite", src: "/images/ted/tp/2023/q36.png" }],
+    visualPanelImages: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2023/ted2023_tp_q36_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2023/ted2023_tp_q36_img02.png" }
+    ],
+    images: [
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2023/ted2023_tp_q36_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2023/ted2023_tp_q36_img02.png" }
+    ],
     options: [
       { id: "A", text: "Micose fungoide." },
       { id: "B", text: "Pitiríase rubra pilar." },
@@ -10446,10 +10484,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Dermoscopia e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2019/ted2019_tp_q15_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2019/ted2019_tp_q15_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2019/ted2019_tp_q15_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Dermoscopia e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2019/ted2019_tp_q15_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2019/ted2019_tp_q15_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2019/ted2019_tp_q15_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -10617,10 +10657,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Imagem clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2019/ted2019_tp_q24_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2019/ted2019_tp_q24_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2019/ted2019_tp_q24_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Imagem clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2019/ted2019_tp_q24_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2019/ted2019_tp_q24_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2019/ted2019_tp_q24_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -10935,10 +10977,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Figuras 1–3: clínica (pré-op) / HE / resultado cirúrgico", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q09_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q09_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q09_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Figuras 1–3: clínica (pré-op) / HE / resultado cirúrgico", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q09_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q09_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q09_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11021,10 +11065,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "HE (2 aumentos) + peça cirúrgica + IHQ EMA positivo", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q11_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q11_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q11_img02.png" }
     ],
     images: [
-      { id: "f1", label: "HE (2 aumentos) + peça cirúrgica + IHQ EMA positivo", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q11_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q11_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q11_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11108,10 +11154,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE — células fusiformes)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q13_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q13_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q13_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE — células fusiformes)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q13_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q13_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q13_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11196,10 +11244,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Histopatologia (HE) — vasos ectásicos subepidérmicos", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q15_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q15_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q15_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Histopatologia (HE) — vasos ectásicos subepidérmicos", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q15_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q15_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q15_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11371,16 +11421,18 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "multiple",
     visualPanelImages: [
-      { id: "f1", label: "Imagem clínica (tronco) e HE de referência", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q19_f1.jpg" },
-      { id: "f2", label: "Alternativa A — HE", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_f2.jpg" },
-      { id: "f3", label: "Alternativa B — HE", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_f3.jpg" },
-      { id: "f4", label: "Alternativa C — HE", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_f4.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q19_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img02.png" },
+      { id: "img3", label: "Histopatologia (maior aumento)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img03.png" },
+      { id: "img4", label: "Histopatologia (PAS)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img04.png" },
+      { id: "img5", label: "Imagem adicional", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img05.png" }
     ],
     images: [
-      { id: "f1", label: "Imagem clínica (tronco) e HE de referência", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q19_f1.jpg" },
-      { id: "f2", label: "Alternativa A — HE", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_f2.jpg" },
-      { id: "f3", label: "Alternativa B — HE", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_f3.jpg" },
-      { id: "f4", label: "Alternativa C — HE", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_f4.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q19_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img02.png" },
+      { id: "img3", label: "Histopatologia (maior aumento)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img03.png" },
+      { id: "img4", label: "Histopatologia (PAS)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img04.png" },
+      { id: "img5", label: "Imagem adicional", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q19_img05.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11420,10 +11472,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE — acantólise suprabasal)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q20_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q20_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q20_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Lesão clínica e histopatologia (HE — acantólise suprabasal)", type: "composite", src: "/images/ted/tp/2018/ted2018_tp_q20_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2018/ted2018_tp_q20_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2018/ted2018_tp_q20_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11639,10 +11693,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q20_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q20_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q20_img02.png" }
     ],
     images: [
-      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q20_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q20_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q20_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -11859,10 +11915,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q30_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q30_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q30_img02.png" }
     ],
     images: [
-      { id: "f1", label: "", type: "composite", src: "/images/ted/tp/2016/ted2016_tp_q30_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2016/ted2016_tp_q30_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2016/ted2016_tp_q30_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -12078,10 +12136,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Imagem clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2017/ted2017_tp_q02_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2017/ted2017_tp_q02_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2017/ted2017_tp_q02_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Imagem clínica e histopatologia (HE)", type: "composite", src: "/images/ted/tp/2017/ted2017_tp_q02_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2017/ted2017_tp_q02_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2017/ted2017_tp_q02_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -12160,10 +12220,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Clínica + HE + IHQ CK20", type: "composite", src: "/images/ted/tp/2017/ted2017_tp_q04_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2017/ted2017_tp_q04_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2017/ted2017_tp_q04_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Clínica + HE + IHQ CK20", type: "composite", src: "/images/ted/tp/2017/ted2017_tp_q04_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2017/ted2017_tp_q04_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2017/ted2017_tp_q04_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,
@@ -12493,10 +12555,12 @@ const tedTheoreticalPracticalQuestionBankBase: TedQuestion[] = [
     hasImages: true,
     imageMode: "single",
     visualPanelImages: [
-      { id: "f1", label: "Clínica e histopatologia (HE — 3 painéis)", type: "composite", src: "/images/ted/tp/2017/ted2017_tp_q15_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2017/ted2017_tp_q15_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2017/ted2017_tp_q15_img02.png" }
     ],
     images: [
-      { id: "f1", label: "Clínica e histopatologia (HE — 3 painéis)", type: "composite", src: "/images/ted/tp/2017/ted2017_tp_q15_f1.jpg" },
+      { id: "img1", label: "Imagem clínica", type: "clinical", src: "/images/ted/tp/2017/ted2017_tp_q15_img01.png" },
+      { id: "img2", label: "Histopatologia (HE)", type: "histopathology", src: "/images/ted/tp/2017/ted2017_tp_q15_img02.png" }
     ],
     promptImageUrl: null,
     supportImageUrl: null,

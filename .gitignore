@@ -16,3 +16,9 @@ android/build/
 
 # Arquivos intermediários de extração de imagens
 *_extracted_*
+
+# PDFs de fonte (grandes demais para o repositório)
+scripts/pdfs/
+
+# Worktrees do Claude Code
+.claude/worktrees/

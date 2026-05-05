@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { TedQuestion } from "../../types/ted";
 import { formatTedStatement } from "../../utils/tedStatement";
 import { TedFeedbackMessage } from "./TedFeedbackMessage";
@@ -16,6 +16,40 @@ interface TedQuestionViewProps {
   onNextQuestion?: () => void;
   nextQuestionDisabled?: boolean;
   nextQuestionLabel?: string;
+}
+
+function ImageLightbox({ src, label, onClose }: { src: string; label: string; onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div className="relative max-h-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+        <img
+          src={src}
+          alt={label}
+          className="max-h-[85vh] max-w-full rounded-xl object-contain shadow-2xl"
+        />
+        {label && (
+          <p className="mt-2 text-center text-sm font-medium text-white/80">{label}</p>
+        )}
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute -right-3 -top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-ink shadow-lg hover:bg-stone-100"
+          aria-label="Fechar"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export function TedQuestionView({
@@ -36,6 +70,7 @@ export function TedQuestionView({
   const [firstAttemptDone, setFirstAttemptDone] = useState(false);
   const [promptImageVisible, setPromptImageVisible] = useState(Boolean(question.promptImageUrl));
   const [supportImageVisible, setSupportImageVisible] = useState(Boolean(question.supportImageUrl));
+  const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
 
   const correctOption = useMemo(
     () => question.options.find((option) => option.id === question.correctOption),
@@ -93,6 +128,12 @@ export function TedQuestionView({
       <div className="space-y-6 px-6 py-6">
         <div className="rounded-[24px] border border-[#f2e2ca] bg-[#fffdfa] p-5">
           <div className="space-y-5">
+            {question.notes ? (
+              <div className="flex items-start gap-2 rounded-[12px] border border-amber-300 bg-amber-50 px-3 py-2.5">
+                <span className="mt-px text-amber-500">⚠️</span>
+                <p className="text-xs leading-5 text-amber-800">{question.notes}</p>
+              </div>
+            ) : null}
             {formattedStatement.kind === "true_false" ? (
               <div className="space-y-4">
                 {formattedStatement.intro ? <p className="text-base leading-8 text-steel">{formattedStatement.intro}</p> : null}
@@ -178,16 +219,34 @@ export function TedQuestionView({
 
         {practicalImages.length ? (
           <section className="space-y-4">
-            <div className={question.imageMode === "multiple" ? "grid gap-4 md:grid-cols-2" : "mx-auto max-w-[640px]"}>
+            <div
+              className={
+                practicalImages.length === 1
+                  ? "mx-auto max-w-[480px]"
+                  : practicalImages.length === 2
+                    ? "grid grid-cols-2 gap-3"
+                    : practicalImages.length === 3
+                      ? "grid grid-cols-3 gap-3"
+                      : "grid grid-cols-2 gap-3"
+              }
+            >
               {practicalImages.map((image) => (
-                <figure key={image.id} className="overflow-hidden rounded-2xl border border-sand/80 bg-paper shadow-sm">
-                  <img src={image.src} alt={image.label} className="block h-auto w-full object-contain" />
+                <figure
+                  key={image.id}
+                  className="group overflow-hidden rounded-2xl border border-sand/80 bg-paper shadow-sm cursor-zoom-in transition hover:border-[#e0b87a] hover:shadow-md"
+                  onClick={() => setLightbox({ src: image.src, label: image.label })}
+                >
+                  <img src={image.src} alt={image.label} className="block w-full object-contain max-h-52 transition group-hover:opacity-90" />
                   <figcaption className="mt-2 px-3 pb-3 text-center text-xs font-medium text-steel">{image.label}</figcaption>
                 </figure>
               ))}
             </div>
           </section>
         ) : null}
+
+        {lightbox && (
+          <ImageLightbox src={lightbox.src} label={lightbox.label} onClose={() => setLightbox(null)} />
+        )}
 
         <div className="space-y-4">
           <div>

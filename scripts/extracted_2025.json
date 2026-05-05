@@ -1,0 +1,240 @@
+{
+  "2": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q02_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q02_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "8": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q08_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q08_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "10": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q10_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q10_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "11": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q11_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q11_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "13": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q13_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q13_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "16": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q16_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q16_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "19": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q19_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q19_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "21": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q21_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q21_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "22": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q22_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q22_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "23": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q23_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q23_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "24": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q24_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q24_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "26": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q26_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q26_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "27": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q27_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q27_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "28": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q28_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q28_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "31": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q31_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q31_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "36": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q36_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q36_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "39": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2025/ted2025_tp_q39_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2025/ted2025_tp_q39_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ]
+}

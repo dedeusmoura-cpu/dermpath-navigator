@@ -35,8 +35,9 @@ interface QuestionResultCardProps {
 
 function QuestionResultCard({ question, index, userOptionId }: QuestionResultCardProps) {
   const area = getAreaById(question.area);
-  const isCorrect =
-    question.correctOption !== null && userOptionId === question.correctOption;
+  const isCorrect = question.isAnnulled
+    ? !!userOptionId
+    : question.correctOption !== null && userOptionId === question.correctOption;
   const isWrong = userOptionId !== undefined && !isCorrect;
   const userOption = question.options.find((o) => o.id === userOptionId);
   const correctOption = question.options.find((o) => o.id === question.correctOption);

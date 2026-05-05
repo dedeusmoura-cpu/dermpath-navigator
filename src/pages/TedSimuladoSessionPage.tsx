@@ -42,6 +42,40 @@ interface SimuladoQuestionCardProps {
   onSelect: (optionId: string) => void;
 }
 
+function ImageLightbox({ src, label, onClose }: { src: string; label: string; onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div className="relative max-h-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+        <img
+          src={src}
+          alt={label}
+          className="max-h-[85vh] max-w-full rounded-xl object-contain shadow-2xl"
+        />
+        {label && (
+          <p className="mt-2 text-center text-sm font-medium text-white/80">{label}</p>
+        )}
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute -right-3 -top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-bold text-ink shadow-lg hover:bg-stone-100"
+          aria-label="Fechar"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function SimuladoQuestionCard({
   question,
   index,
@@ -49,6 +83,7 @@ function SimuladoQuestionCard({
   isFinished,
   onSelect,
 }: SimuladoQuestionCardProps) {
+  const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
   const formattedStatement = formatTedStatement(question.statement);
   const matchingColumns =
     question.statementType === "matching_columns" ? (question.matchingColumns ?? null) : null;
@@ -63,8 +98,8 @@ function SimuladoQuestionCard({
     practicalImages = base?.filter((img) => Boolean(img.src)) ?? [];
   }
 
-  const isCorrect = isFinished && selectedAnswerId === question.correctOption;
-  const isWrong = isFinished && !!selectedAnswerId && selectedAnswerId !== question.correctOption;
+  const isCorrect = isFinished && (question.isAnnulled ? !!selectedAnswerId : selectedAnswerId === question.correctOption);
+  const isWrong = isFinished && !!selectedAnswerId && !isCorrect;
   const correctOption = question.options.find((o) => o.id === question.correctOption);
 
   return (
@@ -215,15 +250,22 @@ function SimuladoQuestionCard({
           <section className="space-y-4">
             <div
               className={
-                question.imageMode === "multiple" ? "grid gap-4 md:grid-cols-2" : "mx-auto max-w-[640px]"
+                practicalImages.length === 1
+                  ? "mx-auto max-w-[480px]"
+                  : practicalImages.length === 2
+                    ? "grid grid-cols-2 gap-3"
+                    : practicalImages.length === 3
+                      ? "grid grid-cols-3 gap-3"
+                      : "grid grid-cols-2 gap-3"
               }
             >
               {practicalImages.map((image) => (
                 <figure
                   key={image.id}
-                  className="overflow-hidden rounded-2xl border border-sand/80 bg-paper shadow-sm"
+                  className="group overflow-hidden rounded-2xl border border-sand/80 bg-paper shadow-sm cursor-zoom-in transition hover:border-[#e0b87a] hover:shadow-md"
+                  onClick={() => setLightbox({ src: image.src, label: image.label })}
                 >
-                  <img src={image.src} alt={image.label} className="block h-auto w-full object-contain" />
+                  <img src={image.src} alt={image.label} className="block w-full object-contain max-h-52 transition group-hover:opacity-90" />
                   {image.label && (
                     <figcaption className="mt-2 px-3 pb-3 text-center text-xs font-medium text-steel">
                       {image.label}
@@ -234,6 +276,10 @@ function SimuladoQuestionCard({
             </div>
           </section>
         ) : null}
+
+        {lightbox && (
+          <ImageLightbox src={lightbox.src} label={lightbox.label} onClose={() => setLightbox(null)} />
+        )}
 
         {/* Options */}
         <div className="space-y-4">
@@ -346,7 +392,7 @@ export function TedSimuladoSessionPage() {
 
   const { correctCount, scorePercent, classification } = useMemo(() => {
     if (!isFinished) return { correctCount: 0, scorePercent: 0, classification: getClassification(0) };
-    const correct = questions.filter((q) => selectedAnswers[q.id] === q.correctOption).length;
+    const correct = questions.filter((q) => q.isAnnulled ? !!selectedAnswers[q.id] : selectedAnswers[q.id] === q.correctOption).length;
     const percent = questions.length ? Math.round((correct / questions.length) * 100) : 0;
     return { correctCount: correct, scorePercent: percent, classification: getClassification(percent) };
   }, [isFinished, questions, selectedAnswers]);
@@ -372,7 +418,7 @@ export function TedSimuladoSessionPage() {
     if (!id) return;
     const sim = buscarSimulado(id);
     if (!sim) return;
-    const correct = questions.filter((q) => selectedAnswers[q.id] === q.correctOption).length;
+    const correct = questions.filter((q) => q.isAnnulled ? !!selectedAnswers[q.id] : selectedAnswers[q.id] === q.correctOption).length;
     const percent = questions.length ? Math.round((correct / questions.length) * 100) : 0;
     salvarSimulado({
       ...sim,

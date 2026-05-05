@@ -1,0 +1,164 @@
+{
+  "4": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q04_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q04_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "13": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q13_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q13_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    },
+    {
+      "id": "img3",
+      "src": "/images/ted/tp/2019/ted2019_tp_q13_img03.png",
+      "label": "Histopatologia (maior aumento)",
+      "type": "histopathology"
+    },
+    {
+      "id": "img4",
+      "src": "/images/ted/tp/2019/ted2019_tp_q13_img04.png",
+      "label": "Histopatologia (PAS)",
+      "type": "histopathology"
+    }
+  ],
+  "14": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q14_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q14_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    },
+    {
+      "id": "img3",
+      "src": "/images/ted/tp/2019/ted2019_tp_q14_img03.png",
+      "label": "Histopatologia (maior aumento)",
+      "type": "histopathology"
+    },
+    {
+      "id": "img4",
+      "src": "/images/ted/tp/2019/ted2019_tp_q14_img04.png",
+      "label": "Histopatologia (PAS)",
+      "type": "histopathology"
+    }
+  ],
+  "15": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q15_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q15_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "20": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q20_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q20_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "24": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q24_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q24_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "36": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q36_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q36_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    },
+    {
+      "id": "img3",
+      "src": "/images/ted/tp/2019/ted2019_tp_q36_img03.png",
+      "label": "Histopatologia (maior aumento)",
+      "type": "histopathology"
+    },
+    {
+      "id": "img4",
+      "src": "/images/ted/tp/2019/ted2019_tp_q36_img04.png",
+      "label": "Histopatologia (PAS)",
+      "type": "histopathology"
+    }
+  ],
+  "37": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q37_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q37_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ],
+  "39": [
+    {
+      "id": "img1",
+      "src": "/images/ted/tp/2019/ted2019_tp_q39_img01.png",
+      "label": "Imagem clínica",
+      "type": "clinical"
+    },
+    {
+      "id": "img2",
+      "src": "/images/ted/tp/2019/ted2019_tp_q39_img02.png",
+      "label": "Histopatologia (HE)",
+      "type": "histopathology"
+    }
+  ]
+}
