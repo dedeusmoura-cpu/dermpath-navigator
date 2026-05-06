@@ -11,6 +11,7 @@ interface TedHeaderProps {
   eyebrow?: string;
   navItems?: unknown; // mantido por compatibilidade, não utilizado
   actionSlot?: ReactNode;
+  onBack?: () => void;
 }
 
 const SECTION_LABELS: Record<TedSection, string> = {
@@ -19,7 +20,7 @@ const SECTION_LABELS: Record<TedSection, string> = {
 };
 
 
-export function TedHeader({ title, actionSlot }: TedHeaderProps) {
+export function TedHeader({ title, actionSlot, onBack }: TedHeaderProps) {
   const { language, setLanguage } = useLanguage();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ export function TedHeader({ title, actionSlot }: TedHeaderProps) {
           </Link>
           <button
             type="button"
-            onClick={() => navigate(-1)}
+            onClick={() => onBack ? onBack() : navigate(-1)}
             className="shrink-0 rounded-full border border-[#f1c487] bg-white/70 px-2.5 py-0.5 text-[10px] font-semibold text-[#8c5400] transition hover:border-[#eba94d] hover:bg-white"
           >
             ↩ Voltar

@@ -265,6 +265,14 @@ export function TedSessionPage() {
     setCurrentIndex((current) => current + 1);
   }
 
+  function handlePrevQuestion() {
+    if (currentIndex > 0) {
+      setCurrentIndex((current) => current - 1);
+    } else {
+      navigate(section ? `/treinamento-ted/aleatorio?section=${section}` : "/treinamento-ted/aleatorio");
+    }
+  }
+
   function handleToggleReview() {
     setProgress((current) => toggleTedReview(current, currentQuestion.id));
   }
@@ -289,6 +297,7 @@ export function TedSessionPage() {
                 ? "Sessão filtrada para questões teórico-práticas, com imagens integradas ao enunciado quando disponíveis."
                 : "Agora o TED avalia imediatamente no clique, permite nova tentativa em caso de erro e libera o comentário em vídeo apenas após o acerto."
           }
+          onBack={handlePrevQuestion}
         />
 
         <section className="grid gap-4 lg:grid-cols-[1.35fr_0.65fr]">

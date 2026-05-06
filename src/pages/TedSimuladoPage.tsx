@@ -5,7 +5,7 @@ import { ScopeSelector } from "../components/ted/ScopeSelector";
 import { Layout } from "../components/Layout";
 import type { TedDifficulty, TedQuestionScope, TedSection } from "../types/ted";
 import { getTedCompletoGroups, tedQuestions } from "../data/ted";
-import { getAreasBySection } from "../utils/tedProgress";
+import { getAreasBySection, matchesTedArea } from "../utils/tedProgress";
 
 const quantityOptions = [5, 10, 20, 40, 60, 80];
 
@@ -85,6 +85,30 @@ export function TedSimuladoPage() {
   }
 
   const selectableAreas = displayAreas.filter((a) => !a.isComingSoon);
+
+  // When years are selected, compute per-area question counts for THOSE years only
+  const yearFilteredCounts = useMemo(() => {
+    if (selectedYears.length === 0) return null;
+    const pool = (section ? tedQuestions.filter((q) => q.section === section) : tedQuestions).filter((q) =>
+      selectedYears.includes(parseInt(q.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10)),
+    );
+    const counts: Record<string, number> = {};
+    for (const area of displayAreas) {
+      if (!area.isComingSoon) {
+        counts[area.id] = pool.filter((q) => matchesTedArea(q.area, area.id)).length;
+      }
+    }
+    return counts;
+  }, [selectedYears, section, displayAreas]);
+
+  // Total available questions given current filter (section + years + all selectable areas)
+  const totalPoolSize = useMemo(() => {
+    const pool = (section ? tedQuestions.filter((q) => q.section === section) : tedQuestions).filter((q) => {
+      if (selectedYears.length === 0) return true;
+      return selectedYears.includes(parseInt(q.sourceLabel.match(/\d{4}/)?.[0] ?? "0", 10));
+    });
+    return pool.filter((q) => selectableAreas.some((a) => matchesTedArea(q.area, a.id))).length;
+  }, [selectedYears, section, selectableAreas]);
 
   return (
     <Layout>
@@ -181,10 +205,20 @@ export function TedSimuladoPage() {
                 </div>
               </div>
 
+              {/* Pool size indicator */}
+              <div className="rounded-2xl bg-[#f5f0e8] px-4 py-3 text-sm text-steel">
+                <span className="font-semibold text-ink">{Math.min(totalPoolSize, quantidade)}</span>
+                {" "}questão{Math.min(totalPoolSize, quantidade) !== 1 ? "s" : ""} serão incluídas
+                {totalPoolSize < quantidade && (
+                  <span className="text-[#b56d00]"> (pool de {totalPoolSize} disponível com esses filtros)</span>
+                )}
+              </div>
+
               <button
                 type="button"
                 onClick={startSimulado}
-                className="w-full rounded-full bg-[linear-gradient(90deg,#1f2f4c_0%,#2d4470_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_44px_-24px_rgba(31,47,76,0.45)] transition hover:-translate-y-0.5"
+                disabled={totalPoolSize === 0}
+                className="w-full rounded-full bg-[linear-gradient(90deg,#1f2f4c_0%,#2d4470_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_44px_-24px_rgba(31,47,76,0.45)] transition hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Iniciar Simulado →
               </button>
@@ -252,7 +286,15 @@ export function TedSimuladoPage() {
                           <h3 className="text-base font-semibold text-ink">{area.nome}</h3>
                           <span className={`h-3 w-3 shrink-0 rounded-full ${active ? "bg-[#ea9000]" : "bg-[#ddd2bf]"}`} />
                         </div>
-                        <p className="text-sm leading-6 text-steel">{area.numeroQuestoes} questões disponíveis</p>
+                        {yearFilteredCounts ? (
+                          <p className="text-sm leading-6 text-steel">
+                            <span className="font-semibold text-ink">{yearFilteredCounts[area.id] ?? 0}</span>
+                            {" "}questão{(yearFilteredCounts[area.id] ?? 0) !== 1 ? "s" : ""} em {selectedYears.join(", ")}
+                            <span className="text-[#c0a882]"> / {area.numeroQuestoes} total</span>
+                          </p>
+                        ) : (
+                          <p className="text-sm leading-6 text-steel">{area.numeroQuestoes} questões disponíveis</p>
+                        )}
                       </div>
                     </button>
                   );
