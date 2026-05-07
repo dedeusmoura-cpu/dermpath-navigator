@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, type FormEvent } from "react";
+import { useState, useRef, useEffect, Fragment, type FormEvent } from "react";
 import type { ReactNode } from "react";
 import { Link, useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
@@ -154,10 +154,9 @@ export function TedHeader({ title, actionSlot, onBack }: TedHeaderProps) {
             {navGroupTreinar.map((item, i) => {
               const isActive = location.pathname === item.path;
               return (
-                <>
-                  {i > 0 && <div key={`sep-t-${i}`} className="h-4 w-px bg-[#f1c487]" aria-hidden="true" />}
+                <Fragment key={item.path}>
+                  {i > 0 && <div className="h-4 w-px bg-[#f1c487]" aria-hidden="true" />}
                   <Link
-                    key={item.path}
                     to={r(item.path)}
                     className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
                       isActive
@@ -167,7 +166,7 @@ export function TedHeader({ title, actionSlot, onBack }: TedHeaderProps) {
                   >
                     {item.label}
                   </Link>
-                </>
+                </Fragment>
               );
             })}
           </div>
@@ -180,10 +179,9 @@ export function TedHeader({ title, actionSlot, onBack }: TedHeaderProps) {
             {navGroupHistorico.map((item, i) => {
               const isActive = location.pathname === item.path;
               return (
-                <>
-                  {i > 0 && <div key={`sep-h-${i}`} className="h-4 w-px bg-[#f1c487]" aria-hidden="true" />}
+                <Fragment key={item.path}>
+                  {i > 0 && <div className="h-4 w-px bg-[#f1c487]" aria-hidden="true" />}
                   <Link
-                    key={item.path}
                     to={item.noSection ? item.path : r(item.path)}
                     className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
                       isActive
@@ -193,7 +191,7 @@ export function TedHeader({ title, actionSlot, onBack }: TedHeaderProps) {
                   >
                     {item.label}
                   </Link>
-                </>
+                </Fragment>
               );
             })}
           </div>
