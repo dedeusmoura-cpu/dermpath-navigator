@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { TedQuestion } from "../../types/ted";
 import { formatTedStatement } from "../../utils/tedStatement";
+import { MatchingColumnsInteraction } from "./MatchingColumnsInteraction";
 import { TedFeedbackMessage } from "./TedFeedbackMessage";
 import { TedOptionList } from "./TedOptionList";
 import { TedQuestionHeader } from "./TedQuestionHeader";
@@ -153,37 +154,14 @@ export function TedQuestionView({
             )}
 
             {matchingColumns ? (
-              <div className="space-y-4 rounded-[22px] border border-[#f2dfc3] bg-white p-4 sm:p-5">
-                <div className="grid gap-4 lg:grid-cols-2">
-                  <section className="rounded-[20px] border border-[#f6e8cf] bg-[#fffaf2] p-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#b56d00]">
-                      {matchingColumns.leftTitle}
-                    </p>
-                    <div className="mt-3 space-y-3">
-                      {matchingColumns.leftItems.map((item, index) => (
-                        <p key={index} className="text-sm leading-7 text-steel">
-                          {item}
-                        </p>
-                      ))}
-                    </div>
-                  </section>
-
-                  <section className="rounded-[20px] border border-[#f6e8cf] bg-[#fffaf2] p-4">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#b56d00]">
-                      {matchingColumns.rightTitle}
-                    </p>
-                    <div className="mt-3 space-y-3">
-                      {matchingColumns.rightItems.map((item, index) => (
-                        <p key={index} className="text-sm leading-7 text-steel">
-                          {item}
-                        </p>
-                      ))}
-                    </div>
-                  </section>
-                </div>
-
-                {question.postStatement ? <p className="text-sm font-medium leading-7 text-ink">{question.postStatement}</p> : null}
-              </div>
+              <MatchingColumnsInteraction
+                key={question.id}
+                columns={matchingColumns}
+                correctOptionText={
+                  question.options.find((o) => o.id === question.correctOption)?.text ?? null
+                }
+                postStatement={question.postStatement}
+              />
             ) : null}
 
             {!matchingColumns && question.postStatement ? (
