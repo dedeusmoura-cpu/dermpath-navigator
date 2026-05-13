@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import dermPathLogo from "../assets/dermpath-logo-final.png";
 import mapTreeImage from "../assets/Mapa-da-Arvore.png";
 import quizImage from "../assets/Quiz-branco.png";
 import authorImage from "../assets/Rafael.png.png";
@@ -8,7 +9,7 @@ import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
 
 export function HomePage() {
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
 
   return (
     <Layout title={t("home_title")} subtitle={t("home_subtitle")} compactHeader>
@@ -18,6 +19,33 @@ export function HomePage() {
         <div className="absolute right-0 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.78),_rgba(255,255,255,0))]" />
 
         <div className="relative px-6 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-14">
+          <div className="flex items-center justify-between mb-6">
+            <img
+              src={dermPathLogo}
+              alt={t("home_title")}
+              className="h-[44px] w-auto sm:h-[62px]"
+            />
+            <div className="inline-flex w-fit rounded-full border border-sand bg-white/80 p-[3px]">
+              <button
+                type="button"
+                onClick={() => setLanguage("pt")}
+                className={`rounded-full px-3 py-1 text-sm font-semibold transition ${
+                  language === "pt" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"
+                }`}
+              >
+                PT
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`rounded-full px-3 py-1 text-sm font-semibold transition ${
+                  language === "en" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"
+                }`}
+              >
+                EN
+              </button>
+            </div>
+          </div>
           <div className="mx-auto max-w-4xl space-y-8 text-center">
             <div className="space-y-4">
               <span className="inline-flex rounded-full border border-accent/15 bg-white/88 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-accent shadow-sm">
