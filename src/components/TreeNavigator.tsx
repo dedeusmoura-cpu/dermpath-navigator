@@ -278,7 +278,11 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
             <h2 className="mt-2 font-serif text-2xl text-ink">{getDisplayedNodeTitle(node, language)}</h2>
           </div>
         ) : (
-          <div aria-hidden="true" />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("brand_kicker")}</p>
+            <h2 className="mt-1 font-serif text-2xl text-ink">{t("home_start")}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-steel">{t("process_hub_instruction")}</p>
+          </div>
         )}
 
         <FavoriteToggleButton nodeId={node.id} favorite={favorite} onToggleFavorite={onToggleFavorite} className="shrink-0" />
@@ -307,8 +311,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     </div>
                   )}
                 </div>
-                <div className="mt-0 w-full rounded-b-[22px] bg-white px-3 py-2 text-center">
-                  <h3 className="text-base font-semibold leading-6 text-ink">
+                <div className="mt-0 w-full rounded-b-[22px] border-t border-sand/70 bg-white/96 px-3 py-2.5 text-center shadow-[0_4px_12px_rgba(20,27,43,0.1)]">
+                  <h3 className="text-[0.88rem] font-bold uppercase leading-5 tracking-[0.07em] text-[#1A47BF]">
                     {translateOptionLabel(node.id, option, language)}
                   </h3>
                 </div>
@@ -375,8 +379,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                         </div>
                       )}
                     </div>
-                    <div className={`mt-0 w-full rounded-b-[28px] bg-white py-2 ${processTitleWrapperClasses[option.nextNodeId] ?? "px-2"}`}>
-                      <h3 className="text-[1.05rem] font-bold uppercase leading-6 tracking-[0.04em] text-[#1A47BF]">
+                    <div className={`mt-0 w-full rounded-b-[28px] border-t border-sand/70 bg-white/96 py-3 shadow-[0_6px_18px_rgba(20,27,43,0.12)] ${processTitleWrapperClasses[option.nextNodeId] ?? "px-2"}`}>
+                      <h3 className="text-[0.88rem] font-bold uppercase leading-5 tracking-[0.07em] text-[#1A47BF]">
                         {translateOptionLabel(node.id, option, language)}
                       </h3>
                     </div>
