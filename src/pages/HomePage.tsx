@@ -13,7 +13,7 @@ export function HomePage() {
 
   return (
     <Layout title={t("home_title")} subtitle={t("home_subtitle")} compactHeader>
-      <section className="relative overflow-hidden rounded-[36px] border border-sand/80 bg-[linear-gradient(135deg,_rgba(255,253,248,0.98)_0%,_rgba(250,246,238,0.98)_42%,_rgba(246,239,226,0.98)_100%)] shadow-panel">
+      <section className="relative overflow-hidden rounded-[36px] border border-sand/80 bg-[linear-gradient(135deg,_rgba(237,221,191,1)_0%,_rgba(242,233,214,1)_42%,_rgba(236,225,200,1)_100%)] shadow-panel">
         <div className="absolute inset-x-0 top-0 h-44 bg-[radial-gradient(circle_at_top_left,_rgba(169,122,31,0.18),_transparent_56%)]" />
         <div className="absolute bottom-0 left-0 h-44 w-44 rounded-full bg-[radial-gradient(circle,_rgba(20,27,43,0.06),_rgba(20,27,43,0))]" />
         <div className="absolute right-0 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.78),_rgba(255,255,255,0))]" />
