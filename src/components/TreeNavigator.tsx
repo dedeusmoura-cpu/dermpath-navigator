@@ -322,15 +322,24 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 z-[0] flex h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
               style={{
-                background:
-                  "radial-gradient(circle at center, #2563EB 0%, rgba(37, 99, 235, 0.45) 45%, rgba(37, 99, 235, 0) 85%)",
+                background: [
+                  "radial-gradient(circle at 38% 32%, rgba(255,255,255,0.22) 0%, transparent 38%)",
+                  "radial-gradient(circle at center, #1a3fc7 0%, #2563eb 28%, rgba(37,99,235,0.58) 50%, rgba(37,99,235,0) 82%)",
+                ].join(", "),
+                boxShadow: [
+                  "0 0 72px rgba(37,99,235,0.45)",
+                  "0 0 140px rgba(37,99,235,0.22)",
+                  "inset 0 -28px 48px rgba(17,50,160,0.35)",
+                  "inset 0 12px 28px rgba(255,255,255,0.1)",
+                ].join(", "),
               }}
             >
                 <img
                   src={navegacaoDiagnosticaCompassIcon}
                   alt=""
                   aria-hidden="true"
-                  className="h-[228px] w-[228px] object-contain drop-shadow-lg"
+                  className="h-[228px] w-[228px] object-contain"
+                  style={{ filter: "drop-shadow(0 8px 24px rgba(17,50,160,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.3))" }}
                 />
             </div>
 
