@@ -321,7 +321,7 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
             ))}
           </div>
 
-          <div className="relative hidden min-h-[900px] overflow-hidden rounded-[36px] border border-sand bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 py-8 xl:block">
+          <div className="relative hidden min-h-[900px] overflow-hidden bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 pb-8 pt-2 xl:block">
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a9c5ff]/80 bg-[radial-gradient(circle,_rgba(255,255,255,0.99)_0%,_rgba(236,243,255,0.94)_56%,_rgba(208,223,255,0.42)_100%)] shadow-[inset_0_18px_42px_rgba(255,255,255,0.62),0_34px_90px_-50px_rgba(36,95,231,0.38)]" />
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[690px] w-[690px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5px] border-[#6d96ff]/75 shadow-[0_0_0_10px_rgba(109,150,255,0.08)]" />
             <div
