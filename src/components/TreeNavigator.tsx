@@ -303,7 +303,7 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     <img
                       src={processCategoryImages[option.nextNodeId]}
                       alt={translateOptionLabel(node.id, option, language)}
-                      className="block h-auto w-full object-cover object-center transition duration-300 group-hover:scale-[1.03]"
+                      className="block h-auto w-full object-contain object-center transition duration-300 group-hover:scale-[1.03]"
                       style={{ aspectRatio: '3/2' }}
                     />
                   ) : (
