@@ -230,13 +230,6 @@ const processCircularPositions: Record<string, { angle: number; radius: number }
   "placeholder-hamartoma": { angle: 198, radius: 35.5 },
 };
 
-const processTitleWrapperClasses: Record<string, string> = {
-  dermatite: "px-2",
-  "placeholder-neoplasia": "px-2",
-  "placeholder-cisto": "px-2",
-  deposito: "px-2",
-  "placeholder-hamartoma": "px-2",
-};
 
 export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: TreeNavigatorProps) {
   const { language, t } = useLanguage();
