@@ -296,9 +296,9 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                 key={`${node.id}-${option.nextNodeId}`}
                 type="button"
                 onClick={() => onNavigate(option.nextNodeId)}
-                className="group flex flex-col items-stretch gap-0 overflow-visible bg-transparent text-center transition duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                className="group flex flex-col items-center gap-0 overflow-visible bg-transparent text-center transition duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
               >
-                <div className="-mb-1 w-full overflow-visible bg-transparent">
+                <div className="w-full overflow-visible bg-transparent">
                   {processCategoryImages[option.nextNodeId] ? (
                     <img
                       src={processCategoryImages[option.nextNodeId]}
@@ -311,8 +311,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     </div>
                   )}
                 </div>
-                <div className="mt-0 w-full rounded-b-[22px] border-t border-sand/70 bg-white/96 px-3 py-2.5 text-center shadow-[0_4px_12px_rgba(20,27,43,0.1)]">
-                  <h3 className="text-[0.88rem] font-bold uppercase leading-5 tracking-[0.07em] text-[#1A47BF]">
+                <div className="mt-2 inline-flex items-center rounded-full border border-[#c5d4ff] bg-white px-3 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
+                  <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
                     {translateOptionLabel(node.id, option, language)}
                   </h3>
                 </div>
@@ -364,9 +364,9 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                       top: `calc(50% + ${orbitY.toFixed(2)}%)`,
                       transform: "translate(-50%, -50%)",
                     }}
-                    className="group absolute flex w-[228px] flex-col items-stretch gap-0 overflow-visible bg-transparent text-center transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                    className="group absolute flex w-[228px] flex-col items-center gap-0 overflow-visible bg-transparent text-center transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
                   >
-                    <div className="-mb-1 w-full overflow-visible bg-transparent">
+                    <div className="w-full overflow-visible bg-transparent">
                       {imageSrc ? (
                         <img
                           src={imageSrc}
@@ -379,8 +379,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                         </div>
                       )}
                     </div>
-                    <div className={`mt-0 w-full rounded-b-[28px] border-t border-sand/70 bg-white/96 py-3 shadow-[0_6px_18px_rgba(20,27,43,0.12)] ${processTitleWrapperClasses[option.nextNodeId] ?? "px-2"}`}>
-                      <h3 className="text-[0.88rem] font-bold uppercase leading-5 tracking-[0.07em] text-[#1A47BF]">
+                    <div className="mt-2 inline-flex items-center rounded-full border border-[#c5d4ff] bg-white px-4 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
+                      <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
                         {translateOptionLabel(node.id, option, language)}
                       </h3>
                     </div>
