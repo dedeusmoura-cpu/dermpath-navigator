@@ -311,7 +311,7 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     </div>
                   )}
                 </div>
-                <div className="mt-2 inline-flex items-center rounded-full border border-[#c5d4ff] bg-white px-3 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
+                <div className="mt-2 flex w-full items-center justify-center rounded-full border border-[#c5d4ff] bg-white px-3 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
                   <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
                     {translateOptionLabel(node.id, option, language)}
                   </h3>
@@ -379,7 +379,7 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                         </div>
                       )}
                     </div>
-                    <div className="mt-2 inline-flex items-center rounded-full border border-[#c5d4ff] bg-white px-4 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
+                    <div className="mt-2 flex w-full items-center justify-center rounded-full border border-[#c5d4ff] bg-white px-4 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
                       <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
                         {translateOptionLabel(node.id, option, language)}
                       </h3>
