@@ -32,6 +32,8 @@ export function Breadcrumbs({ path, onSelect, actions }: BreadcrumbsProps) {
   const { language, t } = useLanguage();
   const hasVisiblePath = path.length > 0;
 
+  if (!hasVisiblePath && !actions) return null;
+
   return (
     <nav aria-label={t("breadcrumb_aria")} className="rounded-2xl border border-sand bg-white px-4 py-2 shadow-panel">
       <div className="flex flex-col gap-3 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-3">
