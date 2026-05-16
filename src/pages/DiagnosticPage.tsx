@@ -11,7 +11,6 @@ import { algorithmTree } from "../data/algorithm";
 import { useFavorites } from "../hooks/useFavorites";
 import { translateNodeTitle } from "../i18n/translations";
 import { buildExportText, buildPathToNode } from "../utils/tree";
-import treeMapIcon from "../assets/Mapa-da-Arvore.png";
 
 interface DiagnosticLocationState {
   nodeId?: string;
@@ -51,7 +50,6 @@ export function DiagnosticPage() {
   const isDermatiteHub = currentNode.id === "dermatite";
   const isPerivascularHub = currentNode.id === "perivascular";
   const hideSidebar = isProcessHub || isDermatiteHub || isPerivascularHub;
-  const treeMapLabel = language === "pt" ? "Mapa da Árvore" : "Tree map";
 
   useEffect(() => {
     const stateNodeId = locationState?.nodeId;
@@ -111,22 +109,6 @@ export function DiagnosticPage() {
               const selectedTrail = index >= 0 ? currentTrail.slice(0, index + 1) : buildPathToNode(nodeId).map((item) => item.id);
               navigate(`/diagnostico?nodeId=${nodeId}`, { state: { nodeId, trail: selectedTrail } });
             }}
-            actions={
-              <button
-                type="button"
-                onClick={() => navigate(`/mapa-da-arvore?nodeId=${currentNode.id}`, { state: { trail: path.map((item) => item.id) } })}
-                aria-label={t("nav_tree_map")}
-                className="inline-flex h-[42px] shrink-0 items-center gap-2 rounded-full border border-sand bg-ink pl-3 pr-6 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
-              >
-                <img
-                  src={treeMapIcon}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-[32px] w-[32px] flex-none object-contain mix-blend-screen brightness-125 contrast-125"
-                />
-                <span className="text-[0.83rem] font-semibold tracking-[0.01em] leading-none">{treeMapLabel}</span>
-              </button>
-            }
           />
 
           {isTerminal ? (
