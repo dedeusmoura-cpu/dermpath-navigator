@@ -16,6 +16,14 @@ const CATEGORY_LINE_COLORS: Record<string, string> = {
   deposito: "rgba(252, 211, 77, 0.50)",
   "placeholder-hamartoma": "rgba(253, 164, 175, 0.45)",
 };
+
+const CATEGORY_TILE_CONFIG: Record<string, { gradient: string; border: string; textColor: string }> = {
+  dermatite: { gradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)", border: "#d8b4fe", textColor: "#7c3aed" },
+  "placeholder-neoplasia": { gradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)", border: "#86efac", textColor: "#15803d" },
+  "placeholder-cisto": { gradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)", border: "#93c5fd", textColor: "#1d4ed8" },
+  deposito: { gradient: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)", border: "#fcd34d", textColor: "#92400e" },
+  "placeholder-hamartoma": { gradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)", border: "#fecdd3", textColor: "#be123c" },
+};
 const DEFAULT_LINE_COLOR = "rgba(192, 132, 252, 0.36)";
 
 function resolveConcrete(id: string): string {
@@ -94,7 +102,9 @@ function buildLevels(
     }
   }
 
-  visit(rootId, undefined, undefined, 0);
+  for (const childId of childMap.get(rootId) ?? []) {
+    visit(childId, undefined, undefined, 0);
+  }
   return levels;
 }
 
@@ -106,13 +116,16 @@ interface CardProps {
   isActive: boolean;
   isClickable: boolean;
   onClick: () => void;
+  tileConfig?: { gradient: string; border: string; textColor: string };
 }
 
-function TreeCard({ refCb, label, isActive, isClickable, onClick }: CardProps) {
-  const activeStyle: CSSProperties = {
-    background: "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
-    boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
-  };
+function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig }: CardProps) {
+  const isTile = !!tileConfig && !isActive;
+  const cardStyle: CSSProperties | undefined = isActive
+    ? { background: "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)", boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)" }
+    : isTile
+      ? { background: tileConfig.gradient, borderColor: tileConfig.border, boxShadow: "0 6px 24px -8px rgba(0,0,0,0.10), 0 2px 8px -4px rgba(0,0,0,0.06)" }
+      : undefined;
 
   return (
     <button
@@ -122,11 +135,13 @@ function TreeCard({ refCb, label, isActive, isClickable, onClick }: CardProps) {
       className={`relative w-[270px] min-w-[270px] rounded-[1.45rem] border px-6 py-5 pr-20 text-left text-[1.08rem] font-semibold leading-[1.28] transition duration-200 ${
         isActive
           ? "border-[#dccdff] text-[#8b63d9]"
-          : "border-[#eadff3] bg-white text-[#8b63d9] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16),0_10px_18px_-16px_rgba(39,19,71,0.12)]"
-      } ${isClickable ? "cursor-pointer hover:-translate-y-0.5 hover:border-[#d8c1ef] hover:shadow-[0_22px_34px_-24px_rgba(39,19,71,0.2),0_12px_22px_-16px_rgba(39,19,71,0.14)]" : "cursor-default"}`}
-      style={isActive ? activeStyle : undefined}
+          : isTile
+            ? "hover:brightness-[0.975]"
+            : "border-[#eadff3] bg-white text-[#8b63d9] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16),0_10px_18px_-16px_rgba(39,19,71,0.12)]"
+      } ${isClickable ? "cursor-pointer hover:-translate-y-0.5" + (isTile ? "" : " hover:border-[#d8c1ef] hover:shadow-[0_22px_34px_-24px_rgba(39,19,71,0.2),0_12px_22px_-16px_rgba(39,19,71,0.14)]") : "cursor-default"}`}
+      style={cardStyle}
     >
-      <span className="block">{label}</span>
+      <span className="block" style={isTile ? { color: tileConfig.textColor } : undefined}>{label}</span>
       {isActive && (
         <span
           aria-hidden="true"
@@ -448,6 +463,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
               return (
                 <div key={colIndex} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {visibleEntries.map((entry) => {
+                    const tileConfig = colIndex === 0 ? CATEGORY_TILE_CONFIG[entry.concreteId] : undefined;
+
                     if (entry.isBridge) {
                       const termEntry = terminalByBridgeId.get(entry.id);
                       const isOpen = expanded.has(entry.id);
@@ -460,6 +477,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                             isActive={isOpen}
                             isClickable={true}
                             onClick={() => toggle(entry.id)}
+                            tileConfig={tileConfig}
                           />
                           {termEntry && isOpen && (
                             <TreeCard
@@ -490,6 +508,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                         isActive={isActive}
                         isClickable={canExpand}
                         onClick={() => toggle(entry.id)}
+                        tileConfig={tileConfig}
                       />
                     );
                   })}
