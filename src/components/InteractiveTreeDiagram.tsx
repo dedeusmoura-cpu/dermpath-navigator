@@ -187,17 +187,17 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       const out = outerRef.current;
       if (!cnt || !out) return;
 
-      // naturalW/H are layout sizes before the CSS transform is applied.
-      // We need to read them in pre-scale space so we divide by the current scale.
-      const currentScale = scaleRef.current || 1;
-      const naturalW = cnt.scrollWidth / currentScale;
-      const naturalH = cnt.scrollHeight / currentScale;
+      // CSS `transform: scale()` does NOT affect layout — scrollWidth/Height
+      // always reflect the element's natural (pre-transform) layout size.
+      // Do NOT divide by currentScale here; that creates a runaway feedback loop.
+      const naturalW = cnt.scrollWidth;
+      const naturalH = cnt.scrollHeight;
       const availW = out.clientWidth - 32;
 
-      // Fit width only — height grows freely so tall columns don't shrink the scale.
-      // Cap at 1.0 (never zoom in past natural size) and floor at 0.32 (still readable).
+      // Scale only to fit width. Height grows with the content.
+      // Cap at 1.0 (never zoom in) and floor at 0.32 (still readable).
       const newScale = Math.max(
-        Math.min(naturalW > 0 ? availW / naturalW : 1, 1.0),
+        Math.min(naturalW > 0 ? availW / naturalW : 1.0, 1.0),
         0.32,
       );
 
@@ -295,10 +295,10 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     setExpanded(new Set([rootNodeId]));
   }, [rootNodeId]);
 
-  // svgH is the natural (pre-scale) layout height captured during measurement.
-  // The visual height after scaling is svgH * scale.
-  const minHeight = Math.floor(window.innerHeight * 0.72);
-  const outerHeight = svgH > 0 ? Math.max(Math.ceil(svgH * scale) + 48, minHeight) : minHeight;
+  // svgH is the natural (pre-scale) layout height; visual height = svgH * scale.
+  // minHeight: small floor so the box doesn't collapse before first render.
+  const minHeight = 260;
+  const outerHeight = svgH > 0 ? Math.max(Math.ceil(svgH * scale) + 40, minHeight) : minHeight;
 
   function getDisplayLabel(entry: LevelEntry): string {
     if (!entry.isTerminal && entry.parentConcreteId) {
