@@ -230,13 +230,6 @@ const processCircularPositions: Record<string, { angle: number; radius: number }
   "placeholder-hamartoma": { angle: 198, radius: 35.5 },
 };
 
-const processTitleWrapperClasses: Record<string, string> = {
-  dermatite: "px-2",
-  "placeholder-neoplasia": "px-2",
-  "placeholder-cisto": "px-2",
-  deposito: "px-2",
-  "placeholder-hamartoma": "px-2",
-};
 
 export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: TreeNavigatorProps) {
   const { language, t } = useLanguage();
@@ -278,7 +271,11 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
             <h2 className="mt-2 font-serif text-2xl text-ink">{getDisplayedNodeTitle(node, language)}</h2>
           </div>
         ) : (
-          <div aria-hidden="true" />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("brand_kicker")}</p>
+            <h2 className="mt-1 font-serif text-2xl text-ink">{t("home_start")}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-steel">{t("process_hub_instruction")}</p>
+          </div>
         )}
 
         <FavoriteToggleButton nodeId={node.id} favorite={favorite} onToggleFavorite={onToggleFavorite} className="shrink-0" />
@@ -292,14 +289,15 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                 key={`${node.id}-${option.nextNodeId}`}
                 type="button"
                 onClick={() => onNavigate(option.nextNodeId)}
-                className="group flex flex-col items-stretch gap-0 overflow-visible bg-transparent text-center transition duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                className="group flex flex-col items-center gap-0 overflow-visible bg-transparent text-center transition duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
               >
-                <div className="-mb-1 w-full overflow-visible bg-transparent">
+                <div className="w-full overflow-visible bg-transparent">
                   {processCategoryImages[option.nextNodeId] ? (
                     <img
                       src={processCategoryImages[option.nextNodeId]}
                       alt={translateOptionLabel(node.id, option, language)}
                       className="block h-auto w-full object-contain object-center transition duration-300 group-hover:scale-[1.03]"
+                      style={{ aspectRatio: '3/2' }}
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-sm text-steel">
@@ -307,8 +305,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     </div>
                   )}
                 </div>
-                <div className="mt-0 w-full rounded-b-[22px] bg-white px-3 py-2 text-center">
-                  <h3 className="text-base font-semibold leading-6 text-ink">
+                <div className="mt-2 flex w-full items-center justify-center rounded-full border border-[#c5d4ff] bg-white px-3 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
+                  <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
                     {translateOptionLabel(node.id, option, language)}
                   </h3>
                 </div>
@@ -316,21 +314,30 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
             ))}
           </div>
 
-          <div className="relative hidden min-h-[900px] overflow-hidden rounded-[36px] border border-sand bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 py-8 xl:block">
+          <div className="relative hidden min-h-[900px] overflow-hidden bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 pb-8 pt-2 xl:block">
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a9c5ff]/80 bg-[radial-gradient(circle,_rgba(255,255,255,0.99)_0%,_rgba(236,243,255,0.94)_56%,_rgba(208,223,255,0.42)_100%)] shadow-[inset_0_18px_42px_rgba(255,255,255,0.62),0_34px_90px_-50px_rgba(36,95,231,0.38)]" />
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[690px] w-[690px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5px] border-[#6d96ff]/75 shadow-[0_0_0_10px_rgba(109,150,255,0.08)]" />
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 z-[0] flex h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
               style={{
-                background:
-                  "radial-gradient(circle at center, #2563EB 0%, rgba(37, 99, 235, 0.45) 45%, rgba(37, 99, 235, 0) 85%)",
+                background: [
+                  "radial-gradient(circle at 38% 32%, rgba(255,255,255,0.22) 0%, transparent 38%)",
+                  "radial-gradient(circle at center, #1a3fc7 0%, #2563eb 28%, rgba(37,99,235,0.58) 50%, rgba(37,99,235,0) 82%)",
+                ].join(", "),
+                boxShadow: [
+                  "0 0 72px rgba(37,99,235,0.45)",
+                  "0 0 140px rgba(37,99,235,0.22)",
+                  "inset 0 -28px 48px rgba(17,50,160,0.35)",
+                  "inset 0 12px 28px rgba(255,255,255,0.1)",
+                ].join(", "),
               }}
             >
                 <img
                   src={navegacaoDiagnosticaCompassIcon}
                   alt=""
                   aria-hidden="true"
-                  className="h-[228px] w-[228px] object-contain drop-shadow-lg"
+                  className="h-[228px] w-[228px] object-contain"
+                  style={{ filter: "drop-shadow(0 8px 24px rgba(17,50,160,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.3))" }}
                 />
             </div>
 
@@ -351,14 +358,15 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                       top: `calc(50% + ${orbitY.toFixed(2)}%)`,
                       transform: "translate(-50%, -50%)",
                     }}
-                    className="group absolute flex w-[228px] flex-col items-stretch gap-0 overflow-visible bg-transparent text-center transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                    className="group absolute flex w-[228px] flex-col items-center gap-0 overflow-visible bg-transparent text-center transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
                   >
-                    <div className="-mb-1 w-full overflow-visible bg-transparent">
+                    <div className="w-full overflow-visible bg-transparent">
                       {imageSrc ? (
                         <img
                           src={imageSrc}
                           alt={translateOptionLabel(node.id, option, language)}
                           className="block h-auto w-full object-contain object-center transition duration-300 group-hover:scale-[1.03]"
+                          style={{ aspectRatio: '3/2' }}
                         />
                       ) : (
                         <div className="flex h-full items-center justify-center text-sm text-steel">
@@ -366,8 +374,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                         </div>
                       )}
                     </div>
-                    <div className={`mt-0 w-full rounded-b-[28px] bg-white py-2 ${processTitleWrapperClasses[option.nextNodeId] ?? "px-2"}`}>
-                      <h3 className="text-[1.05rem] font-bold uppercase leading-6 tracking-[0.04em] text-[#1A47BF]">
+                    <div className="mt-2 flex w-full items-center justify-center rounded-full border border-[#c5d4ff] bg-white px-4 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
+                      <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
                         {translateOptionLabel(node.id, option, language)}
                       </h3>
                     </div>
