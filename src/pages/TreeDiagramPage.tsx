@@ -1,18 +1,13 @@
-import { useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { InteractiveTreeDiagram } from "../components/InteractiveTreeDiagram";
 import { algorithmTree } from "../data/algorithm";
 import { useLanguage } from "../context/LanguageContext";
 
 export function TreeDiagramPage() {
-  const [searchParams] = useSearchParams();
   const { language } = useLanguage();
-  const rootNodeId = useMemo(() => {
-    const id = searchParams.get("nodeId");
-    return id && algorithmTree.nodes[id] ? id : algorithmTree.rootId;
-  }, [searchParams]);
+  const rootNodeId = algorithmTree.rootId;
 
-  const sequentialUrl = `/mapa-da-arvore?nodeId=${rootNodeId}`;
+  const sequentialUrl = `/mapa-da-arvore`;
 
   return (
     <div className="space-y-3">
