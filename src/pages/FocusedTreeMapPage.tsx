@@ -188,14 +188,6 @@ export function FocusedTreeMapPage() {
             return;
           }
 
-          if (item.kind === "terminal-bridge" && parentHasOnlyTerminalChildren(item.nodeId)) {
-            persistFinalResultReturnContext(mapStateKey);
-            navigate(`/diagnostico?nodeId=${item.nodeId}`, {
-              state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
-            });
-            return;
-          }
-
           setIsReturningFromFinalResult(false);
 
           setSelectedPath((prev) => {
@@ -279,13 +271,6 @@ function isFinalTreeNode(node: (typeof algorithmTree.nodes)[string] | undefined)
   return ["diagnosis", "morphologic_terminal", "placeholder", "info"].includes(node?.type ?? "");
 }
 
-function parentHasOnlyTerminalChildren(nodeId: string): boolean {
-  const parentId = algorithmTree.nodes[nodeId]?.parentId;
-  if (!parentId) return false;
-  const options = algorithmTree.nodes[parentId]?.options;
-  if (!options?.length) return false;
-  return options.every((opt) => isFinalTreeNode(algorithmTree.nodes[opt.nextNodeId]));
-}
 
 function isValidFocusedTrail(trail: string[] | undefined, expectedLastNodeId: string) {
   if (!trail) {

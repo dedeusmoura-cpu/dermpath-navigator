@@ -192,30 +192,32 @@ export function MatchingColumnsInteraction({ columns, correctOptionText, postSta
         </section>
       )}
 
-      <div className="flex gap-2">
-        {!verified ? (
-          <button
-            type="button"
-            disabled={!allAssigned}
-            onClick={() => setVerified(true)}
-            className="flex-1 rounded-[16px] bg-[#b56d00] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9a5c00] disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Verificar emparelhamento
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              setVerified(false);
-              setAssignments(new Array(columns.rightItems.length).fill(null));
-              setSelectedLeft(null);
-            }}
-            className="rounded-[16px] border border-[#f2dfc3] bg-white px-4 py-2.5 text-sm font-medium text-steel transition hover:border-amber-300 hover:text-ink"
-          >
-            Tentar novamente
-          </button>
-        )}
-      </div>
+      {correctOptionText !== null && (
+        <div className="flex gap-2">
+          {!verified ? (
+            <button
+              type="button"
+              disabled={!allAssigned}
+              onClick={() => setVerified(true)}
+              className="flex-1 rounded-[16px] bg-[#b56d00] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#9a5c00] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Verificar emparelhamento
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setVerified(false);
+                setAssignments(new Array(columns.rightItems.length).fill(null));
+                setSelectedLeft(null);
+              }}
+              className="rounded-[16px] border border-[#f2dfc3] bg-white px-4 py-2.5 text-sm font-medium text-steel transition hover:border-amber-300 hover:text-ink"
+            >
+              Tentar novamente
+            </button>
+          )}
+        </div>
+      )}
 
       {postStatement && (
         <p className="text-sm font-medium leading-7 text-ink">{postStatement}</p>

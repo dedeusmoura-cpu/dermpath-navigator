@@ -41,6 +41,7 @@ import { TedSimuladoResultadoPage } from "./pages/TedSimuladoResultadoPage";
 import { TedSimuladoSessionPage } from "./pages/TedSimuladoSessionPage";
 import { MeusSimuladosPage } from "./pages/MeusSimuladosPage";
 import { TedBuscaPage } from "./pages/TedBuscaPage";
+import { TreeDiagramPage } from "./pages/TreeDiagramPage";
 import { WelcomeVideoPage } from "./pages/WelcomeVideoPage";
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
   const isQuizSection = location.pathname.startsWith("/quiz");
   const isTedPage = location.pathname.startsWith("/treinamento-ted");
   const isHomePage = location.pathname === "/";
+  const isTreeMapPage = location.pathname === "/mapa-da-arvore";
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -89,7 +91,7 @@ export default function App() {
         message={language === "pt" ? "Para visualizar melhor o quiz, gire o celular para a horizontal." : "For a better quiz view, rotate your phone to landscape."}
       />
 
-      {!isTedPage && !isHomePage && <header className="fixed inset-x-0 top-0 z-30 border-b border-sand/90 bg-white/92 shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur">
+      {!isTedPage && !isHomePage && !isTreeMapPage && <header className="fixed inset-x-0 top-0 z-30 border-b border-sand/90 bg-white/92 shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-start justify-between gap-3 px-4 py-1.5 sm:px-6 lg:items-center">
           <NavLink to="/" className="shrink-0">
             <img
@@ -111,18 +113,6 @@ export default function App() {
             ) : null}
 
             <nav className="hidden gap-1 rounded-full border border-sand bg-paper/90 p-[3px] md:flex">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `nav-link-hover rounded-full px-3 py-1 text-sm font-semibold transition ${
-                    isActive
-                      ? "bg-ink text-white shadow-[0_12px_28px_-18px_rgba(20,27,43,0.9)]"
-                      : "text-steel hover:bg-white hover:text-accent"
-                  }`
-                }
-              >
-                {t("nav_home")}
-              </NavLink>
               <button
                 type="button"
                 onClick={openSearchPanel}
@@ -151,7 +141,7 @@ export default function App() {
                   language === "pt" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"
                 }`}
               >
-                {t("language_portuguese")}
+                PT
               </button>
               <button
                 type="button"
@@ -160,14 +150,14 @@ export default function App() {
                   language === "en" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"
                 }`}
               >
-                {t("language_english")}
+                EN
               </button>
             </div>
           </div>
         </div>
       </header>}
 
-      <main className={`mx-auto max-w-7xl px-4 pb-6 sm:px-6 lg:px-8 ${isTedPage || isHomePage ? "pt-4" : "pt-16 sm:pt-24"}`}>
+      <main className={`mx-auto max-w-7xl px-4 pb-6 sm:px-6 lg:px-8 ${isTedPage || isHomePage || isTreeMapPage ? "pt-4" : "pt-16 sm:pt-24"}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/video-de-boas-vindas" element={<WelcomeVideoPage />} />
@@ -213,6 +203,7 @@ export default function App() {
           <Route path="/treinamento-ted/simulado/resultado" element={<TedSimuladoResultadoPage />} />
           <Route path="/treinamento-ted/meus-simulados" element={<MeusSimuladosPage />} />
           <Route path="/treinamento-ted/busca" element={<TedBuscaPage />} />
+          <Route path="/arvore-interativa" element={<TreeDiagramPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

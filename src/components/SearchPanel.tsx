@@ -3,6 +3,11 @@ import { useLanguage } from "../context/LanguageContext";
 import { getTranslatedTerminalLabel, translateNodeResultTitle } from "../i18n/translations";
 import { searchNodes } from "../utils/search";
 
+const SUGGESTED_TERMS: Record<string, string[]> = {
+  pt: ["vasculite", "líquen", "granuloma", "mucina", "melanoma", "psoríase", "carcinoma", "amiloidose"],
+  en: ["vasculitis", "lichen", "granuloma", "mucin", "melanoma", "psoriasis", "carcinoma", "amyloidosis"],
+};
+
 interface SearchPanelProps {
   initialQuery?: string;
   onOpenNode: (nodeId: string) => void;
@@ -12,6 +17,7 @@ export function SearchPanel({ initialQuery = "", onOpenNode }: SearchPanelProps)
   const { language, t } = useLanguage();
   const [query, setQuery] = useState(initialQuery);
   const results = useMemo(() => searchNodes(query, language), [language, query]);
+  const suggestions = SUGGESTED_TERMS[language] ?? SUGGESTED_TERMS.pt;
 
   return (
     <section id="search-panel" className="scroll-mt-28 space-y-5 rounded-[24px] border border-sand bg-white/95 p-5 shadow-panel">
@@ -30,11 +36,31 @@ export function SearchPanel({ initialQuery = "", onOpenNode }: SearchPanelProps)
         />
       </label>
 
+      {!query && (
+        <div className="space-y-2">
+          <p className="text-xs font-medium text-steel/60">{t("search_suggestions_label")}</p>
+          <div className="flex flex-wrap gap-2">
+            {suggestions.map((term) => (
+              <button
+                key={term}
+                type="button"
+                onClick={() => setQuery(term)}
+                className="rounded-full border border-sand bg-paper px-3 py-1.5 text-xs font-medium text-steel transition hover:border-accent/40 hover:bg-accent/5 hover:text-accent"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-3">
         {results.length === 0 ? (
-          <div className="rounded-2xl border border-sand/70 bg-paper p-4 text-sm text-steel">
-            {query ? t("search_empty_results") : t("search_empty_query")}
-          </div>
+          query ? (
+            <div className="rounded-2xl border border-sand/70 bg-paper p-4 text-sm text-steel">
+              {t("search_empty_results")}
+            </div>
+          ) : null
         ) : (
           results.map(({ node, excerpt }) => (
             <button

@@ -200,7 +200,9 @@ function SimuladoQuestionCard({
                 key={question.id}
                 columns={matchingColumns}
                 correctOptionText={
-                  question.options.find((o) => o.id === question.correctOption)?.text ?? null
+                  isFinished
+                    ? (question.options.find((o) => o.id === question.correctOption)?.text ?? null)
+                    : null
                 }
                 postStatement={question.postStatement}
               />
