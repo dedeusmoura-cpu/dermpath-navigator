@@ -117,10 +117,11 @@ interface CardProps {
   isClickable: boolean;
   onClick: () => void;
   tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string };
+  showTile?: boolean;
 }
 
-function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig }: CardProps) {
-  const isTile = !!tileConfig && !isActive;
+function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig, showTile = false }: CardProps) {
+  const isTile = !!tileConfig && !isActive && showTile;
   const cardStyle: CSSProperties | undefined = isActive
     ? {
         background: tileConfig?.activeGradient ?? "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
@@ -484,6 +485,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                             isClickable={true}
                             onClick={() => toggle(entry.id)}
                             tileConfig={tileConfig}
+                            showTile={colIndex === 0}
                           />
                           {termEntry && isOpen && (
                             <TreeCard
@@ -515,6 +517,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                         isClickable={canExpand}
                         onClick={() => toggle(entry.id)}
                         tileConfig={tileConfig}
+                        showTile={colIndex === 0}
                       />
                     );
                   })}
