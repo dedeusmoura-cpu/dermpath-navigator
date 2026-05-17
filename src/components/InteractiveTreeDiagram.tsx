@@ -17,12 +17,12 @@ const CATEGORY_LINE_COLORS: Record<string, string> = {
   "placeholder-hamartoma": "rgba(253, 164, 175, 0.45)",
 };
 
-const CATEGORY_TILE_CONFIG: Record<string, { gradient: string; border: string; textColor: string }> = {
-  dermatite: { gradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)", border: "#d8b4fe", textColor: "#7c3aed" },
-  "placeholder-neoplasia": { gradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)", border: "#86efac", textColor: "#15803d" },
-  "placeholder-cisto": { gradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)", border: "#93c5fd", textColor: "#1d4ed8" },
-  deposito: { gradient: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)", border: "#fcd34d", textColor: "#92400e" },
-  "placeholder-hamartoma": { gradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)", border: "#fecdd3", textColor: "#be123c" },
+const CATEGORY_TILE_CONFIG: Record<string, { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string }> = {
+  dermatite: { gradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)", border: "#d8b4fe", textColor: "#7c3aed", activeGradient: "linear-gradient(135deg, #ede9ff 0%, #e0d0ff 100%)", activeBorder: "#c4b5fd", arrowColor: "#7c3aed" },
+  "placeholder-neoplasia": { gradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)", border: "#86efac", textColor: "#15803d", activeGradient: "linear-gradient(135deg, #e8fdf0 0%, #c6f6d5 100%)", activeBorder: "#86efac", arrowColor: "#15803d" },
+  "placeholder-cisto": { gradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)", border: "#93c5fd", textColor: "#1d4ed8", activeGradient: "linear-gradient(135deg, #e5f0ff 0%, #bfdbfe 100%)", activeBorder: "#93c5fd", arrowColor: "#1d4ed8" },
+  deposito: { gradient: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)", border: "#fcd34d", textColor: "#92400e", activeGradient: "linear-gradient(135deg, #fef5d0 0%, #fde68a 100%)", activeBorder: "#fcd34d", arrowColor: "#92400e" },
+  "placeholder-hamartoma": { gradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)", border: "#fecdd3", textColor: "#be123c", activeGradient: "linear-gradient(135deg, #ffe8ea 0%, #ffd1d5 100%)", activeBorder: "#fecdd3", arrowColor: "#be123c" },
 };
 const DEFAULT_LINE_COLOR = "rgba(192, 132, 252, 0.36)";
 
@@ -116,13 +116,18 @@ interface CardProps {
   isActive: boolean;
   isClickable: boolean;
   onClick: () => void;
-  tileConfig?: { gradient: string; border: string; textColor: string };
+  tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string };
 }
 
 function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig }: CardProps) {
   const isTile = !!tileConfig && !isActive;
   const cardStyle: CSSProperties | undefined = isActive
-    ? { background: "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)", boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)" }
+    ? {
+        background: tileConfig?.activeGradient ?? "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
+        borderColor: tileConfig?.activeBorder,
+        color: tileConfig?.textColor,
+        boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+      }
     : isTile
       ? { background: tileConfig.gradient, borderColor: tileConfig.border, boxShadow: "0 6px 24px -8px rgba(0,0,0,0.10), 0 2px 8px -4px rgba(0,0,0,0.06)" }
       : undefined;
@@ -148,7 +153,7 @@ function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig }: 
           className="absolute right-6 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
         >
           <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
-            <path d="M7 5.5 12 10l-5 4.5" stroke="#ff4f5e" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7 5.5 12 10l-5 4.5" stroke={tileConfig?.arrowColor ?? "#ff4f5e"} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
       )}
@@ -463,7 +468,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
               return (
                 <div key={colIndex} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {visibleEntries.map((entry) => {
-                    const tileConfig = colIndex === 0 ? CATEGORY_TILE_CONFIG[entry.concreteId] : undefined;
+                    const categoryId = nodeCategoryMap.get(resolveConcrete(entry.id));
+                    const tileConfig = categoryId ? CATEGORY_TILE_CONFIG[categoryId] : undefined;
 
                     if (entry.isBridge) {
                       const termEntry = terminalByBridgeId.get(entry.id);

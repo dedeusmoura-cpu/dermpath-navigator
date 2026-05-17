@@ -29,6 +29,12 @@ const CATEGORY_CONFIG: Record<string, {
   activeLineColor: string;
   inactiveLineColor: string;
   pulseGlow: string;
+  focusGradient: string;
+  focusShadow: string;
+  selectedGradient: string;
+  selectedShadow: string;
+  selectedBorder: string;
+  arrowColor: string;
 }> = {
   dermatite: {
     gradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)",
@@ -37,6 +43,12 @@ const CATEGORY_CONFIG: Record<string, {
     activeLineColor: "rgba(124, 58, 237, 0.86)",
     inactiveLineColor: "rgba(167, 92, 246, 0.38)",
     pulseGlow: "drop-shadow(0 0 6px rgba(192, 132, 252, 0.95)) drop-shadow(0 0 12px rgba(124, 58, 237, 0.70))",
+    focusGradient: "linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #a78bfa 100%)",
+    focusShadow: "0 18px 28px -20px rgba(109, 40, 217, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
+    selectedGradient: "linear-gradient(135deg, #ede9ff 0%, #e0d0ff 100%)",
+    selectedShadow: "0 16px 28px -24px rgba(124, 58, 237, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+    selectedBorder: "#c4b5fd",
+    arrowColor: "#7c3aed",
   },
   "placeholder-neoplasia": {
     gradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
@@ -45,6 +57,12 @@ const CATEGORY_CONFIG: Record<string, {
     activeLineColor: "rgba(21, 128, 61, 0.82)",
     inactiveLineColor: "rgba(134, 239, 172, 0.50)",
     pulseGlow: "drop-shadow(0 0 6px rgba(134, 239, 172, 0.95)) drop-shadow(0 0 12px rgba(21, 128, 61, 0.70))",
+    focusGradient: "linear-gradient(135deg, #15803d 0%, #16a34a 55%, #4ade80 100%)",
+    focusShadow: "0 18px 28px -20px rgba(21, 128, 61, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
+    selectedGradient: "linear-gradient(135deg, #e8fdf0 0%, #c6f6d5 100%)",
+    selectedShadow: "0 16px 28px -24px rgba(21, 128, 61, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+    selectedBorder: "#86efac",
+    arrowColor: "#15803d",
   },
   "placeholder-cisto": {
     gradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)",
@@ -53,6 +71,12 @@ const CATEGORY_CONFIG: Record<string, {
     activeLineColor: "rgba(37, 99, 235, 0.82)",
     inactiveLineColor: "rgba(147, 197, 253, 0.50)",
     pulseGlow: "drop-shadow(0 0 6px rgba(147, 197, 253, 0.95)) drop-shadow(0 0 12px rgba(37, 99, 235, 0.70))",
+    focusGradient: "linear-gradient(135deg, #1e40af 0%, #2563eb 55%, #60a5fa 100%)",
+    focusShadow: "0 18px 28px -20px rgba(29, 78, 216, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
+    selectedGradient: "linear-gradient(135deg, #e5f0ff 0%, #bfdbfe 100%)",
+    selectedShadow: "0 16px 28px -24px rgba(37, 99, 235, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+    selectedBorder: "#93c5fd",
+    arrowColor: "#1d4ed8",
   },
   deposito: {
     gradient: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
@@ -61,6 +85,12 @@ const CATEGORY_CONFIG: Record<string, {
     activeLineColor: "rgba(180, 83, 9, 0.82)",
     inactiveLineColor: "rgba(252, 211, 77, 0.50)",
     pulseGlow: "drop-shadow(0 0 6px rgba(252, 211, 77, 0.95)) drop-shadow(0 0 12px rgba(180, 83, 9, 0.70))",
+    focusGradient: "linear-gradient(135deg, #92400e 0%, #b45309 55%, #f59e0b 100%)",
+    focusShadow: "0 18px 28px -20px rgba(146, 64, 14, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
+    selectedGradient: "linear-gradient(135deg, #fef5d0 0%, #fde68a 100%)",
+    selectedShadow: "0 16px 28px -24px rgba(180, 83, 9, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+    selectedBorder: "#fcd34d",
+    arrowColor: "#92400e",
   },
   "placeholder-hamartoma": {
     gradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)",
@@ -69,6 +99,12 @@ const CATEGORY_CONFIG: Record<string, {
     activeLineColor: "rgba(225, 29, 72, 0.82)",
     inactiveLineColor: "rgba(253, 164, 175, 0.45)",
     pulseGlow: "drop-shadow(0 0 6px rgba(253, 164, 175, 0.95)) drop-shadow(0 0 12px rgba(225, 29, 72, 0.70))",
+    focusGradient: "linear-gradient(135deg, #9f1239 0%, #e11d48 55%, #fb7185 100%)",
+    focusShadow: "0 18px 28px -20px rgba(190, 18, 60, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
+    selectedGradient: "linear-gradient(135deg, #ffe8ea 0%, #ffd1d5 100%)",
+    selectedShadow: "0 16px 28px -24px rgba(225, 29, 72, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+    selectedBorder: "#fecdd3",
+    arrowColor: "#be123c",
   },
 };
 
@@ -305,13 +341,15 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
                 const isCategoryTile = !!catConfig && columnIndex === 0 && !isFocusNode && !isSelectedPath;
                 const buttonStyle: CSSProperties | undefined = isFocusNode
                   ? {
-                      background: "linear-gradient(135deg, #ff6a6f 0%, #ff4f7f 55%, #a75cf6 100%)",
-                      boxShadow: "0 18px 28px -20px rgba(255, 79, 127, 0.34), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
+                      background: activeCatLineConfig?.focusGradient ?? "linear-gradient(135deg, #ff6a6f 0%, #ff4f7f 55%, #a75cf6 100%)",
+                      boxShadow: activeCatLineConfig?.focusShadow ?? "0 18px 28px -20px rgba(255, 79, 127, 0.34), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
                     }
                   : isSelectedPath
                     ? {
-                        background: "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
-                        boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+                        background: activeCatLineConfig?.selectedGradient ?? "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
+                        boxShadow: activeCatLineConfig?.selectedShadow ?? "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+                        borderColor: activeCatLineConfig?.selectedBorder,
+                        color: activeCatLineConfig?.textColor,
                       }
                     : isCategoryTile
                       ? {
@@ -361,7 +399,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
                           <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
                             <path
                               d="M7 5.5 12 10l-5 4.5"
-                              stroke="#ff4f5e"
+                              stroke={activeCatLineConfig?.arrowColor ?? "#ff4f5e"}
                               strokeWidth="2.4"
                               strokeLinecap="round"
                               strokeLinejoin="round"
