@@ -187,14 +187,18 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       const out = outerRef.current;
       if (!cnt || !out) return;
 
-      const naturalW = cnt.scrollWidth;
-      const naturalH = cnt.scrollHeight;
-      const availW = out.clientWidth - 40;
-      const availH = window.innerHeight * 0.82;
+      // naturalW/H are layout sizes before the CSS transform is applied.
+      // We need to read them in pre-scale space so we divide by the current scale.
+      const currentScale = scaleRef.current || 1;
+      const naturalW = cnt.scrollWidth / currentScale;
+      const naturalH = cnt.scrollHeight / currentScale;
+      const availW = out.clientWidth - 32;
 
+      // Fit width only — height grows freely so tall columns don't shrink the scale.
+      // Cap at 1.0 (never zoom in past natural size) and floor at 0.32 (still readable).
       const newScale = Math.max(
-        Math.min(availW / naturalW, availH / naturalH, 2.5),
-        0.1,
+        Math.min(naturalW > 0 ? availW / naturalW : 1, 1.0),
+        0.32,
       );
 
       if (Math.abs(newScale - scaleRef.current) > 0.004) {
@@ -221,8 +225,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         });
       }
 
-      setSvgW(cnt.scrollWidth);
-      setSvgH(cnt.scrollHeight);
+      setSvgW(naturalW);
+      setSvgH(naturalH);
       setLines(newLines);
     }
 
@@ -291,8 +295,10 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     setExpanded(new Set([rootNodeId]));
   }, [rootNodeId]);
 
-  const minHeight = Math.floor(window.innerHeight * 0.80);
-  const outerHeight = svgH > 0 ? Math.max(Math.ceil(svgH * scale) + 56, minHeight) : minHeight;
+  // svgH is the natural (pre-scale) layout height captured during measurement.
+  // The visual height after scaling is svgH * scale.
+  const minHeight = Math.floor(window.innerHeight * 0.72);
+  const outerHeight = svgH > 0 ? Math.max(Math.ceil(svgH * scale) + 48, minHeight) : minHeight;
 
   function getDisplayLabel(entry: LevelEntry): string {
     if (!entry.isTerminal && entry.parentConcreteId) {
@@ -329,7 +335,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
 
       <div
         ref={outerRef}
-        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-hidden"
+        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-x-hidden overflow-y-auto"
         style={{ height: outerHeight }}
       >
         <div
