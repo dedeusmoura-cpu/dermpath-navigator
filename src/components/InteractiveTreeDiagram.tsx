@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { algorithmTree } from "../data/algorithm";
@@ -8,6 +8,23 @@ import { buildPathToNode, getChildMap } from "../utils/tree";
 import type { AlgorithmNode } from "../types/algorithm";
 
 const TERMINAL_TYPES = new Set(["diagnosis", "morphologic_terminal", "placeholder", "info"]);
+
+const CATEGORY_LINE_COLORS: Record<string, string> = {
+  dermatite: "rgba(167, 92, 246, 0.38)",
+  "placeholder-neoplasia": "rgba(134, 239, 172, 0.50)",
+  "placeholder-cisto": "rgba(147, 197, 253, 0.50)",
+  deposito: "rgba(252, 211, 77, 0.50)",
+  "placeholder-hamartoma": "rgba(253, 164, 175, 0.45)",
+};
+const DEFAULT_LINE_COLOR = "rgba(192, 132, 252, 0.36)";
+
+function resolveConcrete(id: string): string {
+  return id.startsWith("bridge:") ? id.split(":")[1] : id;
+}
+
+function getCategoryForLine(fromId: string, toId: string, map: Map<string, string>): string | undefined {
+  return map.get(resolveConcrete(toId)) ?? map.get(resolveConcrete(fromId));
+}
 
 function isTerminalNode(node: AlgorithmNode | undefined): boolean {
   return TERMINAL_TYPES.has(node?.type ?? "");
@@ -19,6 +36,8 @@ function makeBridgeId(parentId: string, childId: string) {
 
 interface LineData {
   id: string;
+  from: string;
+  to: string;
   x1: number;
   y1: number;
   x2: number;
@@ -138,6 +157,21 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const [svgH, setSvgH] = useState(0);
   const [scale, setScale] = useState(1);
   const scaleRef = useRef(1);
+  const [enteringLineIds, setEnteringLineIds] = useState<Set<string>>(new Set());
+  const previousLineIdsRef = useRef<Set<string>>(new Set());
+  const enterTimerRef = useRef<number | null>(null);
+
+  const nodeCategoryMap = useMemo(() => {
+    const map = new Map<string, string>();
+    function mark(nodeId: string, categoryId: string) {
+      map.set(nodeId, categoryId);
+      for (const childId of childMap.get(nodeId) ?? []) mark(childId, categoryId);
+    }
+    for (const opt of algorithmTree.nodes[algorithmTree.rootId]?.options ?? []) {
+      mark(opt.nextNodeId, opt.nextNodeId);
+    }
+    return map;
+  }, [childMap]);
 
   const outerRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -216,6 +250,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         const tr = toEl.getBoundingClientRect();
         newLines.push({
           id: `${edge.from}→${edge.to}`,
+          from: edge.from,
+          to: edge.to,
           x1: (fr.right - cRect.left) / s,
           y1: (fr.top + fr.height / 2 - cRect.top) / s,
           x2: (tr.left - cRect.left) / s,
@@ -239,6 +275,22 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     return () => { cancelAnimationFrame(rafId); ro.disconnect(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [edges, scale]);
+
+  useEffect(() => {
+    const currentIds = new Set(lines.map((l) => l.id));
+    const prev = previousLineIdsRef.current;
+    const newIds = [...currentIds].filter((id) => !prev.has(id));
+    previousLineIdsRef.current = currentIds;
+    if (newIds.length === 0) return;
+    if (enterTimerRef.current !== null) window.clearTimeout(enterTimerRef.current);
+    setEnteringLineIds(new Set(newIds));
+    enterTimerRef.current = window.setTimeout(() => {
+      setEnteringLineIds(new Set());
+      enterTimerRef.current = null;
+    }, 620);
+  }, [lines]);
+
+  useEffect(() => () => { if (enterTimerRef.current !== null) window.clearTimeout(enterTimerRef.current); }, []);
 
   const toggle = useCallback(
     (toggleId: string) => {
@@ -364,12 +416,19 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
               const gap = 4;
               const cx = line.x2 - gap - cr;
               const px = cx - cr - 0.5;
-              const stroke = "rgba(192, 132, 252, 0.36)";
+              const categoryId = getCategoryForLine(line.from, line.to, nodeCategoryMap);
+              const stroke = CATEGORY_LINE_COLORS[categoryId ?? ""] ?? DEFAULT_LINE_COLOR;
+              const isEntering = enteringLineIds.has(line.id);
               return (
                 <g key={line.id}>
                   <path
+                    className={isEntering ? "focused-tree-map-connection focused-tree-map-connection--enter" : "focused-tree-map-connection"}
                     d={`M ${line.x1} ${line.y1} C ${midX} ${line.y1}, ${midX} ${line.y2}, ${px} ${line.y2}`}
-                    fill="none" stroke={stroke} strokeWidth="1.55" strokeLinecap="round"
+                    fill="none"
+                    pathLength={1}
+                    stroke={stroke}
+                    strokeWidth="1.55"
+                    strokeLinecap="round"
                   />
                   <circle cx={cx} cy={line.y2} r={cr} fill="white" stroke={stroke} strokeWidth="1.4" />
                 </g>
