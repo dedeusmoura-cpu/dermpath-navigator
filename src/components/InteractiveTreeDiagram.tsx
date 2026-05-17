@@ -17,8 +17,6 @@ function makeBridgeId(parentId: string, childId: string) {
   return `bridge:${parentId}:${childId}`;
 }
 
-type Language = "pt" | "en";
-
 interface LineData {
   id: string;
   x1: number;
