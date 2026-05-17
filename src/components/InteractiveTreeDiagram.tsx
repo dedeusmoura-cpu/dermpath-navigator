@@ -17,12 +17,12 @@ const CATEGORY_LINE_COLORS: Record<string, string> = {
   "placeholder-hamartoma": "rgba(253, 164, 175, 0.45)",
 };
 
-const CATEGORY_TILE_CONFIG: Record<string, { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string }> = {
-  dermatite: { gradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)", border: "#d8b4fe", textColor: "#7c3aed", activeGradient: "linear-gradient(135deg, #ede9ff 0%, #e0d0ff 100%)", activeBorder: "#c4b5fd", arrowColor: "#7c3aed" },
-  "placeholder-neoplasia": { gradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)", border: "#86efac", textColor: "#15803d", activeGradient: "linear-gradient(135deg, #e8fdf0 0%, #c6f6d5 100%)", activeBorder: "#86efac", arrowColor: "#15803d" },
-  "placeholder-cisto": { gradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)", border: "#93c5fd", textColor: "#1d4ed8", activeGradient: "linear-gradient(135deg, #e5f0ff 0%, #bfdbfe 100%)", activeBorder: "#93c5fd", arrowColor: "#1d4ed8" },
-  deposito: { gradient: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)", border: "#fcd34d", textColor: "#92400e", activeGradient: "linear-gradient(135deg, #fef5d0 0%, #fde68a 100%)", activeBorder: "#fcd34d", arrowColor: "#92400e" },
-  "placeholder-hamartoma": { gradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)", border: "#fecdd3", textColor: "#be123c", activeGradient: "linear-gradient(135deg, #ffe8ea 0%, #ffd1d5 100%)", activeBorder: "#fecdd3", arrowColor: "#be123c" },
+const CATEGORY_TILE_CONFIG: Record<string, { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string; focusGradient: string; focusShadow: string }> = {
+  dermatite: { gradient: "linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)", border: "#d8b4fe", textColor: "#7c3aed", activeGradient: "linear-gradient(135deg, #ede9ff 0%, #e0d0ff 100%)", activeBorder: "#c4b5fd", arrowColor: "#7c3aed", focusGradient: "linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #a78bfa 100%)", focusShadow: "0 18px 28px -20px rgba(109, 40, 217, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)" },
+  "placeholder-neoplasia": { gradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)", border: "#86efac", textColor: "#15803d", activeGradient: "linear-gradient(135deg, #e8fdf0 0%, #c6f6d5 100%)", activeBorder: "#86efac", arrowColor: "#15803d", focusGradient: "linear-gradient(135deg, #15803d 0%, #16a34a 55%, #4ade80 100%)", focusShadow: "0 18px 28px -20px rgba(21, 128, 61, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)" },
+  "placeholder-cisto": { gradient: "linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)", border: "#93c5fd", textColor: "#1d4ed8", activeGradient: "linear-gradient(135deg, #e5f0ff 0%, #bfdbfe 100%)", activeBorder: "#93c5fd", arrowColor: "#1d4ed8", focusGradient: "linear-gradient(135deg, #1e40af 0%, #2563eb 55%, #60a5fa 100%)", focusShadow: "0 18px 28px -20px rgba(29, 78, 216, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)" },
+  deposito: { gradient: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)", border: "#fcd34d", textColor: "#92400e", activeGradient: "linear-gradient(135deg, #fef5d0 0%, #fde68a 100%)", activeBorder: "#fcd34d", arrowColor: "#92400e", focusGradient: "linear-gradient(135deg, #92400e 0%, #b45309 55%, #f59e0b 100%)", focusShadow: "0 18px 28px -20px rgba(146, 64, 14, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)" },
+  "placeholder-hamartoma": { gradient: "linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)", border: "#fecdd3", textColor: "#be123c", activeGradient: "linear-gradient(135deg, #ffe8ea 0%, #ffd1d5 100%)", activeBorder: "#fecdd3", arrowColor: "#be123c", focusGradient: "linear-gradient(135deg, #9f1239 0%, #e11d48 55%, #fb7185 100%)", focusShadow: "0 18px 28px -20px rgba(190, 18, 60, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)" },
 };
 const DEFAULT_LINE_COLOR = "rgba(192, 132, 252, 0.36)";
 
@@ -114,24 +114,30 @@ interface CardProps {
   refCb: (el: HTMLElement | null) => void;
   label: string;
   isActive: boolean;
+  isFocused: boolean;
   isClickable: boolean;
   onClick: () => void;
-  tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string };
+  tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string; focusGradient: string; focusShadow: string };
   showTile?: boolean;
 }
 
-function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig, showTile = false }: CardProps) {
+function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false }: CardProps) {
   const isTile = !!tileConfig && !isActive && showTile;
-  const cardStyle: CSSProperties | undefined = isActive
+  const cardStyle: CSSProperties | undefined = isFocused
     ? {
-        background: tileConfig?.activeGradient ?? "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
-        borderColor: tileConfig?.activeBorder,
-        color: tileConfig?.textColor,
-        boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+        background: tileConfig?.focusGradient ?? "linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #a78bfa 100%)",
+        boxShadow: tileConfig?.focusShadow ?? "0 18px 28px -20px rgba(109, 40, 217, 0.40), 0 10px 18px -16px rgba(39, 19, 71, 0.18)",
       }
-    : isTile
-      ? { background: tileConfig.gradient, borderColor: tileConfig.border, boxShadow: "0 6px 24px -8px rgba(0,0,0,0.10), 0 2px 8px -4px rgba(0,0,0,0.06)" }
-      : undefined;
+    : isActive
+      ? {
+          background: tileConfig?.activeGradient ?? "linear-gradient(135deg, #f3ecff 0%, #efe6ff 100%)",
+          borderColor: tileConfig?.activeBorder,
+          color: tileConfig?.textColor,
+          boxShadow: "0 16px 28px -24px rgba(167, 92, 246, 0.24), 0 10px 18px -16px rgba(39, 19, 71, 0.14)",
+        }
+      : isTile
+        ? { background: tileConfig.gradient, borderColor: tileConfig.border, boxShadow: "0 6px 24px -8px rgba(0,0,0,0.10), 0 2px 8px -4px rgba(0,0,0,0.06)" }
+        : undefined;
 
   return (
     <button
@@ -139,11 +145,13 @@ function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig, sh
       type="button"
       onClick={isClickable ? onClick : undefined}
       className={`relative w-[270px] min-w-[270px] rounded-[1.45rem] border px-6 py-5 pr-20 text-left text-[1.08rem] font-semibold leading-[1.28] transition duration-200 ${
-        isActive
-          ? "border-[#dccdff] text-[#8b63d9]"
-          : isTile
-            ? "hover:brightness-[0.975]"
-            : "border-[#eadff3] bg-white text-[#8b63d9] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16),0_10px_18px_-16px_rgba(39,19,71,0.12)]"
+        isFocused
+          ? "border-white/20 text-white"
+          : isActive
+            ? "border-[#dccdff] text-[#8b63d9]"
+            : isTile
+              ? "hover:brightness-[0.975]"
+              : "border-[#eadff3] bg-white text-[#8b63d9] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16),0_10px_18px_-16px_rgba(39,19,71,0.12)]"
       } ${isClickable ? "cursor-pointer hover:-translate-y-0.5" + (isTile ? "" : " hover:border-[#d8c1ef] hover:shadow-[0_22px_34px_-24px_rgba(39,19,71,0.2),0_12px_22px_-16px_rgba(39,19,71,0.14)]") : "cursor-default"}`}
       style={cardStyle}
     >
@@ -154,7 +162,7 @@ function TreeCard({ refCb, label, isActive, isClickable, onClick, tileConfig, sh
           className="absolute right-6 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
         >
           <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
-            <path d="M7 5.5 12 10l-5 4.5" stroke={tileConfig?.arrowColor ?? "#ff4f5e"} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7 5.5 12 10l-5 4.5" stroke={isFocused ? "white" : (tileConfig?.arrowColor ?? "#ff4f5e")} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
       )}
@@ -172,6 +180,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const childMap = useMemo(() => getChildMap(), []);
 
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set([rootNodeId]));
+  const [lastExpandedId, setLastExpandedId] = useState<string | null>(null);
 
   const [lines, setLines] = useState<LineData[]>([]);
   const [svgW, setSvgW] = useState(0);
@@ -334,8 +343,10 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
             }
             collapse(toggleId);
           }
+          setLastExpandedId((cur) => (cur === toggleId ? null : cur));
         } else {
           next.add(toggleId);
+          setLastExpandedId(toggleId);
         }
         return next;
       });
@@ -482,6 +493,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                             refCb={(el) => { nodeRefs.current[entry.id] = el; }}
                             label={getDisplayLabel(entry)}
                             isActive={isOpen}
+                            isFocused={isOpen && lastExpandedId === entry.id}
                             isClickable={true}
                             onClick={() => toggle(entry.id)}
                             tileConfig={tileConfig}
@@ -514,6 +526,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                         refCb={(el) => { nodeRefs.current[entry.id] = el; }}
                         label={getDisplayLabel(entry)}
                         isActive={isActive}
+                        isFocused={isActive && lastExpandedId === entry.id}
                         isClickable={canExpand}
                         onClick={() => toggle(entry.id)}
                         tileConfig={tileConfig}
