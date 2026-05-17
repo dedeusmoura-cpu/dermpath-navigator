@@ -42,6 +42,7 @@ import { TedSimuladoSessionPage } from "./pages/TedSimuladoSessionPage";
 import { MeusSimuladosPage } from "./pages/MeusSimuladosPage";
 import { TedBuscaPage } from "./pages/TedBuscaPage";
 import { WelcomeVideoPage } from "./pages/WelcomeVideoPage";
+import { TreeDiagramPage } from "./pages/TreeDiagramPage";
 
 export default function App() {
   const location = useLocation();
@@ -197,6 +198,7 @@ export default function App() {
           />
           <Route path="/histopatologico/prp" element={<PrpHistopathologyPage />} />
           <Route path="/visao-geral" element={<OverviewPage />} />
+          <Route path="/arvore-interativa" element={<TreeDiagramPage />} />
           <Route path="/buscar" element={<SearchPage />} />
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/quiz/dermatite" element={<DermatiteQuizListPage />} />
