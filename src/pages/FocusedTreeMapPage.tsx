@@ -147,9 +147,6 @@ export function FocusedTreeMapPage() {
   const [selectedPath, setSelectedPath] = useState<string[]>(() =>
     buildSelectedPath(focusNodeId, isReturningFromFinalResult, requestedMapTrail, locationState?.trail),
   );
-  const [openedFinalNodeIds, setOpenedFinalNodeIds] = useState<string[]>(() =>
-    buildInitialOpenedFinalNodes(focusNodeId, isReturningFromFinalResult),
-  );
 
   useEffect(() => {
     const isReturning = hasFinalResultReturnContext(mapStateKey);
@@ -178,17 +175,9 @@ export function FocusedTreeMapPage() {
       <TreeMapTopBar treeViewUrl={treeViewUrl} />
       <FocusedTreeMap
         selectedPath={selectedPath}
-        openedFinalNodeIds={openedFinalNodeIds}
+        openedFinalNodeIds={[]}
         onSelectNode={(item, level) => {
-          if (item.kind === "result") {
-            persistFinalResultReturnContext(mapStateKey);
-            navigate(`/diagnostico?nodeId=${item.nodeId}`, {
-              state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
-            });
-            return;
-          }
-
-          if (item.kind === "terminal-bridge" && parentHasOnlyTerminalChildren(item.nodeId)) {
+          if (item.kind === "result" || item.kind === "terminal-bridge") {
             persistFinalResultReturnContext(mapStateKey);
             navigate(`/diagnostico?nodeId=${item.nodeId}`, {
               state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
@@ -200,15 +189,9 @@ export function FocusedTreeMapPage() {
 
           setSelectedPath((prev) => {
             const isAlreadyActive = prev[level] === item.mapId;
-            const terminalResultMapId =
-              item.kind === "terminal-bridge"
-                ? buildSelectedMapPath(item.nodeId)[buildSelectedMapPath(item.nodeId).length - 1]
-                : null;
             const nextPath = isAlreadyActive
               ? prev.slice(0, level)
-              : item.kind === "terminal-bridge"
-                ? [...prev.slice(0, level), item.mapId, terminalResultMapId!]
-                : [...prev.slice(0, level), item.mapId];
+              : [...prev.slice(0, level), item.mapId];
 
             const nextNodeId = getConcreteNodeIdFromMapPath(nextPath);
             const nextTrail = serializeMapTrail(nextPath);
@@ -228,13 +211,6 @@ export function FocusedTreeMapPage() {
 
             return nextPath;
           });
-
-          if (item.kind === "terminal-bridge") {
-            setOpenedFinalNodeIds((prev) => (prev.includes(item.nodeId) ? prev : [...prev, item.nodeId]));
-            return;
-          }
-
-          setOpenedFinalNodeIds([]);
         }}
       />
     </Layout>
@@ -265,26 +241,8 @@ function buildSelectedPath(
   return normalizeFocusedSelectionPath(buildSelectedMapPath(focusNodeId), focusNodeId, isReturningFromFinalResult);
 }
 
-function buildInitialOpenedFinalNodes(focusNodeId: string, isReturningFromFinalResult: boolean) {
-  const focusedNode = algorithmTree.nodes[focusNodeId];
-
-  if (!isFinalTreeNode(focusedNode) || !focusedNode?.parentId) {
-    return [];
-  }
-
-  return isReturningFromFinalResult ? getTerminalSiblingNodeIds(focusedNode.parentId) : [focusNodeId];
-}
-
 function isFinalTreeNode(node: (typeof algorithmTree.nodes)[string] | undefined) {
   return ["diagnosis", "morphologic_terminal", "placeholder", "info"].includes(node?.type ?? "");
-}
-
-function parentHasOnlyTerminalChildren(nodeId: string): boolean {
-  const parentId = algorithmTree.nodes[nodeId]?.parentId;
-  if (!parentId) return false;
-  const options = algorithmTree.nodes[parentId]?.options;
-  if (!options?.length) return false;
-  return options.every((opt) => isFinalTreeNode(algorithmTree.nodes[opt.nextNodeId]));
 }
 
 function isValidFocusedTrail(trail: string[] | undefined, expectedLastNodeId: string) {
@@ -358,11 +316,6 @@ function normalizeFocusedSelectionPath(path: string[], focusNodeId: string, isRe
   return lastPathItem === `node:${focusNodeId}` ? path.slice(0, -1) : path;
 }
 
-function getTerminalSiblingNodeIds(parentId: string) {
-  return (algorithmTree.nodes[parentId]?.options ?? [])
-    .map((option) => option.nextNodeId)
-    .filter((nodeId) => isFinalTreeNode(algorithmTree.nodes[nodeId]));
-}
 
 const finalResultReturnContextStorageKey = "dermpath-focused-map-return-context";
 
