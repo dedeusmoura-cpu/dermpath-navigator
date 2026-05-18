@@ -160,6 +160,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const outerRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const nodeRefs = useRef<Record<string, HTMLElement | null>>({});
+  const rootRowRefs = useRef<Record<string, HTMLElement | null>>({});
 
   // bridgeIds where the option label == terminal title — skip the toggle, show terminal directly.
   const noBridgeIds = useMemo(() => {
@@ -378,7 +379,11 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     const label = getLabel(nodeId, parentId);
 
     return (
-      <div key={nodeId} style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: COL_GAP }}>
+      <div
+        key={nodeId}
+        ref={depth === 0 ? (el) => { rootRowRefs.current[nodeId] = el; } : undefined}
+        style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: COL_GAP }}
+      >
         <TreeCard
           refCb={(el) => { nodeRefs.current[nodeId] = el; }}
           label={label}
@@ -485,6 +490,27 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
             const outer = outerRef.current;
             if (!el || !outer) return;
 
+            // Reset scroll so html2canvas captures from the top-left origin.
+            outer.scrollTop = 0;
+            outer.scrollLeft = 0;
+
+            // Hide root-level rows whose branch is collapsed so the PDF only
+            // contains the expanded pathological process(es).
+            const rootChildren = childMap.get(rootNodeId) ?? [];
+            const anyExpanded = rootChildren.some((id) => expanded.has(id));
+            const hiddenRows: HTMLElement[] = [];
+            if (anyExpanded) {
+              for (const childId of rootChildren) {
+                if (!expanded.has(childId)) {
+                  const rowEl = rootRowRefs.current[childId];
+                  if (rowEl) {
+                    rowEl.style.display = "none";
+                    hiddenRows.push(rowEl);
+                  }
+                }
+              }
+            }
+
             // Remove transform and clipping so html2canvas captures the full natural content.
             // SVG line coordinates are already in natural (pre-scale) space so they stay correct.
             const prevTransform = el.style.transform;
@@ -518,6 +544,9 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
             outer.style.borderRadius = "";
             outer.style.boxShadow = "";
             outer.style.border = "";
+            for (const rowEl of hiddenRows) {
+              rowEl.style.display = "";
+            }
 
             const imgW = canvas.width;
             const imgH = canvas.height;
