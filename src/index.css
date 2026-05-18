@@ -514,3 +514,30 @@ body {
     animation: none;
   }
 }
+
+/* ─── Print / Save as PDF ───────────────────────────────────────────────── */
+
+@media print {
+  @page { size: landscape; margin: 1cm; }
+
+  body, .app-shell { background: white !important; }
+
+  /* Hide everything except the tree diagram */
+  .no-print { display: none !important; }
+
+  /* Tree outer container: remove fixed height and overflow so full tree is visible */
+  .print-tree-outer {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Tree content: remove scale transform so it renders at natural size */
+  .print-tree-content {
+    transform: none !important;
+    transition: none !important;
+  }
+}

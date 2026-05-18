@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import { algorithmTree } from "../data/algorithm";
 import { useLanguage } from "../context/LanguageContext";
 import { translateNodeTitle, translateOptionLabel } from "../i18n/translations";
@@ -56,58 +58,6 @@ interface Props {
   rootNodeId: string;
 }
 
-// ─── Level entry ───────────────────────────────────────────────────────────────
-
-interface LevelEntry {
-  id: string;
-  concreteId: string;
-  parentId: string | undefined;
-  parentConcreteId: string | undefined;
-  isTerminal: boolean;
-  isBridge: boolean;
-}
-
-function buildLevels(
-  rootId: string,
-  expanded: Set<string>,
-  childMap: Map<string, string[]>,
-): LevelEntry[][] {
-  const levels: LevelEntry[][] = [];
-
-  function visit(
-    nodeId: string,
-    parentId: string | undefined,
-    parentConcreteId: string | undefined,
-    depth: number,
-  ) {
-    if (!levels[depth]) levels[depth] = [];
-    levels[depth].push({ id: nodeId, concreteId: nodeId, parentId, parentConcreteId, isTerminal: false, isBridge: false });
-
-    if (!expanded.has(nodeId)) return;
-
-    for (const childId of childMap.get(nodeId) ?? []) {
-      const childNode = algorithmTree.nodes[childId];
-      if (isTerminalNode(childNode)) {
-        const bridgeId = makeBridgeId(nodeId, childId);
-        if (!levels[depth + 1]) levels[depth + 1] = [];
-        levels[depth + 1].push({ id: bridgeId, concreteId: childId, parentId: nodeId, parentConcreteId: nodeId, isTerminal: false, isBridge: true });
-        // Terminal card: stored in levels for ref/edge tracking, rendered inline with bridge
-        if (expanded.has(bridgeId)) {
-          if (!levels[depth + 2]) levels[depth + 2] = [];
-          levels[depth + 2].push({ id: childId, concreteId: childId, parentId: bridgeId, parentConcreteId: nodeId, isTerminal: true, isBridge: false });
-        }
-      } else {
-        visit(childId, nodeId, nodeId, depth + 1);
-      }
-    }
-  }
-
-  for (const childId of childMap.get(rootId) ?? []) {
-    visit(childId, undefined, undefined, 0);
-  }
-  return levels;
-}
-
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
 interface CardProps {
@@ -119,9 +69,10 @@ interface CardProps {
   onClick: () => void;
   tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string; focusGradient: string; focusShadow: string };
   showTile?: boolean;
+  isTerminal?: boolean;
 }
 
-function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false }: CardProps) {
+function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false, isTerminal = false }: CardProps) {
   const isTile = !!tileConfig && !isActive && showTile;
   const cardStyle: CSSProperties | undefined = isFocused
     ? {
@@ -137,7 +88,9 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
         }
       : isTile
         ? { background: tileConfig.gradient, borderColor: tileConfig.border, boxShadow: "0 6px 24px -8px rgba(0,0,0,0.10), 0 2px 8px -4px rgba(0,0,0,0.06)" }
-        : undefined;
+        : isTerminal && tileConfig
+          ? { borderColor: tileConfig.activeBorder, borderWidth: "2px", background: tileConfig.gradient }
+          : undefined;
 
   return (
     <button
@@ -173,6 +126,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 // ─── Main component ────────────────────────────────────────────────────────────
 
 const COL_GAP = 40; // px between columns
+const ROW_GAP = 12; // px between sibling rows
 
 export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const { language } = useLanguage();
@@ -207,37 +161,58 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const nodeRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  const levels = useMemo(
-    () => buildLevels(rootNodeId, expanded, childMap),
-    [rootNodeId, expanded, childMap],
-  );
-
-  // Map bridgeId → terminal LevelEntry for inline rendering
-  const terminalByBridgeId = useMemo(() => {
-    const map = new Map<string, LevelEntry>();
-    for (const level of levels) {
-      for (const entry of level) {
-        if (entry.isTerminal && entry.parentId) {
-          map.set(entry.parentId, entry);
+  // bridgeIds where the option label == terminal title — skip the toggle, show terminal directly.
+  const noBridgeIds = useMemo(() => {
+    const result = new Set<string>();
+    function check(nodeId: string) {
+      for (const childId of childMap.get(nodeId) ?? []) {
+        const childNode = algorithmTree.nodes[childId];
+        if (isTerminalNode(childNode)) {
+          const parent = algorithmTree.nodes[nodeId];
+          const option = parent?.options?.find((o) => o.nextNodeId === childId);
+          const bridgeLabel = option ? translateOptionLabel(nodeId, option, language) : translateNodeTitle(childNode, language);
+          if (bridgeLabel === translateNodeTitle(childNode, language)) {
+            result.add(makeBridgeId(nodeId, childId));
+          }
+        } else {
+          check(childId);
         }
       }
     }
-    return map;
-  }, [levels]);
+    check(rootNodeId);
+    return result;
+  }, [childMap, language, rootNodeId]);
 
-  // Edges: every non-root entry has parent→self edge; terminals are rendered inline so their
-  // edge (bridge→terminal) is a short connector — still tracked for the SVG line.
+  // Compute edges for SVG lines by traversing the expanded tree recursively.
+  // Root-level cards (direct children of rootNodeId) have no incoming edge.
   const edges = useMemo(() => {
     const result: Array<{ from: string; to: string }> = [];
-    for (const level of levels) {
-      for (const entry of level) {
-        if (entry.parentId !== undefined) {
-          result.push({ from: entry.parentId, to: entry.id });
+
+    function traverse(nodeId: string) {
+      if (!expanded.has(nodeId)) return;
+      for (const childId of childMap.get(nodeId) ?? []) {
+        const childNode = algorithmTree.nodes[childId];
+        if (isTerminalNode(childNode)) {
+          const bridgeId = makeBridgeId(nodeId, childId);
+          result.push({ from: nodeId, to: bridgeId });
+          if (expanded.has(bridgeId)) {
+            result.push({ from: bridgeId, to: childId });
+          }
+        } else {
+          result.push({ from: nodeId, to: childId });
+          traverse(childId);
         }
+      }
+    }
+
+    for (const childId of childMap.get(rootNodeId) ?? []) {
+      const childNode = algorithmTree.nodes[childId];
+      if (!isTerminalNode(childNode)) {
+        traverse(childId);
       }
     }
     return result;
-  }, [levels]);
+  }, [rootNodeId, expanded, childMap]);
 
   useLayoutEffect(() => {
     const content = contentRef.current;
@@ -363,7 +338,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       for (const childId of childMap.get(id) ?? []) {
         const childNode = algorithmTree.nodes[childId];
         if (isTerminalNode(childNode)) {
-          all.add(makeBridgeId(id, childId));
+          const bridgeId = makeBridgeId(id, childId);
+          if (!noBridgeIds.has(bridgeId)) all.add(bridgeId);
         } else {
           addAll(childId);
         }
@@ -371,29 +347,123 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     }
     addAll(rootNodeId);
     setExpanded(all);
-  }, [rootNodeId, childMap]);
+  }, [rootNodeId, childMap, noBridgeIds]);
 
   const collapseAll = useCallback(() => {
     setExpanded(new Set([rootNodeId]));
   }, [rootNodeId]);
 
   // svgH is the natural (pre-scale) layout height; visual height = svgH * scale.
-  // minHeight: small floor so the box doesn't collapse before first render.
   const minHeight = 260;
   const outerHeight = svgH > 0 ? Math.max(Math.ceil(svgH * scale) + 40, minHeight) : minHeight;
 
-  function getDisplayLabel(entry: LevelEntry): string {
-    if (!entry.isTerminal && entry.parentConcreteId) {
-      const parent = algorithmTree.nodes[entry.parentConcreteId];
-      const option = parent?.options?.find((o) => o.nextNodeId === entry.concreteId);
-      if (option) return translateOptionLabel(entry.parentConcreteId, option, language);
+  function getLabel(nodeId: string, parentId: string | undefined): string {
+    if (parentId) {
+      const parent = algorithmTree.nodes[parentId];
+      const option = parent?.options?.find((o) => o.nextNodeId === nodeId);
+      if (option) return translateOptionLabel(parentId, option, language);
     }
-    return translateNodeTitle(algorithmTree.nodes[entry.concreteId], language);
+    return translateNodeTitle(algorithmTree.nodes[nodeId], language);
   }
+
+  // Recursive render: each node row = card + children column (centered).
+  // alignItems: "center" on the row centers the card vertically relative to its subtree.
+  function renderNode(nodeId: string, parentId: string | undefined, depth: number): JSX.Element {
+    const children = childMap.get(nodeId) ?? [];
+    const isExpanded = expanded.has(nodeId);
+    const canExpand = children.length > 0;
+    const isActive = canExpand && isExpanded;
+    const categoryId = nodeCategoryMap.get(nodeId);
+    const tileConfig = categoryId ? CATEGORY_TILE_CONFIG[categoryId] : undefined;
+    const label = getLabel(nodeId, parentId);
+
+    return (
+      <div key={nodeId} style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: COL_GAP }}>
+        <TreeCard
+          refCb={(el) => { nodeRefs.current[nodeId] = el; }}
+          label={label}
+          isActive={isActive}
+          isFocused={isActive && lastExpandedId === nodeId}
+          isClickable={canExpand}
+          onClick={() => toggle(nodeId)}
+          tileConfig={tileConfig}
+          showTile={depth === 0}
+        />
+        {isExpanded && children.length > 0 && (
+          <div style={{ display: "flex", flexDirection: "column", gap: ROW_GAP }}>
+            {children.map((childId) => {
+              const childNode = algorithmTree.nodes[childId];
+              const childCategoryId = nodeCategoryMap.get(childId) ?? categoryId;
+              const childTileConfig = childCategoryId ? CATEGORY_TILE_CONFIG[childCategoryId] : tileConfig;
+
+              if (isTerminalNode(childNode)) {
+                const bridgeId = makeBridgeId(nodeId, childId);
+                const terminalLabel = translateNodeTitle(childNode, language);
+                const goToDiagnosis = () => navigate(`/diagnostico?nodeId=${childId}`, {
+                  state: { trail: buildPathToNode(childId).map((n) => n.id) },
+                });
+
+                // When option label == terminal title, skip the redundant bridge toggle.
+                // Register the terminal under bridgeId so the SVG edge still connects.
+                if (noBridgeIds.has(bridgeId)) {
+                  return (
+                    <TreeCard
+                      key={childId}
+                      refCb={(el) => { nodeRefs.current[bridgeId] = el; nodeRefs.current[childId] = el; }}
+                      label={terminalLabel}
+                      isActive={false}
+                      isFocused={false}
+                      isClickable={true}
+                      isTerminal={true}
+                      tileConfig={childTileConfig}
+                      onClick={goToDiagnosis}
+                    />
+                  );
+                }
+
+                const isBridgeOpen = expanded.has(bridgeId);
+                const bridgeLabel = getLabel(childId, nodeId);
+                return (
+                  <div key={bridgeId} style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: COL_GAP }}>
+                    <TreeCard
+                      refCb={(el) => { nodeRefs.current[bridgeId] = el; }}
+                      label={bridgeLabel}
+                      isActive={isBridgeOpen}
+                      isFocused={isBridgeOpen && lastExpandedId === bridgeId}
+                      isClickable={true}
+                      onClick={() => toggle(bridgeId)}
+                      tileConfig={childTileConfig}
+                      showTile={false}
+                    />
+                    {isBridgeOpen && (
+                      <TreeCard
+                        refCb={(el) => { nodeRefs.current[childId] = el; }}
+                        label={terminalLabel}
+                        isActive={false}
+                        isFocused={false}
+                        isClickable={true}
+                        isTerminal={true}
+                        tileConfig={childTileConfig}
+                        onClick={goToDiagnosis}
+                      />
+                    )}
+                  </div>
+                );
+              }
+
+              return renderNode(childId, nodeId, depth + 1);
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const rootChildren = childMap.get(rootNodeId) ?? [];
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2">
+      <div className="no-print flex items-center gap-2">
         <button
           type="button"
           onClick={expandAll}
@@ -408,21 +478,78 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         >
           {language === "en" ? "Collapse" : "Recolher"}
         </button>
-        <span className="text-xs text-steel/70">
-          {language === "en"
-            ? "Click any node to expand / collapse"
-            : "Clique em qualquer nó para expandir / recolher"}
-        </span>
+        <button
+          type="button"
+          onClick={async () => {
+            const el = contentRef.current;
+            const outer = outerRef.current;
+            if (!el || !outer) return;
+
+            // Remove transform and clipping so html2canvas captures the full natural content.
+            // SVG line coordinates are already in natural (pre-scale) space so they stay correct.
+            const prevTransform = el.style.transform;
+            const prevTransition = el.style.transition;
+            el.style.transform = "none";
+            el.style.transition = "none";
+
+            outer.style.overflow = "visible";
+            outer.style.height = "auto";
+            outer.style.maxHeight = "none";
+            outer.style.borderRadius = "0";
+            outer.style.boxShadow = "none";
+            outer.style.border = "none";
+
+            // Two frames: first lets the DOM expand, second lets layout stabilise.
+            await new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+
+            const canvas = await html2canvas(el, {
+              scale: 2,
+              useCORS: true,
+              backgroundColor: "#ffffff",
+              logging: false,
+            });
+
+            // Restore styles.
+            el.style.transform = prevTransform;
+            el.style.transition = prevTransition;
+            outer.style.overflow = "";
+            outer.style.height = "";
+            outer.style.maxHeight = "";
+            outer.style.borderRadius = "";
+            outer.style.boxShadow = "";
+            outer.style.border = "";
+
+            const imgW = canvas.width;
+            const imgH = canvas.height;
+            const pageW = Math.max(imgW, imgH);
+            const pageH = Math.min(imgW, imgH);
+            const pdf = new jsPDF({
+              orientation: "landscape",
+              unit: "px",
+              format: [pageW, pageH],
+            });
+            pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, imgW, imgH);
+            pdf.save("DermPath-Algoritmo.pdf");
+          }}
+          title={language === "en" ? "Save as PDF" : "Salvar como PDF"}
+          className="no-print ml-auto rounded-full border border-sand bg-paper p-2 text-steel transition hover:bg-sand hover:text-ink"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+        </button>
       </div>
 
       <div
         ref={outerRef}
-        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-x-hidden overflow-y-auto"
+        className="print-tree-outer rounded-[32px] border border-sand bg-white shadow-panel overflow-x-hidden overflow-y-auto"
         style={{ height: outerHeight }}
       >
         <div
           ref={contentRef}
-          className="relative p-5"
+          className="print-tree-content relative p-5"
           style={{
             display: "inline-flex",
             transform: `scale(${scale})`,
@@ -468,76 +595,10 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
             })}
           </svg>
 
-          {/* Column layout: one column per depth level.
-              Terminal nodes (diagnosis) are rendered INLINE to the right of their bridge card
-              so each diagnosis is vertically aligned with its criterion. */}
-          <div style={{ position: "relative", zIndex: 1, display: "inline-flex", gap: `${COL_GAP}px` }}>
-            {levels.map((level, colIndex) => {
-              // Skip pure-terminal levels — they're rendered inline with their bridges
-              const visibleEntries = level.filter((e) => !e.isTerminal);
-              if (visibleEntries.length === 0) return null;
-
-              return (
-                <div key={colIndex} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                  {visibleEntries.map((entry) => {
-                    const categoryId = nodeCategoryMap.get(resolveConcrete(entry.id));
-                    const tileConfig = categoryId ? CATEGORY_TILE_CONFIG[categoryId] : undefined;
-
-                    if (entry.isBridge) {
-                      const termEntry = terminalByBridgeId.get(entry.id);
-                      const isOpen = expanded.has(entry.id);
-                      return (
-                        // Bridge card + its diagnosis card in a horizontal pair
-                        <div key={entry.id} style={{ display: "flex", flexDirection: "row", gap: `${COL_GAP}px` }}>
-                          <TreeCard
-                            refCb={(el) => { nodeRefs.current[entry.id] = el; }}
-                            label={getDisplayLabel(entry)}
-                            isActive={isOpen}
-                            isFocused={isOpen && lastExpandedId === entry.id}
-                            isClickable={true}
-                            onClick={() => toggle(entry.id)}
-                            tileConfig={tileConfig}
-                            showTile={colIndex === 0}
-                          />
-                          {termEntry && isOpen && (
-                            <TreeCard
-                              refCb={(el) => { nodeRefs.current[termEntry.id] = el; }}
-                              label={getDisplayLabel(termEntry)}
-                              isActive={false}
-                              isFocused={false}
-                              isClickable={true}
-                              onClick={() => {
-                                navigate(`/diagnostico?nodeId=${termEntry.concreteId}`, {
-                                  state: { trail: buildPathToNode(termEntry.concreteId).map((n) => n.id) },
-                                });
-                              }}
-                            />
-                          )}
-                        </div>
-                      );
-                    }
-
-                    // Regular branch card
-                    const children = childMap.get(entry.id) ?? [];
-                    const canExpand = children.length > 0;
-                    const isActive = canExpand && expanded.has(entry.id);
-                    return (
-                      <TreeCard
-                        key={entry.id}
-                        refCb={(el) => { nodeRefs.current[entry.id] = el; }}
-                        label={getDisplayLabel(entry)}
-                        isActive={isActive}
-                        isFocused={isActive && lastExpandedId === entry.id}
-                        isClickable={canExpand}
-                        onClick={() => toggle(entry.id)}
-                        tileConfig={tileConfig}
-                        showTile={colIndex === 0}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
+          {/* Recursive layout: each node row = card + children column.
+              alignItems "center" on each row centers the card relative to its subtree. */}
+          <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: ROW_GAP }}>
+            {rootChildren.map((childId) => renderNode(childId, undefined, 0))}
           </div>
         </div>
       </div>
