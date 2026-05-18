@@ -103,7 +103,7 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
             <line x1="19.5" y1="15" x2="19.5" y2="11"/>
             <line x1="4.5" y1="11" x2="19.5" y2="11"/>
           </svg>
-          {language === "en" ? "Full tree" : "Árvore expandível"}
+          {language === "en" ? "Expanded algorithm" : "Algoritmo expandido"}
         </Link>
 
         <button
