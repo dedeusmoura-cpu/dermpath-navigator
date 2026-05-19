@@ -173,6 +173,79 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 // ─── Main component ────────────────────────────────────────────────────────────
 
 const COL_GAP = 40; // px between columns
+const CARD_W = 270; // px — must match w-[270px] on TreeCard
+const CARD_GAP = 12; // px between cards in a column
+
+// ─── Layout computation ────────────────────────────────────────────────────────
+// Positions each card so that every expanded parent is vertically centered
+// relative to its group of children (multi-level, handles multiple open branches).
+
+function computeLayout(
+  levels: LevelEntry[][],
+  nodeRefs: Record<string, HTMLElement | null>,
+  currentScale: number,
+): { positions: Map<string, number>; colHeights: number[] } {
+  const APPROX_H = 74;
+
+  // Measure actual card heights in natural (pre-scale) pixels
+  const measured = new Map<string, number>();
+  for (const [id, el] of Object.entries(nodeRefs)) {
+    if (el) measured.set(id, el.getBoundingClientRect().height / currentScale);
+  }
+  const cardH = (id: string) => measured.get(id) ?? APPROX_H;
+
+  // Returns visible (non-terminal) children of `parentId` in the next column
+  function getChildren(col: number, parentId: string): LevelEntry[] {
+    if (col + 1 >= levels.length) return [];
+    return levels[col + 1].filter((e) => !e.isTerminal && e.parentId === parentId);
+  }
+
+  // Bottom-up: how much vertical space does each entry's subtree need?
+  const subtreeH = new Map<string, number>();
+  for (let col = levels.length - 1; col >= 0; col--) {
+    for (const entry of levels[col].filter((e) => !e.isTerminal)) {
+      const ch = cardH(entry.id);
+      const kids = getChildren(col, entry.id);
+      if (kids.length > 0) {
+        const groupH = kids.reduce(
+          (sum, k, i) => sum + (subtreeH.get(k.id) ?? APPROX_H) + (i > 0 ? CARD_GAP : 0),
+          0,
+        );
+        subtreeH.set(entry.id, Math.max(ch, groupH));
+      } else {
+        subtreeH.set(entry.id, ch);
+      }
+    }
+  }
+
+  // Top-down: assign absolute `top` positions within each column
+  const positions = new Map<string, number>();
+  const colHeights: number[] = new Array(levels.length).fill(0);
+
+  function assign(col: number, entries: LevelEntry[], groupStartY: number) {
+    let y = groupStartY;
+    for (const entry of entries) {
+      const sh = subtreeH.get(entry.id) ?? APPROX_H;
+      const ch = cardH(entry.id);
+      // Center the card vertically within its slot
+      positions.set(entry.id, y + (sh - ch) / 2);
+
+      const kids = getChildren(col, entry.id);
+      if (kids.length > 0) {
+        const groupH = kids.reduce(
+          (sum, k, i) => sum + (subtreeH.get(k.id) ?? APPROX_H) + (i > 0 ? CARD_GAP : 0),
+          0,
+        );
+        assign(col + 1, kids, y + sh / 2 - groupH / 2);
+      }
+      y += sh + CARD_GAP;
+    }
+    colHeights[col] = Math.max(colHeights[col], y - CARD_GAP);
+  }
+
+  assign(0, levels[0]?.filter((e) => !e.isTerminal) ?? [], 0);
+  return { positions, colHeights };
+}
 
 export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const { language } = useLanguage();
@@ -186,6 +259,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const [svgW, setSvgW] = useState(0);
   const [svgH, setSvgH] = useState(0);
   const [scale, setScale] = useState(1);
+  const [cardPositions, setCardPositions] = useState<Map<string, number>>(new Map());
+  const [colHeights, setColHeights] = useState<number[]>([]);
   const scaleRef = useRef(1);
   const [enteringLineIds, setEnteringLineIds] = useState<Set<string>>(new Set());
   const previousLineIdsRef = useRef<Set<string>>(new Set());
@@ -292,6 +367,11 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       setSvgW(naturalW);
       setSvgH(naturalH);
       setLines(newLines);
+
+      // Compute vertical centering positions
+      const layout = computeLayout(levels, nodeRefs.current, s);
+      setCardPositions(layout.positions);
+      setColHeights(layout.colHeights);
     }
 
     update();
@@ -469,26 +549,45 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
           </svg>
 
           {/* Column layout: one column per depth level.
-              Terminal nodes (diagnosis) are rendered INLINE to the right of their bridge card
-              so each diagnosis is vertically aligned with its criterion. */}
-          <div style={{ position: "relative", zIndex: 1, display: "inline-flex", gap: `${COL_GAP}px` }}>
+              Each card is positioned absolutely within its column so that expanded
+              parents are vertically centered relative to their child group. */}
+          <div style={{ position: "relative", zIndex: 1, display: "inline-flex", gap: `${COL_GAP}px`, alignItems: "flex-start" }}>
             {levels.map((level, colIndex) => {
               // Skip pure-terminal levels — they're rendered inline with their bridges
               const visibleEntries = level.filter((e) => !e.isTerminal);
               if (visibleEntries.length === 0) return null;
 
+              const colH = colHeights[colIndex];
+              const positioned = colH !== undefined && colH > 0 && cardPositions.size > 0;
+
               return (
-                <div key={colIndex} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div
+                  key={colIndex}
+                  style={
+                    positioned
+                      ? { position: "relative", width: `${CARD_W}px`, height: `${colH}px`, flexShrink: 0 }
+                      : { display: "flex", flexDirection: "column", gap: `${CARD_GAP}px` }
+                  }
+                >
                   {visibleEntries.map((entry) => {
                     const categoryId = nodeCategoryMap.get(resolveConcrete(entry.id));
                     const tileConfig = categoryId ? CATEGORY_TILE_CONFIG[categoryId] : undefined;
+                    const topPos = cardPositions.get(entry.id) ?? 0;
 
                     if (entry.isBridge) {
                       const termEntry = terminalByBridgeId.get(entry.id);
                       const isOpen = expanded.has(entry.id);
                       return (
                         // Bridge card + its diagnosis card in a horizontal pair
-                        <div key={entry.id} style={{ display: "flex", flexDirection: "row", gap: `${COL_GAP}px` }}>
+                        <div
+                          key={entry.id}
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: `${COL_GAP}px`,
+                            ...(positioned ? { position: "absolute", top: topPos, left: 0 } : {}),
+                          }}
+                        >
                           <TreeCard
                             refCb={(el) => { nodeRefs.current[entry.id] = el; }}
                             label={getDisplayLabel(entry)}
@@ -522,17 +621,21 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                     const canExpand = children.length > 0;
                     const isActive = canExpand && expanded.has(entry.id);
                     return (
-                      <TreeCard
+                      <div
                         key={entry.id}
-                        refCb={(el) => { nodeRefs.current[entry.id] = el; }}
-                        label={getDisplayLabel(entry)}
-                        isActive={isActive}
-                        isFocused={isActive && lastExpandedId === entry.id}
-                        isClickable={canExpand}
-                        onClick={() => toggle(entry.id)}
-                        tileConfig={tileConfig}
-                        showTile={colIndex === 0}
-                      />
+                        style={positioned ? { position: "absolute", top: topPos, left: 0 } : {}}
+                      >
+                        <TreeCard
+                          refCb={(el) => { nodeRefs.current[entry.id] = el; }}
+                          label={getDisplayLabel(entry)}
+                          isActive={isActive}
+                          isFocused={isActive && lastExpandedId === entry.id}
+                          isClickable={canExpand}
+                          onClick={() => toggle(entry.id)}
+                          tileConfig={tileConfig}
+                          showTile={colIndex === 0}
+                        />
+                      </div>
                     );
                   })}
                 </div>
