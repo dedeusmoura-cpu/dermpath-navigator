@@ -330,12 +330,29 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       // Do NOT divide by currentScale here; that creates a runaway feedback loop.
       const naturalW = cnt.scrollWidth;
       const naturalH = cnt.scrollHeight;
-      const availW = out.clientWidth - 32;
 
-      // Scale only to fit width. Height grows with the content.
+      // Layout pass first so we can derive the relevant height for scale.
+      const layout = computeLayout(levels, nodeRefs.current, scaleRef.current);
+
+      // Height-scale target = tallest expanded column (col 1+).
+      // Column 0 always has ALL root nodes stacked, so using it would force
+      // a much smaller zoom than needed. Columns 1+ contain only the active branch.
+      const expandedColHeights = layout.colHeights.slice(1);
+      const relevantH = expandedColHeights.length > 0
+        ? Math.max(...expandedColHeights)
+        : (layout.colHeights[0] ?? naturalH);
+
+      const availW = out.clientWidth - 32;
+      const availH = out.clientHeight - 40;
+
+      // Fit both width and the active-branch height so the expanded branch is always visible.
       // Cap at 1.0 (never zoom in) and floor at 0.32 (still readable).
       const newScale = Math.max(
-        Math.min(naturalW > 0 ? availW / naturalW : 1.0, 1.0),
+        Math.min(
+          naturalW > 0 ? availW / naturalW : 1.0,
+          relevantH > 0 ? availH / relevantH : 1.0,
+          1.0,
+        ),
         0.32,
       );
 
@@ -369,8 +386,6 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       setSvgH(naturalH);
       setLines(newLines);
 
-      // Compute vertical centering positions
-      const layout = computeLayout(levels, nodeRefs.current, s);
       setCardPositions(layout.positions);
       setColHeights(layout.colHeights);
     }
@@ -465,10 +480,6 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     return () => window.removeEventListener("keydown", handler);
   }, [isFullscreen]);
 
-  // svgH is the natural (pre-scale) layout height; visual height = svgH * scale.
-  // minHeight: small floor so the box doesn't collapse before first render.
-  const minHeight = 260;
-  const outerHeight = svgH > 0 ? Math.max(Math.ceil(svgH * scale) + 40, minHeight) : minHeight;
 
   function getDisplayLabel(entry: LevelEntry): string {
     if (!entry.isTerminal && entry.parentConcreteId) {
@@ -521,8 +532,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
 
       <div
         ref={outerRef}
-        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-x-hidden overflow-y-auto"
-        style={isFullscreen ? { flex: 1, minHeight: 0 } : { height: outerHeight }}
+        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-hidden"
+        style={isFullscreen ? { flex: 1, minHeight: 0 } : { height: "clamp(260px, calc(100vh - 220px), 900px)" }}
       >
         <div
           ref={contentRef}
