@@ -602,6 +602,41 @@ function applyFinalColumnAlignment(
 
     targetWrapper.style.transform = Math.abs(offsetY) < 1 ? "" : `translateY(${offsetY}px)`;
   });
+
+  // When the last column contains only terminal-bridge items (decision node whose
+  // ALL children are terminals), align the group's vertical center with the parent
+  // branch card in the previous column.
+  const terminalBridgeItems = lastColumn.filter((item) => item.kind === "terminal-bridge");
+  if (terminalBridgeItems.length === 0 || resultItems.length > 0) return;
+
+  terminalBridgeItems.forEach((item) => {
+    const wrapper = wrapperElements[item.mapId];
+    if (wrapper) wrapper.style.transform = "";
+  });
+
+  // mapId format: "terminal-bridge:{parentId}:{childId}"
+  const parentId = terminalBridgeItems[0].mapId.split(":")[1];
+  const parentElement = nodeElements[buildNodeMapId(parentId)];
+  if (!parentElement) return;
+
+  const firstEl = nodeElements[terminalBridgeItems[0].mapId];
+  const lastEl = nodeElements[terminalBridgeItems[terminalBridgeItems.length - 1].mapId];
+  if (!firstEl || !lastEl) return;
+
+  const firstRect = firstEl.getBoundingClientRect();
+  const lastRect = lastEl.getBoundingClientRect();
+  const groupCenter = (firstRect.top + lastRect.bottom) / 2;
+
+  const parentRect = parentElement.getBoundingClientRect();
+  const parentCenter = parentRect.top + parentRect.height / 2;
+
+  const offsetY = parentCenter - groupCenter;
+  if (!Number.isFinite(offsetY) || Math.abs(offsetY) < 1) return;
+
+  terminalBridgeItems.forEach((item) => {
+    const wrapper = wrapperElements[item.mapId];
+    if (wrapper) wrapper.style.transform = `translateY(${offsetY}px)`;
+  });
 }
 
 function isTerminalTreeNode(node: (typeof algorithmTree.nodes)[string] | undefined) {
