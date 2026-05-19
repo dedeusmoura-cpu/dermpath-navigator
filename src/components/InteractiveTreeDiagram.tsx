@@ -65,6 +65,7 @@ interface LevelEntry {
   parentConcreteId: string | undefined;
   isTerminal: boolean;
   isBridge: boolean;
+  renderInline?: boolean; // bridge rendered inline with its parent instead of in a new column
 }
 
 function buildLevels(
@@ -85,12 +86,17 @@ function buildLevels(
 
     if (!expanded.has(nodeId)) return;
 
-    for (const childId of childMap.get(nodeId) ?? []) {
+    const children = childMap.get(nodeId) ?? [];
+    const allTerminal = children.length > 0 && children.every((cId) => isTerminalNode(algorithmTree.nodes[cId]));
+
+    for (const childId of children) {
       const childNode = algorithmTree.nodes[childId];
       if (isTerminalNode(childNode)) {
         const bridgeId = makeBridgeId(nodeId, childId);
         if (!levels[depth + 1]) levels[depth + 1] = [];
-        levels[depth + 1].push({ id: bridgeId, concreteId: childId, parentId: nodeId, parentConcreteId: nodeId, isTerminal: false, isBridge: true });
+        // When ALL children are terminal, mark bridges for inline rendering so they
+        // appear to the right of the parent card instead of starting a new column.
+        levels[depth + 1].push({ id: bridgeId, concreteId: childId, parentId: nodeId, parentConcreteId: nodeId, isTerminal: false, isBridge: true, renderInline: allTerminal });
         // Terminal card: stored in levels for ref/edge tracking, rendered inline with bridge
         if (expanded.has(bridgeId)) {
           if (!levels[depth + 2]) levels[depth + 2] = [];
@@ -219,6 +225,21 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       for (const entry of level) {
         if (entry.isTerminal && entry.parentId) {
           map.set(entry.parentId, entry);
+        }
+      }
+    }
+    return map;
+  }, [levels]);
+
+  // Map parentId → inline bridge entries (bridges that render alongside their parent)
+  const inlineBridgesByParentId = useMemo(() => {
+    const map = new Map<string, LevelEntry[]>();
+    for (const level of levels) {
+      for (const entry of level) {
+        if (entry.renderInline && entry.parentId) {
+          const list = map.get(entry.parentId) ?? [];
+          list.push(entry);
+          map.set(entry.parentId, list);
         }
       }
     }
@@ -473,8 +494,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
               so each diagnosis is vertically aligned with its criterion. */}
           <div style={{ position: "relative", zIndex: 1, display: "inline-flex", gap: `${COL_GAP}px` }}>
             {levels.map((level, colIndex) => {
-              // Skip pure-terminal levels — they're rendered inline with their bridges
-              const visibleEntries = level.filter((e) => !e.isTerminal);
+              // Skip pure-terminal levels and inline-bridge levels — rendered inline with parent
+              const visibleEntries = level.filter((e) => !e.isTerminal && !e.renderInline);
               if (visibleEntries.length === 0) return null;
 
               return (
@@ -521,6 +542,64 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                     const children = childMap.get(entry.id) ?? [];
                     const canExpand = children.length > 0;
                     const isActive = canExpand && expanded.has(entry.id);
+
+                    // When all children are terminals, their bridges render inline to the right
+                    const inlineBridges = inlineBridgesByParentId.get(entry.id);
+                    if (inlineBridges && inlineBridges.length > 0) {
+                      return (
+                        <div key={entry.id} style={{ display: "flex", alignItems: "flex-start", gap: `${COL_GAP}px` }}>
+                          <TreeCard
+                            refCb={(el) => { nodeRefs.current[entry.id] = el; }}
+                            label={getDisplayLabel(entry)}
+                            isActive={isActive}
+                            isFocused={isActive && lastExpandedId === entry.id}
+                            isClickable={canExpand}
+                            onClick={() => toggle(entry.id)}
+                            tileConfig={tileConfig}
+                            showTile={colIndex === 0}
+                          />
+                          {isActive && (
+                            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                              {inlineBridges.map((bridge) => {
+                                const termEntry = terminalByBridgeId.get(bridge.id);
+                                const isBridgeOpen = expanded.has(bridge.id);
+                                const bridgeCategoryId = nodeCategoryMap.get(resolveConcrete(bridge.id));
+                                const bridgeTileConfig = bridgeCategoryId ? CATEGORY_TILE_CONFIG[bridgeCategoryId] : undefined;
+                                return (
+                                  <div key={bridge.id} style={{ display: "flex", alignItems: "flex-start", gap: `${COL_GAP}px` }}>
+                                    <TreeCard
+                                      refCb={(el) => { nodeRefs.current[bridge.id] = el; }}
+                                      label={getDisplayLabel(bridge)}
+                                      isActive={isBridgeOpen}
+                                      isFocused={isBridgeOpen && lastExpandedId === bridge.id}
+                                      isClickable={true}
+                                      onClick={() => toggle(bridge.id)}
+                                      tileConfig={bridgeTileConfig}
+                                      showTile={false}
+                                    />
+                                    {termEntry && isBridgeOpen && (
+                                      <TreeCard
+                                        refCb={(el) => { nodeRefs.current[termEntry.id] = el; }}
+                                        label={getDisplayLabel(termEntry)}
+                                        isActive={false}
+                                        isFocused={false}
+                                        isClickable={true}
+                                        onClick={() => {
+                                          navigate(`/diagnostico?nodeId=${termEntry.concreteId}`, {
+                                            state: { trail: buildPathToNode(termEntry.concreteId).map((n) => n.id) },
+                                          });
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }
+
                     return (
                       <TreeCard
                         key={entry.id}
