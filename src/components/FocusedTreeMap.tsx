@@ -165,7 +165,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
   // useLayoutEffect separado garante que o transform esteja no DOM antes
   // do hook `useQuizTreeLines` medir.
   useLayoutEffect(() => {
-    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current);
+    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current, columnRefs.current);
   }, [columns]);
 
   const lines = useQuizTreeLines({
@@ -562,7 +562,12 @@ function applyFinalColumnAlignment(
   columns: ColumnItem[][],
   nodeElements: Record<string, HTMLElement | null>,
   wrapperElements: Record<string, HTMLDivElement | null>,
+  columnElements: Array<HTMLDivElement | null>,
 ) {
+  // Reset last column paddingTop on every call so stale values don't persist.
+  const lastColumnEl = columnElements[columns.length - 1];
+  if (lastColumnEl) lastColumnEl.style.paddingTop = "";
+
   if (columns.length < 2) {
     return;
   }
@@ -604,15 +609,13 @@ function applyFinalColumnAlignment(
   });
 
   // When the last column contains only terminal-bridge items (decision node whose
-  // ALL children are terminals), align the group's vertical center with the parent
-  // branch card in the previous column.
+  // ALL children are terminals), push the column down with paddingTop so the
+  // group is vertically centered on the parent card in the previous column.
+  // Using paddingTop (layout space) instead of translateY (paint-only) keeps
+  // content inside the scroll container and avoids overflow clipping.
   const terminalBridgeItems = lastColumn.filter((item) => item.kind === "terminal-bridge");
   if (terminalBridgeItems.length === 0 || resultItems.length > 0) return;
-
-  terminalBridgeItems.forEach((item) => {
-    const wrapper = wrapperElements[item.mapId];
-    if (wrapper) wrapper.style.transform = "";
-  });
+  if (!lastColumnEl) return;
 
   // mapId format: "terminal-bridge:{parentId}:{childId}"
   const parentId = terminalBridgeItems[0].mapId.split(":")[1];
@@ -630,13 +633,14 @@ function applyFinalColumnAlignment(
   const parentRect = parentElement.getBoundingClientRect();
   const parentCenter = parentRect.top + parentRect.height / 2;
 
+  // offsetY is how much we need to shift the group downward.
+  // Negative values mean the group is already below the parent — do nothing.
   const offsetY = parentCenter - groupCenter;
-  if (!Number.isFinite(offsetY) || Math.abs(offsetY) < 1) return;
+  if (!Number.isFinite(offsetY) || offsetY < 1) return;
 
-  terminalBridgeItems.forEach((item) => {
-    const wrapper = wrapperElements[item.mapId];
-    if (wrapper) wrapper.style.transform = `translateY(${offsetY}px)`;
-  });
+  // py-4 = 16px is the column's base top padding (Tailwind). Adding offsetY
+  // pushes the column's content down by exactly that amount in the layout flow.
+  lastColumnEl.style.paddingTop = `${16 + Math.round(offsetY)}px`;
 }
 
 function isTerminalTreeNode(node: (typeof algorithmTree.nodes)[string] | undefined) {
