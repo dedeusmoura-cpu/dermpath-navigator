@@ -176,7 +176,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 
 const COL_GAP = 56; // px between columns
 const CARD_W = 420; // px — must match w-[420px] on TreeCard (branch cards)
-const TERMINAL_CARD_W = 420; // px — must match w-[420px] on TreeCard (terminal/diagnosis cards)
+
 const CARD_GAP = 10; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
@@ -345,7 +345,6 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         ? Math.max(...expandedColHeights)
         : (layout.colHeights[0] ?? naturalH);
 
-      const availW = out.clientWidth - 32;
       const availH = out.clientHeight - 40;
 
       // Scale only to fit the active-branch height — width scrolls freely.
