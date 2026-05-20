@@ -146,7 +146,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[420px] min-w-[420px] px-7 py-5 pr-5 text-[1.22rem]" : "w-[420px] min-w-[420px] px-7 py-5 pr-20 text-[1.22rem]"} ${
+      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[560px] min-w-[560px] px-8 py-6 pr-8 text-[2.4rem]" : "w-[560px] min-w-[560px] px-8 py-6 pr-28 text-[2.4rem]"} ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -161,9 +161,9 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       {isActive && (
         <span
           aria-hidden="true"
-          className="absolute right-5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
+          className="absolute right-6 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
         >
-          <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
+          <svg viewBox="0 0 20 20" className="h-7 w-7" fill="none">
             <path d="M7 5.5 12 10l-5 4.5" stroke={isFocused ? "white" : (tileConfig?.arrowColor ?? "#ff4f5e")} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
@@ -174,10 +174,9 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 
 // ─── Main component ────────────────────────────────────────────────────────────
 
-const COL_GAP = 56; // px between columns
-const CARD_W = 420; // px — must match w-[420px] on TreeCard (branch cards)
-
-const CARD_GAP = 10; // px between cards in a column
+const COL_GAP = 72; // px between columns
+const CARD_W = 560; // px — must match w-[560px] on TreeCard (branch cards)
+const CARD_GAP = 16; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
 // Positions each card so that every expanded parent is vertically centered
