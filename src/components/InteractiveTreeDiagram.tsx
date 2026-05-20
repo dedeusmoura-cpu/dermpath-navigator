@@ -146,7 +146,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[260px] min-w-[260px] px-5 py-3 pr-5 text-[0.92rem]" : "w-[420px] min-w-[420px] px-7 py-5 pr-20 text-[1.22rem]"} ${
+      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[420px] min-w-[420px] px-7 py-5 pr-5 text-[1.22rem]" : "w-[420px] min-w-[420px] px-7 py-5 pr-20 text-[1.22rem]"} ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -176,7 +176,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 
 const COL_GAP = 56; // px between columns
 const CARD_W = 420; // px — must match w-[420px] on TreeCard (branch cards)
-const TERMINAL_CARD_W = 260; // px — must match w-[260px] on TreeCard (terminal/diagnosis cards)
+const TERMINAL_CARD_W = 420; // px — must match w-[420px] on TreeCard (terminal/diagnosis cards)
 const CARD_GAP = 10; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
