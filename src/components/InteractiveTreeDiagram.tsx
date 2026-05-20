@@ -119,12 +119,13 @@ interface CardProps {
   onClick: () => void;
   tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string; focusGradient: string; focusShadow: string };
   showTile?: boolean;
-  variant?: "branch" | "bridge" | "terminal";
+  variant?: "branch" | "terminal";
+  isCompact?: boolean;
 }
 
-function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false, variant = "branch" }: CardProps) {
+function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false, variant = "branch", isCompact = false }: CardProps) {
   const isTerminal = variant === "terminal";
-  const isSmall = variant === "terminal" || variant === "bridge";
+  const isSmall = isCompact;
   const isTile = !!tileConfig && !isActive && showTile;
   const cardStyle: CSSProperties | undefined = isFocused
     ? {
@@ -147,7 +148,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isSmall ? "w-[560px] min-w-[560px] px-8 py-6 text-[2.4rem]" + (isTerminal ? " pr-8" : " pr-28") : "w-[640px] min-w-[640px] px-9 py-7 pr-36 text-[4.8rem]"} ${
+      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isSmall ? `w-[560px] min-w-[560px] px-8 py-6 text-[2.4rem] ${isTerminal ? "pr-8" : "pr-28"}` : "w-[640px] min-w-[640px] px-9 py-7 pr-36 text-[4.8rem]"} ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -639,7 +640,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                             isActive={isOpen}
                             isFocused={isOpen && lastExpandedId === entry.id}
                             isClickable={true}
-                            variant="bridge"
+                            isCompact={colIndex >= 5}
                             onClick={() => toggle(entry.id)}
                             tileConfig={tileConfig}
                             showTile={colIndex === 0}
@@ -652,6 +653,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                               isFocused={false}
                               isClickable={true}
                               variant="terminal"
+                              isCompact={colIndex + 1 >= 5}
                               onClick={() => {
                                 navigate(`/diagnostico?nodeId=${termEntry.concreteId}`, {
                                   state: { trail: buildPathToNode(termEntry.concreteId).map((n) => n.id) },
@@ -678,6 +680,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                           isActive={isActive}
                           isFocused={isActive && lastExpandedId === entry.id}
                           isClickable={canExpand}
+                          isCompact={colIndex >= 5}
                           onClick={() => toggle(entry.id)}
                           tileConfig={tileConfig}
                           showTile={colIndex === 0}
