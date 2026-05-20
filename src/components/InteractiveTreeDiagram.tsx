@@ -146,7 +146,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[260px] min-w-[260px] px-5 py-3 pr-5 text-[0.92rem]" : "w-[360px] min-w-[360px] px-6 py-4 pr-16 text-[1.12rem]"} ${
+      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[260px] min-w-[260px] px-5 py-3 pr-5 text-[0.92rem]" : "w-[420px] min-w-[420px] px-7 py-5 pr-20 text-[1.22rem]"} ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -161,7 +161,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       {isActive && (
         <span
           aria-hidden="true"
-          className="absolute right-4 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
+          className="absolute right-5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
         >
           <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
             <path d="M7 5.5 12 10l-5 4.5" stroke={isFocused ? "white" : (tileConfig?.arrowColor ?? "#ff4f5e")} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -175,7 +175,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 // ─── Main component ────────────────────────────────────────────────────────────
 
 const COL_GAP = 56; // px between columns
-const CARD_W = 360; // px — must match w-[360px] on TreeCard (branch cards)
+const CARD_W = 420; // px — must match w-[420px] on TreeCard (branch cards)
 const TERMINAL_CARD_W = 260; // px — must match w-[260px] on TreeCard (terminal/diagnosis cards)
 const CARD_GAP = 10; // px between cards in a column
 
