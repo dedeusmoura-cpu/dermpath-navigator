@@ -144,7 +144,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative w-[270px] min-w-[270px] rounded-[1.45rem] border px-6 py-5 pr-20 text-left text-[1.08rem] font-semibold leading-[1.28] transition duration-200 ${
+      className={`relative w-[320px] min-w-[320px] rounded-[1.3rem] border px-6 py-4 pr-16 text-left text-[1.05rem] font-semibold leading-[1.28] transition duration-200 ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -159,7 +159,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       {isActive && (
         <span
           aria-hidden="true"
-          className="absolute right-6 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
+          className="absolute right-4 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
         >
           <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
             <path d="M7 5.5 12 10l-5 4.5" stroke={isFocused ? "white" : (tileConfig?.arrowColor ?? "#ff4f5e")} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -172,9 +172,9 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 
 // ─── Main component ────────────────────────────────────────────────────────────
 
-const COL_GAP = 40; // px between columns
-const CARD_W = 270; // px — must match w-[270px] on TreeCard
-const CARD_GAP = 12; // px between cards in a column
+const COL_GAP = 56; // px between columns
+const CARD_W = 320; // px — must match w-[320px] on TreeCard
+const CARD_GAP = 10; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
 // Positions each card so that every expanded parent is vertically centered
@@ -345,15 +345,14 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       const availW = out.clientWidth - 32;
       const availH = out.clientHeight - 40;
 
-      // Fit both width and the active-branch height so the expanded branch is always visible.
-      // Cap at 1.0 (never zoom in) and floor at 0.32 (still readable).
+      // Scale only to fit the active-branch height — width scrolls freely.
+      // Cap at 1.0 (never zoom in) and floor at 0.45 (still readable).
       const newScale = Math.max(
         Math.min(
-          naturalW > 0 ? availW / naturalW : 1.0,
           relevantH > 0 ? availH / relevantH : 1.0,
           1.0,
         ),
-        0.32,
+        0.45,
       );
 
       if (Math.abs(newScale - scaleRef.current) > 0.004) {
@@ -532,7 +531,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
 
       <div
         ref={outerRef}
-        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-hidden"
+        className="rounded-[32px] border border-sand bg-white shadow-panel overflow-auto"
         style={isFullscreen ? { flex: 1, minHeight: 0 } : { height: "clamp(260px, calc(100vh - 220px), 900px)" }}
       >
         <div
