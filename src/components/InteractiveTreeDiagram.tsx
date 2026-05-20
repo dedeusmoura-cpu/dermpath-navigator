@@ -159,7 +159,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       } ${isClickable ? "cursor-pointer hover:-translate-y-0.5" + (isTile ? "" : " hover:border-[#d8c1ef] hover:shadow-[0_22px_34px_-24px_rgba(39,19,71,0.2),0_12px_22px_-16px_rgba(39,19,71,0.14)]") : "cursor-default"}`}
       style={cardStyle}
     >
-      <span className="block" style={isTile ? { color: tileConfig.textColor } : undefined}>{label}</span>
+      <span className="block" style={isTile ? { color: tileConfig.textColor } : undefined}>{label.replace(/ \//g, ' /')}</span>
       {isActive && (
         <span
           aria-hidden="true"
@@ -178,7 +178,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 
 const COL_GAP = 80; // px between columns
 const CARD_W = 640; // px — must match w-[640px] on TreeCard (branch cards)
-const CARD_GAP = 18; // px between cards in a column
+const CARD_GAP = 28; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
 // Positions each card so that every expanded parent is vertically centered
