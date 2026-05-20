@@ -344,16 +344,25 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         ? Math.max(...expandedColHeights)
         : (layout.colHeights[0] ?? naturalH);
 
+      const availW = out.clientWidth - 32;
       const availH = out.clientHeight - 40;
 
-      // Scale only to fit the active-branch height — width scrolls freely.
-      // Cap at 1.0 (never zoom in) and floor at 0.45 (still readable).
+      // Fit both the width and height of the active branch (cols 1+) so the
+      // entire expanded path is always visible without scrolling.
+      // Col 0 has all root nodes stacked — exclude it from width so its full
+      // height doesn't force extreme zoom-out.
+      const numExpandedCols = Math.max(levels.length - 1, 0);
+      const relevantW = numExpandedCols > 0
+        ? numExpandedCols * CARD_W + (numExpandedCols - 1) * COL_GAP
+        : naturalW;
+
       const newScale = Math.max(
         Math.min(
+          relevantW > 0 ? availW / relevantW : 1.0,
           relevantH > 0 ? availH / relevantH : 1.0,
           1.0,
         ),
-        0.45,
+        0.18,
       );
 
       if (Math.abs(newScale - scaleRef.current) > 0.004) {
