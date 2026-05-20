@@ -119,9 +119,11 @@ interface CardProps {
   onClick: () => void;
   tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string; focusGradient: string; focusShadow: string };
   showTile?: boolean;
+  variant?: "branch" | "terminal";
 }
 
-function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false }: CardProps) {
+function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false, variant = "branch" }: CardProps) {
+  const isTerminal = variant === "terminal";
   const isTile = !!tileConfig && !isActive && showTile;
   const cardStyle: CSSProperties | undefined = isFocused
     ? {
@@ -144,7 +146,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative w-[320px] min-w-[320px] rounded-[1.3rem] border px-6 py-4 pr-16 text-left text-[1.05rem] font-semibold leading-[1.28] transition duration-200 ${
+      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isTerminal ? "w-[260px] min-w-[260px] px-5 py-3 pr-5 text-[0.92rem]" : "w-[360px] min-w-[360px] px-6 py-4 pr-16 text-[1.12rem]"} ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -173,7 +175,8 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 // ─── Main component ────────────────────────────────────────────────────────────
 
 const COL_GAP = 56; // px between columns
-const CARD_W = 320; // px — must match w-[320px] on TreeCard
+const CARD_W = 360; // px — must match w-[360px] on TreeCard (branch cards)
+const TERMINAL_CARD_W = 260; // px — must match w-[260px] on TreeCard (terminal/diagnosis cards)
 const CARD_GAP = 10; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
@@ -639,6 +642,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                               isActive={false}
                               isFocused={false}
                               isClickable={true}
+                              variant="terminal"
                               onClick={() => {
                                 navigate(`/diagnostico?nodeId=${termEntry.concreteId}`, {
                                   state: { trail: buildPathToNode(termEntry.concreteId).map((n) => n.id) },
