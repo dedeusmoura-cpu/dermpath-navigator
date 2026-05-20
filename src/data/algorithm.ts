@@ -978,7 +978,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-morfeia-inflamatoria", "Morfeia inflamatória", "diagnosis", "pv-apenas-linfo-plasmocitos", "Infiltrado linfoplasmocitário perivascular compatível com Morfeia inflamatória.", blocks("A correlação clínica e o sítio anatômico ajudam no refinamento."), ["morfeia inflamatória", "plasmócitos"], ["morfeia inflamatoria"]),
   terminal("dx-hanseniase-indeterminada", "Hanseníase indeterminada", "diagnosis", "pv-apenas", "Linfócitos e Histiócitos proeminentes em padrão compatível com hanseníase indeterminada.", blocks("A avaliaão neural e a clínica seguem essenciais."), ["hanseníase indeterminada"], ["hanseniase indeterminada"]),
   node({ id: "pv-intersticial", title: "Perivascular e intersticial", type: "decision", parentId: "perivascular-sem-epiderme", description: "Avalie a composição predominante do infiltrado.", options: [
-    { label: "Predomínio de Linfócitos", nextNodeId: "dx-schamberg-2" },
+    { label: "Linfócitos, hemácias extravasadas e/ou siderófagos", nextNodeId: "dx-schamberg-2" },
     { label: "Neutrófilos proeminentes", nextNodeId: "group-pv-neutrofilos" },
     { label: "Eosinófilos proeminentes", nextNodeId: "group-pv-eosinofilos" },
     { label: "Neutrófilos e eosinófilos", nextNodeId: "dx-urticaria" },
