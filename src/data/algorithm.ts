@@ -1024,37 +1024,28 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Vacuolar", nextNodeId: "interface-vacuolar" },
     { label: "Liquenoide", nextNodeId: "interface-liquenoide" },
   ]}),
-  node({ id: "interface-vacuolar", title: "Interface vacuolar", type: "decision", parentId: "perivascular-interface", description: "Subdivida conforme o predomínio de Linfócitos ou de eosinófilos e neutrófilos.", options: [
-    { label: "Somente Linfócitos", nextNodeId: "interface-vac-somente-linfocitos" },
-    { label: "Linfócitos, neutrófilos e eosinófilos", nextNodeId: "interface-vac-misto" },
-  ]}),
-  node({ id: "interface-vac-somente-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "interface-vacuolar", description: "Defina se h balonização e queratinócitos Necróticos individuais.", options: [
-    { label: "Balonização e queratinócitos Necróticos individuais", nextNodeId: "interface-vac-linf-balonizacao" },
+  node({ id: "interface-vacuolar", title: "Interface vacuolar", type: "decision", parentId: "perivascular-interface", description: "Subdivida conforme há balonização e queratinócitos necróticos ou não.", options: [
+    { label: "Balonização e queratinócitos Necróticos", nextNodeId: "interface-vac-linf-balonizacao" },
     { label: "Sem balonização e com poucos queratinócitos Necróticos", nextNodeId: "interface-vac-linf-sem-balonizacao" },
   ]}),
-  node({ id: "interface-vac-linf-balonizacao", title: "Balonização e queratinócitos Necróticos individuais", type: "decision", parentId: "interface-vac-somente-linfocitos", description: "Use os achados epidérmicos associados para fechamento do algoritmo.", options: [
+  node({ id: "interface-vac-linf-balonizacao", title: "Balonização e queratinócitos Necróticos", type: "decision", parentId: "interface-vacuolar", description: "Use os achados epidérmicos associados para fechamento do algoritmo.", options: [
     { label: "Camada córnea normal", nextNodeId: "dx-eritema-multiforme" },
     { label: "Paraceratose", nextNodeId: "dx-pleva" },
-    { label: "Camada granular proeminente", nextNodeId: "dx-gvhd" },
+    { label: "Extensão da alteração vacuolar para folículos", nextNodeId: "dx-gvhd" },
+    { label: "Eosinófilos perivasculares", nextNodeId: "dx-eritema-pigmentar-fixo-superficial" },
   ]}),
   terminal("dx-eritema-multiforme", "Eritema multiforme", "diagnosis", "interface-vac-linf-balonizacao", "Interface vacuolar com balonização e necrose, mantendo camada córnea normal.", blocks("Também reaparece em outros braos do algoritmo conforme a aula."), ["eritema multiforme"]),
   terminal("dx-pleva", "Pitiríase liquenoide e varioliforme aguda (PLEVA)", "diagnosis", "interface-vac-linf-balonizacao", "Dermatite de interface com paraceratose, balonização, ceratinócitos Necróticos, interface vacuolar, extravasamento de Hemácias e infiltrado linfocitário dérmico em \"V\".", blocks("O resultado final preserva a sigla clássica PLEVA e explicita a nomenclatura completa para facilitar a leitura Diagnóstica e a busca."), ["pleva", "pitiríase liquenoide", "doença de mucha-habermann"], ["pitiriase liquenoide", "mucha-habermann", "doenca de mucha-habermann"]),
   terminal("dx-gvhd", "Doença enxerto versus hospedeiro (GVHD)", "diagnosis", "interface-vac-linf-balonizacao", "Queratinócitos necróticos e alteração vacuolar estendendo-se ao longo do epitélio folicular.", blocks("Correlacionar com contexto clínico de transplante."), ["gvhd"]),
-  terminal("dx-efeitos-interferon-mf", "Efeitos de interferon em micose fungoide, patch/plaque", "diagnosis", "interface-vac-linf-balonizacao", "Queratinócitos necróticos em papilas dérmicas também, em contexto de uso de interferon em micose fungoide tipo patch/plaque.", blocks("Mantido como desfecho específico do algoritmo fornecido."), ["interferon", "micose fungoide", "patch", "plaque"]),
-  node({ id: "interface-vac-linf-sem-balonizacao", title: "Sem balonização e com poucos queratinócitos Necróticos", type: "decision", parentId: "interface-vac-somente-linfocitos", description: "Use os achados adicionais para separar os desfechos diagnósticos.", options: [
-    { label: "Camada córnea normal", nextNodeId: "dx-erupcao-droga-tipo-interface" },
-    { label: "Membrana basal às vezes espessada, interface borrada, epiderme afinada", nextNodeId: "group-lupus-dermatomiosite-interface" },
-    { label: "Esclerose na porão superior da derme", nextNodeId: "group-liquen-escleroso-api" },
-    { label: "Melanófagos em derme papilar", nextNodeId: "dx-alteracao-pigmentar-pos-inflamatoria" },
+  node({ id: "interface-vac-linf-sem-balonizacao", title: "Sem balonização e com poucos queratinócitos Necróticos", type: "decision", parentId: "interface-vacuolar", description: "Use os achados adicionais para separar os desfechos diagnósticos.", options: [
+    { label: "Eosinófilos perivasculares", nextNodeId: "dx-erupcao-droga-tipo-interface" },
+    { label: "Atrofia epidérmica e membrana basal espessada", nextNodeId: "group-lupus-dermatomiosite-interface" },
+    { label: "Esclerose na porção superior da derme", nextNodeId: "group-liquen-escleroso-api" },
   ]}),
-  terminal("dx-erupcao-droga-tipo-interface", "Erupção por droga (um tipo)", "diagnosis", "interface-vac-linf-sem-balonizacao", "Interface vacuolar sem balonização, com poucos queratinócitos Necróticos, mantendo camada córnea normal.", blocks("Representa um tipo específico de erupção por droga dentro deste braço do algoritmo."), ["erupção por droga", "drug eruption"], ["erupcao por droga"]),
-  diagnosisGroup("group-lupus-dermatomiosite-interface", "Membrana basal espessada / interface borrada / epiderme afinada", "interface-vac-linf-sem-balonizacao", "Este ponto do algoritmo abre duas possibilidades principais.", ["Lúpus discide", "Dermatomiosite"], blocks("A correlação clínico-patológica e os estudos complementares ajudam na separação."), ["lúpus discóide", "dermatomiosite"], ["lupus discoide"]),
+  terminal("dx-erupcao-droga-tipo-interface", "Erupção por droga", "diagnosis", "interface-vac-linf-sem-balonizacao", "Interface vacuolar sem balonização, com poucos queratinócitos Necróticos, mantendo camada córnea normal.", blocks("Representa um tipo específico de erupção por droga dentro deste braço do algoritmo."), ["erupção por droga", "drug eruption"], ["erupcao por droga"]),
+  diagnosisGroup("group-lupus-dermatomiosite-interface", "Lúpus eritematoso / Dermatomiosite", "interface-vac-linf-sem-balonizacao", "Este ponto do algoritmo abre duas possibilidades principais.", ["Lúpus discide", "Dermatomiosite"], blocks("A correlação clínico-patológica e os estudos complementares ajudam na separação."), ["lúpus discóide", "dermatomiosite"], ["lupus discoide"]),
   terminal("group-liquen-escleroso-api", "Líquen escleroso e atrófico", "diagnosis", "interface-vac-linf-sem-balonizacao", "Atrofia epidérmica, alteração vacuolar em camada basal e esclerose do colágeno em derme papilar", blocks("Mantido como diagnóstico final nico deste ramo."), ["líquen escleroso e atrófico", "liquen escleroso"], ["liquen escleroso e atrofico"]),
-  terminal("dx-alteracao-pigmentar-pos-inflamatoria", "alteração pigmentar pós-inflamatória", "diagnosis", "interface-vac-linf-sem-balonizacao", "Infiltrado linfocitário perivascular superficial com melanófagos, podendo corresponder a fases tardias de líquen plano, erupção por drogas, dermatose cinzenta, a depender de correlação clínica.", blocks("Melanófagos em derme papilar como desfecho final deste ramo."), ["alteração pigmentar pós-inflamatória", "melanófagos em derme papilar"], ["alteracao pigmentar pos-inflamatoria", "melanofagos em derme papilar"]),
-  node({ id: "interface-vac-misto", title: "Linfócitos, neutrófilos e eosinófilos", type: "decision", parentId: "interface-vacuolar", description: "Defina se h balonização e queratinócitos Necróticos individuais.", options: [
-    { label: "Balonização e queratinócitos Necróticos individuais", nextNodeId: "dx-eritema-pigmentar-fixo-superficial" },
-  ]}),
-  terminal("dx-eritema-pigmentar-fixo-superficial", "Eritema pigmentar fixo, superficial", "diagnosis", "interface-vac-misto", "Interface vacuolar com eosinófilos e neutrófilos proeminentes, balonização e queratinócitos Necróticos individuais, com camada córnea normal.", blocks("Mantido como desfecho específico do algoritmo fornecido."), ["eritema pigmentar fixo", "superficial"]),
+  terminal("dx-eritema-pigmentar-fixo-superficial", "Eritema pigmentar fixo, superficial", "diagnosis", "interface-vac-linf-balonizacao", "Interface vacuolar com eosinófilos perivasculares, balonização e queratinócitos Necróticos individuais, com camada córnea normal.", blocks("Mantido como desfecho específico do algoritmo fornecido."), ["eritema pigmentar fixo", "superficial"]),
   node({ id: "interface-liquenoide", title: "Interface liquenoide", type: "decision", parentId: "perivascular-interface", description: "Subdivida conforme o predomínio de Linfócitos, Histiócitos ou células de Langerhans.", options: [
     { label: "Linfócitos predominam", nextNodeId: "interface-liquenoide-linfocitos" },
     { label: "Histiócitos predominam", nextNodeId: "interface-liquenoide-hisítiocitos" },

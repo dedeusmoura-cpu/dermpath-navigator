@@ -13,6 +13,7 @@ interface FocusedTreeMapProps {
   selectedPath: string[];
   openedFinalNodeIds: string[];
   onSelectNode: (item: ColumnItem, level: number) => void;
+  extraControls?: React.ReactNode;
 }
 
 interface ColumnItem {
@@ -108,11 +109,16 @@ const CATEGORY_CONFIG: Record<string, {
   },
 };
 
-export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode }: FocusedTreeMapProps) {
+const ZOOM_STEPS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+const ZOOM_MIN = 0.4;
+const ZOOM_MAX = 1.0;
+
+export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode, extraControls }: FocusedTreeMapProps) {
   const { language } = useLanguage();
   const childMap = useMemo(() => getChildMap(), []);
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [zoom, setZoom] = useState(1);
   const columnRefs = useRef<Array<HTMLDivElement | null>>([]);
   const nodeRefs = useRef<Record<string, HTMLElement | null>>({});
   const nodeWrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -264,10 +270,72 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode 
     scrollArea.scrollTo({ left: targetLeft, behavior: "smooth" });
   }, [focusedMapId, columns, selectedPathIds]);
 
+  function handleZoomOut() {
+    setZoom((z) => {
+      for (let i = ZOOM_STEPS.length - 1; i >= 0; i--) {
+        if (ZOOM_STEPS[i] < z - 0.001) return ZOOM_STEPS[i];
+      }
+      return ZOOM_MIN;
+    });
+  }
+
+  function handleZoomIn() {
+    setZoom((z) => {
+      const idx = ZOOM_STEPS.findIndex((s) => s > z + 0.001);
+      return idx >= 0 ? ZOOM_STEPS[idx] : ZOOM_MAX;
+    });
+  }
+
+  function handleZoomFit() {
+    const area = scrollAreaRef.current;
+    const cnt = containerRef.current;
+    if (!area || !cnt) return;
+    const naturalW = cnt.scrollWidth / zoom;
+    const naturalH = cnt.scrollHeight / zoom;
+    const fitW = (area.clientWidth - 40) / naturalW;
+    const fitH = (area.clientHeight - 40) / naturalH;
+    const fit = Math.min(fitW, fitH, ZOOM_MAX);
+    setZoom(Math.max(fit, ZOOM_MIN));
+  }
+
   return (
     <section>
-      <div ref={scrollAreaRef} className="overflow-x-auto overflow-y-hidden rounded-[32px] border border-sand bg-white p-5 shadow-panel">
-        <div ref={containerRef} className="relative flex min-w-max flex-nowrap items-start gap-10 pb-3">
+      <div className="mb-2 flex items-center justify-end gap-1 pr-1">
+        <button
+          type="button"
+          onClick={handleZoomFit}
+          title="Ajustar à tela"
+          className="rounded-full border border-sand bg-white px-2.5 py-1 text-xs font-semibold text-steel shadow-sm transition hover:bg-sand hover:text-ink"
+        >
+          Ajustar
+        </button>
+        <div className="inline-flex items-center rounded-full border border-sand bg-white shadow-sm">
+          <button
+            type="button"
+            onClick={handleZoomOut}
+            disabled={zoom <= ZOOM_MIN}
+            title="Zoom out"
+            className="rounded-l-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
+          >
+            −
+          </button>
+          <span className="min-w-[3rem] text-center text-xs font-semibold text-steel tabular-nums select-none">
+            {Math.round(zoom * 100)}%
+          </span>
+          <button
+            type="button"
+            onClick={handleZoomIn}
+            disabled={zoom >= ZOOM_MAX}
+            title="Zoom in"
+            className="rounded-r-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
+          >
+            +
+          </button>
+        </div>
+        {extraControls}
+      </div>
+      <div ref={scrollAreaRef} className="overflow-auto rounded-[32px] border border-sand bg-white p-5 shadow-panel">
+        <div ref={containerRef} className="relative flex min-w-max flex-nowrap items-start gap-10 pb-3" style={{ zoom }}>
           <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
             {lines.map((line) => (
               (() => {

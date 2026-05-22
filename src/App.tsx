@@ -53,7 +53,7 @@ export default function App() {
   const isQuizSection = location.pathname.startsWith("/quiz");
   const isTedPage = location.pathname.startsWith("/treinamento-ted");
   const isHomePage = location.pathname === "/";
-  const isTreeMapPage = location.pathname === "/mapa-da-arvore";
+  const isTreeMapPage = location.pathname === "/mapa-da-arvore" || location.pathname === "/arvore-interativa";
 
   useEffect(() => {
     requestAnimationFrame(() => {

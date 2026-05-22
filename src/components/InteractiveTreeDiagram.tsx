@@ -120,12 +120,10 @@ interface CardProps {
   tileConfig?: { gradient: string; border: string; textColor: string; activeGradient: string; activeBorder: string; arrowColor: string; focusGradient: string; focusShadow: string };
   showTile?: boolean;
   variant?: "branch" | "terminal";
-  isCompact?: boolean;
 }
 
-function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false, variant = "branch", isCompact = false }: CardProps) {
+function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, tileConfig, showTile = false, variant = "branch" }: CardProps) {
   const isTerminal = variant === "terminal";
-  const isSmall = isCompact;
   const isTile = !!tileConfig && !isActive && showTile;
   const cardStyle: CSSProperties | undefined = isFocused
     ? {
@@ -148,7 +146,7 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       ref={refCb}
       type="button"
       onClick={isClickable ? onClick : undefined}
-      className={`relative rounded-[1.3rem] border text-left font-semibold leading-[1.28] transition duration-200 ${isSmall ? `w-[560px] min-w-[560px] px-8 py-6 text-[2.4rem] ${isTerminal ? "pr-8" : "pr-28"}` : "w-[640px] min-w-[640px] px-9 py-7 pr-36 text-[4.8rem]"} ${
+      className={`relative rounded-[1.45rem] border text-left font-semibold leading-[1.28] transition duration-200 w-[270px] min-w-[270px] px-6 text-[1.08rem] ${isTerminal ? "py-3" : "py-5 pr-20"} ${
         isFocused
           ? "border-white/20 text-white"
           : isActive
@@ -163,9 +161,9 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
       {isActive && (
         <span
           aria-hidden="true"
-          className={`absolute top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)] ${isSmall ? "right-6 h-14 w-14" : "right-8 h-20 w-20"}`}
+          className="absolute top-1/2 -translate-y-1/2 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[0_14px_28px_-18px_rgba(20,27,43,0.42)]"
         >
-          <svg viewBox="0 0 20 20" className={isSmall ? "h-7 w-7" : "h-10 w-10"} fill="none">
+          <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none">
             <path d="M7 5.5 12 10l-5 4.5" stroke={isFocused ? "white" : (tileConfig?.arrowColor ?? "#ff4f5e")} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
@@ -176,9 +174,9 @@ function TreeCard({ refCb, label, isActive, isFocused, isClickable, onClick, til
 
 // ─── Main component ────────────────────────────────────────────────────────────
 
-const COL_GAP = 80; // px between columns
-const CARD_W = 640; // px — must match w-[640px] on TreeCard (branch cards)
-const CARD_GAP = 28; // px between cards in a column
+const COL_GAP = 40; // px between columns
+const CARD_W = 270; // px — must match w-[270px] on TreeCard (branch cards)
+const CARD_GAP = 8; // px between cards in a column
 
 // ─── Layout computation ────────────────────────────────────────────────────────
 // Positions each card so that every expanded parent is vertically centered
@@ -251,6 +249,10 @@ function computeLayout(
   return { positions, colHeights };
 }
 
+const ZOOM_STEPS = [0.25, 0.33, 0.5, 0.67, 0.75, 1.0, 1.25, 1.5, 2.0];
+const ZOOM_MIN = 0.18;
+const ZOOM_MAX = 2.0;
+
 export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -259,6 +261,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   const [expanded, setExpanded] = useState<Set<string>>(() => new Set([rootNodeId]));
   const [lastExpandedId, setLastExpandedId] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [manualZoom, setManualZoom] = useState<number | null>(null);
 
   const [lines, setLines] = useState<LineData[]>([]);
   const [svgW, setSvgW] = useState(0);
@@ -358,7 +361,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         ? numExpandedCols * CARD_W + (numExpandedCols - 1) * COL_GAP
         : naturalW;
 
-      const newScale = Math.max(
+      const autoScale = Math.max(
         Math.min(
           relevantW > 0 ? availW / relevantW : 1.0,
           relevantH > 0 ? availH / relevantH : 1.0,
@@ -366,6 +369,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         ),
         0.18,
       );
+
+      const newScale = manualZoom ?? autoScale;
 
       if (Math.abs(newScale - scaleRef.current) > 0.004) {
         scaleRef.current = newScale;
@@ -411,7 +416,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
     ro.observe(content);
     return () => { cancelAnimationFrame(rafId); ro.disconnect(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [edges, scale]);
+  }, [edges, scale, manualZoom]);
 
   useEffect(() => {
     const currentIds = new Set(lines.map((l) => l.id));
@@ -492,6 +497,24 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
   }, [isFullscreen]);
 
 
+  function handleZoomOut() {
+    const cur = manualZoom ?? scale;
+    const idx = [...ZOOM_STEPS].reverse().findIndex((s) => s < cur - 0.001);
+    const next = idx >= 0 ? [...ZOOM_STEPS].reverse()[idx] : ZOOM_MIN;
+    setManualZoom(Math.max(next, ZOOM_MIN));
+  }
+
+  function handleZoomIn() {
+    const cur = manualZoom ?? scale;
+    const idx = ZOOM_STEPS.findIndex((s) => s > cur + 0.001);
+    const next = idx >= 0 ? ZOOM_STEPS[idx] : ZOOM_MAX;
+    setManualZoom(Math.min(next, ZOOM_MAX));
+  }
+
+  function handleZoomFit() {
+    setManualZoom(null);
+  }
+
   function getDisplayLabel(entry: LevelEntry): string {
     if (!entry.isTerminal && entry.parentConcreteId) {
       const parent = algorithmTree.nodes[entry.parentConcreteId];
@@ -523,12 +546,44 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
             ? "Click any node to expand / collapse"
             : "Clique em qualquer nó para expandir / recolher"}
         </span>
-        <button
-          type="button"
-          onClick={() => setIsFullscreen((v) => !v)}
-          title={isFullscreen ? (language === "en" ? "Exit fullscreen" : "Sair da tela cheia") : (language === "en" ? "Fullscreen" : "Tela cheia")}
-          className="ml-auto rounded-full border border-sand bg-paper p-1.5 text-steel transition hover:bg-sand"
-        >
+        <div className="ml-auto flex items-center gap-1">
+          <button
+            type="button"
+            onClick={handleZoomFit}
+            title={language === "en" ? "Fit to screen" : "Ajustar à tela"}
+            className="rounded-full border border-sand bg-paper px-2.5 py-1 text-xs font-semibold text-steel shadow-sm transition hover:bg-sand hover:text-ink"
+          >
+            {language === "en" ? "Fit" : "Ajustar"}
+          </button>
+          <div className="inline-flex items-center rounded-full border border-sand bg-paper shadow-sm">
+            <button
+              type="button"
+              onClick={handleZoomOut}
+              disabled={(manualZoom ?? scale) <= ZOOM_MIN}
+              title="Zoom out"
+              className="rounded-l-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
+            >
+              −
+            </button>
+            <span className="min-w-[3rem] text-center text-xs font-semibold text-steel tabular-nums select-none">
+              {Math.round((manualZoom ?? scale) * 100)}%
+            </span>
+            <button
+              type="button"
+              onClick={handleZoomIn}
+              disabled={(manualZoom ?? scale) >= ZOOM_MAX}
+              title="Zoom in"
+              className="rounded-r-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
+            >
+              +
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsFullscreen((v) => !v)}
+            title={isFullscreen ? (language === "en" ? "Exit fullscreen" : "Sair da tela cheia") : (language === "en" ? "Fullscreen" : "Tela cheia")}
+            className="rounded-full border border-sand bg-paper p-1.5 text-steel transition hover:bg-sand"
+          >
           {isFullscreen ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/>
@@ -538,7 +593,8 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
               <path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
             </svg>
           )}
-        </button>
+          </button>
+        </div>
       </div>
 
       <div
@@ -640,7 +696,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                             isActive={isOpen}
                             isFocused={isOpen && lastExpandedId === entry.id}
                             isClickable={true}
-                            isCompact={colIndex >= 5}
+
                             onClick={() => toggle(entry.id)}
                             tileConfig={tileConfig}
                             showTile={colIndex === 0}
@@ -653,7 +709,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                               isFocused={false}
                               isClickable={true}
                               variant="terminal"
-                              isCompact={colIndex + 1 >= 5}
+
                               onClick={() => {
                                 navigate(`/diagnostico?nodeId=${termEntry.concreteId}`, {
                                   state: { trail: buildPathToNode(termEntry.concreteId).map((n) => n.id) },
@@ -680,7 +736,6 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                           isActive={isActive}
                           isFocused={isActive && lastExpandedId === entry.id}
                           isClickable={canExpand}
-                          isCompact={colIndex >= 5}
                           onClick={() => toggle(entry.id)}
                           tileConfig={tileConfig}
                           showTile={colIndex === 0}
