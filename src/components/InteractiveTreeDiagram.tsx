@@ -338,8 +338,9 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       const naturalW = cnt.scrollWidth;
       const naturalH = cnt.scrollHeight;
 
-      // Layout pass first so we can derive the relevant height for scale.
-      const layout = computeLayout(levels, nodeRefs.current, scaleRef.current);
+      // Layout pass first (uses naturalHeight of cards, unaffected by scale).
+      // Use scale from state (reflects the transform the DOM currently has).
+      const layout = computeLayout(levels, nodeRefs.current, scale);
 
       // Height-scale target = tallest expanded column (col 1+).
       // Column 0 always has ALL root nodes stacked, so using it would force
@@ -375,9 +376,16 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
       if (Math.abs(newScale - scaleRef.current) > 0.004) {
         scaleRef.current = newScale;
         setScale(newScale);
+        // Return early: DOM still has the old transform applied.
+        // getBoundingClientRect() would be in old-scale space while scaleRef
+        // already holds the new value, producing wrong line coordinates.
+        // The next useLayoutEffect run (triggered by setScale) will compute
+        // lines correctly once the DOM reflects the new transform.
+        return;
       }
 
-      const s = scaleRef.current;
+      // scale state == DOM transform == scaleRef.current: safe to measure.
+      const s = scale;
       const cRect = cnt.getBoundingClientRect();
       const newLines: LineData[] = [];
 
@@ -609,7 +617,6 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
             display: "inline-flex",
             transform: `scale(${scale})`,
             transformOrigin: "top left",
-            transition: "transform 0.35s ease",
           }}
         >
           <svg
@@ -626,10 +633,13 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
           >
             {lines.map((line) => {
               const midX = (line.x1 + line.x2) / 2;
-              const cr = 3;
-              const gap = 4;
+              // Compensate for CSS scale so connectors keep a fixed visual size at any zoom level
+              const cr = 3 / scale;
+              const gap = 4 / scale;
+              const sw = 1.55 / scale;
+              const csw = 1.4 / scale;
               const cx = line.x2 - gap - cr;
-              const px = cx - cr - 0.5;
+              const px = cx - cr - 0.5 / scale;
               const categoryId = getCategoryForLine(line.from, line.to, nodeCategoryMap);
               const stroke = CATEGORY_LINE_COLORS[categoryId ?? ""] ?? DEFAULT_LINE_COLOR;
               const isEntering = enteringLineIds.has(line.id);
@@ -641,10 +651,10 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                     fill="none"
                     pathLength={1}
                     stroke={stroke}
-                    strokeWidth="1.55"
+                    strokeWidth={sw}
                     strokeLinecap="round"
                   />
-                  <circle cx={cx} cy={line.y2} r={cr} fill="white" stroke={stroke} strokeWidth="1.4" />
+                  <circle cx={cx} cy={line.y2} r={cr} fill="white" stroke={stroke} strokeWidth={csw} />
                 </g>
               );
             })}
