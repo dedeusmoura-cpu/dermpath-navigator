@@ -1052,7 +1052,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Clulas de Langerhans predominam", nextNodeId: "interface-liquenoide-langerhans" },
   ]}),
   node({ id: "interface-liquenoide-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "interface-liquenoide", description: "Use os achados epidérmicos e dérmicos associados para fechamento do algoritmo.", options: [
-    { label: "Hiperplasia epidérmica irregular serrilhada, hipergranulose em cunha, ortoceratose compacta", nextNodeId: "dx-liquen-plano" },
+    { label: "Hiperplasia irregular serrilhada, hipergranulose em V, ortoceratose", nextNodeId: "dx-liquen-plano" },
     { label: "Eosinófilos às vezes, epiderme focalmente afinada, paraceratose focal", nextNodeId: "group-liquenoide-droga-fotodermatite" },
     { label: "Queratinócitos necróticos individuais, balonização, espongiose, palidez na epiderme superior e paraceratose", nextNodeId: "dx-pleva" },
     { label: "Linfócitos ao longo de glândulas écrinas na derme reticular, queratinócitos necróticos individuais", nextNodeId: "dx-liquen-estriado" },

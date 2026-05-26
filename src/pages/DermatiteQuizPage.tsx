@@ -92,7 +92,7 @@ const sixthColumnOptions: TreeOption[] = [
   {
     id: "irregular-hyperplasia",
     label: {
-      pt: "Hiperplasia epidérmica irregular serrilhada, hipergranulose em cunha, ortoceratose compacta",
+      pt: "Hiperplasia irregular serrilhada, hipergranulose em V, ortoceratose",
       en: "Irregular sawtooth epidermal hyperplasia, wedge hypergranulosis, compact orthokeratosis",
     },
   },
