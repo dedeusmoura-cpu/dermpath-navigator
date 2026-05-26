@@ -99,14 +99,14 @@ const sixthColumnOptions: TreeOption[] = [
   {
     id: "eosinophils-focal",
     label: {
-      pt: "Eosinófilos às vezes, epiderme focalmente afinada, paraceratose focal",
+      pt: "Paraceratose, eosinófilos perivasculares",
       en: "Occasional eosinophils, focally thinned epidermis, focal parakeratosis",
     },
   },
   {
     id: "eccrine-lymphocytes",
     label: {
-      pt: "Linfócitos ao longo de glândulas écrinas na derme reticular, queratinócitos necróticos individuais",
+      pt: "Ceratinócitos necróticos, linfócitos peri-écrinos na derme reticular",
       en: "Lymphocytes along eccrine glands in the reticular dermis, individual necrotic keratinocytes",
     },
   },
@@ -114,7 +114,7 @@ const sixthColumnOptions: TreeOption[] = [
   {
     id: "necrotic-keratinocytes",
     label: {
-      pt: "Queratinócitos necróticos, paraceratose focal, resíduo de lentigo solar às vezes",
+      pt: "Clínica de tumor, lentigo solar na periferia",
       en: "Necrotic keratinocytes, focal parakeratosis, residual solar lentigo sometimes",
     },
   },
@@ -125,7 +125,7 @@ const seventhColumnOptions: TreeOption[] = [
   { id: "lichen-planus", label: { pt: "Líquen plano", en: "Lichen planus" } },
   {
     id: "drug-photodermatitis",
-    label: { pt: "Líquen plano-símile por droga / Fotodermatite liquenoide", en: "Drug-induced lichen planus-like eruption / Lichenoid photodermatitis" },
+    label: { pt: "Erupção liquenoide a drogas / Fotodermatite liquenoide", en: "Drug-induced lichen planus-like eruption / Lichenoid photodermatitis" },
   },
   { id: "lichen-striatus", label: { pt: "Líquen estriado", en: "Lichen striatus" } },
   { id: "gougerot-blum", label: { pt: "Púrpura liquenoide de Gougerot e Blum", en: "Gougerot-Blum lichenoid purpura" } },
