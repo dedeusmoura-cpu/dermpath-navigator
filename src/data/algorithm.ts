@@ -1088,12 +1088,13 @@ const nodesArray: AlgorithmNode[] = [
   ]}),
   terminal("dx-letterer-siwe", "Hisítiocitose de células de Langerhans", "diagnosis", "interface-liquenoide-langerhans", "Predomínio de células de Langerhans grandes, com contornos nucleares granulados e citoplasma anfoflico abundante.", blocks("Mantida como entidade terminal específica deste braço do algoritmo."), ["letterer-siwe", "doença de letterer-siwe"]),
   node({ id: "perivascular-balonizante", title: "Balonizante", type: "decision", parentId: "perivascular", description: "Classifique conforme o padrão de necrose epidérmica e o infiltrado associado.", options: [
-    { label: "Necrose na porção inferior da epiderme, alteração de interface", nextNodeId: "balonizante-necrose-inferior" },
     { label: "Necrose na porção superior da epiderme", nextNodeId: "balonizante-necrose-superior" },
+    { label: "Necrose na porção inferior da epiderme, alteração de interface", nextNodeId: "balonizante-necrose-inferior" },
     { label: "Alguns neutrófilos dispersos na epiderme e infiltrado linfocitário perivascular escasso", nextNodeId: "dx-dermatite-contato-irritativa" },
     { label: "Queratinócitos necróticos individuais e infiltrado linfocitário perivascular escasso", nextNodeId: "dx-queimadura-fototoxica" },
     { label: "Paraceratose, queratinócitos necróticos individuais, alteração vacuolar de interface, infiltrado linfocitário em cunha", nextNodeId: "dx-pitirase-liquenoide" },
     { label: "Neutrófilos em epiderme superficial (podendo formar coleções), linfócitos, neutrófilos e eosinófilos na derme", nextNodeId: "dx-prurigo-pigmentoso" },
+    { label: "Palidez em região superior da epiderme", nextNodeId: "balonizante-palidez-superior" },
   ]}),
   node({ id: "balonizante-necrose-inferior", title: "Necrose na porção inferior da epiderme, alteração de interface", type: "decision", parentId: "perivascular-balonizante", description: "Identifique o tipo de infiltrado dérmico predominante.", options: [
     { label: "Linfócitos perivasculares superficiais", nextNodeId: "dx-bal-eritema-multiforme" },
@@ -1113,6 +1114,16 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-queimadura-fototoxica", "Queimadura / dermatite fototóxica", "diagnosis", "perivascular-balonizante", "Queratinócitos necróticos individuais e infiltrado linfocitário perivascular escasso.", blocks("Inclui queimadura solar e dermatite fototóxica."), ["queimadura", "dermatite fototóxica", "queimadura solar"], ["queimadura", "dermatite fototoxica"]),
   terminal("dx-pitirase-liquenoide", "Pitiríase liquenoide", "diagnosis", "perivascular-balonizante", "Paraceratose, queratinócitos necróticos individuais, alteração vacuolar de interface e infiltrado linfocitário em cunha.", blocks("Correlacionar com apresentação clínica e evolução."), ["pitiríase liquenoide", "pleva", "pleba"], ["pitirase liquenoide"]),
   terminal("dx-prurigo-pigmentoso", "Prurigo pigmentoso", "diagnosis", "perivascular-balonizante", "Neutrófilos em epiderme superficial (podendo formar coleções), com linfócitos, neutrófilos e eosinófilos na derme.", blocks("Correlacionar com apresentação clínica e distribuição das lesões."), ["prurigo pigmentoso"]),
+  node({ id: "balonizante-palidez-superior", title: "Palidez em região superior da epiderme", type: "decision", parentId: "perivascular-balonizante", description: "Identifique a deficiência ou condição metabólica associada.", options: [
+    { label: "Deficiência de Zn", nextNodeId: "dx-acrodermatite-enteropatica" },
+    { label: "Deficiência de B3", nextNodeId: "dx-pelagra" },
+    { label: "Desnutrição proteica", nextNodeId: "dx-kwashiorkor" },
+    { label: "Glucagonoma", nextNodeId: "dx-eritema-necolitico-migratorio" },
+  ]}),
+  terminal("dx-acrodermatite-enteropatica", "Acrodermatite enteropática", "diagnosis", "balonizante-palidez-superior", "Palidez em região superior da epiderme associada à deficiência de zinco.", blocks("Correlacionar com níveis séricos de zinco e contexto clínico."), ["acrodermatite enteropática", "acrodermatite", "deficiência de zinco"], ["acrodermatite enteropatica"]),
+  terminal("dx-pelagra", "Pelagra", "diagnosis", "balonizante-palidez-superior", "Palidez em região superior da epiderme associada à deficiência de niacina (B3).", blocks("Correlacionar com dieta, alcoolismo e uso de medicamentos que interferem com o metabolismo do triptofano."), ["pelagra", "deficiência de niacina", "deficiência de B3"], ["pelagra"]),
+  terminal("dx-kwashiorkor", "Kwashiorkor", "diagnosis", "balonizante-palidez-superior", "Palidez em região superior da epiderme associada à desnutrição proteica grave.", blocks("Correlacionar com quadro clínico de desnutrição proteico-calórica."), ["kwashiorkor", "desnutrição proteica"], ["kwashiorkor"]),
+  terminal("dx-eritema-necolitico-migratorio", "Eritema necrolítico migratório", "diagnosis", "balonizante-palidez-superior", "Palidez em região superior da epiderme associada a glucagonoma.", blocks("Investigar tumor neuroendócrino pancreático produtor de glucagon."), ["eritema necrolítico migratório", "glucagonoma"], ["eritema necrolitico migratorio"]),
   node({ id: "perivascular-espongiotica", title: "espongiótica", type: "decision", parentId: "perivascular", description: "Subdivida o padrão espongiótico em apenas, psoriasiforme, liquenoide ou psoriasiforme-liquenoide.", options: [
     { label: "espongiótica apenas", nextNodeId: "espongiotica-apenas" },
     { label: "espongiótica psoriasiforme", nextNodeId: "espongiotica-psoriasiforme" },
