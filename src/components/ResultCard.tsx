@@ -31,6 +31,7 @@ const LSC_HISTOPATHOLOGY_TARGET_ID = "group-psor-apenas-hiperceratoticos";
 const POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID = "dx-poroqueratose-actinica-superficial-disseminada";
 const NECROBIOSIS_LIPOIDICA_HISTOPATHOLOGY_TARGET_IDS = ["dx-necrobiose-lipoidica", "dx-necrobiose-lipidica-fibrosante"] as const;
 const LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID = "sarcoidico-interface";
+const PRURIGO_PIGMENTOSO_TARGET_ID = "dx-prurigo-pigmentoso";
 
 export function ResultCard({
   node,
@@ -64,6 +65,7 @@ export function ResultCard({
     node.id as (typeof NECROBIOSIS_LIPOIDICA_HISTOPATHOLOGY_TARGET_IDS)[number],
   );
   const showLiquenNitidoHistopathologyButton = node.id === LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID;
+  const showPrurigo = node.id === PRURIGO_PIGMENTOSO_TARGET_ID;
   const showPorokeratosisVariants = node.id === POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID;
   const possibilities = translateList(node.result?.possibilities, language);
 
@@ -87,6 +89,13 @@ export function ResultCard({
             />
           </div>
         </div>
+
+        {showPrurigo ? (
+          <div className="rounded-[16px] border border-amber-200 bg-amber-50 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 mb-1">{tx("Pista clínico-patológica")}</p>
+            <p className="text-sm leading-6 text-amber-900">{tx("Lesões pruriginosas papulovesiculosas/urticariformes em padrão reticulado, evoluindo com hiperpigmentação reticulada.")}</p>
+          </div>
+        ) : null}
 
         {possibilities.length ? (
           <div className="space-y-4 rounded-[22px] border border-[#e4d2fb] bg-white/82 p-5 shadow-[0_20px_38px_-34px_rgba(97,72,153,0.22)]">
