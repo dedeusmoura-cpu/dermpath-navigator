@@ -214,7 +214,7 @@ export function FocusedTreeMapPage() {
       openedFinalNodeIds={openedFinalNodeIds}
       extraControls={fullscreenButton}
       onSelectNode={(item, level) => {
-        if (item.kind === "result") {
+        if (item.kind === "result" || item.kind === "terminal-bridge") {
           persistFinalResultReturnContext(mapStateKey);
           navigate(`/diagnostico?nodeId=${item.nodeId}`, {
             state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
@@ -226,15 +226,9 @@ export function FocusedTreeMapPage() {
 
         setSelectedPath((prev) => {
           const isAlreadyActive = prev[level] === item.mapId;
-          const terminalResultMapId =
-            item.kind === "terminal-bridge"
-              ? buildSelectedMapPath(item.nodeId)[buildSelectedMapPath(item.nodeId).length - 1]
-              : null;
           const nextPath = isAlreadyActive
             ? prev.slice(0, level)
-            : item.kind === "terminal-bridge"
-              ? [...prev.slice(0, level), item.mapId, terminalResultMapId!]
-              : [...prev.slice(0, level), item.mapId];
+            : [...prev.slice(0, level), item.mapId];
 
           const nextNodeId = getConcreteNodeIdFromMapPath(nextPath);
           const nextTrail = serializeMapTrail(nextPath);
@@ -254,11 +248,6 @@ export function FocusedTreeMapPage() {
 
           return nextPath;
         });
-
-        if (item.kind === "terminal-bridge") {
-          setOpenedFinalNodeIds((prev) => (prev.includes(item.nodeId) ? prev : [...prev, item.nodeId]));
-          return;
-        }
 
         setOpenedFinalNodeIds([]);
       }}

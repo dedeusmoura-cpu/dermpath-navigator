@@ -690,7 +690,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                       const termEntry = terminalByBridgeId.get(entry.id);
                       const isOpen = expanded.has(entry.id);
                       return (
-                        // Bridge card + its diagnosis card in a horizontal pair
+                        // Bridge card navigates directly to the diagnosis — no duplicate terminal card
                         <div
                           key={entry.id}
                           style={{
@@ -706,27 +706,19 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
                             isActive={isOpen}
                             isFocused={isOpen && lastExpandedId === entry.id}
                             isClickable={true}
-
-                            onClick={() => toggle(entry.id)}
-                            tileConfig={tileConfig}
-                            showTile={colIndex === 0}
-                          />
-                          {termEntry && isOpen && (
-                            <TreeCard
-                              refCb={(el) => { nodeRefs.current[termEntry.id] = el; }}
-                              label={getDisplayLabel(termEntry)}
-                              isActive={false}
-                              isFocused={false}
-                              isClickable={true}
-                              variant="terminal"
-
-                              onClick={() => {
+                            variant="terminal"
+                            onClick={() => {
+                              if (termEntry) {
                                 navigate(`/diagnostico?nodeId=${termEntry.concreteId}`, {
                                   state: { trail: buildPathToNode(termEntry.concreteId).map((n) => n.id) },
                                 });
-                              }}
-                            />
-                          )}
+                              } else {
+                                toggle(entry.id);
+                              }
+                            }}
+                            tileConfig={tileConfig}
+                            showTile={colIndex === 0}
+                          />
                         </div>
                       );
                     }

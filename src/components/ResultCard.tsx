@@ -32,6 +32,7 @@ const POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID = "dx-poroqueratose-actinica-superf
 const NECROBIOSIS_LIPOIDICA_HISTOPATHOLOGY_TARGET_IDS = ["dx-necrobiose-lipoidica", "dx-necrobiose-lipidica-fibrosante"] as const;
 const LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID = "sarcoidico-interface";
 const PRURIGO_PIGMENTOSO_TARGET_ID = "dx-prurigo-pigmentoso";
+const ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID = "dx-esp-eritema-anular";
 
 export function ResultCard({
   node,
@@ -66,6 +67,7 @@ export function ResultCard({
   );
   const showLiquenNitidoHistopathologyButton = node.id === LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID;
   const showPrurigo = node.id === PRURIGO_PIGMENTOSO_TARGET_ID;
+  const showEritemaAnularCentrifugo = node.id === ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID;
   const showPorokeratosisVariants = node.id === POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID;
   const possibilities = translateList(node.result?.possibilities, language);
 
@@ -94,6 +96,13 @@ export function ResultCard({
           <div className="rounded-[16px] border border-amber-200 bg-amber-50 px-4 py-3">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 mb-1">{tx("Pista clínico-patológica")}</p>
             <p className="text-sm leading-6 text-amber-900">{tx("Lesões pruriginosas papulovesiculosas/urticariformes em padrão reticulado, evoluindo com hiperpigmentação reticulada.")}</p>
+          </div>
+        ) : null}
+
+        {showEritemaAnularCentrifugo ? (
+          <div className="rounded-[16px] border border-amber-200 bg-amber-50 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 mb-1">{tx("Dica")}</p>
+            <p className="text-sm leading-6 text-amber-900">{tx("Diante de uma lesão anular, especialmente se as hipóteses clínicas forem granuloma anular, hanseníase tuberculoide, tínea corporal ou lúpus cutâneo subagudo, lembre-se de considerar eritema anular centrífugo (EAC) no diagnóstico diferencial.")}</p>
           </div>
         ) : null}
 

@@ -1050,6 +1050,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Linfócitos predominam", nextNodeId: "interface-liquenoide-linfocitos" },
     { label: "Histiócitos predominam", nextNodeId: "interface-liquenoide-hisítiocitos" },
     { label: "Clulas de Langerhans predominam", nextNodeId: "interface-liquenoide-langerhans" },
+    { label: "Padrão liquenoide e Psoriasiforme", nextNodeId: "interface-liquenoide-psoriasiforme" },
   ]}),
   node({ id: "interface-liquenoide-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "interface-liquenoide", description: "Use os achados epidérmicos e dérmicos associados para fechamento do algoritmo.", options: [
     { label: "Hiperplasia irregular serrilhada, hipergranulose em V, ortoceratose", nextNodeId: "dx-liquen-plano" },
@@ -1087,6 +1088,14 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Clulas grandes, contornos nucleares granulados, citoplasma anfoflico abundante", nextNodeId: "dx-letterer-siwe" },
   ]}),
   terminal("dx-letterer-siwe", "Hisítiocitose de células de Langerhans", "diagnosis", "interface-liquenoide-langerhans", "Predomínio de células de Langerhans grandes, com contornos nucleares granulados e citoplasma anfoflico abundante.", blocks("Mantida como entidade terminal específica deste braço do algoritmo."), ["letterer-siwe", "doença de letterer-siwe"]),
+  node({ id: "interface-liquenoide-psoriasiforme", title: "Padrão liquenoide e Psoriasiforme", type: "decision", parentId: "interface-liquenoide", description: "Use os achados associados para identificar o diagnóstico neste padrão misto liquenoide-psoriasiforme.", options: [
+    { label: "Infiltrado periécrino profundo", nextNodeId: "dx-liquen-estriado-psoriasiforme" },
+    { label: "Numerosos plasmócitos", nextNodeId: "dx-sifilis-secundaria" },
+    { label: "Epidermotropismo, feixes fibrilares de colágeno desordenado em derme papilar", nextNodeId: "dx-micose-fungoide-psoriasiforme" },
+  ]}),
+  terminal("dx-liquen-estriado-psoriasiforme", "Líquen estriado", "diagnosis", "interface-liquenoide-psoriasiforme", "Padrão liquenoide e psoriasiforme com infiltrado linfocitário periécrino profundo.", blocks("O infiltrado ao longo de glândulas écrinas na derme profunda é o achado chave neste padrão misto."), ["líquen estriado", "liquen estriado"], ["liquen estriado"]),
+  terminal("dx-sifilis-secundaria", "Sífilis secundária", "diagnosis", "interface-liquenoide-psoriasiforme", "Padrão liquenoide e psoriasiforme com numerosos plasmócitos no infiltrado dérmico.", blocks("A presença de plasmócitos em quantidade é um achado orientador importante para sífilis secundária neste padrão."), ["sífilis secundária", "sifilis secundaria"], ["sifilis secundaria"]),
+  terminal("dx-micose-fungoide-psoriasiforme", "Micose fungoide", "diagnosis", "interface-liquenoide-psoriasiforme", "Padrão liquenoide e psoriasiforme com epidermotropismo linfocitário e feixes fibrilares de colágeno desordenado em derme papilar.", blocks("O colágeno fibrilar desordenado na derme papilar associado ao epidermotropismo é característica da micose fungoide neste padrão."), ["micose fungoide", "psoriasiforme"], ["micose fungoide"]),
   node({ id: "perivascular-balonizante", title: "Balonizante", type: "decision", parentId: "perivascular", description: "Classifique conforme o padrão de necrose epidérmica e o infiltrado associado.", options: [
     { label: "Psoriasiformes", nextNodeId: "balonizante-psoriasiformes" },
     { label: "Interface", nextNodeId: "balonizante-interface" },
@@ -1139,85 +1148,131 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-dermatite-contato-irritativa", "Dermatite de contato por irritante", "diagnosis", "balonizante-outros", "Alguns neutrófilos na epiderme e infiltrado linfocitário perivascular escasso.", blocks("Correlacionar com história de exposição a irritantes."), ["dermatite de contato por irritante", "dermatite irritativa", "dermatite de contato irritativa"], ["dermatite contato irritativa"]),
   terminal("dx-queimadura-fototoxica", "Queimadura / dermatite fototóxica", "diagnosis", "balonizante-outros", "Queratinócitos necróticos individuais e infiltrado linfocitário perivascular escasso.", blocks("Inclui queimadura solar e dermatite fototóxica."), ["queimadura", "dermatite fototóxica", "queimadura solar"], ["queimadura", "dermatite fototoxica"]),
   terminal("dx-prurigo-pigmentoso", "Prurigo pigmentoso", "diagnosis", "balonizante-outros", "Neutrófilos em epiderme superficial, ceratinócitos necróticos, linfócitos, neutrófilos e eosinófilos na derme.", blocks("Pista clínico-patológica: lesões pruriginosas papulovesiculosas/urticariformes em padrão reticulado, evoluindo com hiperpigmentação reticulada."), ["prurigo pigmentoso"]),
-  node({ id: "perivascular-espongiotica", title: "espongiótica", type: "decision", parentId: "perivascular", description: "Subdivida o padrão espongiótico em apenas, psoriasiforme, liquenoide ou psoriasiforme-liquenoide.", options: [
-    { label: "espongiótica apenas", nextNodeId: "espongiotica-apenas" },
-    { label: "espongiótica psoriasiforme", nextNodeId: "espongiotica-psoriasiforme" },
-    { label: "espongiótica liquenoide", nextNodeId: "espongiotica-liquenoide" },
-    { label: "espongiótica psoriasiforme-liquenoide", nextNodeId: "espongiotica-psoriasiforme-liquenoide" },
-  ], tags: ["espongiótica", "espongiótica"] }),
-  node({ id: "espongiotica-apenas", title: "espongiótica apenas", type: "decision", parentId: "perivascular-espongiotica", description: "Subdivida conforme o predomínio de Linfócitos ou eosinófilos.", options: [
+  node({ id: "perivascular-espongiotica", title: "Espongiótica", type: "decision", parentId: "perivascular", description: "Subdivida o padrão espongiótico.", options: [
+    { label: "Espongiótica apenas", nextNodeId: "espongiotica-apenas" },
+    { label: "Espongiótica e psoriasiforme", nextNodeId: "espongiotica-psoriasiforme" },
+    { label: "Espongiótica psoriasiforme e liquenoide", nextNodeId: "espongiotica-psoriasiforme-liquenoide" },
+  ], tags: ["espongiótica"] }),
+
+  // 1. Espongiótica apenas
+  node({ id: "espongiotica-apenas", title: "Espongiótica apenas", type: "decision", parentId: "perivascular-espongiotica", description: "Subdivida conforme o predomínio de linfócitos ou eosinófilos.", options: [
     { label: "Linfócitos predominam", nextNodeId: "espongiotica-apenas-linfocitos" },
     { label: "Eosinófilos proeminentes", nextNodeId: "espongiotica-apenas-eosinofilos" },
   ]}),
+
+  // 1.1. Linfócitos predominam
   node({ id: "espongiotica-apenas-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "espongiotica-apenas", description: "Use os achados adicionais para o fechamento do algoritmo espongiótico.", options: [
-    { label: "Sem outros achados", nextNodeId: "group-esp-apenas-eczemas" },
+    { label: "Sem outros achados", nextNodeId: "esp-linf-sem-outros" },
+    { label: "Casquetes de paraceratose", nextNodeId: "esp-linf-casquetes" },
+    { label: "Casquetes de paraceratose em óstios infundibulares", nextNodeId: "dx-esp-dermatite-seborreica" },
+    { label: "Espongiose centrada em acrossiríngio", nextNodeId: "dx-miliaria-rubra" },
+    { label: "Pouca espongiose e pouca paraceratose", nextNodeId: "dx-pitiriase-alba" },
     { label: "Hifas na camada córnea", nextNodeId: "dx-esp-dermatofitose" },
-    { label: "Espongiose centrada em acrosirngio", nextNodeId: "dx-miliaria-rubra" },
-    { label: "Casquetes de paraceratose", nextNodeId: "group-esp-apenas-pr-eac" },
-    { label: "Casquetes de paraceratose em torno dos sítios foliculares", nextNodeId: "dx-esp-dermatite-seborreica" },
-    { label: "Queratinócitos necróticos individuais, focos de paraceratose", nextNodeId: "dx-esp-liquen-estriado" },
-    { label: "Pouca espongiose, pouca paraceratose", nextNodeId: "dx-pitiriase-alba" },
-    { label: "Poucos Linfócitos na epiderme, pouca espongiose, casquetes alongados de escamo-crosta", nextNodeId: "dx-esp-micose-fungoide-macula-placa" },
   ]}),
-  diagnosisGroup("group-esp-apenas-eczemas", "Dermatite espongiótica, sem outros achados", "espongiotica-apenas-linfocitos", "Os achados histopatológicos são compatíveis com um Eczema. A depender de correlação clínica, as principais possibilidades Diagnósticas são listadas abaixo.", ["Dermatite de contato alérgica", "Dermatite numular", "Dermatite disidrtica", "Reação Id", "Dermatite fotoalérgica, precoce"], blocks("A correlação clínica e topogrfica ajuda a separar as dermatoses eczematosas deste braço."), ["dermatite de contato alérgica", "dermatite numular", "dermatite disidrótica", "reação id", "dermatite fotoalérgica"], ["reacao id", "dermatite fotoalergica"]),
-  terminal("dx-esp-dermatofitose", "Dermatofitose", "diagnosis", "espongiotica-apenas-linfocitos", "padrão espongiótico com Linfócitos predominantes e hifas na camada córnea, compatível com dermatofitose.", blocks("Mantido como desfecho específico do braço espongiótico."), ["dermatofitose", "tínea"], ["tinea"]),
-  terminal("dx-miliaria-rubra", "Miliária rubra", "diagnosis", "espongiotica-apenas-linfocitos", "Espongiose centrada em acrosirngio, compatível com miliária rubra.", blocks("Mantido como diagnóstico final específico deste ramo."), ["miliária rubra", "miliaria rubra"]),
-  terminal("dx-doenca-gianotti", "Doença de Gianotti", "diagnosis", "espongiotica-apenas-linfocitos", "Simulaão espongiótica de coleões de Pautrier, compatível com doença de Gianotti.", blocks("Mantido como desfecho específico do algoritmo fornecido."), ["doença de gianotti", "gianotti"]),
-  diagnosisGroup("group-esp-apenas-pr-eac", "Dermatite espongiótica com casquetes de paraceratose.", "espongiotica-apenas-linfocitos", "Neste contexto morfológico, devem ser consideradas as possibilidades de pitiríase rósea e eritema anular centrífugo. Essas entidades constituem look-alikes histopatológicos e devem ser distinguidas pela correlação clínica.", ["Pitiríase rósea||lesões ovaladas, eritmato-descamativas, com colarete descamativo periférico.", "Eritema anular centrífugo||lesões clinicamente anulares."], blocks("A integração com clínica e distribuição das lesões ajuda a diferenciar as possibilidades."), ["pitiríase rósea", "eritema anular centrífugo"], ["pitiriase rosea", "eritema anular centrifugo"]),
-  terminal("dx-esp-dermatite-seborreica", "Dermatite seborreica", "diagnosis", "espongiotica-apenas-linfocitos", "Casquetes de escamo-crosta nas pontas dos sítios foliculares ou infundibulares, compatíveis com dermatite seborreica.", blocks("Mantido como diagnóstico final específico do ramo espongiótico."), ["dermatite seborreica"]),
-  terminal("dx-esp-liquen-estriado", "Líquen estriado", "diagnosis", "espongiotica-apenas-linfocitos", "Queratinócitos necróticos individuais com focos de paraceratose em padrão espongiótico, compatíveis com líquen estriado.", blocks("Mantido separado para preservar o breadcrumb do braço espongiótico."), ["líquen estriado", "liquen estriado"]),
-  terminal("dx-pitiriase-alba", "Pitiríase alba", "diagnosis", "espongiotica-apenas-linfocitos", "Pouca espongiose e pouca paraceratose em padrão compatível com pitiríase alba.", blocks("Mantido como desfecho específico do algoritmo."), ["pitiríase alba", "pitiriase alba"]),
-  terminal("dx-esp-micose-fungoide-macula-placa", "Micose fungoide, mácula/placa", "diagnosis", "espongiotica-apenas-linfocitos", "Poucos Linfócitos na epiderme, pouca espongiose e casquetes alongados de escamo-crosta em padrão compatível com micose fungoide, mácula/placa.", blocks("Mantido separado da forma liquenoide para preservar o caminho específico da rvore."), ["micose fungoide", "mácula", "placa"], ["macula"]),
-  node({ id: "espongiotica-apenas-eosinofilos", title: "Eosinófilos proeminentes", type: "decision", parentId: "espongiotica-apenas", description: "Use a distribuição dos eosinófilos e o grau de espongiose para o fechamento do algoritmo.", options: [
+
+  // 1.1.1. Sem outros achados (linfócitos)
+  node({ id: "esp-linf-sem-outros", title: "Sem outros achados", type: "decision", parentId: "espongiotica-apenas-linfocitos", description: "Selecione o diagnóstico conforme clínica e topografia.", options: [
+    { label: "Dermatite de contato", nextNodeId: "dx-esp-linf-dermatite-contato" },
+    { label: "Dermatite numular", nextNodeId: "dx-esp-linf-dermatite-numular" },
+    { label: "Dermatite fotoalérgica", nextNodeId: "dx-esp-linf-dermatite-fotoalergica" },
+    { label: "Pele acral", nextNodeId: "esp-linf-acral" },
+  ]}),
+  terminal("dx-esp-linf-dermatite-contato", "Dermatite de contato", "diagnosis", "esp-linf-sem-outros", "Padrão espongiótico linfocítico sem outros achados, compatível com dermatite de contato.", blocks("Correlação clínico-topográfica essencial."), ["dermatite de contato"], []),
+  terminal("dx-esp-linf-dermatite-numular", "Dermatite numular", "diagnosis", "esp-linf-sem-outros", "Padrão espongiótico linfocítico sem outros achados, compatível com dermatite numular.", blocks("Correlação clínico-topográfica essencial."), ["dermatite numular"], []),
+  terminal("dx-esp-linf-dermatite-fotoalergica", "Dermatite fotoalérgica", "diagnosis", "esp-linf-sem-outros", "Padrão espongiótico linfocítico sem outros achados, compatível com dermatite fotoalérgica.", blocks("Correlação clínico-topográfica essencial."), ["dermatite fotoalérgica"], ["dermatite fotoalergica"]),
+  node({ id: "esp-linf-acral", title: "Pele acral", type: "decision", parentId: "esp-linf-sem-outros", description: "Padrão espongiótico linfocítico em pele acral.", options: [
+    { label: "Reação id", nextNodeId: "dx-esp-linf-reacao-id" },
+    { label: "Dermatite disidrótica", nextNodeId: "dx-esp-linf-disidrotica" },
+  ]}),
+  terminal("dx-esp-linf-reacao-id", "Reação id", "diagnosis", "esp-linf-acral", "Padrão espongiótico linfocítico em pele acral, compatível com reação id.", blocks(""), ["reação id"], ["reacao id"]),
+  terminal("dx-esp-linf-disidrotica", "Dermatite disidrótica", "diagnosis", "esp-linf-acral", "Padrão espongiótico linfocítico em pele acral, compatível com dermatite disidrótica.", blocks(""), ["dermatite disidrótica"], ["dermatite disidrotica"]),
+
+  // 1.1.2. Casquetes de paraceratose (linfócitos)
+  node({ id: "esp-linf-casquetes", title: "Casquetes de paraceratose", type: "decision", parentId: "espongiotica-apenas-linfocitos", description: "Avalie a presença de neutrófilos degenerados.", options: [
+    { label: "Sem neutrófilos degenerados", nextNodeId: "esp-linf-casquetes-sem-neutro" },
+    { label: "Com neutrófilos degenerados", nextNodeId: "esp-linf-casquetes-com-neutro" },
+  ]}),
+  node({ id: "esp-linf-casquetes-sem-neutro", title: "Sem neutrófilos degenerados", type: "decision", parentId: "esp-linf-casquetes", description: "Pitiríase rósea e eritema anular centrífugo são look-alikes histopatológicos — diferenciar pela correlação clínica.", options: [
+    { label: "Pitiríase rósea", nextNodeId: "dx-esp-pitiriase-rosea" },
+    { label: "Eritema anular centrífugo", nextNodeId: "dx-esp-eritema-anular" },
+  ]}),
+  terminal("dx-esp-pitiriase-rosea", "Pitiríase rósea", "diagnosis", "esp-linf-casquetes-sem-neutro", "Casquetes de paraceratose sem neutrófilos degenerados, compatíveis com pitiríase rósea.", blocks("Lesões ovaladas com colarete descamativo periférico."), ["pitiríase rósea"], ["pitiriase rosea"]),
+  terminal("dx-esp-eritema-anular", "Eritema anular centrífugo", "diagnosis", "esp-linf-casquetes-sem-neutro", "Casquetes de paraceratose sem neutrófilos degenerados, compatíveis com eritema anular centrífugo.", blocks("Lesões clinicamente anulares."), ["eritema anular centrífugo"], ["eritema anular centrifugo"]),
+  node({ id: "esp-linf-casquetes-com-neutro", title: "Com neutrófilos degenerados", type: "decision", parentId: "esp-linf-casquetes", description: "Pesquise hifas ao PAS.", options: [
+    { label: "Psoríase eruptiva/gutata", nextNodeId: "dx-esp-psoriase-eruptiva" },
+    { label: "Dermatofitose (PAS)", nextNodeId: "dx-esp-dermatofitose-pas" },
+  ]}),
+  terminal("dx-esp-psoriase-eruptiva", "Psoríase eruptiva/gutata", "diagnosis", "esp-linf-casquetes-com-neutro", "Casquetes de paraceratose com neutrófilos degenerados, compatíveis com psoríase eruptiva/gutata.", blocks(""), ["psoríase eruptiva", "psoríase gutata"], ["psoriase eruptiva", "psoriase gutata"]),
+  terminal("dx-esp-dermatofitose-pas", "Dermatofitose (PAS)", "diagnosis", "esp-linf-casquetes-com-neutro", "Casquetes de paraceratose com neutrófilos degenerados e hifas ao PAS, compatíveis com dermatofitose.", blocks("PAS deve ser realizado para pesquisa de hifas."), ["dermatofitose", "PAS"], ["tinea"]),
+
+  // 1.1.3–1.1.6
+  terminal("dx-esp-dermatite-seborreica", "Dermatite seborreica", "diagnosis", "espongiotica-apenas-linfocitos", "Casquetes de paraceratose em óstios infundibulares, compatíveis com dermatite seborreica.", blocks(""), ["dermatite seborreica"]),
+  terminal("dx-miliaria-rubra", "Miliária rubra", "diagnosis", "espongiotica-apenas-linfocitos", "Espongiose centrada em acrossiríngio, compatível com miliária rubra.", blocks(""), ["miliária rubra", "miliaria rubra"]),
+  terminal("dx-pitiriase-alba", "Pitiríase alba", "diagnosis", "espongiotica-apenas-linfocitos", "Pouca espongiose e pouca paraceratose, compatível com pitiríase alba.", blocks(""), ["pitiríase alba", "pitiriase alba"]),
+  terminal("dx-esp-dermatofitose", "Dermatofitose", "diagnosis", "espongiotica-apenas-linfocitos", "Hifas na camada córnea em padrão espongiótico linfocítico, compatível com dermatofitose.", blocks(""), ["dermatofitose", "tínea"], ["tinea"]),
+
+  // 1.2. Eosinófilos proeminentes
+  node({ id: "espongiotica-apenas-eosinofilos", title: "Eosinófilos proeminentes", type: "decision", parentId: "espongiotica-apenas", description: "Use a distribuição dos eosinófilos e o grau de espongiose para o fechamento.", options: [
+    { label: "Sem outros achados", nextNodeId: "esp-eos-sem-outros" },
     { label: "Números variáveis de eosinófilos na metade superior da derme, leve espongiose", nextNodeId: "dx-puppp" },
-    { label: "Eosinófilos na derme e às vezes na epiderme", nextNodeId: "group-esp-eos-eczemas" },
-    { label: "Eosinófilos como unidades solitárias difusamente na epiderme", nextNodeId: "group-esp-eos-bolhosas-urticariformes" },
-    { label: "Eosinófilos em coleões em focos de espongiose proeminente", nextNodeId: "group-esp-eos-incontinentia-eritema-toxico" },
-    { label: "Eosinófilos em focos de espongiose proeminente acima do ápice de infiltrado dérmico em cunha", nextNodeId: "dx-insulto-artropode-superficial" },
+    { label: "Eosinófilos em coleções em focos de espongiose proeminente", nextNodeId: "group-esp-eos-incontinentia-eritema-toxico" },
+    { label: "Infiltrado dérmico em cunha", nextNodeId: "dx-insulto-artropode-superficial" },
   ]}),
-  terminal("dx-puppp", "pápulas e placas urticariformes pruriginosas da gestaão", "diagnosis", "espongiotica-apenas-eosinofilos", "Números variáveis de eosinófilos na metade superior da derme com leve espongiose, compatíveis com pápulas e placas urticariformes pruriginosas da gestaão.", blocks("Também indexado pela sigla PUPPP."), ["pápulas e placas urticariformes pruriginosas da gestação", "puppp"], ["papulas e placas urticariformes pruriginosas da gestacao"]),
-  diagnosisGroup("group-esp-eos-eczemas", "Eosinófilos na derme e às vezes na epiderme", "espongiotica-apenas-eosinofilos", "Este ponto do algoritmo mantém quatro possibilidades eczematosas principais.", ["Dermatite de contato alérgica", "Dermatite numular", "Dermatite disidrótica", "Reação Id"], blocks("A correlação clínico-topográfica continua essencial."), ["dermatite de contato alérgica", "dermatite numular", "dermatite disidrótica", "reação id"], ["reacao id"]),
-  diagnosisGroup("group-esp-eos-bolhosas-urticariformes", "Eosinófilos como unidades solitárias difusamente na epiderme", "espongiotica-apenas-eosinofilos", "Este ponto do algoritmo abre trs possibilidades principais.", ["Penfigoide bolhoso", "Herpes gestationis", "Pênfigo vulgar, urticariforme"], blocks("A clínica e a imunopatologia ajudam a separar essas possibilidades."), ["penfigoide bolhoso", "herpes gestationis", "herpes gestacional", "pênfigo vulgar urticariforme"], ["penfigoide bolhoso urticariforme"]),
-  diagnosisGroup("group-esp-eos-incontinentia-eritema-toxico", "Eosinófilos em coleões em focos de espongiose proeminente", "espongiotica-apenas-eosinofilos", "Neste ponto do algoritmo permanecem duas possibilidades principais.", ["Incontinentia pigmenti", "Eritema tóxico do recém-nascido"], blocks("A idade e o contexto clínico ajudam a definir o desfecho final."), ["incontinentia pigmenti", "eritema tóxico do recém-nascido"], ["eritema toxico do recem-nascido"]),
-  terminal("dx-insulto-artropode-superficial", "Insulto por artrópode, superficial", "diagnosis", "espongiotica-apenas-eosinofilos", "Eosinófilos em focos de espongiose proeminente acima do ápice de infiltrado dérmico em cunha, compatíveis com insulto por artrópode superficial.", blocks("Mantido como desfecho específico do braço espongiótico eosinofílico."), ["insulto por artrópode", "superficial"], ["artropode"]),
-  node({ id: "espongiotica-psoriasiforme", title: "espongiótica psoriasiforme", type: "decision", parentId: "perivascular-espongiotica", description: "Use os achados epidérmicos e peri-crinos para o fechamento do algoritmo.", options: [
-    { label: "Espongiose proeminente, escamo-crosta", nextNodeId: "group-esp-psor-eczemas" },
+
+  // 1.2.1. Sem outros achados (eosinófilos)
+  node({ id: "esp-eos-sem-outros", title: "Sem outros achados", type: "decision", parentId: "espongiotica-apenas-eosinofilos", description: "Selecione o diagnóstico conforme clínica e topografia.", options: [
+    { label: "Dermatite de contato", nextNodeId: "dx-esp-eos-dermatite-contato" },
+    { label: "Dermatite numular", nextNodeId: "dx-esp-eos-dermatite-numular" },
+    { label: "Pele acral", nextNodeId: "esp-eos-acral" },
+  ]}),
+  terminal("dx-esp-eos-dermatite-contato", "Dermatite de contato", "diagnosis", "esp-eos-sem-outros", "Padrão espongiótico eosinofílico sem outros achados, compatível com dermatite de contato.", blocks(""), ["dermatite de contato"], []),
+  terminal("dx-esp-eos-dermatite-numular", "Dermatite numular", "diagnosis", "esp-eos-sem-outros", "Padrão espongiótico eosinofílico sem outros achados, compatível com dermatite numular.", blocks(""), ["dermatite numular"], []),
+  node({ id: "esp-eos-acral", title: "Pele acral", type: "decision", parentId: "esp-eos-sem-outros", description: "Padrão espongiótico eosinofílico em pele acral.", options: [
+    { label: "Reação id", nextNodeId: "dx-esp-eos-reacao-id" },
+    { label: "Dermatite disidrótica", nextNodeId: "dx-esp-eos-disidrotica" },
+  ]}),
+  terminal("dx-esp-eos-reacao-id", "Reação id", "diagnosis", "esp-eos-acral", "Padrão espongiótico eosinofílico em pele acral, compatível com reação id.", blocks(""), ["reação id"], ["reacao id"]),
+  terminal("dx-esp-eos-disidrotica", "Dermatite disidrótica", "diagnosis", "esp-eos-acral", "Padrão espongiótico eosinofílico em pele acral, compatível com dermatite disidrótica.", blocks(""), ["dermatite disidrótica"], ["dermatite disidrotica"]),
+
+  // 1.2.2–1.2.4
+  terminal("dx-puppp", "Pápulas e placas urticariformes pruriginosas da gestação", "diagnosis", "espongiotica-apenas-eosinofilos", "Números variáveis de eosinófilos na metade superior da derme com leve espongiose, compatíveis com PUPPP.", blocks("Também indexado pela sigla PUPPP."), ["pápulas e placas urticariformes pruriginosas da gestação", "puppp"], ["papulas e placas urticariformes pruriginosas da gestacao"]),
+  diagnosisGroup("group-esp-eos-incontinentia-eritema-toxico", "Incontinentia pigmenti / Eritema tóxico do recém-nascido", "espongiotica-apenas-eosinofilos", "Eosinófilos em coleções em focos de espongiose proeminente. Duas possibilidades principais.", ["Incontinentia pigmenti", "Eritema tóxico do recém-nascido"], blocks("A idade e o contexto clínico ajudam a definir o desfecho."), ["incontinentia pigmenti", "eritema tóxico do recém-nascido"], ["eritema toxico do recem-nascido"]),
+  terminal("dx-insulto-artropode-superficial", "Insulto por artrópode", "diagnosis", "espongiotica-apenas-eosinofilos", "Infiltrado dérmico em cunha, compatível com insulto por artrópode.", blocks(""), ["insulto por artrópode", "superficial"], ["artropode"]),
+
+  // 2. Espongiótica e psoriasiforme
+  node({ id: "espongiotica-psoriasiforme", title: "Espongiótica e psoriasiforme", type: "decision", parentId: "perivascular-espongiotica", description: "Use os achados epidérmicos e peri-crinos para o fechamento.", options: [
+    { label: "Sem outros achados", nextNodeId: "esp-psor-sem-outros" },
     { label: "Escamo-crostas nas pontas dos sítios foliculares", nextNodeId: "dx-esp-psor-dermatite-seborreica" },
-    { label: "Escamo-crostas fora das pontas dos sítios foliculares", nextNodeId: "dx-eritrodermia-ictiosiforme-congenita-nao-bolhosa" },
-    { label: "Infiltrado peri-crino de Linfócitos, queratinócitos Necróticos", nextNodeId: "dx-esp-psor-liquen-estriado" },
+    { label: "Infiltrado peri-crino de linfócitos, queratinócitos necróticos", nextNodeId: "dx-esp-psor-liquen-estriado" },
   ]}),
-  node({ id: "espongiotica-psoriasiforme-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "legacy-hidden-root", description: "Use os achados epidérmicos e peri-crinos para o fechamento do algoritmo.", options: [
-    { label: "Espongiose proeminente, escamo-crosta", nextNodeId: "group-esp-psor-eczemas" },
-    { label: "Escamo-crostas nas pontas dos sítios foliculares", nextNodeId: "dx-esp-psor-dermatite-seborreica" },
-    { label: "Escamo-crostas fora das pontas dos sítios foliculares", nextNodeId: "dx-eritrodermia-ictiosiforme-congenita-nao-bolhosa" },
-    { label: "Infiltrado peri-crino de Linfócitos, queratinócitos Necróticos", nextNodeId: "dx-esp-psor-liquen-estriado" },
+
+  // 2.1. Sem outros achados (psoriasiforme)
+  node({ id: "esp-psor-sem-outros", title: "Sem outros achados", type: "decision", parentId: "espongiotica-psoriasiforme", description: "Selecione o diagnóstico conforme clínica e topografia.", options: [
+    { label: "Dermatite de contato", nextNodeId: "dx-esp-psor-dermatite-contato" },
+    { label: "Dermatite numular", nextNodeId: "dx-esp-psor-dermatite-numular" },
+    { label: "Dermatite atópica", nextNodeId: "dx-esp-psor-dermatite-atopica" },
+    { label: "Pele acral", nextNodeId: "esp-psor-acral" },
   ]}),
-  diagnosisGroup("group-esp-psor-eczemas", "Espongiose proeminente, escamo-crosta", "espongiotica-psoriasiforme", "Neste ponto do algoritmo permanecem quatro possibilidades eczematosas principais.", ["Dermatite de contato alérgica", "Dermatite numular", "Dermatite disidrtica", "Reação Id"], blocks("A diferenciação depende da correlação clínico-topogrfica."), ["dermatite de contato alérgica", "dermatite numular", "dermatite disidrótica", "reação id"], ["reacao id"]),
-  terminal("dx-esp-psor-dermatite-seborreica", "Dermatite seborreica", "diagnosis", "espongiotica-psoriasiforme", "Escamo-crostas nas pontas dos sítios foliculares em padrão espongiótico psoriasiforme, compatíveis com dermatite seborreica.", blocks("Mantido como desfecho específico deste braço do algoritmo."), ["dermatite seborreica"]),
-  terminal("dx-eritrodermia-ictiosiforme-congenita-nao-bolhosa", "Eritrodermia ictiosiforme congênita não bolhosa", "diagnosis", "espongiotica-psoriasiforme", "Escamo-crostas fora das pontas dos sítios foliculares em padrão espongiótico psoriasiforme, compatíveis com eritrodermia ictiosiforme congênita não bolhosa.", blocks("Mantido como entidade terminal específica do algoritmo."), ["eritrodermia ictiosiforme congênita não bolhosa"], ["eritrodermia ictiosiforme congenita nao bolhosa"]),
-  terminal("dx-esp-psor-liquen-estriado", "Líquen estriado", "diagnosis", "espongiotica-psoriasiforme", "Infiltrado peri-crino de Linfócitos com queratinócitos Necróticos em padrão espongiótico psoriasiforme, compatível com líquen estriado, em lesões clinicamente lineares.", blocks("Mantido separado para preservar o caminho específico deste ramo."), ["líquen estriado", "liquen estriado"]),
-  node({ id: "espongiotica-liquenoide", title: "espongiótica liquenoide", type: "decision", parentId: "perivascular-espongiotica", description: "Use o padrão peri-crino, os eosinófilos e a epidermotropia para o fechamento.", options: [
-    { label: "Infiltrado perianexial de Linfócitos, queratinócitos Necróticos, espongiose com numerosos eosinófilos", nextNodeId: "group-esp-liq-perianexial" },
-    { label: "Linfócitos em unidades individuais alinhados ao longo da camada basal da epiderme e feixes retorcidos de colágeno na derme superficial", nextNodeId: "dx-esp-liq-micose-fungoide-macula-placa" },
+  terminal("dx-esp-psor-dermatite-contato", "Dermatite de contato", "diagnosis", "esp-psor-sem-outros", "Padrão espongiótico psoriasiforme sem outros achados, compatível com dermatite de contato.", blocks(""), ["dermatite de contato"], []),
+  terminal("dx-esp-psor-dermatite-numular", "Dermatite numular", "diagnosis", "esp-psor-sem-outros", "Padrão espongiótico psoriasiforme sem outros achados, compatível com dermatite numular.", blocks(""), ["dermatite numular"], []),
+  terminal("dx-esp-psor-dermatite-atopica", "Dermatite atópica", "diagnosis", "esp-psor-sem-outros", "Padrão espongiótico psoriasiforme sem outros achados, compatível com dermatite atópica.", blocks(""), ["dermatite atópica"], ["dermatite atopica"]),
+  node({ id: "esp-psor-acral", title: "Pele acral", type: "decision", parentId: "esp-psor-sem-outros", description: "Padrão espongiótico psoriasiforme em pele acral.", options: [
+    { label: "Reação id", nextNodeId: "dx-esp-psor-reacao-id" },
+    { label: "Dermatite disidrótica", nextNodeId: "dx-esp-psor-disidrotica" },
   ]}),
-  node({ id: "espongiotica-liquenoide-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "legacy-hidden-root", description: "Use o padrão peri-crino, os eosinófilos e a epidermotropia para o fechamento.", options: [
-    { label: "Infiltrado perianexial de Linfócitos, queratinócitos Necróticos, espongiose com numerosos eosinófilos", nextNodeId: "group-esp-liq-perianexial" },
-    { label: "Linfócitos em unidades individuais alinhados ao longo da camada basal da epiderme e feixes retorcidos de colágeno na derme superficial", nextNodeId: "dx-esp-liq-micose-fungoide-macula-placa" },
-  ]}),
-  diagnosisGroup("group-esp-liq-perianexial", "Infiltrado peri-crino de Linfócitos, queratinócitos Necróticos, espongiose com numerosos eosinófilos", "espongiotica-liquenoide", "Este ponto do algoritmo abre duas possibilidades principais.", ["Líquen estriado (lesões clinicamente lineares)", "Penfigoide bolhoso/Herpes gestacional, fase urticariforme"], blocks("O ramo mantm exatamente o conjunto de diagnósticos possíveis fornecido."), ["líquen estriado", "penfigoide bolhoso", "herpes gestacional", "urticariforme"], ["liquen estriado", "herpes gestationis", "fase urticariforme"]),
-  terminal("dx-esp-liq-micose-fungoide-macula-placa", "Micose fungoide, fase mácula/placa", "diagnosis", "espongiotica-liquenoide", "Linfócitos dispostos em unidades individuais, alinhados ao longo da camada basal da epiderme, com proporcionalmente pouca espongiose e feixes retorcidos de colágeno em arranjos desorganizados na derme superficial.", blocks("Mantido como desfecho específico do braço espongiótico liquenoide."), ["micose fungoide", "mácula", "placa"], ["macula"]),
-  node({ id: "espongiotica-psoriasiforme-liquenoide", title: "espongiótica psoriasiforme-liquenoide", type: "decision", parentId: "perivascular-espongiotica", description: "Use o padrão peri-crino, os eosinófilos e a epidermotropia para o fechamento.", options: [
+  terminal("dx-esp-psor-reacao-id", "Reação id", "diagnosis", "esp-psor-acral", "Padrão espongiótico psoriasiforme em pele acral, compatível com reação id.", blocks(""), ["reação id"], ["reacao id"]),
+  terminal("dx-esp-psor-disidrotica", "Dermatite disidrótica", "diagnosis", "esp-psor-acral", "Padrão espongiótico psoriasiforme em pele acral, compatível com dermatite disidrótica.", blocks(""), ["dermatite disidrótica"], ["dermatite disidrotica"]),
+  terminal("dx-esp-psor-dermatite-seborreica", "Dermatite seborreica", "diagnosis", "espongiotica-psoriasiforme", "Escamo-crostas nas pontas dos sítios foliculares, compatíveis com dermatite seborreica.", blocks(""), ["dermatite seborreica"]),
+  terminal("dx-esp-psor-liquen-estriado", "Líquen estriado", "diagnosis", "espongiotica-psoriasiforme", "Infiltrado peri-crino de linfócitos com queratinócitos necróticos, compatível com líquen estriado.", blocks(""), ["líquen estriado", "liquen estriado"]),
+
+  // 3. Espongiótica psoriasiforme-liquenoide
+  node({ id: "espongiotica-psoriasiforme-liquenoide", title: "Espongiótica psoriasiforme-liquenoide", type: "decision", parentId: "perivascular-espongiotica", description: "Use o padrão peri-crino, os eosinófilos e a epidermotropia para o fechamento.", options: [
     { label: "Queratinócitos necróticos em epiderme e infiltrado periécrino de linfócitos", nextNodeId: "dx-esp-psor-liq-liquen-estriado" },
     { label: "Infiltrado liquenoide rico em plasmócitos", nextNodeId: "group-esp-psor-liq-bolhosas-urticariformes" },
     { label: "Linfócitos em unidades individuais alinhados ao longo da camada basal da epiderme e feixes retorcidos de colágeno em arranjos desorganizados na derme superficial", nextNodeId: "dx-esp-psor-liq-micose-fungoide-macula-placa" },
   ]}),
-  node({ id: "espongiotica-psor-liq-linfocitos", title: "Linfócitos predominam", type: "decision", parentId: "legacy-hidden-root", description: "Use o padrão peri-crino, os eosinófilos e a epidermotropia para o fechamento.", options: [
-    { label: "Queratinócitos necróticos em epiderme e infiltrado periécrino de linfócitos", nextNodeId: "dx-esp-psor-liq-liquen-estriado" },
-    { label: "Infiltrado liquenoide rico em plasmócitos", nextNodeId: "group-esp-psor-liq-bolhosas-urticariformes" },
-    { label: "Linfócitos em unidades individuais alinhados ao longo da camada basal da epiderme e feixes retorcidos de colágeno em arranjos desorganizados na derme superficial", nextNodeId: "dx-esp-psor-liq-micose-fungoide-macula-placa" },
-  ]}),
-  terminal("dx-esp-psor-liq-liquen-estriado", "Líquen estriado", "diagnosis", "espongiotica-psoriasiforme-liquenoide", "Infiltrado peri-crino de Linfócitos com queratinócitos Necróticos em padrão espongiótico psoriasiforme-liquenoide, compatível com líquen estriado.", blocks("Mantido como diagnóstico final específico deste braço."), ["líquen estriado", "liquen estriado"]),
-  terminal("group-esp-psor-liq-bolhosas-urticariformes", "Sífilis secundária", "diagnosis", "espongiotica-psoriasiforme-liquenoide", "Dermatite psoriasiforme com cones epidérmicos afinados e alongados e Infiltrado liquenoide rico em plasmócitos.", blocks("Mantido como desfecho final nico deste braço do algoritmo."), ["sífilis secundária", "sifilis secundaria", "plasmócitos", "psoriasiforme"]),
+  terminal("dx-esp-psor-liq-liquen-estriado", "Líquen estriado", "diagnosis", "espongiotica-psoriasiforme-liquenoide", "Infiltrado peri-crino de linfócitos com queratinócitos necróticos em padrão espongiótico psoriasiforme-liquenoide, compatível com líquen estriado.", blocks("Mantido como diagnóstico final específico deste braço."), ["líquen estriado", "liquen estriado"]),
+  terminal("group-esp-psor-liq-bolhosas-urticariformes", "Sífilis secundária", "diagnosis", "espongiotica-psoriasiforme-liquenoide", "Dermatite psoriasiforme com cones epidérmicos afinados e alongados e infiltrado liquenoide rico em plasmócitos.", blocks("Mantido como desfecho final único deste braço do algoritmo."), ["sífilis secundária", "sifilis secundaria", "plasmócitos", "psoriasiforme"]),
   terminal("dx-esp-psor-liq-micose-fungoide-macula-placa", "Micose fungoide, mácula/placa", "diagnosis", "espongiotica-psoriasiforme-liquenoide", "Linfócitos como unidades solitárias, ao menos na epiderme, pouca espongiose e feixes ondulados de colágeno na derme superior, compatíveis com micose fungoide, mácula/placa.", blocks("Mantido separado para preservar o breadcrumb do braço espongiótico psoriasiforme-liquenoide."), ["micose fungoide", "mácula", "placa"], ["macula"]),
   node({ id: "perivascular-psoriasiforme", title: "Psoriasiforme", type: "decision", parentId: "perivascular", description: "Subdivida o padrão em psoriasiforme apenas ou psoriasiforme liquenoide.", options: [
     { label: "Psoriasiforme apenas", nextNodeId: "psoriasiforme-apenas" },
