@@ -214,10 +214,22 @@ export function FocusedTreeMapPage() {
       openedFinalNodeIds={openedFinalNodeIds}
       extraControls={fullscreenButton}
       onSelectNode={(item, level) => {
-        if (item.kind === "result" || item.kind === "terminal-bridge") {
+        if (item.kind === "result") {
           persistFinalResultReturnContext(mapStateKey);
           navigate(`/diagnostico?nodeId=${item.nodeId}`, {
             state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
+          });
+          return;
+        }
+
+        if (item.kind === "terminal-bridge") {
+          const isAlreadyOpen = openedFinalNodeIds.includes(item.nodeId);
+          setOpenedFinalNodeIds((prev) =>
+            isAlreadyOpen ? prev.filter((id) => id !== item.nodeId) : [...prev, item.nodeId],
+          );
+          setSelectedPath((prev) => {
+            const isAlreadyActive = prev[level] === item.mapId;
+            return isAlreadyActive || isAlreadyOpen ? prev.slice(0, level) : [...prev.slice(0, level), item.mapId];
           });
           return;
         }
