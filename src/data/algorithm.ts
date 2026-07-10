@@ -1405,90 +1405,46 @@ const nodesArray: AlgorithmNode[] = [
   node({ id: "vasculites", title: "Vasculites", type: "decision", parentId: "dermatite", description: "Classifique o calibre vascular predominante neste ramo.", options: [
     { label: "Pequenos vasos", nextNodeId: "vasculites-pequenos-vasos" },
     { label: "Grandes vasos", nextNodeId: "placeholder-vasculites-grandes-vasos" },
-    { label: "classificação DE CHAPEL HILL", nextNodeId: "info-vasculites-chapel-hill" },
   ], tags: ["vasculites", "vascular"] }),
-  node({
-    id: "info-vasculites-chapel-hill",
-    title: "classificação de Chapel Hill",
-    type: "decision",
-    parentId: "vasculites",
-    description: "Navegue pelo esquema classificatório de Chapel Hill para vasculites cutâneas de pequenos vasos.",
-    options: [
-      { label: "1. Vasculite de pequenos vasos limitada pele", nextNodeId: "chapel-hill-limitada-pele" },
-      { label: "2. Vasculite de pequenos vasos associada a doenças sistêmicas, drogas, infecções", nextNodeId: "placeholder-chapel-hill-associada-sistemicas" },
-    ],
-    tags: [
-      "chapel hill",
-      "classificação de chapel hill",
-      "classificacao de chapel hill",
-      "anca",
-      "imunofluorescência direta",
-      "imunofluorescencia direta",
-      "vasculite por imunocomplexos",
-      "poliangiíte microscópica",
-      "granulomatose com poliangiíte",
-      "churg-strauss",
-      "wegener",
-      "iga",
-      "crioglobulinêmica",
-      "henoch-schönlein",
-      "vasculites",
-    ],
-    synonyms: [
-      "classificacao de chapel hill",
-      "poliangiite microscopica",
-      "granulomatose com poliangiite",
-      "granulomatose com poliangiite de wegener",
-      "henoch-schonlein",
-      "vasculite por iga",
-      "vasculite crioglobulinemica",
-      "imunocomplexos",
-    ],
-  }),
-  node({ id: "chapel-hill-limitada-pele", title: "1. Vasculite de pequenos vasos limitada pele", type: "decision", parentId: "info-vasculites-chapel-hill", description: "Siga o ramo cutâneo limitado pele dentro da classificação de Chapel Hill.", options: [
-    { label: "1.1 ANCA+", nextNodeId: "chapel-hill-limitada-pele-anca-positivo" },
-    { label: "1.2 ANCA-", nextNodeId: "chapel-hill-limitada-pele-anca-negativo" },
-  ], tags: ["chapel hill", "anca", "limitada à pele"], synonyms: ["limitada a pele", "anca positivo", "anca negativo"] }),
-  node({ id: "chapel-hill-limitada-pele-anca-positivo", title: "1.1 ANCA+", type: "decision", parentId: "chapel-hill-limitada-pele", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
-    { label: "1.1.1 Vasculite associada ao ANCA (sem imunocomplexos)", nextNodeId: "chapel-hill-limitada-pele-vasculite-anca" },
+  node({ id: "chapel-hill-limitada-pele-anca-positivo", title: "ANCA+", type: "decision", parentId: "dx-vasculite-lc", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
+    { label: "Vasculite associada ao ANCA (sem imunocomplexos)", nextNodeId: "chapel-hill-limitada-pele-vasculite-anca" },
   ], tags: ["anca+", "anca positivo", "chapel hill"], synonyms: ["anca positivo"] }),
-  node({ id: "chapel-hill-limitada-pele-vasculite-anca", title: "1.1.1 Vasculite associada ao ANCA (sem imunocomplexos)", type: "decision", parentId: "chapel-hill-limitada-pele-anca-positivo", description: "Selecione o diagnóstico final associado ao ANCA sem imunocomplexos.", options: [
-    { label: "1.1.1.1 Poliangite microscópica", nextNodeId: "dx-chapel-hill-poliangiite-microscopica-limitada-pele" },
-    { label: "1.1.1.2 Granulomatose com poliangite (de Wegener)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele" },
-    { label: "1.1.1.3 Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele" },
+  node({ id: "chapel-hill-limitada-pele-vasculite-anca", title: "Vasculite associada ao ANCA (sem imunocomplexos)", type: "decision", parentId: "chapel-hill-limitada-pele-anca-positivo", description: "Selecione o diagnóstico final associado ao ANCA sem imunocomplexos.", options: [
+    { label: "Poliangite microscópica", nextNodeId: "dx-chapel-hill-poliangiite-microscopica-limitada-pele" },
+    { label: "Granulomatose com poliangite (de Wegener)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele" },
+    { label: "Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele" },
   ], tags: ["anca", "sem imunocomplexos", "chapel hill"], synonyms: ["vasculite associada ao anca"] }),
   terminal("dx-chapel-hill-poliangiite-microscopica-limitada-pele", "Poliangite microscópica", "diagnosis", "chapel-hill-limitada-pele-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["poliangiíte microscópica", "anca", "chapel hill"], ["poliangiite microscopica"]),
   terminal("dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele", "Granulomatose com poliangite (de Wegener)", "diagnosis", "chapel-hill-limitada-pele-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["granulomatose com poliangiíte", "wegener", "anca", "chapel hill"], ["granulomatose com poliangiite", "granulomatose com poliangiite de wegener"]),
   terminal("dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele", "Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", "diagnosis", "chapel-hill-limitada-pele-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["granulomatose com poliangiíte e eosinofilia", "churg-strauss", "eosinofilia", "anca", "chapel hill"], ["granulomatose com poliangiite e eosinofilia", "granulomatose com poliangiite de churg-strauss"]),
-  node({ id: "chapel-hill-limitada-pele-anca-negativo", title: "1.2 ANCA-", type: "decision", parentId: "chapel-hill-limitada-pele", description: "Subdivida conforme o resultado da Imunofluorescência Direta.", options: [
-    { label: "1.2.1 Imunofluorescência Direta negativa", nextNodeId: "chapel-hill-anca-negativo-ifd-negativa" },
-    { label: "1.2.2 Imunofluorescência Direta positiva", nextNodeId: "chapel-hill-anca-negativo-ifd-positiva" },
+  node({ id: "chapel-hill-limitada-pele-anca-negativo", title: "ANCA-", type: "decision", parentId: "dx-vasculite-lc", description: "Subdivida conforme o resultado da Imunofluorescência Direta.", options: [
+    { label: "Imunofluorescência Direta negativa", nextNodeId: "chapel-hill-anca-negativo-ifd-negativa" },
+    { label: "Imunofluorescência Direta positiva", nextNodeId: "chapel-hill-anca-negativo-ifd-positiva" },
   ], tags: ["anca-", "imunofluorescência direta", "chapel hill"], synonyms: ["anca negativo", "imunofluorescencia direta"] }),
-  node({ id: "chapel-hill-anca-negativo-ifd-negativa", title: "1.2.1 Imunofluorescência Direta negativa", type: "decision", parentId: "chapel-hill-limitada-pele-anca-negativo", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
-    { label: "1.2.1.1 Vasculite associada ao ANCA (sem imunocomplexos)", nextNodeId: "chapel-hill-ifd-negativa-vasculite-anca" },
+  node({ id: "chapel-hill-anca-negativo-ifd-negativa", title: "Imunofluorescência Direta negativa", type: "decision", parentId: "chapel-hill-limitada-pele-anca-negativo", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
+    { label: "Vasculite associada ao ANCA (sem imunocomplexos)", nextNodeId: "chapel-hill-ifd-negativa-vasculite-anca" },
   ], tags: ["imunofluorescência direta negativa", "anca-", "chapel hill"], synonyms: ["imunofluorescencia direta negativa"] }),
-  node({ id: "chapel-hill-ifd-negativa-vasculite-anca", title: "1.2.1.1 Vasculite associada ao ANCA (sem imunocomplexos)", type: "decision", parentId: "chapel-hill-anca-negativo-ifd-negativa", description: "Selecione o diagnóstico final associado ao ANCA sem imunocomplexos.", options: [
-    { label: "1.2.1.1.1 Poliangite microscópica", nextNodeId: "dx-chapel-hill-poliangiite-microscopica-ifd-negativa" },
-    { label: "1.2.1.1.2 Granulomatose com poliangite (de Wegener)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-wegener-ifd-negativa" },
-    { label: "1.2.1.1.3 Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-ifd-negativa" },
+  node({ id: "chapel-hill-ifd-negativa-vasculite-anca", title: "Vasculite associada ao ANCA (sem imunocomplexos)", type: "decision", parentId: "chapel-hill-anca-negativo-ifd-negativa", description: "Selecione o diagnóstico final associado ao ANCA sem imunocomplexos.", options: [
+    { label: "Poliangite microscópica", nextNodeId: "dx-chapel-hill-poliangiite-microscopica-ifd-negativa" },
+    { label: "Granulomatose com poliangite (de Wegener)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-wegener-ifd-negativa" },
+    { label: "Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", nextNodeId: "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-ifd-negativa" },
   ], tags: ["anca", "sem imunocomplexos", "chapel hill"], synonyms: ["vasculite associada ao anca"] }),
   terminal("dx-chapel-hill-poliangiite-microscopica-ifd-negativa", "Poliangite microscópica", "diagnosis", "chapel-hill-ifd-negativa-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["poliangiíte microscópica", "anca", "chapel hill"], ["poliangiite microscopica"]),
   terminal("dx-chapel-hill-granulomatose-poliangiite-wegener-ifd-negativa", "Granulomatose com poliangite (de Wegener)", "diagnosis", "chapel-hill-ifd-negativa-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["granulomatose com poliangiíte", "wegener", "anca", "chapel hill"], ["granulomatose com poliangiite", "granulomatose com poliangiite de wegener"]),
   terminal("dx-chapel-hill-granulomatose-poliangiite-eosinofilia-ifd-negativa", "Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", "diagnosis", "chapel-hill-ifd-negativa-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["granulomatose com poliangiíte e eosinofilia", "churg-strauss", "eosinofilia", "anca", "chapel hill"], ["granulomatose com poliangiite e eosinofilia", "granulomatose com poliangiite de churg-strauss"]),
-  node({ id: "chapel-hill-anca-negativo-ifd-positiva", title: "1.2.2 Imunofluorescência Direta positiva", type: "decision", parentId: "chapel-hill-limitada-pele-anca-negativo", description: "Siga para o grupo de vasculite por imunocomplexos.", options: [
-    { label: "1.2.2.1 Vasculite por imunocomplexos", nextNodeId: "chapel-hill-vasculite-imunocomplexos" },
+  node({ id: "chapel-hill-anca-negativo-ifd-positiva", title: "Imunofluorescência Direta positiva", type: "decision", parentId: "chapel-hill-limitada-pele-anca-negativo", description: "Siga para o grupo de vasculite por imunocomplexos.", options: [
+    { label: "Vasculite por imunocomplexos", nextNodeId: "chapel-hill-vasculite-imunocomplexos" },
   ], tags: ["imunofluorescência direta positiva", "imunocomplexos", "chapel hill"], synonyms: ["imunofluorescencia direta positiva"] }),
-  node({ id: "chapel-hill-vasculite-imunocomplexos", title: "1.2.2.1 Vasculite por imunocomplexos", type: "decision", parentId: "chapel-hill-anca-negativo-ifd-positiva", description: "Selecione o diagnóstico final dentro do grupo de vasculite por imunocomplexos.", options: [
-    { label: "1.2.2.1.1 Vasculite crioglobulinêmica tipos II e III", nextNodeId: "dx-chapel-hill-vasculite-crioglobulinemica" },
-    { label: "1.2.2.1.2 Vasculite por IgA (de Henoch-Schönlein)", nextNodeId: "dx-chapel-hill-vasculite-iga-henoch-schonlein" },
-    { label: "1.2.2.1.3 Vasculite urticarial hipocomplementêmica", nextNodeId: "dx-chapel-hill-vasculite-urticarial-hipocomplementemica" },
-    { label: "1.2.2.1.4 Vasculite cutânea por depósito imune de IgM e IgG (provisório)", nextNodeId: "dx-chapel-hill-vasculite-cutanea-igm-igg" },
+  node({ id: "chapel-hill-vasculite-imunocomplexos", title: "Vasculite por imunocomplexos", type: "decision", parentId: "chapel-hill-anca-negativo-ifd-positiva", description: "Selecione o diagnóstico final dentro do grupo de vasculite por imunocomplexos.", options: [
+    { label: "Vasculite crioglobulinêmica tipos II e III", nextNodeId: "dx-chapel-hill-vasculite-crioglobulinemica" },
+    { label: "Vasculite por IgA (de Henoch-Schönlein)", nextNodeId: "dx-chapel-hill-vasculite-iga-henoch-schonlein" },
+    { label: "Vasculite urticarial hipocomplementêmica", nextNodeId: "dx-chapel-hill-vasculite-urticarial-hipocomplementemica" },
+    { label: "Vasculite cutânea por depósito imune de IgM e IgG (provisório)", nextNodeId: "dx-chapel-hill-vasculite-cutanea-igm-igg" },
   ], tags: ["imunocomplexos", "chapel hill", "iga"], synonyms: ["vasculite por imunocomplexos"] }),
   terminal("dx-chapel-hill-vasculite-crioglobulinemica", "Vasculite crioglobulinêmica tipos II e III", "diagnosis", "chapel-hill-vasculite-imunocomplexos", "Vasculite por imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["crioglobulinêmica", "imunocomplexos", "chapel hill"], ["crioglobulinemica"]),
   terminal("dx-chapel-hill-vasculite-iga-henoch-schonlein", "Vasculite por IgA (de Henoch-Schönlein)", "diagnosis", "chapel-hill-vasculite-imunocomplexos", "Vasculite por imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["iga", "henoch-schönlein", "imunocomplexos", "chapel hill"], ["henoch-schonlein", "vasculite por iga"]),
   terminal("dx-chapel-hill-vasculite-urticarial-hipocomplementemica", "Vasculite urticarial hipocomplementêmica", "diagnosis", "chapel-hill-vasculite-imunocomplexos", "Vasculite por imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["hipocomplementêmica", "imunocomplexos", "chapel hill"], ["hipocomplementemica"]),
   terminal("dx-chapel-hill-vasculite-cutanea-igm-igg", "Vasculite cutânea por depósito imune de IgM e IgG (provisório)", "diagnosis", "chapel-hill-vasculite-imunocomplexos", "Vasculite por imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["igm", "igg", "imunocomplexos", "chapel hill"], ["vasculite cutanea por deposito imune de igm e igg"]),
-  terminal("placeholder-chapel-hill-associada-sistemicas", "2. Vasculite de pequenos vasos associada a doenças sistêmicas, drogas, infecções", "placeholder", "info-vasculites-chapel-hill", "Ramo futuro da classificação de Chapel Hill ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "chapel hill", "doenças sistêmicas", "drogas", "infecções"], ["doencas sistemicas"]),
   node({ id: "vasculites-pequenos-vasos", title: "Pequenos vasos", type: "decision", parentId: "vasculites", description: "Subdivida os pequenos vasos em vênulas ou arteríolas.", options: [
     { label: "Vênulas", nextNodeId: "venulas" },
     { label: "Arteríolas", nextNodeId: "placeholder-vasculites-arteriolas" },
@@ -1499,10 +1455,18 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Linfócitos", nextNodeId: "venulas-linfocitos" },
   ], tags: ["vênulas", "venulas", "pequenos vasos"] }),
   node({ id: "venulas-neutrofilos", title: "Neutrófilos", type: "decision", parentId: "venulas", description: "Defina se h leucocitoclasia com fibrina na parede ou trombo luminal sem leucocitoclasia.", options: [
-    { label: "Leucocitoclasia + fibrina na parede", nextNodeId: "dx-vasculite-lc" },
+    { label: "Leucocitoclasia + fibrina na parede", nextNodeId: "venulas-neutrofilos-leucocitoclasia" },
     { label: "Sem leucocitoclasia + trombo no lúmen", nextNodeId: "dx-vasculite-septica" },
   ], tags: ["neutrófilos", "venulas"], synonyms: ["neutrofilos", "venulas"] }),
-  terminal("dx-vasculite-lc", "Vasculite leucocitoclástica", "diagnosis", "venulas-neutrofilos", "padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular.", blocks("Mantida como entidade Diagnóstica final deste ramo de vênulas."), ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos"], ["vasculite leucocitoclastica"]),
+  node({ id: "venulas-neutrofilos-leucocitoclasia", title: "Leucocitoclasia + fibrina na parede", type: "decision", parentId: "venulas-neutrofilos", description: "Defina se o quadro é agudo ou crônico.", options: [
+    { label: "Agudo", nextNodeId: "dx-vasculite-lc" },
+    { label: "Crônica", nextNodeId: "group-venulas-lc-cronica" },
+  ], tags: ["leucocitoclasia", "fibrina na parede", "venulas"], synonyms: ["leucocitoclasia mais fibrina na parede"] }),
+  node({ id: "dx-vasculite-lc", title: "Vasculite leucocitoclástica", type: "decision", parentId: "venulas-neutrofilos-leucocitoclasia", description: "padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular, em fase aguda. Classifique conforme o status do ANCA.", options: [
+    { label: "ANCA+", nextNodeId: "chapel-hill-limitada-pele-anca-positivo" },
+    { label: "ANCA-", nextNodeId: "chapel-hill-limitada-pele-anca-negativo" },
+  ], tags: ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos"], synonyms: ["vasculite leucocitoclastica"] }),
+  diagnosisGroup("group-venulas-lc-cronica", "Granuloma facial / Eritema elevatum diutinum", "venulas-neutrofilos-leucocitoclasia", "Vasculites leucocitoclásticas tórpidas, de evolução lenta e progressiva, em fase crônica.", ["Granuloma facial", "Eritema elevatum diutinum"], blocks("Mantida como entidade diagnóstica final deste ramo de vênulas."), ["granuloma facial", "eritema elevatum diutinum", "vasculites tórpidas", "leucocitoclasia crônica"]),
   terminal("dx-vasculite-septica", "Vasculite séptica", "diagnosis", "venulas-neutrofilos", "padrão vascular com trombose luminal na ausência de leucocitoclasia.", blocks("Correlacionar com contexto infeccioso quando aplicável."), ["vasculite séptica", "séptica", "séptica"], ["vasculite septica"]),
   node({ id: "venulas-infiltrado-escasso", title: "Infiltrado escasso", type: "decision", parentId: "venulas", description: "Avalie a presença de trombo no lúmen e fibrina na parede vascular.", options: [
     { label: "Trombo no lúmen + fibrina na parede", nextNodeId: "dx-vasculopatia-livedoide" },

@@ -651,6 +651,15 @@ function applyFinalColumnAlignment(
     }
   });
 
+  // Each result card wants to center on its own source bridge, but when
+  // several bridges under the same parent are opened at once (e.g. clicking
+  // "Agudo" then "Crônica" in quick succession) their ideal centers can be
+  // closer together than the cards are tall, which made independent
+  // centering overlap the cards. Compute every desired position first, then
+  // sweep top-to-bottom enforcing a minimum gap between them.
+  const RESULT_GAP = 12; // matches the last column's `gap-3` (0.75rem)
+  const alignmentEntries: Array<{ wrapper: HTMLDivElement; naturalTop: number; height: number; desiredTop: number }> = [];
+
   resultItems.forEach((item) => {
     const sourceMapId = sourceColumn.find((sourceItem) => sourceItem.kind === "terminal-bridge" && sourceItem.nodeId === item.nodeId)?.mapId;
     if (!sourceMapId) {
@@ -666,14 +675,29 @@ function applyFinalColumnAlignment(
 
     const sourceRect = sourceElement.getBoundingClientRect();
     const targetRect = targetElement.getBoundingClientRect();
-    const offsetY =
-      sourceRect.top + sourceRect.height / 2 - (targetRect.top + targetRect.height / 2);
+    const sourceCenter = sourceRect.top + sourceRect.height / 2;
 
+    alignmentEntries.push({
+      wrapper: targetWrapper,
+      naturalTop: targetRect.top,
+      height: targetRect.height,
+      desiredTop: sourceCenter - targetRect.height / 2,
+    });
+  });
+
+  alignmentEntries.sort((a, b) => a.desiredTop - b.desiredTop);
+
+  let prevBottom = -Infinity;
+  alignmentEntries.forEach((entry) => {
+    const top = Math.max(entry.desiredTop, prevBottom + RESULT_GAP);
+    prevBottom = top + entry.height;
+
+    const offsetY = top - entry.naturalTop;
     if (!Number.isFinite(offsetY)) {
       return;
     }
 
-    targetWrapper.style.transform = Math.abs(offsetY) < 1 ? "" : `translateY(${offsetY}px)`;
+    entry.wrapper.style.transform = Math.abs(offsetY) < 1 ? "" : `translateY(${offsetY}px)`;
   });
 
   // When the last column contains only terminal-bridge items (decision node whose
