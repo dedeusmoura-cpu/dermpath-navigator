@@ -164,7 +164,7 @@ export function FocusedTreeMapPage() {
     buildSelectedPath(focusNodeId, isReturningFromFinalResult, requestedMapTrail, locationState?.trail),
   );
   const [openedFinalNodeIds, setOpenedFinalNodeIds] = useState<string[]>(() =>
-    buildInitialOpenedFinalNodes(focusNodeId, isReturningFromFinalResult),
+    buildInitialOpenedFinalNodes(focusNodeId),
   );
 
   useEffect(() => {
@@ -223,10 +223,16 @@ export function FocusedTreeMapPage() {
         }
 
         if (item.kind === "terminal-bridge") {
+          if (item.sameAsResult) {
+            persistFinalResultReturnContext(mapStateKey);
+            navigate(`/diagnostico?nodeId=${item.nodeId}`, {
+              state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
+            });
+            return;
+          }
+
           const isAlreadyOpen = openedFinalNodeIds.includes(item.nodeId);
-          setOpenedFinalNodeIds((prev) =>
-            isAlreadyOpen ? prev.filter((id) => id !== item.nodeId) : [...prev, item.nodeId],
-          );
+          setOpenedFinalNodeIds(isAlreadyOpen ? [] : [item.nodeId]);
           setSelectedPath((prev) => {
             const isAlreadyActive = prev[level] === item.mapId;
             return isAlreadyActive || isAlreadyOpen ? prev.slice(0, level) : [...prev.slice(0, level), item.mapId];
@@ -235,6 +241,7 @@ export function FocusedTreeMapPage() {
         }
 
         setIsReturningFromFinalResult(false);
+        setOpenedFinalNodeIds([]);
 
         setSelectedPath((prev) => {
           const isAlreadyActive = prev[level] === item.mapId;
@@ -260,8 +267,6 @@ export function FocusedTreeMapPage() {
 
           return nextPath;
         });
-
-        setOpenedFinalNodeIds([]);
       }}
     />
   );
@@ -308,14 +313,14 @@ function buildSelectedPath(
   return normalizeFocusedSelectionPath(buildSelectedMapPath(focusNodeId), focusNodeId, isReturningFromFinalResult);
 }
 
-function buildInitialOpenedFinalNodes(focusNodeId: string, isReturningFromFinalResult: boolean) {
+function buildInitialOpenedFinalNodes(focusNodeId: string) {
   const focusedNode = algorithmTree.nodes[focusNodeId];
 
   if (!isFinalTreeNode(focusedNode) || !focusedNode?.parentId) {
     return [];
   }
 
-  return isReturningFromFinalResult ? getTerminalSiblingNodeIds(focusedNode.parentId) : [focusNodeId];
+  return [focusNodeId];
 }
 
 function isFinalTreeNode(node: (typeof algorithmTree.nodes)[string] | undefined) {
@@ -392,12 +397,6 @@ function normalizeFocusedSelectionPath(path: string[], focusNodeId: string, isRe
 
   const lastPathItem = path[path.length - 1];
   return lastPathItem === `node:${focusNodeId}` ? path.slice(0, -1) : path;
-}
-
-function getTerminalSiblingNodeIds(parentId: string) {
-  return (algorithmTree.nodes[parentId]?.options ?? [])
-    .map((option) => option.nextNodeId)
-    .filter((nodeId) => isFinalTreeNode(algorithmTree.nodes[nodeId]));
 }
 
 const finalResultReturnContextStorageKey = "dermpath-focused-map-return-context";

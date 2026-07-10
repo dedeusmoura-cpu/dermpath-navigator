@@ -21,6 +21,7 @@ interface ColumnItem {
   nodeId: string;
   displayLabel: string;
   kind: "branch" | "terminal-bridge" | "result";
+  sameAsResult?: boolean;
 }
 
 const CATEGORY_CONFIG: Record<string, {
@@ -575,11 +576,14 @@ function buildColumnItems(parentId: string, childMap: Map<string, string[]>, lan
   return children.map((childId) => {
     const childNode = algorithmTree.nodes[childId];
     const isTerminalChild = isTerminalTreeNode(childNode);
+    const optionLabel = optionLabelMap.get(childId);
+    const resultLabel = translateNodeTitle(childNode, language);
     return {
       mapId: isTerminalChild ? buildTerminalBridgeId(parentId, childId) : buildNodeMapId(childId),
       nodeId: childId,
-      displayLabel: optionLabelMap.get(childId) ?? translateNodeTitle(childNode, language),
+      displayLabel: optionLabel ?? resultLabel,
       kind: isTerminalChild ? "terminal-bridge" : "branch",
+      sameAsResult: isTerminalChild ? (optionLabel ?? resultLabel) === resultLabel : undefined,
     };
   });
 }
