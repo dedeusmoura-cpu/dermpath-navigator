@@ -1466,7 +1466,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Crônica", nextNodeId: "group-venulas-lc-cronica" },
   ], tags: ["leucocitoclasia", "fibrina na parede", "venulas"], synonyms: ["leucocitoclasia mais fibrina na parede"] }),
   node({ id: "group-venulas-lc-aguda", title: "Vasculite leucocitoclástica", type: "decision", parentId: "venulas-neutrofilos-leucocitoclasia", description: "Padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular, em fase aguda. Registre o diagnóstico final ou avance para a classificação de Chapel Hill conforme o status do ANCA.", options: [
-    { label: "Vasculite Leucocitoclástica", nextNodeId: "dx-vasculite-lc" },
+    { label: "Vasculite leucocitoclástica", nextNodeId: "dx-vasculite-lc" },
     { label: "Classificação de Chapel Hill", nextNodeId: "chapel-hill-limitada-pele-classificacao" },
   ], tags: ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos", "chapel hill"], synonyms: ["leucocitoclasia aguda"] }),
   terminal("dx-vasculite-lc", "Vasculite leucocitoclástica", "diagnosis", "group-venulas-lc-aguda", "Padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular, em fase aguda.", blocks("Mantida como diagnóstico final para o padrão agudo de vasculite leucocitoclástica de pequenos vasos."), ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos"], ["vasculite leucocitoclastica"]),
