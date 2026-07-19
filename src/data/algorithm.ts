@@ -1409,7 +1409,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Pequenos vasos", nextNodeId: "vasculites-pequenos-vasos" },
     { label: "Grandes vasos", nextNodeId: "placeholder-vasculites-grandes-vasos" },
   ], tags: ["vasculites", "vascular"] }),
-  node({ id: "chapel-hill-limitada-pele-anca-positivo", title: "ANCA+", type: "decision", parentId: "dx-vasculite-lc", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
+  node({ id: "chapel-hill-limitada-pele-anca-positivo", title: "ANCA+", type: "decision", parentId: "chapel-hill-limitada-pele-classificacao", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
     { label: "Vasculite associada ao ANCA (sem imunocomplexos)", nextNodeId: "chapel-hill-limitada-pele-vasculite-anca" },
   ], tags: ["anca+", "anca positivo", "chapel hill"], synonyms: ["anca positivo"] }),
   node({ id: "chapel-hill-limitada-pele-vasculite-anca", title: "Vasculite associada ao ANCA (sem imunocomplexos)", type: "decision", parentId: "chapel-hill-limitada-pele-anca-positivo", description: "Selecione o diagnóstico final associado ao ANCA sem imunocomplexos.", options: [
@@ -1420,7 +1420,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-chapel-hill-poliangiite-microscopica-limitada-pele", "Poliangite microscópica", "diagnosis", "chapel-hill-limitada-pele-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["poliangiíte microscópica", "anca", "chapel hill"], ["poliangiite microscopica"]),
   terminal("dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele", "Granulomatose com poliangite (de Wegener)", "diagnosis", "chapel-hill-limitada-pele-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["granulomatose com poliangiíte", "wegener", "anca", "chapel hill"], ["granulomatose com poliangiite", "granulomatose com poliangiite de wegener"]),
   terminal("dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele", "Granulomatose com poliangite e eosinofilia (de Churg-Strauss)", "diagnosis", "chapel-hill-limitada-pele-vasculite-anca", "Vasculite associada ao ANCA sem imunocomplexos.", blocks("Mantida como diagnóstico final dentro da classificação de Chapel Hill."), ["granulomatose com poliangiíte e eosinofilia", "churg-strauss", "eosinofilia", "anca", "chapel hill"], ["granulomatose com poliangiite e eosinofilia", "granulomatose com poliangiite de churg-strauss"]),
-  node({ id: "chapel-hill-limitada-pele-anca-negativo", title: "ANCA-", type: "decision", parentId: "dx-vasculite-lc", description: "Subdivida conforme o resultado da Imunofluorescência Direta.", options: [
+  node({ id: "chapel-hill-limitada-pele-anca-negativo", title: "ANCA-", type: "decision", parentId: "chapel-hill-limitada-pele-classificacao", description: "Subdivida conforme o resultado da Imunofluorescência Direta.", options: [
     { label: "Imunofluorescência Direta negativa", nextNodeId: "chapel-hill-anca-negativo-ifd-negativa" },
     { label: "Imunofluorescência Direta positiva", nextNodeId: "chapel-hill-anca-negativo-ifd-positiva" },
   ], tags: ["anca-", "imunofluorescência direta", "chapel hill"], synonyms: ["anca negativo", "imunofluorescencia direta"] }),
@@ -1462,13 +1462,18 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Sem leucocitoclasia + trombo no lúmen", nextNodeId: "dx-vasculite-septica" },
   ], tags: ["neutrófilos", "venulas"], synonyms: ["neutrofilos", "venulas"] }),
   node({ id: "venulas-neutrofilos-leucocitoclasia", title: "Leucocitoclasia + fibrina na parede", type: "decision", parentId: "venulas-neutrofilos", description: "Defina se o quadro é agudo ou crônico.", options: [
-    { label: "Agudo", nextNodeId: "dx-vasculite-lc" },
+    { label: "Agudo", nextNodeId: "group-venulas-lc-aguda" },
     { label: "Crônica", nextNodeId: "group-venulas-lc-cronica" },
   ], tags: ["leucocitoclasia", "fibrina na parede", "venulas"], synonyms: ["leucocitoclasia mais fibrina na parede"] }),
-  node({ id: "dx-vasculite-lc", title: "Vasculite leucocitoclástica", type: "decision", parentId: "venulas-neutrofilos-leucocitoclasia", description: "padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular, em fase aguda. Classifique conforme o status do ANCA.", options: [
+  node({ id: "group-venulas-lc-aguda", title: "Vasculite leucocitoclástica", type: "decision", parentId: "venulas-neutrofilos-leucocitoclasia", description: "Padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular, em fase aguda. Registre o diagnóstico final ou avance para a classificação de Chapel Hill conforme o status do ANCA.", options: [
+    { label: "Vasculite Leucocitoclástica", nextNodeId: "dx-vasculite-lc" },
+    { label: "Classificação de Chapel Hill", nextNodeId: "chapel-hill-limitada-pele-classificacao" },
+  ], tags: ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos", "chapel hill"], synonyms: ["leucocitoclasia aguda"] }),
+  terminal("dx-vasculite-lc", "Vasculite leucocitoclástica", "diagnosis", "group-venulas-lc-aguda", "Padrão de pequenos vasos com leucocitoclasia e fibrina na parede vascular, em fase aguda.", blocks("Mantida como diagnóstico final para o padrão agudo de vasculite leucocitoclástica de pequenos vasos."), ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos"], ["vasculite leucocitoclastica"]),
+  node({ id: "chapel-hill-limitada-pele-classificacao", title: "Classificação de Chapel Hill", type: "decision", parentId: "group-venulas-lc-aguda", description: "Classifique conforme o status do ANCA.", options: [
     { label: "ANCA+", nextNodeId: "chapel-hill-limitada-pele-anca-positivo" },
     { label: "ANCA-", nextNodeId: "chapel-hill-limitada-pele-anca-negativo" },
-  ], tags: ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos"], synonyms: ["vasculite leucocitoclastica"] }),
+  ], tags: ["vasculite leucocitoclástica", "leucocitoclástica", "pequenos vasos", "chapel hill"] }),
   node({ id: "group-venulas-lc-cronica", title: "Vasculites Tórpidas", type: "decision", parentId: "venulas-neutrofilos-leucocitoclasia", description: "Vasculites leucocitoclásticas tórpidas, de evolução lenta e progressiva, em fase crônica.", options: [
     { label: "Vasculites Tórpidas", nextNodeId: "dx-venulas-granuloma-facial-eritema-elevatum" },
   ] }),
