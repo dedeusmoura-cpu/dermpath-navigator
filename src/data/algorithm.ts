@@ -1407,7 +1407,7 @@ const nodesArray: AlgorithmNode[] = [
   diagnosisGroup("group-espongiose-balonizacao-ruptura", "Intensa espongiose e balonização com ruptura", "vesico-mista", "Este ponto do algoritmo abre trs possibilidades principais.", ["Insulto por artrópode", "Eritema multiforme", "Eritema pigmentar fixo"], blocks("O contexto clínico e a distribuição das lesões são determinantes."), ["insulto por artrópode", "eritema multiforme", "eritema pigmentar fixo"], ["artropode"]),
   node({ id: "vasculites", title: "Vasculites", type: "decision", parentId: "dermatite", description: "Classifique o calibre vascular predominante neste ramo.", options: [
     { label: "Pequenos vasos", nextNodeId: "vasculites-pequenos-vasos" },
-    { label: "Grandes vasos", nextNodeId: "placeholder-vasculites-grandes-vasos" },
+    { label: "Grandes vasos", nextNodeId: "vasculites-grandes-vasos" },
   ], tags: ["vasculites", "vascular"] }),
   node({ id: "chapel-hill-limitada-pele-anca-positivo", title: "ANCA+", type: "decision", parentId: "chapel-hill-limitada-pele-classificacao", description: "Siga para o grupo de vasculite associada ao ANCA sem imunocomplexos.", options: [
     { label: "Vasculite associada ao ANCA (sem imunocomplexos)", nextNodeId: "chapel-hill-limitada-pele-vasculite-anca" },
@@ -1494,10 +1494,22 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Ramo futuro", nextNodeId: "placeholder-vasculites-arteriolas-futuro" },
   ], tags: ["arteríolas", "arteriolas", "placeholder"] }),
   terminal("placeholder-vasculites-arteriolas-futuro", "Arteríolas", "placeholder", "placeholder-vasculites-arteriolas", "Ramo de arteríolas ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "arteríolas", "arteriolas"]),
-  node({ id: "placeholder-vasculites-grandes-vasos", title: "Grandes vasos", type: "decision", parentId: "vasculites", description: "Ramo de grandes vasos reservado para expansão futura.", options: [
-    { label: "Ramo futuro", nextNodeId: "placeholder-vasculites-grandes-vasos-futuro" },
-  ], tags: ["grandes vasos", "placeholder"] }),
-  terminal("placeholder-vasculites-grandes-vasos-futuro", "Grandes vasos", "placeholder", "placeholder-vasculites-grandes-vasos", "Ramo de grandes vasos ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "grandes vasos"]),
+  node({ id: "vasculites-grandes-vasos", title: "Grandes vasos", type: "decision", parentId: "vasculites", description: "Avalie se o vaso acometido é uma veia ou uma artéria.", options: [
+    { label: "Veia", nextNodeId: "vasculites-grandes-vasos-veia" },
+    { label: "Artéria", nextNodeId: "vasculites-grandes-vasos-arteria" },
+  ], tags: ["grandes vasos", "vasculites"] }),
+  node({ id: "vasculites-grandes-vasos-veia", title: "Veia", type: "decision", parentId: "vasculites-grandes-vasos", description: "Defina se há leucocitoclasia.", options: [
+    { label: "Leucocitoclástica", nextNodeId: "dx-grandes-vasos-veia-leucocitoclastica" },
+    { label: "Não leucocitoclástica", nextNodeId: "dx-grandes-vasos-veia-nao-leucocitoclastica" },
+  ], tags: ["grandes vasos", "veia"] }),
+  terminal("dx-grandes-vasos-veia-leucocitoclastica", "Granulomatose com poliangiite (de Wegener)", "diagnosis", "vasculites-grandes-vasos-veia", "Vasculite leucocitoclástica acometendo veia de grande calibre.", blocks("Correlacionar com achados sistêmicos e sorologia ANCA quando aplicável."), ["granulomatose com poliangiíte", "wegener", "grandes vasos", "veia"], ["granulomatose com poliangiite de wegener"]),
+  terminal("dx-grandes-vasos-veia-nao-leucocitoclastica", "Tromboflebite", "diagnosis", "vasculites-grandes-vasos-veia", "Vasculite não leucocitoclástica acometendo veia de grande calibre.", blocks("Correlacionar com contexto clínico e fatores de risco trombóticos."), ["tromboflebite", "grandes vasos", "veia"]),
+  node({ id: "vasculites-grandes-vasos-arteria", title: "Artéria", type: "decision", parentId: "vasculites-grandes-vasos", description: "Defina se há leucocitoclasia.", options: [
+    { label: "Leucocitoclástica", nextNodeId: "dx-grandes-vasos-arteria-leucocitoclastica" },
+    { label: "Não leucocitoclástica", nextNodeId: "dx-grandes-vasos-arteria-nao-leucocitoclastica" },
+  ], tags: ["grandes vasos", "artéria", "arteria"] }),
+  terminal("dx-grandes-vasos-arteria-leucocitoclastica", "Poliarterite nodosa", "diagnosis", "vasculites-grandes-vasos-arteria", "Vasculite leucocitoclástica acometendo artéria de grande calibre.", blocks("Correlacionar com achados sistêmicos quando aplicável."), ["poliarterite nodosa", "grandes vasos", "artéria"], ["poliarterite nodosa"]),
+  terminal("dx-grandes-vasos-arteria-nao-leucocitoclastica", "Vasculite nodular", "diagnosis", "vasculites-grandes-vasos-arteria", "Vasculite não leucocitoclástica acometendo artéria de grande calibre.", blocks("Mantida como diagnóstico final deste ramo."), ["vasculite nodular", "grandes vasos", "artéria"]),
 
   node({
     id: "deposito",
