@@ -33,6 +33,7 @@ const NECROBIOSIS_LIPOIDICA_HISTOPATHOLOGY_TARGET_IDS = ["dx-necrobiose-lipoidic
 const LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID = "sarcoidico-interface";
 const PRURIGO_PIGMENTOSO_TARGET_ID = "dx-prurigo-pigmentoso";
 const ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID = "dx-esp-eritema-anular";
+const VASCULITE_LC_TARGET_ID = "dx-vasculite-lc";
 
 export function ResultCard({
   node,
@@ -68,6 +69,7 @@ export function ResultCard({
   const showLiquenNitidoHistopathologyButton = node.id === LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID;
   const showPrurigo = node.id === PRURIGO_PIGMENTOSO_TARGET_ID;
   const showEritemaAnularCentrifugo = node.id === ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID;
+  const showVasculiteLcTomeNotaButton = node.id === VASCULITE_LC_TARGET_ID;
   const showPorokeratosisVariants = node.id === POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID;
   const possibilities = translateList(node.result?.possibilities, language);
 
@@ -152,6 +154,13 @@ export function ResultCard({
         ) : null}
 
         {showRosaceaGoldButton ? <GoldTipsLink to="/dicas-que-valem-ouro/rosacea" nodeId={node.id} /> : null}
+        {showVasculiteLcTomeNotaButton ? (
+          <TomeNotaLink
+            to="/dicas-que-valem-ouro/vasculite-leucocitoclastica"
+            nodeId={node.id}
+            title="Vasculite Leucocitoclástica"
+          />
+        ) : null}
         {showNeutrophilicUrticarialDermatosisGoldButton ? (
           <GoldTipsLink
             to="/dicas-que-valem-ouro/dermatose-urticariforme-neutrofilica"
@@ -292,6 +301,51 @@ function GoldTipsLink({ to, nodeId, title }: { to: string; nodeId: string; title
   );
 }
 
+function TomeNotaLink({ to, nodeId, title }: { to: string; nodeId: string; title?: string }) {
+  const { t, tx } = useLanguage();
+
+  return (
+    <Link
+      to={to}
+      state={{ returnToNodeId: nodeId }}
+      className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-[22px] border border-[#e3cd82] bg-[repeating-linear-gradient(to_bottom,#fffdf0_0px,#fffdf0_26px,#f6ecd2_27px)] px-5 py-4 text-left text-[#1c2b45] shadow-[0_16px_34px_rgba(217,168,23,0.16)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.22)]"
+    >
+      <div className="flex min-w-0 items-center gap-4">
+        <span className="-rotate-6">
+          <TomeNotaIcon />
+        </span>
+        <div className="min-w-0">
+          <p className="relative inline-flex items-center gap-1.5 font-hand text-2xl font-bold leading-none text-[#1c2b45] sm:text-[1.75rem]">
+            <MotionTicks className="h-4 w-4 flex-none text-rose-500" />
+            {t("tome_nota")}
+          </p>
+          <RedSquiggle className="-mt-1 h-2 w-28 text-rose-500" />
+          <p className="mt-1 truncate font-serif text-base text-[#1c2b45]/75 sm:text-lg">{title ? tx(title) : ""}</p>
+        </div>
+      </div>
+      <span className="flex-none rounded-full border border-[#e3cd82] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d1a]">
+        {t("open")}
+      </span>
+    </Link>
+  );
+}
+
+function MotionTicks({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
+      <path d="M6 14 3 17M9 10 7 6M13 8l-1-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function RedSquiggle({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 200 12" preserveAspectRatio="none" className={className} aria-hidden="true">
+      <path d="M2 8 Q 20 2, 38 8 T 74 8 T 110 8 T 146 8 T 182 8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function UnderstandBetterLink({ to, nodeId }: { to: string; nodeId: string }) {
   const { t } = useLanguage();
 
@@ -341,6 +395,18 @@ function GoldBarsIcon() {
         <path d="M8 36 24 28l10 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
         <path d="M28 30 44 22l12 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
         <path d="M20 18 36 10l12 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
+
+function TomeNotaIcon() {
+  return (
+    <span className="relative flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-[#e3cd82] bg-[#fdf1c9] shadow-sm">
+      <span className="absolute -top-1.5 left-1/2 h-3 w-8 -translate-x-1/2 -rotate-3 rounded-sm border border-[#e3cd82] bg-[#f4e2a4]/90" />
+      <svg viewBox="0 0 24 24" className="h-8 w-8 text-[#8a6d1a]" fill="none" aria-hidden="true">
+        <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.44 1 1.1 1 1.9v.7h5v-.7c0-.8.4-1.46 1-1.9A6 6 0 0 0 12 3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M10 19h4M10.5 21h3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       </svg>
     </span>
   );

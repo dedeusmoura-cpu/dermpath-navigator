@@ -42,6 +42,7 @@ import { TedSimuladoSessionPage } from "./pages/TedSimuladoSessionPage";
 import { MeusSimuladosPage } from "./pages/MeusSimuladosPage";
 import { TedBuscaPage } from "./pages/TedBuscaPage";
 import { TreeDiagramPage } from "./pages/TreeDiagramPage";
+import { VasculiteLeucocitoclasticaGoldTipsPage } from "./pages/VasculiteLeucocitoclasticaGoldTipsPage";
 import { WelcomeVideoPage } from "./pages/WelcomeVideoPage";
 
 export default function App() {
@@ -177,6 +178,7 @@ export default function App() {
           <Route path="/histopatologico/liquen-simples-cronico" element={<LscHistopathologyPage />} />
           <Route path="/histopatologico/poroceratose" element={<PoroceratoseHistopathologyPage />} />
           <Route path="/dicas-que-valem-ouro/rosacea" element={<RosaceaGoldTipsPage />} />
+          <Route path="/dicas-que-valem-ouro/vasculite-leucocitoclastica" element={<VasculiteLeucocitoclasticaGoldTipsPage />} />
           <Route
             path="/entenda-melhor/dermatite-neutrofilica-granulomatosa-palicada"
             element={<PalisadedNeutrophilicGranulomatousDermatitisPage />}

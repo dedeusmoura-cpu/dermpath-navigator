@@ -19,7 +19,8 @@ export default {
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', "ui-sans-serif", "system-ui"],
-        serif: ['"Fraunces"', "ui-serif", "Georgia"]
+        serif: ['"Fraunces"', "ui-serif", "Georgia"],
+        hand: ['"Shantell Sans"', "cursive"]
       }
     }
   },

@@ -25,6 +25,23 @@ const uiTranslations = {
     home_card_start_body: "Percorra um fluxo algorítmico guiado por desenhos histológicos até o diagnóstico mais provável.",
     home_card_tree_map_body: "Visualize a estrutura geral da árvore diagnóstica",
     home_card_quiz_body: "Acesse o módulo Quiz utilizando o método algorítmico para revisar conteúdos do aplicativo de forma guiada.",
+    home_card_ted_body: "Treine com questões comentadas no formato TED e desenvolva seu raciocínio diagnóstico.",
+    home_diagnostic_title: "Navegação diagnóstica",
+    home_explore_title: "Explorar dermatopatologia",
+    home_ted_title: "Treinamento TED",
+    home_tools_link: "Conheça as ferramentas",
+    home_paths_kicker: "Escolha seu caminho",
+    home_paths_title: "Aprenda no seu ritmo.",
+    home_paths_body: "Quatro formas complementares de explorar, compreender e consolidar o diagnóstico dermatopatológico.",
+    home_action_tree: "Abrir árvore diagnóstica",
+    home_action_explore: "Iniciar exploração guiada",
+    home_action_quiz: "Resolver casos",
+    home_action_ted: "Iniciar treinamento",
+    home_video_subtitle: "Uma breve apresentação do projeto",
+    home_lattes_cta: "Currículo Lattes",
+    home_footer_about: "Sobre o projeto",
+    home_footer_disclaimer: "Ferramenta destinada ao aprendizado. Não substitui avaliação diagnóstica, correlação clinicopatológica ou consulta à literatura especializada.",
+    home_footer_rights: "DermPath Navigator · Rafael de Deus Moura",
     home_about_kicker: "Sobre o método",
     home_about_title: "Leitura organizada, sem excesso de ruído.",
     home_about_body:
@@ -73,6 +90,7 @@ const uiTranslations = {
     histopathology: "Histopatológico",
     gold_tips: "DICAS QUE VALEM OURO",
     gold_tips_lupus_classification: "Dicas que Valem Ouro: Classificação do Lúpus Cutâneo",
+    tome_nota: "Tome nota!",
     return_to_diagnosis: "Voltar ao diagnóstico",
     didactic_slide: "Lâmina didática",
     didactic_slides: "Lâminas didáticas",
@@ -105,6 +123,23 @@ const uiTranslations = {
     home_card_start_body: "Follow the morphologic flow through illustrated images to the most likely outcome.",
     home_card_tree_map_body: "View the overall structure of the diagnostic tree.",
     home_card_quiz_body: "Access the Quiz module using the algorithmic method to review app content in a guided way.",
+    home_card_ted_body: "Practice with commented questions in the TED format and develop your diagnostic reasoning.",
+    home_diagnostic_title: "Diagnostic navigation",
+    home_explore_title: "Explore dermatopathology",
+    home_ted_title: "TED Training",
+    home_tools_link: "Explore the tools",
+    home_paths_kicker: "Choose your path",
+    home_paths_title: "Learn at your own pace.",
+    home_paths_body: "Four complementary ways to explore, understand, and consolidate dermatopathologic diagnosis.",
+    home_action_tree: "Open diagnostic tree",
+    home_action_explore: "Start guided exploration",
+    home_action_quiz: "Solve cases",
+    home_action_ted: "Start training",
+    home_video_subtitle: "A brief introduction to the project",
+    home_lattes_cta: "Lattes CV",
+    home_footer_about: "About the project",
+    home_footer_disclaimer: "This tool is intended for education. It does not replace diagnostic assessment, clinicopathologic correlation, or consultation of specialized literature.",
+    home_footer_rights: "DermPath Navigator · Rafael de Deus Moura",
     home_about_kicker: "About the method",
     home_about_title: "Organized reading, without excess noise.",
     home_about_body:
@@ -153,6 +188,7 @@ const uiTranslations = {
     histopathology: "Histopathology",
     gold_tips: "GOLDEN TIPS",
     gold_tips_lupus_classification: "Golden Tips: Cutaneous Lupus Classification",
+    tome_nota: "Take note!",
     return_to_diagnosis: "Back to diagnosis",
     didactic_slide: "Teaching slide",
     didactic_slides: "Teaching slides",
@@ -1524,7 +1560,6 @@ export function getTranslatedTerminalLabel(type: NodeType, language: Language): 
       return "Decision";
   }
 }
-
 
 
 
