@@ -18,7 +18,7 @@ interface StudyNoteCardProps {
   sectionsLeft: StudyNoteSectionData[];
   sectionsRight: StudyNoteSectionData[];
   note?: ReactNode;
-  pearl: ReactNode;
+  pearl?: ReactNode;
   source?: ReactNode;
 }
 
@@ -74,6 +74,10 @@ export function StudyNoteCard({
   pearl,
   source,
 }: StudyNoteCardProps) {
+  const sections = [sectionsLeft[0], sectionsRight[0], sectionsLeft[1], sectionsRight[1]].filter(
+    (section): section is StudyNoteSectionData => Boolean(section),
+  );
+
   return (
     <div className="relative overflow-hidden rounded-[28px] border border-[#c9d3e0] bg-[#fffdf7] shadow-[0_28px_70px_-40px_rgba(20,27,43,0.35)]">
       <SpiralBinding />
@@ -101,10 +105,9 @@ export function StudyNoteCard({
         </header>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <SectionCard section={sectionsLeft[0]} className="md:col-start-1 md:row-start-1" />
-          <SectionCard section={sectionsRight[0]} className="md:col-start-2 md:row-start-1" />
-          <SectionCard section={sectionsLeft[1]} className="md:col-start-1 md:row-start-2" />
-          <SectionCard section={sectionsRight[1]} className="md:col-start-2 md:row-start-2" />
+          {sections.map((section) => (
+            <SectionCard key={section.id} section={section} className={sections.length === 1 ? "md:col-span-2" : ""} />
+          ))}
 
           {note ? (
             <div className="flex items-center gap-3 rounded-xl border border-sky-200 bg-sky-50/90 px-4 py-2.5 md:col-span-2 md:row-start-3">
@@ -113,13 +116,15 @@ export function StudyNoteCard({
             </div>
           ) : null}
 
-          <div className="flex items-center gap-4 rounded-xl border-2 border-dashed border-amber-300 bg-amber-50/90 px-5 py-3 md:col-span-2 md:row-start-4">
-            <DiamondIcon />
-            <p className="font-hand text-lg leading-8 text-[#1c2b45]">
-              <span className="font-bold text-rose-600">Pérola: </span>
-              {pearl}
-            </p>
-          </div>
+          {pearl ? (
+            <div className="flex items-center gap-4 rounded-xl border-2 border-dashed border-amber-300 bg-amber-50/90 px-5 py-3 md:col-span-2 md:row-start-4">
+              <DiamondIcon />
+              <p className="font-hand text-lg leading-8 text-[#1c2b45]">
+                <span className="font-bold text-rose-600">Pérola: </span>
+                {pearl}
+              </p>
+            </div>
+          ) : null}
         </div>
 
         {source ? <p className="mt-4 text-center font-sans text-xs text-slate-500 sm:text-sm">{source}</p> : null}

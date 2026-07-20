@@ -166,6 +166,8 @@ export default function App() {
           <Route path="/mapa-da-arvore" element={<FocusedTreeMapPage />} />
           <Route path="/dicas-que-valem-ouro" element={<LupusGoldTipsPage />} />
           <Route path="/dicas-que-valem-ouro/dermatose-urticariforme-neutrofilica" element={<NeutrophilicUrticarialDermatosisGoldTipsPage />} />
+          <Route path="/tome-nota/lupus-cutaneo" element={<LupusGoldTipsPage />} />
+          <Route path="/tome-nota/dermatose-urticariforme-neutrofilica" element={<NeutrophilicUrticarialDermatosisGoldTipsPage />} />
           <Route path="/histopatologico/dermatose-urticariforme-neutrofilica" element={<DunHistopathologyPage />} />
           <Route path="/histopatologico/dermatofitose" element={<DermatofitoseHistopathologyPage />} />
           <Route path="/histopatologico/ceratose-liquenoide" element={<CeratoseLiquenoideHistopathologyPage />} />
@@ -179,8 +181,14 @@ export default function App() {
           <Route path="/histopatologico/poroceratose" element={<PoroceratoseHistopathologyPage />} />
           <Route path="/dicas-que-valem-ouro/rosacea" element={<RosaceaGoldTipsPage />} />
           <Route path="/dicas-que-valem-ouro/vasculite-leucocitoclastica" element={<VasculiteLeucocitoclasticaGoldTipsPage />} />
+          <Route path="/tome-nota/rosacea" element={<RosaceaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-leucocitoclastica" element={<VasculiteLeucocitoclasticaGoldTipsPage />} />
           <Route
             path="/entenda-melhor/dermatite-neutrofilica-granulomatosa-palicada"
+            element={<PalisadedNeutrophilicGranulomatousDermatitisPage />}
+          />
+          <Route
+            path="/tome-nota/dermatite-neutrofilica-granulomatosa-palicada"
             element={<PalisadedNeutrophilicGranulomatousDermatitisPage />}
           />
           <Route

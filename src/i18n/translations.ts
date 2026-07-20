@@ -88,8 +88,8 @@ const uiTranslations = {
     teaching_content: "Conteúdo didático",
     understand_better: "ENTENDA MELHOR",
     histopathology: "Histopatológico",
-    gold_tips: "DICAS QUE VALEM OURO",
-    gold_tips_lupus_classification: "Dicas que Valem Ouro: Classificação do Lúpus Cutâneo",
+    gold_tips: "TOME NOTA!",
+    gold_tips_lupus_classification: "Tome nota: Classificação do Lúpus Cutâneo",
     tome_nota: "Tome nota!",
     return_to_diagnosis: "Voltar ao diagnóstico",
     didactic_slide: "Lâmina didática",
@@ -186,8 +186,8 @@ const uiTranslations = {
     teaching_content: "Didactic content",
     understand_better: "UNDERSTAND BETTER",
     histopathology: "Histopathology",
-    gold_tips: "GOLDEN TIPS",
-    gold_tips_lupus_classification: "Golden Tips: Cutaneous Lupus Classification",
+    gold_tips: "TAKE NOTE!",
+    gold_tips_lupus_classification: "Take note: Cutaneous Lupus Classification",
     tome_nota: "Take note!",
     return_to_diagnosis: "Back to diagnosis",
     didactic_slide: "Teaching slide",
@@ -906,7 +906,7 @@ const optionHintTranslationsEn: Record<string, string> = {
 
 const extraExactTextTranslations: Record<string, string> = {
   "Dicas que Valem Ouro: Dermatose Urticariforme Neutrofílica":
-    "Golden Tips: Neutrophilic Urticarial Dermatosis",
+    "Take note: Neutrophilic Urticarial Dermatosis",
   "Predom?nio de Linfócitos": "Predominance of lymphocytes",
   "Neutr?filos proeminentes": "Prominent neutrophils",
   "Eosinófilos proeminentes": "Prominent eosinophils",
@@ -1435,7 +1435,7 @@ const repairedManualExactTextTranslations = repairRecord({
     "Enlarged display of the 8 histopathology images, with a focus on comfortable and detailed reading.",
   "Dermatofitose": "Dermatophytosis",
   "Dicas que Valem Ouro: Dermatose Urticariforme Neutrofílica":
-    "Golden Tips: Neutrophilic Urticarial Dermatosis",
+    "Take note: Neutrophilic Urticarial Dermatosis",
   "Histopatológico: Dermatose Urticariforme Neutrofílica":
     "Histopathology: Neutrophilic Urticarial Dermatosis",
   "Trata-se de fragmentos de pele com epiderme exibindo paraceratose com microabscessos de neutrófilos, hiperplasia psoriasiforme e hipogranulose. Em derme superficial, h? leve infiltrado linfocitário perivascular. A colora?ão de PAS revelou presen?a de hifas septadas em camada córnea. Os achados são compatéveis com Dermatofitose, simulando psoríase histologicamente.":
@@ -1560,7 +1560,6 @@ export function getTranslatedTerminalLabel(type: NodeType, language: Language): 
       return "Decision";
   }
 }
-
 
 
 

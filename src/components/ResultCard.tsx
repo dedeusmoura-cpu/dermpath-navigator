@@ -38,7 +38,6 @@ const VASCULITE_LC_TARGET_ID = "dx-vasculite-lc";
 export function ResultCard({
   node,
   breadcrumb,
-  trail,
   favorite,
   onToggleFavorite,
   onBack,
@@ -133,39 +132,24 @@ export function ResultCard({
             </div>
 
             {showLupusGoldButton ? (
-              <Link
-                to="/dicas-que-valem-ouro"
-                state={{ returnToNodeId: node.id, returnTrail: trail }}
-                className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-[#ecdca7] bg-[linear-gradient(135deg,#fff9df_0%,#fff3c3_52%,#ffe6aa_100%)] px-5 py-4 text-left text-amber-950 shadow-[0_16px_34px_rgba(217,168,23,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.24)]"
-              >
-                <div className="flex min-w-0 items-center gap-4">
-                  <GoldBarsIcon />
-                  <div className="min-w-0">
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-amber-900/80">{t("special_content")}</p>
-                    <p className="font-serif text-xl leading-tight sm:text-2xl">{t("gold_tips_lupus_classification")}</p>
-                  </div>
-                </div>
-                <span className="rounded-full border border-[#e7cf93] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900/80">
-                  {t("open")}
-                </span>
-              </Link>
+              <TomeNotaLink to="/tome-nota/lupus-cutaneo" nodeId={node.id} title="Classificação do Lúpus Cutâneo" />
             ) : null}
           </div>
         ) : null}
 
-        {showRosaceaGoldButton ? <GoldTipsLink to="/dicas-que-valem-ouro/rosacea" nodeId={node.id} /> : null}
+        {showRosaceaGoldButton ? <TomeNotaLink to="/tome-nota/rosacea" nodeId={node.id} title="Classificação da Rosácea" /> : null}
         {showVasculiteLcTomeNotaButton ? (
           <TomeNotaLink
-            to="/dicas-que-valem-ouro/vasculite-leucocitoclastica"
+            to="/tome-nota/vasculite-leucocitoclastica"
             nodeId={node.id}
             title="Vasculite Leucocitoclástica"
           />
         ) : null}
         {showNeutrophilicUrticarialDermatosisGoldButton ? (
-          <GoldTipsLink
-            to="/dicas-que-valem-ouro/dermatose-urticariforme-neutrofilica"
+          <TomeNotaLink
+            to="/tome-nota/dermatose-urticariforme-neutrofilica"
             nodeId={node.id}
-            title="Dicas que Valem Ouro: Dermatose Urticariforme Neutrofílica"
+            title="Dermatose Urticariforme Neutrofílica"
           />
         ) : null}
         {showNeutrophilicUrticarialDermatosisHistopathologyButton ? (
@@ -198,7 +182,12 @@ export function ResultCard({
           <div className="flex flex-wrap items-stretch gap-4">
             {showUnderstandBetterButton ? (
               <div className="min-w-[260px] flex-1 [&>a]:h-full [&>a]:min-h-[104px]">
-                <UnderstandBetterLink to="/entenda-melhor/dermatite-neutrofilica-granulomatosa-palicada" nodeId={node.id} />
+                <TomeNotaLink
+                  to="/tome-nota/dermatite-neutrofilica-granulomatosa-palicada"
+                  nodeId={node.id}
+                  title="Dermatite Neutrofílica e Granulomatosa de Paliçada"
+                  compact
+                />
               </div>
             ) : null}
             {showPalisadedHistopathologyButton ? (
@@ -278,52 +267,31 @@ function HistopathologyLink({ to, nodeId, title }: { to: string; nodeId: string;
   );
 }
 
-function GoldTipsLink({ to, nodeId, title }: { to: string; nodeId: string; title?: string }) {
+function TomeNotaLink({ to, nodeId, title, compact = false }: { to: string; nodeId: string; title?: string; compact?: boolean }) {
   const { t, tx } = useLanguage();
 
   return (
     <Link
       to={to}
       state={{ returnToNodeId: nodeId }}
-      className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-[#ecdca7] bg-[linear-gradient(135deg,#fff9df_0%,#fff3c3_52%,#ffe6aa_100%)] px-5 py-4 text-left text-amber-950 shadow-[0_16px_34px_rgba(217,168,23,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.24)]"
+      className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-[24px] border border-[#ead48b] bg-[repeating-linear-gradient(to_bottom,#fffef7_0px,#fffef7_31px,#e8edf5_32px)] px-5 py-5 text-left text-[#102b61] shadow-[0_16px_34px_rgba(70,85,118,0.12)] transition duration-200 hover:-translate-y-0.5 hover:border-[#dfbf55] hover:shadow-[0_22px_40px_rgba(70,85,118,0.18)] sm:px-7 sm:py-6"
     >
-      <div className="flex min-w-0 items-center gap-4">
-        <GoldBarsIcon />
-        <div className="min-w-0">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-amber-900/80">{t("special_content")}</p>
-          <p className="font-serif text-xl leading-tight sm:text-2xl">{title ? tx(title) : t("gold_tips")}</p>
-        </div>
-      </div>
-      <span className="rounded-full border border-[#e7cf93] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900/80">
-        {t("open")}
-      </span>
-    </Link>
-  );
-}
-
-function TomeNotaLink({ to, nodeId, title }: { to: string; nodeId: string; title?: string }) {
-  const { t, tx } = useLanguage();
-
-  return (
-    <Link
-      to={to}
-      state={{ returnToNodeId: nodeId }}
-      className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-[22px] border border-[#e3cd82] bg-[repeating-linear-gradient(to_bottom,#fffdf0_0px,#fffdf0_26px,#f6ecd2_27px)] px-5 py-4 text-left text-[#1c2b45] shadow-[0_16px_34px_rgba(217,168,23,0.16)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.22)]"
-    >
-      <div className="flex min-w-0 items-center gap-4">
-        <span className="-rotate-6">
-          <TomeNotaIcon />
+      <div className={`flex min-w-0 items-center ${compact ? "gap-4" : "gap-5 sm:gap-7"}`}>
+        <span className="-rotate-6 transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-[1.03]">
+          <TomeNotaIcon compact={compact} />
         </span>
         <div className="min-w-0">
-          <p className="relative inline-flex items-center gap-1.5 font-hand text-2xl font-bold leading-none text-[#1c2b45] sm:text-[1.75rem]">
-            <MotionTicks className="h-4 w-4 flex-none text-rose-500" />
-            {t("tome_nota")}
-          </p>
-          <RedSquiggle className="-mt-1 h-2 w-28 text-rose-500" />
-          <p className="mt-1 truncate font-serif text-base text-[#1c2b45]/75 sm:text-lg">{title ? tx(title) : ""}</p>
+          <div className="relative inline-block">
+            <MotionTicks className="absolute -left-7 -top-3 h-7 w-7 text-[#ff5b4d] sm:-left-9 sm:-top-5 sm:h-9 sm:w-9" />
+            <p className={`whitespace-nowrap font-hand font-bold leading-none tracking-[-0.02em] text-[#102b61] ${compact ? "text-[1.8rem] sm:text-[2rem]" : "text-[2rem] sm:text-[2.65rem]"}`}>
+              {t("tome_nota")}
+            </p>
+            <RedSquiggle className="mt-1 h-2.5 w-full text-[#ff5b4d] sm:h-3" />
+          </div>
+          <p className="mt-1 truncate font-serif text-base text-[#33476d]/75 sm:text-lg">{title ? tx(title) : ""}</p>
         </div>
       </div>
-      <span className="flex-none rounded-full border border-[#e3cd82] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d1a]">
+      <span className={`${compact ? "hidden" : "flex-none"} rounded-full border border-[#dfc267] bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d1a] transition group-hover:bg-[#fff5c9]`}>
         {t("open")}
       </span>
     </Link>
@@ -333,7 +301,7 @@ function TomeNotaLink({ to, nodeId, title }: { to: string; nodeId: string; title
 function MotionTicks({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
-      <path d="M6 14 3 17M9 10 7 6M13 8l-1-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M7 17 2.5 19M10 11 6 6M16 8l-1-6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
     </svg>
   );
 }
@@ -341,31 +309,8 @@ function MotionTicks({ className = "" }: { className?: string }) {
 function RedSquiggle({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 200 12" preserveAspectRatio="none" className={className} aria-hidden="true">
-      <path d="M2 8 Q 20 2, 38 8 T 74 8 T 110 8 T 146 8 T 182 8" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M2 9 Q 44 2, 88 7 T 198 5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
     </svg>
-  );
-}
-
-function UnderstandBetterLink({ to, nodeId }: { to: string; nodeId: string }) {
-  const { t } = useLanguage();
-
-  return (
-    <Link
-      to={to}
-      state={{ returnToNodeId: nodeId }}
-      className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-[#ecdca7] bg-[linear-gradient(135deg,#fff9df_0%,#fff3c3_52%,#ffe6aa_100%)] px-5 py-4 text-left text-amber-950 shadow-[0_16px_34px_rgba(217,168,23,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.24)]"
-    >
-      <div className="flex min-w-0 items-center gap-4">
-        <GoldBarsIcon />
-        <div className="min-w-0">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-amber-900/80">{t("special_content")}</p>
-          <p className="font-serif text-xl leading-tight sm:text-2xl">{t("understand_better")}</p>
-        </div>
-      </div>
-      <span className="rounded-full border border-[#e7cf93] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900/80">
-        {t("open")}
-      </span>
-    </Link>
   );
 }
 
@@ -381,32 +326,13 @@ function ActionButton({ label, onClick }: { label: string; onClick: () => void }
   );
 }
 
-function GoldBarsIcon() {
+function TomeNotaIcon({ compact = false }: { compact?: boolean }) {
   return (
-    <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-[#ecdca7] bg-white/60 shadow-sm">
-      <svg viewBox="0 0 64 64" className="h-9 w-9" aria-hidden="true">
-        <defs>
-          <linearGradient id="gold-bar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fef3c7" />
-            <stop offset="45%" stopColor="#fbbf24" />
-            <stop offset="100%" stopColor="#d97706" />
-          </linearGradient>
-        </defs>
-        <path d="M8 36 24 28l10 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M28 30 44 22l12 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M20 18 36 10l12 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
-      </svg>
-    </span>
-  );
-}
-
-function TomeNotaIcon() {
-  return (
-    <span className="relative flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-[#e3cd82] bg-[#fdf1c9] shadow-sm">
-      <span className="absolute -top-1.5 left-1/2 h-3 w-8 -translate-x-1/2 -rotate-3 rounded-sm border border-[#e3cd82] bg-[#f4e2a4]/90" />
-      <svg viewBox="0 0 24 24" className="h-8 w-8 text-[#8a6d1a]" fill="none" aria-hidden="true">
-        <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.44 1 1.1 1 1.9v.7h5v-.7c0-.8.4-1.46 1-1.9A6 6 0 0 0 12 3Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M10 19h4M10.5 21h3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    <span className={`relative flex flex-none items-center justify-center rounded-md border border-[#e5c96e] bg-[linear-gradient(145deg,#fff7cf,#f9e8a5)] shadow-[0_10px_16px_rgba(73,61,24,0.22)] ${compact ? "h-[4.75rem] w-[4.5rem]" : "h-[4.75rem] w-[4.5rem] sm:h-[6.4rem] sm:w-24"}`}>
+      <span className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-3 border border-[#ddc47c]/70 bg-[#f4e2b3]/90 shadow-sm sm:w-16" />
+      <svg viewBox="0 0 24 24" className="h-10 w-10 text-[#16356f] sm:h-14 sm:w-14" fill="none" aria-hidden="true">
+        <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.44 1 1.1 1 1.9v.7h5v-.7c0-.8.4-1.46 1-1.9A6 6 0 0 0 12 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M10 19h4M10.5 21h3M12 7v4M9.5 9.5l2.5 1.5 2.5-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </span>
   );
@@ -428,9 +354,4 @@ function MicroscopeIcon() {
     </span>
   );
 }
-
-
-
-
-
 
