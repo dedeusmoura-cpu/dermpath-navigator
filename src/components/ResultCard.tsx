@@ -34,6 +34,30 @@ const LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID = "sarcoidico-interface";
 const PRURIGO_PIGMENTOSO_TARGET_ID = "dx-prurigo-pigmentoso";
 const ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID = "dx-esp-eritema-anular";
 const VASCULITE_LC_TARGET_ID = "dx-vasculite-lc";
+const VASCULITE_SEPTICA_TARGET_ID = "dx-vasculite-septica";
+const VASCULOPATIA_LIVEDOIDE_TARGET_ID = "dx-vasculopatia-livedoide";
+const PERNIOSE_LES_TARGET_ID = "dx-perniose-epifenomeno-les";
+const VASCULITES_TORPIDAS_TARGET_ID = "dx-venulas-granuloma-facial-eritema-elevatum";
+const POLIANGITE_MICROSCOPICA_TARGET_IDS: string[] = [
+  "dx-chapel-hill-poliangiite-microscopica-limitada-pele",
+  "dx-chapel-hill-poliangiite-microscopica-ifd-negativa",
+];
+const GPA_WEGENER_TARGET_IDS: string[] = [
+  "dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele",
+  "dx-chapel-hill-granulomatose-poliangiite-wegener-ifd-negativa",
+  "dx-grandes-vasos-veia-leucocitoclastica",
+];
+const EGPA_TARGET_IDS: string[] = [
+  "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele",
+  "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-ifd-negativa",
+];
+const CRIOGLOBULINEMICA_TARGET_ID = "dx-chapel-hill-vasculite-crioglobulinemica";
+const IGA_HSP_TARGET_ID = "dx-chapel-hill-vasculite-iga-henoch-schonlein";
+const URTICARIAL_HIPOCOMPLEMENTEMICA_TARGET_ID = "dx-chapel-hill-vasculite-urticarial-hipocomplementemica";
+const IGM_IGG_TARGET_ID = "dx-chapel-hill-vasculite-cutanea-igm-igg";
+const TROMBOFLEBITE_TARGET_ID = "dx-grandes-vasos-veia-nao-leucocitoclastica";
+const PAN_VASCULITE_TARGET_ID = "dx-grandes-vasos-arteria-leucocitoclastica";
+const VASCULITE_NODULAR_TARGET_ID = "dx-grandes-vasos-arteria-nao-leucocitoclastica";
 
 export function ResultCard({
   node,
@@ -69,6 +93,20 @@ export function ResultCard({
   const showPrurigo = node.id === PRURIGO_PIGMENTOSO_TARGET_ID;
   const showEritemaAnularCentrifugo = node.id === ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID;
   const showVasculiteLcTomeNotaButton = node.id === VASCULITE_LC_TARGET_ID;
+  const showVasculiteSepticaButton = node.id === VASCULITE_SEPTICA_TARGET_ID;
+  const showVasculopatiaLivedoideButton = node.id === VASCULOPATIA_LIVEDOIDE_TARGET_ID;
+  const showPernioseLesButton = node.id === PERNIOSE_LES_TARGET_ID;
+  const showVasculitesTorpidasButtons = node.id === VASCULITES_TORPIDAS_TARGET_ID;
+  const showPoliangiteMicroscopicaButton = POLIANGITE_MICROSCOPICA_TARGET_IDS.includes(node.id);
+  const showGpaWegenerButton = GPA_WEGENER_TARGET_IDS.includes(node.id);
+  const showEgpaButton = EGPA_TARGET_IDS.includes(node.id);
+  const showCrioglobulinemicaButton = node.id === CRIOGLOBULINEMICA_TARGET_ID;
+  const showIgaHspButton = node.id === IGA_HSP_TARGET_ID;
+  const showUrticarialHipocomplementemicaButton = node.id === URTICARIAL_HIPOCOMPLEMENTEMICA_TARGET_ID;
+  const showIgmIggButton = node.id === IGM_IGG_TARGET_ID;
+  const showTromboflebiteButton = node.id === TROMBOFLEBITE_TARGET_ID;
+  const showPanVasculiteButton = node.id === PAN_VASCULITE_TARGET_ID;
+  const showVasculiteNodularButton = node.id === VASCULITE_NODULAR_TARGET_ID;
   const showPorokeratosisVariants = node.id === POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID;
   const possibilities = translateList(node.result?.possibilities, language);
 
@@ -144,6 +182,67 @@ export function ResultCard({
             nodeId={node.id}
             title="Vasculite Leucocitoclástica"
           />
+        ) : null}
+        {showVasculiteSepticaButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-septica" nodeId={node.id} title="Vasculite Séptica" />
+        ) : null}
+        {showVasculopatiaLivedoideButton ? (
+          <TomeNotaLink to="/tome-nota/vasculopatia-livedoide" nodeId={node.id} title="Vasculopatia Livedoide" />
+        ) : null}
+        {showPernioseLesButton ? (
+          <TomeNotaLink to="/tome-nota/perniose-epifenomeno-les" nodeId={node.id} title="Perniose / Epifenômeno no LES" />
+        ) : null}
+        {showVasculitesTorpidasButtons ? (
+          <div className="flex flex-wrap items-stretch gap-4">
+            <div className="min-w-[260px] flex-1 [&>a]:h-full [&>a]:min-h-[104px]">
+              <TomeNotaLink to="/tome-nota/granuloma-facial" nodeId={node.id} title="Granuloma Facial" compact />
+            </div>
+            <div className="min-w-[260px] flex-1 [&>a]:h-full [&>a]:min-h-[104px]">
+              <TomeNotaLink to="/tome-nota/eritema-elevatum-diutinum" nodeId={node.id} title="Eritema Elevatum Diutinum" compact />
+            </div>
+          </div>
+        ) : null}
+        {showPoliangiteMicroscopicaButton ? (
+          <TomeNotaLink to="/tome-nota/poliangite-microscopica" nodeId={node.id} title="Poliangite Microscópica" />
+        ) : null}
+        {showGpaWegenerButton ? (
+          <TomeNotaLink
+            to="/tome-nota/granulomatose-poliangiite-wegener"
+            nodeId={node.id}
+            title="Granulomatose com Poliangite (Wegener)"
+          />
+        ) : null}
+        {showEgpaButton ? (
+          <TomeNotaLink
+            to="/tome-nota/granulomatose-poliangiite-eosinofilia"
+            nodeId={node.id}
+            title="Granulomatose com Poliangite e Eosinofilia (Churg-Strauss)"
+          />
+        ) : null}
+        {showCrioglobulinemicaButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-crioglobulinemica" nodeId={node.id} title="Vasculite Crioglobulinêmica" />
+        ) : null}
+        {showIgaHspButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-iga-henoch-schonlein" nodeId={node.id} title="Vasculite por IgA (Henoch-Schönlein)" />
+        ) : null}
+        {showUrticarialHipocomplementemicaButton ? (
+          <TomeNotaLink
+            to="/tome-nota/vasculite-urticarial-hipocomplementemica"
+            nodeId={node.id}
+            title="Vasculite Urticarial Hipocomplementêmica"
+          />
+        ) : null}
+        {showIgmIggButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-cutanea-igm-igg" nodeId={node.id} title="Vasculite Cutânea por IgM/IgG" />
+        ) : null}
+        {showTromboflebiteButton ? (
+          <TomeNotaLink to="/tome-nota/tromboflebite" nodeId={node.id} title="Tromboflebite" />
+        ) : null}
+        {showPanVasculiteButton ? (
+          <TomeNotaLink to="/tome-nota/poliarterite-nodosa-vasculite" nodeId={node.id} title="Poliarterite Nodosa" />
+        ) : null}
+        {showVasculiteNodularButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-nodular" nodeId={node.id} title="Vasculite Nodular" />
         ) : null}
         {showNeutrophilicUrticarialDermatosisGoldButton ? (
           <TomeNotaLink
