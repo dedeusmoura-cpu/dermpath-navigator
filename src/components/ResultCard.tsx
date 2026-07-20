@@ -33,11 +33,35 @@ const NECROBIOSIS_LIPOIDICA_HISTOPATHOLOGY_TARGET_IDS = ["dx-necrobiose-lipoidic
 const LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID = "sarcoidico-interface";
 const PRURIGO_PIGMENTOSO_TARGET_ID = "dx-prurigo-pigmentoso";
 const ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID = "dx-esp-eritema-anular";
+const VASCULITE_LC_TARGET_ID = "dx-vasculite-lc";
+const VASCULITE_SEPTICA_TARGET_ID = "dx-vasculite-septica";
+const VASCULOPATIA_LIVEDOIDE_TARGET_ID = "dx-vasculopatia-livedoide";
+const PERNIOSE_LES_TARGET_ID = "dx-perniose-epifenomeno-les";
+const VASCULITES_TORPIDAS_TARGET_ID = "dx-venulas-granuloma-facial-eritema-elevatum";
+const POLIANGITE_MICROSCOPICA_TARGET_IDS: string[] = [
+  "dx-chapel-hill-poliangiite-microscopica-limitada-pele",
+  "dx-chapel-hill-poliangiite-microscopica-ifd-negativa",
+];
+const GPA_WEGENER_TARGET_IDS: string[] = [
+  "dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele",
+  "dx-chapel-hill-granulomatose-poliangiite-wegener-ifd-negativa",
+  "dx-grandes-vasos-veia-leucocitoclastica",
+];
+const EGPA_TARGET_IDS: string[] = [
+  "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele",
+  "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-ifd-negativa",
+];
+const CRIOGLOBULINEMICA_TARGET_ID = "dx-chapel-hill-vasculite-crioglobulinemica";
+const IGA_HSP_TARGET_ID = "dx-chapel-hill-vasculite-iga-henoch-schonlein";
+const URTICARIAL_HIPOCOMPLEMENTEMICA_TARGET_ID = "dx-chapel-hill-vasculite-urticarial-hipocomplementemica";
+const IGM_IGG_TARGET_ID = "dx-chapel-hill-vasculite-cutanea-igm-igg";
+const TROMBOFLEBITE_TARGET_ID = "dx-grandes-vasos-veia-nao-leucocitoclastica";
+const PAN_VASCULITE_TARGET_ID = "dx-grandes-vasos-arteria-leucocitoclastica";
+const VASCULITE_NODULAR_TARGET_ID = "dx-grandes-vasos-arteria-nao-leucocitoclastica";
 
 export function ResultCard({
   node,
   breadcrumb,
-  trail,
   favorite,
   onToggleFavorite,
   onBack,
@@ -68,6 +92,21 @@ export function ResultCard({
   const showLiquenNitidoHistopathologyButton = node.id === LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID;
   const showPrurigo = node.id === PRURIGO_PIGMENTOSO_TARGET_ID;
   const showEritemaAnularCentrifugo = node.id === ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID;
+  const showVasculiteLcTomeNotaButton = node.id === VASCULITE_LC_TARGET_ID;
+  const showVasculiteSepticaButton = node.id === VASCULITE_SEPTICA_TARGET_ID;
+  const showVasculopatiaLivedoideButton = node.id === VASCULOPATIA_LIVEDOIDE_TARGET_ID;
+  const showPernioseLesButton = node.id === PERNIOSE_LES_TARGET_ID;
+  const showVasculitesTorpidasButtons = node.id === VASCULITES_TORPIDAS_TARGET_ID;
+  const showPoliangiteMicroscopicaButton = POLIANGITE_MICROSCOPICA_TARGET_IDS.includes(node.id);
+  const showGpaWegenerButton = GPA_WEGENER_TARGET_IDS.includes(node.id);
+  const showEgpaButton = EGPA_TARGET_IDS.includes(node.id);
+  const showCrioglobulinemicaButton = node.id === CRIOGLOBULINEMICA_TARGET_ID;
+  const showIgaHspButton = node.id === IGA_HSP_TARGET_ID;
+  const showUrticarialHipocomplementemicaButton = node.id === URTICARIAL_HIPOCOMPLEMENTEMICA_TARGET_ID;
+  const showIgmIggButton = node.id === IGM_IGG_TARGET_ID;
+  const showTromboflebiteButton = node.id === TROMBOFLEBITE_TARGET_ID;
+  const showPanVasculiteButton = node.id === PAN_VASCULITE_TARGET_ID;
+  const showVasculiteNodularButton = node.id === VASCULITE_NODULAR_TARGET_ID;
   const showPorokeratosisVariants = node.id === POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID;
   const possibilities = translateList(node.result?.possibilities, language);
 
@@ -131,32 +170,85 @@ export function ResultCard({
             </div>
 
             {showLupusGoldButton ? (
-              <Link
-                to="/dicas-que-valem-ouro"
-                state={{ returnToNodeId: node.id, returnTrail: trail }}
-                className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-[#ecdca7] bg-[linear-gradient(135deg,#fff9df_0%,#fff3c3_52%,#ffe6aa_100%)] px-5 py-4 text-left text-amber-950 shadow-[0_16px_34px_rgba(217,168,23,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.24)]"
-              >
-                <div className="flex min-w-0 items-center gap-4">
-                  <GoldBarsIcon />
-                  <div className="min-w-0">
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-amber-900/80">{t("special_content")}</p>
-                    <p className="font-serif text-xl leading-tight sm:text-2xl">{t("gold_tips_lupus_classification")}</p>
-                  </div>
-                </div>
-                <span className="rounded-full border border-[#e7cf93] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900/80">
-                  {t("open")}
-                </span>
-              </Link>
+              <TomeNotaLink to="/tome-nota/lupus-cutaneo" nodeId={node.id} title="Classificação do Lúpus Cutâneo" />
             ) : null}
           </div>
         ) : null}
 
-        {showRosaceaGoldButton ? <GoldTipsLink to="/dicas-que-valem-ouro/rosacea" nodeId={node.id} /> : null}
-        {showNeutrophilicUrticarialDermatosisGoldButton ? (
-          <GoldTipsLink
-            to="/dicas-que-valem-ouro/dermatose-urticariforme-neutrofilica"
+        {showRosaceaGoldButton ? <TomeNotaLink to="/tome-nota/rosacea" nodeId={node.id} title="Classificação da Rosácea" /> : null}
+        {showVasculiteLcTomeNotaButton ? (
+          <TomeNotaLink
+            to="/tome-nota/vasculite-leucocitoclastica"
             nodeId={node.id}
-            title="Dicas que Valem Ouro: Dermatose Urticariforme Neutrofílica"
+            title="Vasculite Leucocitoclástica"
+          />
+        ) : null}
+        {showVasculiteSepticaButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-septica" nodeId={node.id} title="Vasculite Séptica" />
+        ) : null}
+        {showVasculopatiaLivedoideButton ? (
+          <TomeNotaLink to="/tome-nota/vasculopatia-livedoide" nodeId={node.id} title="Vasculopatia Livedoide" />
+        ) : null}
+        {showPernioseLesButton ? (
+          <TomeNotaLink to="/tome-nota/perniose-epifenomeno-les" nodeId={node.id} title="Perniose / Epifenômeno no LES" />
+        ) : null}
+        {showVasculitesTorpidasButtons ? (
+          <div className="flex flex-wrap items-stretch gap-4">
+            <div className="min-w-[260px] flex-1 [&>a]:h-full [&>a]:min-h-[104px]">
+              <TomeNotaLink to="/tome-nota/granuloma-facial" nodeId={node.id} title="Granuloma Facial" compact />
+            </div>
+            <div className="min-w-[260px] flex-1 [&>a]:h-full [&>a]:min-h-[104px]">
+              <TomeNotaLink to="/tome-nota/eritema-elevatum-diutinum" nodeId={node.id} title="Eritema Elevatum Diutinum" compact />
+            </div>
+          </div>
+        ) : null}
+        {showPoliangiteMicroscopicaButton ? (
+          <TomeNotaLink to="/tome-nota/poliangite-microscopica" nodeId={node.id} title="Poliangite Microscópica" />
+        ) : null}
+        {showGpaWegenerButton ? (
+          <TomeNotaLink
+            to="/tome-nota/granulomatose-poliangiite-wegener"
+            nodeId={node.id}
+            title="Granulomatose com Poliangite (Wegener)"
+          />
+        ) : null}
+        {showEgpaButton ? (
+          <TomeNotaLink
+            to="/tome-nota/granulomatose-poliangiite-eosinofilia"
+            nodeId={node.id}
+            title="Granulomatose com Poliangite e Eosinofilia (Churg-Strauss)"
+          />
+        ) : null}
+        {showCrioglobulinemicaButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-crioglobulinemica" nodeId={node.id} title="Vasculite Crioglobulinêmica" />
+        ) : null}
+        {showIgaHspButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-iga-henoch-schonlein" nodeId={node.id} title="Vasculite por IgA (Henoch-Schönlein)" />
+        ) : null}
+        {showUrticarialHipocomplementemicaButton ? (
+          <TomeNotaLink
+            to="/tome-nota/vasculite-urticarial-hipocomplementemica"
+            nodeId={node.id}
+            title="Vasculite Urticarial Hipocomplementêmica"
+          />
+        ) : null}
+        {showIgmIggButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-cutanea-igm-igg" nodeId={node.id} title="Vasculite Cutânea por IgM/IgG" />
+        ) : null}
+        {showTromboflebiteButton ? (
+          <TomeNotaLink to="/tome-nota/tromboflebite" nodeId={node.id} title="Tromboflebite" />
+        ) : null}
+        {showPanVasculiteButton ? (
+          <TomeNotaLink to="/tome-nota/poliarterite-nodosa-vasculite" nodeId={node.id} title="Poliarterite Nodosa" />
+        ) : null}
+        {showVasculiteNodularButton ? (
+          <TomeNotaLink to="/tome-nota/vasculite-nodular" nodeId={node.id} title="Vasculite Nodular" />
+        ) : null}
+        {showNeutrophilicUrticarialDermatosisGoldButton ? (
+          <TomeNotaLink
+            to="/tome-nota/dermatose-urticariforme-neutrofilica"
+            nodeId={node.id}
+            title="Dermatose Urticariforme Neutrofílica"
           />
         ) : null}
         {showNeutrophilicUrticarialDermatosisHistopathologyButton ? (
@@ -189,7 +281,12 @@ export function ResultCard({
           <div className="flex flex-wrap items-stretch gap-4">
             {showUnderstandBetterButton ? (
               <div className="min-w-[260px] flex-1 [&>a]:h-full [&>a]:min-h-[104px]">
-                <UnderstandBetterLink to="/entenda-melhor/dermatite-neutrofilica-granulomatosa-palicada" nodeId={node.id} />
+                <TomeNotaLink
+                  to="/tome-nota/dermatite-neutrofilica-granulomatosa-palicada"
+                  nodeId={node.id}
+                  title="Dermatite Neutrofílica e Granulomatosa de Paliçada"
+                  compact
+                />
               </div>
             ) : null}
             {showPalisadedHistopathologyButton ? (
@@ -269,49 +366,50 @@ function HistopathologyLink({ to, nodeId, title }: { to: string; nodeId: string;
   );
 }
 
-function GoldTipsLink({ to, nodeId, title }: { to: string; nodeId: string; title?: string }) {
+function TomeNotaLink({ to, nodeId, title, compact = false }: { to: string; nodeId: string; title?: string; compact?: boolean }) {
   const { t, tx } = useLanguage();
 
   return (
     <Link
       to={to}
       state={{ returnToNodeId: nodeId }}
-      className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-[#ecdca7] bg-[linear-gradient(135deg,#fff9df_0%,#fff3c3_52%,#ffe6aa_100%)] px-5 py-4 text-left text-amber-950 shadow-[0_16px_34px_rgba(217,168,23,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.24)]"
+      className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-[24px] border border-[#ead48b] bg-[repeating-linear-gradient(to_bottom,#fffef7_0px,#fffef7_31px,#e8edf5_32px)] px-5 py-5 text-left text-[#102b61] shadow-[0_16px_34px_rgba(70,85,118,0.12)] transition duration-200 hover:-translate-y-0.5 hover:border-[#dfbf55] hover:shadow-[0_22px_40px_rgba(70,85,118,0.18)] sm:px-7 sm:py-6"
     >
-      <div className="flex min-w-0 items-center gap-4">
-        <GoldBarsIcon />
+      <div className={`flex min-w-0 items-center ${compact ? "gap-4" : "gap-5 sm:gap-7"}`}>
+        <span className="-rotate-6 transition-transform duration-200 group-hover:-rotate-3 group-hover:scale-[1.03]">
+          <TomeNotaIcon compact={compact} />
+        </span>
         <div className="min-w-0">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-amber-900/80">{t("special_content")}</p>
-          <p className="font-serif text-xl leading-tight sm:text-2xl">{title ? tx(title) : t("gold_tips")}</p>
+          <div className="relative inline-block">
+            <MotionTicks className="absolute -left-7 -top-3 h-7 w-7 text-[#ff5b4d] sm:-left-9 sm:-top-5 sm:h-9 sm:w-9" />
+            <p className={`whitespace-nowrap font-hand font-bold leading-none tracking-[-0.02em] text-[#102b61] ${compact ? "text-[1.8rem] sm:text-[2rem]" : "text-[2rem] sm:text-[2.65rem]"}`}>
+              {t("tome_nota")}
+            </p>
+            <RedSquiggle className="mt-1 h-2.5 w-full text-[#ff5b4d] sm:h-3" />
+          </div>
+          <p className="mt-1 truncate font-serif text-base text-[#33476d]/75 sm:text-lg">{title ? tx(title) : ""}</p>
         </div>
       </div>
-      <span className="rounded-full border border-[#e7cf93] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900/80">
+      <span className={`${compact ? "hidden" : "flex-none"} rounded-full border border-[#dfc267] bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#8a6d1a] transition group-hover:bg-[#fff5c9]`}>
         {t("open")}
       </span>
     </Link>
   );
 }
 
-function UnderstandBetterLink({ to, nodeId }: { to: string; nodeId: string }) {
-  const { t } = useLanguage();
-
+function MotionTicks({ className = "" }: { className?: string }) {
   return (
-    <Link
-      to={to}
-      state={{ returnToNodeId: nodeId }}
-      className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-[#ecdca7] bg-[linear-gradient(135deg,#fff9df_0%,#fff3c3_52%,#ffe6aa_100%)] px-5 py-4 text-left text-amber-950 shadow-[0_16px_34px_rgba(217,168,23,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(217,168,23,0.24)]"
-    >
-      <div className="flex min-w-0 items-center gap-4">
-        <GoldBarsIcon />
-        <div className="min-w-0">
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-amber-900/80">{t("special_content")}</p>
-          <p className="font-serif text-xl leading-tight sm:text-2xl">{t("understand_better")}</p>
-        </div>
-      </div>
-      <span className="rounded-full border border-[#e7cf93] bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-900/80">
-        {t("open")}
-      </span>
-    </Link>
+    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden="true">
+      <path d="M7 17 2.5 19M10 11 6 6M16 8l-1-6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function RedSquiggle({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 200 12" preserveAspectRatio="none" className={className} aria-hidden="true">
+      <path d="M2 9 Q 44 2, 88 7 T 198 5" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
+    </svg>
   );
 }
 
@@ -327,20 +425,13 @@ function ActionButton({ label, onClick }: { label: string; onClick: () => void }
   );
 }
 
-function GoldBarsIcon() {
+function TomeNotaIcon({ compact = false }: { compact?: boolean }) {
   return (
-    <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-[#ecdca7] bg-white/60 shadow-sm">
-      <svg viewBox="0 0 64 64" className="h-9 w-9" aria-hidden="true">
-        <defs>
-          <linearGradient id="gold-bar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fef3c7" />
-            <stop offset="45%" stopColor="#fbbf24" />
-            <stop offset="100%" stopColor="#d97706" />
-          </linearGradient>
-        </defs>
-        <path d="M8 36 24 28l10 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M28 30 44 22l12 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M20 18 36 10l12 8-16 8Z" fill="url(#gold-bar-gradient)" stroke="#92400e" strokeWidth="2" strokeLinejoin="round" />
+    <span className={`relative flex flex-none items-center justify-center rounded-md border border-[#e5c96e] bg-[linear-gradient(145deg,#fff7cf,#f9e8a5)] shadow-[0_10px_16px_rgba(73,61,24,0.22)] ${compact ? "h-[4.75rem] w-[4.5rem]" : "h-[4.75rem] w-[4.5rem] sm:h-[6.4rem] sm:w-24"}`}>
+      <span className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-3 border border-[#ddc47c]/70 bg-[#f4e2b3]/90 shadow-sm sm:w-16" />
+      <svg viewBox="0 0 24 24" className="h-10 w-10 text-[#16356f] sm:h-14 sm:w-14" fill="none" aria-hidden="true">
+        <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.44 1 1.1 1 1.9v.7h5v-.7c0-.8.4-1.46 1-1.9A6 6 0 0 0 12 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M10 19h4M10.5 21h3M12 7v4M9.5 9.5l2.5 1.5 2.5-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </span>
   );
@@ -362,9 +453,4 @@ function MicroscopeIcon() {
     </span>
   );
 }
-
-
-
-
-
 

@@ -12,7 +12,11 @@ import { DermatiteQuizCase2Page } from "./pages/DermatiteQuizCase2Page";
 import { DermatofitoseHistopathologyPage } from "./pages/DermatofitoseHistopathologyPage";
 import { DiagnosticPage } from "./pages/DiagnosticPage";
 import { DunHistopathologyPage } from "./pages/DunHistopathologyPage";
+import { EritemaElevatumDiutinumGoldTipsPage } from "./pages/EritemaElevatumDiutinumGoldTipsPage";
 import { FocusedTreeMapPage } from "./pages/FocusedTreeMapPage";
+import { GranulomaFacialGoldTipsPage } from "./pages/GranulomaFacialGoldTipsPage";
+import { GranulomatosePoliangiteEosinofiliaGoldTipsPage } from "./pages/GranulomatosePoliangiteEosinofiliaGoldTipsPage";
+import { GranulomatosePoliangiteWegenerGoldTipsPage } from "./pages/GranulomatosePoliangiteWegenerGoldTipsPage";
 import { HomePage } from "./pages/HomePage";
 import { LiquenPlanoHistopathologyPage } from "./pages/LiquenPlanoHistopathologyPage";
 import { LiquenNitidoHistopathologyPage } from "./pages/LiquenNitidoHistopathologyPage";
@@ -24,7 +28,10 @@ import { NeutrophilicUrticarialDermatosisGoldTipsPage } from "./pages/Neutrophil
 import { OverviewPage } from "./pages/OverviewPage";
 import { PalisadedDermatitisHistopathologyPage } from "./pages/PalisadedDermatitisHistopathologyPage";
 import { PalisadedNeutrophilicGranulomatousDermatitisPage } from "./pages/PalisadedNeutrophilicGranulomatousDermatitisPage";
+import { PernioseEpifenomenoLesGoldTipsPage } from "./pages/PernioseEpifenomenoLesGoldTipsPage";
 import { PmleHistopathologyPage } from "./pages/PmleHistopathologyPage";
+import { PoliangiteMicroscopicaGoldTipsPage } from "./pages/PoliangiteMicroscopicaGoldTipsPage";
+import { PoliarteriteNodosaVasculiteGoldTipsPage } from "./pages/PoliarteriteNodosaVasculiteGoldTipsPage";
 import { PoroceratoseHistopathologyPage } from "./pages/PoroceratoseHistopathologyPage";
 import { PrpHistopathologyPage } from "./pages/PrpHistopathologyPage";
 import { QuizPage } from "./pages/QuizPage";
@@ -42,6 +49,15 @@ import { TedSimuladoSessionPage } from "./pages/TedSimuladoSessionPage";
 import { MeusSimuladosPage } from "./pages/MeusSimuladosPage";
 import { TedBuscaPage } from "./pages/TedBuscaPage";
 import { TreeDiagramPage } from "./pages/TreeDiagramPage";
+import { TromboflebiteGoldTipsPage } from "./pages/TromboflebiteGoldTipsPage";
+import { VasculiteCrioglobulinemicaGoldTipsPage } from "./pages/VasculiteCrioglobulinemicaGoldTipsPage";
+import { VasculiteCutaneaIgmIggGoldTipsPage } from "./pages/VasculiteCutaneaIgmIggGoldTipsPage";
+import { VasculiteIgaHenochSchonleinGoldTipsPage } from "./pages/VasculiteIgaHenochSchonleinGoldTipsPage";
+import { VasculiteLeucocitoclasticaGoldTipsPage } from "./pages/VasculiteLeucocitoclasticaGoldTipsPage";
+import { VasculiteNodularGoldTipsPage } from "./pages/VasculiteNodularGoldTipsPage";
+import { VasculiteSepticaGoldTipsPage } from "./pages/VasculiteSepticaGoldTipsPage";
+import { VasculiteUrticarialHipocomplementemicaGoldTipsPage } from "./pages/VasculiteUrticarialHipocomplementemicaGoldTipsPage";
+import { VasculopatiaLivedoideGoldTipsPage } from "./pages/VasculopatiaLivedoideGoldTipsPage";
 import { WelcomeVideoPage } from "./pages/WelcomeVideoPage";
 
 export default function App() {
@@ -165,6 +181,8 @@ export default function App() {
           <Route path="/mapa-da-arvore" element={<FocusedTreeMapPage />} />
           <Route path="/dicas-que-valem-ouro" element={<LupusGoldTipsPage />} />
           <Route path="/dicas-que-valem-ouro/dermatose-urticariforme-neutrofilica" element={<NeutrophilicUrticarialDermatosisGoldTipsPage />} />
+          <Route path="/tome-nota/lupus-cutaneo" element={<LupusGoldTipsPage />} />
+          <Route path="/tome-nota/dermatose-urticariforme-neutrofilica" element={<NeutrophilicUrticarialDermatosisGoldTipsPage />} />
           <Route path="/histopatologico/dermatose-urticariforme-neutrofilica" element={<DunHistopathologyPage />} />
           <Route path="/histopatologico/dermatofitose" element={<DermatofitoseHistopathologyPage />} />
           <Route path="/histopatologico/ceratose-liquenoide" element={<CeratoseLiquenoideHistopathologyPage />} />
@@ -177,8 +195,30 @@ export default function App() {
           <Route path="/histopatologico/liquen-simples-cronico" element={<LscHistopathologyPage />} />
           <Route path="/histopatologico/poroceratose" element={<PoroceratoseHistopathologyPage />} />
           <Route path="/dicas-que-valem-ouro/rosacea" element={<RosaceaGoldTipsPage />} />
+          <Route path="/dicas-que-valem-ouro/vasculite-leucocitoclastica" element={<VasculiteLeucocitoclasticaGoldTipsPage />} />
+          <Route path="/tome-nota/rosacea" element={<RosaceaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-leucocitoclastica" element={<VasculiteLeucocitoclasticaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-septica" element={<VasculiteSepticaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculopatia-livedoide" element={<VasculopatiaLivedoideGoldTipsPage />} />
+          <Route path="/tome-nota/perniose-epifenomeno-les" element={<PernioseEpifenomenoLesGoldTipsPage />} />
+          <Route path="/tome-nota/granuloma-facial" element={<GranulomaFacialGoldTipsPage />} />
+          <Route path="/tome-nota/eritema-elevatum-diutinum" element={<EritemaElevatumDiutinumGoldTipsPage />} />
+          <Route path="/tome-nota/poliangite-microscopica" element={<PoliangiteMicroscopicaGoldTipsPage />} />
+          <Route path="/tome-nota/granulomatose-poliangiite-wegener" element={<GranulomatosePoliangiteWegenerGoldTipsPage />} />
+          <Route path="/tome-nota/granulomatose-poliangiite-eosinofilia" element={<GranulomatosePoliangiteEosinofiliaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-crioglobulinemica" element={<VasculiteCrioglobulinemicaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-iga-henoch-schonlein" element={<VasculiteIgaHenochSchonleinGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-urticarial-hipocomplementemica" element={<VasculiteUrticarialHipocomplementemicaGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-cutanea-igm-igg" element={<VasculiteCutaneaIgmIggGoldTipsPage />} />
+          <Route path="/tome-nota/tromboflebite" element={<TromboflebiteGoldTipsPage />} />
+          <Route path="/tome-nota/poliarterite-nodosa-vasculite" element={<PoliarteriteNodosaVasculiteGoldTipsPage />} />
+          <Route path="/tome-nota/vasculite-nodular" element={<VasculiteNodularGoldTipsPage />} />
           <Route
             path="/entenda-melhor/dermatite-neutrofilica-granulomatosa-palicada"
+            element={<PalisadedNeutrophilicGranulomatousDermatitisPage />}
+          />
+          <Route
+            path="/tome-nota/dermatite-neutrofilica-granulomatosa-palicada"
             element={<PalisadedNeutrophilicGranulomatousDermatitisPage />}
           />
           <Route

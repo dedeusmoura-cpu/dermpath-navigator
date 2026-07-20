@@ -25,6 +25,23 @@ const uiTranslations = {
     home_card_start_body: "Percorra um fluxo algorítmico guiado por desenhos histológicos até o diagnóstico mais provável.",
     home_card_tree_map_body: "Visualize a estrutura geral da árvore diagnóstica",
     home_card_quiz_body: "Acesse o módulo Quiz utilizando o método algorítmico para revisar conteúdos do aplicativo de forma guiada.",
+    home_card_ted_body: "Treine com questões comentadas no formato TED e desenvolva seu raciocínio diagnóstico.",
+    home_diagnostic_title: "Navegação diagnóstica",
+    home_explore_title: "Explorar dermatopatologia",
+    home_ted_title: "Treinamento TED",
+    home_tools_link: "Conheça as ferramentas",
+    home_paths_kicker: "Escolha seu caminho",
+    home_paths_title: "Aprenda no seu ritmo.",
+    home_paths_body: "Quatro formas complementares de explorar, compreender e consolidar o diagnóstico dermatopatológico.",
+    home_action_tree: "Abrir árvore diagnóstica",
+    home_action_explore: "Iniciar exploração guiada",
+    home_action_quiz: "Resolver casos",
+    home_action_ted: "Iniciar treinamento",
+    home_video_subtitle: "Uma breve apresentação do projeto",
+    home_lattes_cta: "Currículo Lattes",
+    home_footer_about: "Sobre o projeto",
+    home_footer_disclaimer: "Ferramenta destinada ao aprendizado. Não substitui avaliação diagnóstica, correlação clinicopatológica ou consulta à literatura especializada.",
+    home_footer_rights: "DermPath Navigator · Rafael de Deus Moura",
     home_about_kicker: "Sobre o método",
     home_about_title: "Leitura organizada, sem excesso de ruído.",
     home_about_body:
@@ -71,8 +88,9 @@ const uiTranslations = {
     teaching_content: "Conteúdo didático",
     understand_better: "ENTENDA MELHOR",
     histopathology: "Histopatológico",
-    gold_tips: "DICAS QUE VALEM OURO",
-    gold_tips_lupus_classification: "Dicas que Valem Ouro: Classificação do Lúpus Cutâneo",
+    gold_tips: "TOME NOTA!",
+    gold_tips_lupus_classification: "Tome nota: Classificação do Lúpus Cutâneo",
+    tome_nota: "Tome nota!",
     return_to_diagnosis: "Voltar ao diagnóstico",
     didactic_slide: "Lâmina didática",
     didactic_slides: "Lâminas didáticas",
@@ -105,6 +123,23 @@ const uiTranslations = {
     home_card_start_body: "Follow the morphologic flow through illustrated images to the most likely outcome.",
     home_card_tree_map_body: "View the overall structure of the diagnostic tree.",
     home_card_quiz_body: "Access the Quiz module using the algorithmic method to review app content in a guided way.",
+    home_card_ted_body: "Practice with commented questions in the TED format and develop your diagnostic reasoning.",
+    home_diagnostic_title: "Diagnostic navigation",
+    home_explore_title: "Explore dermatopathology",
+    home_ted_title: "TED Training",
+    home_tools_link: "Explore the tools",
+    home_paths_kicker: "Choose your path",
+    home_paths_title: "Learn at your own pace.",
+    home_paths_body: "Four complementary ways to explore, understand, and consolidate dermatopathologic diagnosis.",
+    home_action_tree: "Open diagnostic tree",
+    home_action_explore: "Start guided exploration",
+    home_action_quiz: "Solve cases",
+    home_action_ted: "Start training",
+    home_video_subtitle: "A brief introduction to the project",
+    home_lattes_cta: "Lattes CV",
+    home_footer_about: "About the project",
+    home_footer_disclaimer: "This tool is intended for education. It does not replace diagnostic assessment, clinicopathologic correlation, or consultation of specialized literature.",
+    home_footer_rights: "DermPath Navigator · Rafael de Deus Moura",
     home_about_kicker: "About the method",
     home_about_title: "Organized reading, without excess noise.",
     home_about_body:
@@ -151,8 +186,9 @@ const uiTranslations = {
     teaching_content: "Didactic content",
     understand_better: "UNDERSTAND BETTER",
     histopathology: "Histopathology",
-    gold_tips: "GOLDEN TIPS",
-    gold_tips_lupus_classification: "Golden Tips: Cutaneous Lupus Classification",
+    gold_tips: "TAKE NOTE!",
+    gold_tips_lupus_classification: "Take note: Cutaneous Lupus Classification",
+    tome_nota: "Take note!",
     return_to_diagnosis: "Back to diagnosis",
     didactic_slide: "Teaching slide",
     didactic_slides: "Teaching slides",
@@ -870,7 +906,7 @@ const optionHintTranslationsEn: Record<string, string> = {
 
 const extraExactTextTranslations: Record<string, string> = {
   "Dicas que Valem Ouro: Dermatose Urticariforme Neutrofílica":
-    "Golden Tips: Neutrophilic Urticarial Dermatosis",
+    "Take note: Neutrophilic Urticarial Dermatosis",
   "Predom?nio de Linfócitos": "Predominance of lymphocytes",
   "Neutr?filos proeminentes": "Prominent neutrophils",
   "Eosinófilos proeminentes": "Prominent eosinophils",
@@ -1399,7 +1435,7 @@ const repairedManualExactTextTranslations = repairRecord({
     "Enlarged display of the 8 histopathology images, with a focus on comfortable and detailed reading.",
   "Dermatofitose": "Dermatophytosis",
   "Dicas que Valem Ouro: Dermatose Urticariforme Neutrofílica":
-    "Golden Tips: Neutrophilic Urticarial Dermatosis",
+    "Take note: Neutrophilic Urticarial Dermatosis",
   "Histopatológico: Dermatose Urticariforme Neutrofílica":
     "Histopathology: Neutrophilic Urticarial Dermatosis",
   "Trata-se de fragmentos de pele com epiderme exibindo paraceratose com microabscessos de neutrófilos, hiperplasia psoriasiforme e hipogranulose. Em derme superficial, h? leve infiltrado linfocitário perivascular. A colora?ão de PAS revelou presen?a de hifas septadas em camada córnea. Os achados são compatéveis com Dermatofitose, simulando psoríase histologicamente.":
@@ -1524,8 +1560,6 @@ export function getTranslatedTerminalLabel(type: NodeType, language: Language): 
       return "Decision";
   }
 }
-
-
 
 
 

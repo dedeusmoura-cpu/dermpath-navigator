@@ -1,250 +1,263 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import dermPathLogo from "../assets/dermpath-logo-final.png";
-import mapTreeImage from "../assets/Mapa-da-Arvore.png";
-import quizImage from "../assets/Quiz-branco.png";
 import authorImage from "../assets/Rafael.png.png";
-import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
-import treinamentoTedIcon from "../assets/Diploma-clean-icon.svg";
+import dermpathTexture from "../assets/dermpath-illustration@2x.png";
+import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
+
+const paths = [
+  {
+    to: "/mapa-da-arvore",
+    number: "01",
+    titleKey: "home_diagnostic_title" as const,
+    bodyKey: "home_card_tree_map_body" as const,
+    labelKey: "home_action_tree" as const,
+    icon: <DiagnosticPathIcon />,
+  },
+  {
+    to: "/diagnostico",
+    number: "02",
+    titleKey: "home_explore_title" as const,
+    bodyKey: "home_card_start_body" as const,
+    labelKey: "home_action_explore" as const,
+    icon: <SkinExploreIcon />,
+  },
+  {
+    to: "/quiz",
+    number: "03",
+    titleKey: "home_quiz" as const,
+    bodyKey: "home_card_quiz_body" as const,
+    labelKey: "home_action_quiz" as const,
+    icon: <QuizSlideIcon />,
+  },
+  {
+    to: "/treinamento-ted",
+    number: "04",
+    titleKey: "home_ted_title" as const,
+    bodyKey: "home_card_ted_body" as const,
+    labelKey: "home_action_ted" as const,
+    icon: <TedExamIcon />,
+  },
+];
 
 export function HomePage() {
   const { t, language, setLanguage } = useLanguage();
 
   return (
     <Layout title={t("home_title")} subtitle={t("home_subtitle")} compactHeader>
-      <section className="relative overflow-hidden rounded-[36px] border border-sand/80 bg-[linear-gradient(135deg,_rgba(237,221,191,1)_0%,_rgba(242,233,214,1)_42%,_rgba(236,225,200,1)_100%)] shadow-panel">
-        <div className="absolute inset-x-0 top-0 h-44 bg-[radial-gradient(circle_at_top_left,_rgba(169,122,31,0.18),_transparent_56%)]" />
-        <div className="absolute bottom-0 left-0 h-44 w-44 rounded-full bg-[radial-gradient(circle,_rgba(20,27,43,0.06),_rgba(20,27,43,0))]" />
-        <div className="absolute right-0 top-16 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.78),_rgba(255,255,255,0))]" />
-
-        <div className="relative px-6 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-14">
-          <div className="flex items-center justify-between mb-6">
+      <div className="overflow-hidden rounded-[28px] border border-[#d9c9a4]/60 bg-[#f9f6ed] shadow-[0_28px_80px_-48px_rgba(4,31,68,0.45)]">
+        <header className="flex items-center justify-between border-b border-[#c7a553]/30 bg-[#082d5c] px-5 py-4 sm:px-8 lg:px-10">
+          <Link to="/" className="group -ml-2 block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" aria-label="DermPath Navigator">
             <img
-              src={dermPathLogo}
-              alt={t("home_title")}
-              className="h-[44px] w-auto sm:h-[62px]"
+              src={dermPathLogoNavyGold}
+              alt="DermPath Navigator"
+              className="h-auto w-[172px] transition duration-300 group-hover:brightness-110 sm:w-[226px]"
             />
-            <div className="inline-flex w-fit rounded-full border border-sand bg-white/80 p-[3px]">
-              <button
-                type="button"
-                onClick={() => setLanguage("pt")}
-                className={`rounded-full px-3 py-1 text-sm font-semibold transition ${
-                  language === "pt" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"
-                }`}
-              >
-                PT
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguage("en")}
-                className={`rounded-full px-3 py-1 text-sm font-semibold transition ${
-                  language === "en" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"
-                }`}
-              >
-                EN
-              </button>
-            </div>
-          </div>
-          <div className="mx-auto max-w-4xl space-y-8 text-center">
-            <div className="space-y-4">
-              <span className="inline-flex rounded-full border border-accent/15 bg-white/88 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-accent shadow-sm">
-                {t("brand_kicker")}
-              </span>
-              <div className="space-y-3">
-                <h1 className="mx-auto max-w-3xl font-serif text-4xl leading-[1.05] text-ink sm:text-5xl lg:text-6xl">
-                  {t("home_hero_heading")}
-                </h1>
-                <p className="mx-auto max-w-2xl text-base leading-7 text-steel sm:text-lg">{t("home_hero_body")}</p>
-              </div>
-            </div>
+          </Link>
 
-            <div className="rounded-[32px] bg-white/92 p-5 shadow-[0_24px_52px_-30px_rgba(20,27,43,0.45)] sm:p-6">
-              <div className="grid grid-cols-1 gap-4 text-left sm:grid-cols-2">
-              <HomeActionCard
-                to="/diagnostico"
-                title={t("home_start")}
-                body={t("home_card_start_body")}
-                imageSrc={navegacaoDiagnosticaCompassIcon}
-                imageAlt={t("home_start")}
-                badgeLabel={t("home_start")}
-                accentClassName="from-[#1A47BF] to-[#245FE7]"
-                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#245FE7]"
-                hoverTextClassName="group-hover:text-[#245FE7]"
-                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(31%)_sepia(95%)_saturate(2824%)_hue-rotate(222deg)_brightness(94%)_contrast(92%)]"
-                badgeTextClassName="text-[1.22rem] font-bold sm:text-[1.38rem]"
-                hideTitle
-                compactText
-              />
-              <HomeActionCard
-                to="/mapa-da-arvore"
-                title={t("home_tree_map")}
-                body={t("home_card_tree_map_body")}
-                imageSrc={mapTreeImage}
-                imageAlt={t("home_tree_map")}
-                badgeLabel={t("home_tree_map")}
-                accentClassName="from-[#7B1EE6] via-[#B82EDC] to-[#F050C7]"
-                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#B82EDC]"
-                hoverTextClassName="group-hover:text-[#B82EDC]"
-                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(30%)_sepia(79%)_saturate(3008%)_hue-rotate(282deg)_brightness(96%)_contrast(88%)]"
-                hideTitle
-                compactText
-              />
-              <HomeActionCard
-                to="/quiz"
-                title={t("home_quiz")}
-                body={t("home_card_quiz_body")}
-                imageSrc={quizImage}
-                imageAlt={t("home_quiz")}
-                accentClassName="from-[#0A5C3B] to-[#1DBA6C]"
-                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#1DBA6C]"
-                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(57%)_sepia(64%)_saturate(1641%)_hue-rotate(103deg)_brightness(93%)_contrast(86%)]"
-              />
-              <HomeActionCard
-                to="/treinamento-ted"
-                title="Treinamento TED"
-                body="Treine com questões comentadas no formato TED para desenvolver seu raciocínio diagnóstico."
-                imageSrc={treinamentoTedIcon}
-                imageAlt="Treinamento TED"
-                badgeLabel="Treinamento TED"
-                accentClassName="from-[#EE8A00] to-[#FFB000]"
-                hoverAccentClassName="group-hover:bg-white group-hover:bg-none group-hover:ring-2 group-hover:ring-[#EE8A00]"
-                hoverTextClassName="group-hover:text-[#EE8A00]"
-                hoverIconClassName="group-hover:[filter:brightness(0)_saturate(100%)_invert(58%)_sepia(95%)_saturate(1460%)_hue-rotate(2deg)_brightness(102%)_contrast(102%)]"
-                hideTitle
-                compactText
-              />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="space-y-6">
-        <div className="rounded-[28px] border border-sand/90 bg-white/92 p-6 shadow-panel sm:p-8">
-          <div className="grid gap-6 lg:grid-cols-[240px_1fr] lg:items-center">
-            <div className="overflow-hidden rounded-[24px] border border-sand bg-paper shadow-sm">
-              <img
-                src={authorImage}
-                alt="Rafael de Deus Moura"
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("author_section_title")}</p>
-              <p className="max-w-4xl text-sm leading-7 text-steel sm:text-base">{t("author_section_body")}</p>
-              <p className="text-sm text-steel">
-                <span className="font-semibold text-ink">{t("author_lattes_label")}</span>{" "}
-                <a
-                  href="https://lattes.cnpq.br/6149961950618151"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-medium text-accent underline decoration-accent/40 underline-offset-4 transition hover:text-ink"
+          <div className="flex items-center gap-4">
+            <span className="hidden text-[0.68rem] font-medium uppercase tracking-[0.2em] text-white/55 sm:block">{t("brand_kicker")}</span>
+            <div className="inline-flex rounded-full border border-white/20 bg-white/[0.06] p-1" aria-label={language === "pt" ? "Idioma" : "Language"}>
+              {(["pt", "en"] as const).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setLanguage(item)}
+                  className={`rounded-full px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-wider transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] ${
+                    language === item ? "bg-[#d6b766] text-[#082d5c]" : "text-white/65 hover:text-white"
+                  }`}
                 >
-                  https://lattes.cnpq.br/6149961950618151
-                </a>
-              </p>
+                  {item}
+                </button>
+              ))}
             </div>
           </div>
-        </div>
+        </header>
 
-        <div className="overflow-hidden rounded-[28px] border border-sand/90 bg-white/92 shadow-panel">
-          <div className="border-b border-sand/80 px-6 py-5 sm:px-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("author_welcome_video")}</p>
-          </div>
-          <div className="p-4 sm:p-6">
-            <div className="overflow-hidden rounded-[24px] border border-sand bg-paper shadow-sm">
-              <div className="aspect-video w-full">
-                <iframe
-                  src="https://www.youtube.com/embed/iFJevx18PsI"
-                  title="Video de Boas Vindas - DermPath Navigator"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="h-full w-full"
-                />
-              </div>
+        <section className="relative isolate overflow-hidden bg-[#082d5c] px-6 py-14 sm:px-10 sm:py-20 lg:px-16 lg:py-24">
+          <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_78%_45%,rgba(37,92,148,0.58),transparent_33%),linear-gradient(120deg,#061f42_0%,#082d5c_58%,#0c3b73_100%)]" />
+          <img
+            src={dermpathTexture}
+            alt=""
+            aria-hidden="true"
+            className="absolute -bottom-16 -right-28 -z-10 w-[720px] max-w-[68%] rotate-[-3deg] opacity-[0.17] mix-blend-screen grayscale sm:-right-16"
+          />
+          <div className="absolute right-[7%] top-10 -z-10 h-56 w-56 rounded-full border border-[#b38b45]/60" />
+          <div className="absolute right-[11%] top-20 -z-10 h-40 w-40 rounded-full border border-[#b38b45]/40" />
+
+          <div className="max-w-3xl">
+            <div className="mb-7 flex items-center gap-3 text-[#e1c77e]">
+              <span className="h-px w-10 bg-[#d6b766]" />
+              <span className="text-[0.68rem] font-semibold uppercase tracking-[0.28em]">{t("brand_kicker")}</span>
+            </div>
+            <h1 className="max-w-[760px] font-serif text-[2.7rem] font-normal leading-[1.03] tracking-[-0.035em] text-white sm:text-6xl lg:text-[4.6rem]">
+              {t("home_hero_heading")}
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-7 text-[#dbe5f0]/80 sm:text-lg">{t("home_hero_body")}</p>
+            <div className="mt-9 flex flex-wrap items-center gap-5">
+              <Link
+                to="/mapa-da-arvore"
+                className="group inline-flex items-center gap-3 rounded-full bg-[#d6b766] px-6 py-3.5 text-sm font-bold text-[#082d5c] shadow-[0_12px_30px_-16px_rgba(214,183,102,0.8)] transition hover:-translate-y-0.5 hover:bg-[#e5cb84] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]"
+              >
+                {t("home_diagnostic_title")}
+                <span className="transition-transform group-hover:translate-x-0.5"><ArrowIcon /></span>
+              </Link>
+              <a href="#caminhos" className="rounded-sm text-sm font-semibold text-white/75 underline decoration-[#d6b766]/60 underline-offset-8 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]">
+                {t("home_tools_link")}
+              </a>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section id="caminhos" className="px-5 py-12 sm:px-8 sm:py-16 lg:px-10">
+          <div className="mb-9 grid gap-4 border-b border-[#cdbb91]/60 pb-7 md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#a07926]">{t("home_paths_kicker")}</p>
+              <h2 className="mt-3 font-serif text-3xl tracking-[-0.025em] text-[#082d5c] sm:text-4xl">{t("home_paths_title")}</h2>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-[#5f6b78] md:text-right">{t("home_paths_body")}</p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {paths.map((path) => (
+              <HomePathCard
+                key={path.to}
+                to={path.to}
+                number={path.number}
+                title={t(path.titleKey)}
+                body={t(path.bodyKey)}
+                label={t(path.labelKey)}
+                icon={path.icon}
+              />
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section className="mt-7 grid gap-7 lg:grid-cols-[0.82fr_1.18fr]">
+        <article id="sobre-projeto" className="scroll-mt-6 overflow-hidden rounded-[28px] border border-[#d9c9a4]/60 bg-[#f9f6ed] shadow-[0_24px_70px_-52px_rgba(4,31,68,0.5)]">
+          <div className="grid h-full sm:grid-cols-[170px_1fr] lg:grid-cols-1 xl:grid-cols-[180px_1fr]">
+            <img src={authorImage} alt="Rafael de Deus Moura" className="h-full min-h-52 w-full object-cover object-center" />
+            <div className="flex flex-col justify-center p-7">
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.23em] text-[#a07926]">{t("author_section_title")}</p>
+              <p className="mt-4 text-sm leading-6 text-[#5f6b78]">{t("author_section_body")}</p>
+              <a href="https://lattes.cnpq.br/6149961950618151" target="_blank" rel="noreferrer" className="group mt-5 inline-flex w-fit items-center gap-2 rounded-sm text-sm font-bold text-[#082d5c] hover:text-[#a07926] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]">
+                {t("home_lattes_cta")} <span className="transition-transform group-hover:translate-x-0.5"><ArrowIcon /></span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article className="overflow-hidden rounded-[28px] border border-[#d9c9a4]/60 bg-[#082d5c] shadow-[0_24px_70px_-52px_rgba(4,31,68,0.5)]">
+          <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+            <div>
+              <p className="text-[0.65rem] font-bold uppercase tracking-[0.23em] text-[#d6b766]">{t("author_welcome_video")}</p>
+              <p className="mt-1 text-sm text-white/65">{t("home_video_subtitle")}</p>
+            </div>
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-[#d6b766]/40 text-[#d6b766]">▶</span>
+          </div>
+          <div className="aspect-video w-full bg-[#061f42]">
+            <iframe
+              src="https://www.youtube.com/embed/iFJevx18PsI"
+              title="Vídeo de boas-vindas — DermPath Navigator"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="h-full w-full"
+            />
+          </div>
+        </article>
       </section>
+
+      <footer className="mt-7 overflow-hidden rounded-[24px] border border-[#d9c9a4]/60 bg-[#082d5c] text-white shadow-[0_24px_70px_-52px_rgba(4,31,68,0.5)]">
+        <div className="grid gap-7 px-6 py-7 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="max-w-3xl">
+            <p className="text-[0.65rem] font-bold uppercase tracking-[0.23em] text-[#d6b766]">DermPath Navigator</p>
+            <p className="mt-3 text-sm leading-6 text-white/65">{t("home_footer_disclaimer")}</p>
+          </div>
+          <nav className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-white/75" aria-label={language === "pt" ? "Links do rodapé" : "Footer links"}>
+            <a href="#sobre-projeto" className="rounded-sm transition hover:text-[#e1c77e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]">{t("home_footer_about")}</a>
+            <a href="#caminhos" className="rounded-sm transition hover:text-[#e1c77e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]">{t("home_tools_link")}</a>
+            <a href="https://lattes.cnpq.br/6149961950618151" target="_blank" rel="noreferrer" className="rounded-sm transition hover:text-[#e1c77e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]">{t("home_lattes_cta")}</a>
+          </nav>
+        </div>
+        <div className="border-t border-white/10 px-6 py-4 text-[0.68rem] text-white/45 sm:px-8">
+          © {new Date().getFullYear()} {t("home_footer_rights")}
+        </div>
+      </footer>
     </Layout>
   );
 }
 
-interface HomeActionCardProps {
-  to: string;
-  title: string;
-  body: string;
-  imageSrc?: string;
-  badgeLabel?: string;
-  hoverIconClassName?: string;
-  imageAlt?: string;
-  accentClassName?: string;
-  hoverAccentClassName?: string;
-  hoverTextClassName?: string;
-  badgeTextClassName?: string;
-  hideTitle?: boolean;
-  compactText?: boolean;
-}
-
-function HomeActionCard({
-  to,
-  title,
-  body,
-  imageSrc,
-  badgeLabel,
-  hoverIconClassName = "",
-  imageAlt,
-  accentClassName = "",
-  hoverAccentClassName = "",
-  hoverTextClassName = "",
-  badgeTextClassName = "",
-  hideTitle = false,
-  compactText = false,
-}: HomeActionCardProps) {
-  const resolvedHideTitle = badgeLabel ? hideTitle : imageSrc ? true : hideTitle;
-  const resolvedCompactText = badgeLabel ? compactText : imageSrc ? true : compactText;
-
+function HomePathCard({ to, number, title, body, label, icon }: { to: string; number: string; title: string; body: string; label: string; icon: ReactNode }) {
   return (
     <Link
       to={to}
-      className="group flex h-full min-h-[180px] flex-col rounded-[28px] sm:min-h-[260px] border border-sand/90 bg-white px-5 py-5 shadow-[0_22px_48px_-30px_rgba(20,27,43,0.28)] transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_34px_68px_-24px_rgba(20,27,43,0.44)]"
+      className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-[22px] border border-[#d8c8a3]/70 bg-[#fffdf7] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#b68d35] hover:shadow-[0_22px_44px_-28px_rgba(8,45,92,0.42)] focus-visible:-translate-y-1 focus-visible:border-[#b68d35] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f9f6ed]"
     >
-      <div
-        className={`relative mb-5 mx-auto box-border flex h-20 w-full max-w-[278px] items-center justify-center overflow-hidden rounded-full shadow-[0_26px_54px_-24px_rgba(20,27,43,0.8)] ring-1 ring-accent/20 transition-all duration-200 ease-out group-hover:scale-[1.04] group-hover:brightness-110 bg-gradient-to-r px-5 py-4 ${accentClassName} ${hoverAccentClassName}`}
-      >
-        {imageSrc ? (
-          badgeLabel ? (
-            <div className="flex w-full items-center justify-center gap-3 px-6 text-white">
-              <img
-                src={imageSrc}
-                alt={imageAlt ?? title}
-                className={`block h-14 w-14 shrink-0 object-contain transition-[filter] duration-200 ${hoverIconClassName}`}
-              />
-              <span className={`text-lg font-semibold leading-tight transition-colors duration-200 sm:text-[1.35rem] ${hoverTextClassName}`}>
-                {badgeLabel}
-              </span>
-            </div>
-          ) : (
-            <img
-              src={imageSrc}
-              alt={imageAlt ?? title}
-              className={`h-14 w-full max-w-full object-contain transition-[filter] duration-200 ${hoverIconClassName}`}
-            />
-          )
-        ) : (
-          <div className={`flex h-full w-full items-center justify-center text-center text-[1.05rem] leading-tight font-semibold text-white sm:text-xl ${badgeTextClassName} ${hoverTextClassName}`}>
-            {title}
-          </div>
-        )}
+      <div className="flex items-start justify-between">
+        <span className="grid h-14 w-14 place-items-center rounded-full bg-[#082d5c] text-[#d6b766] shadow-[0_10px_24px_-16px_rgba(8,45,92,0.8)] transition-colors duration-300 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]">{icon}</span>
+        <span className="font-serif text-sm text-[#b68d35]">{number}</span>
       </div>
-      <div className={`space-y-3 ${resolvedCompactText ? "text-center" : "text-left"}`}>
-        {!resolvedHideTitle ? <h2 className="font-serif text-2xl text-ink">{title}</h2> : null}
-        <p className="text-sm leading-6 text-steel">{body}</p>
+      <h3 className="mt-8 font-serif text-[1.55rem] leading-tight tracking-[-0.02em] text-[#082d5c]">{title}</h3>
+      <p className="mt-3 text-sm leading-6 text-[#68727c]">{body}</p>
+      <div className="mt-auto flex items-center justify-between border-t border-[#d8c8a3]/55 pt-5 text-[0.7rem] font-bold uppercase tracking-[0.11em] text-[#8d6a21]">
+        <span>{label}</span>
+        <span className="grid h-8 w-8 place-items-center rounded-full border border-[#c6a557]/60 transition group-hover:translate-x-0.5 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]"><ArrowIcon /></span>
       </div>
     </Link>
+  );
+}
+
+function ArrowIcon() { return <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>; }
+
+function DiagnosticPathIcon() {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7" aria-hidden="true">
+      <circle cx="16" cy="5.5" r="2.3" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="7" cy="20" r="2.3" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="24.5" cy="19" r="2.3" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="24.5" cy="27" r="2.3" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M16 8v5H7v4.7M16 13h8.5v3.7M24.5 21.3v2.6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="m22.2 22.2 2.3 2.3 2.3-2.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function SkinExploreIcon() {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7" aria-hidden="true">
+      <path d="M4 7.5c3.1-1.8 5.8 1.7 9 0s5.8 1.7 9 0 4.5.1 6 0v14H4v-14Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M4 11c3.1-1.8 5.8 1.7 9 0s5.8 1.7 9 0 4.5.1 6 0M4 15.5h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M7 19c2-1.8 3.7 1.5 5.7 0 2-1.6 3.7 1.5 5.7 0" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="22.2" cy="21.2" r="4.3" fill="#082d5c" stroke="currentColor" strokeWidth="1.7" />
+      <path d="m25.4 24.4 3.1 3.1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function QuizSlideIcon() {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7" aria-hidden="true">
+      <rect x="3.5" y="8" width="25" height="16" rx="2.2" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="6.5" y="11" width="8.5" height="10" rx="1.2" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="9.4" cy="15" r="1.3" stroke="currentColor" strokeWidth="1.2" />
+      <circle cx="12.5" cy="17.5" r="1.6" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M20 13.5a2.8 2.8 0 1 1 3.7 2.7c-1.2.4-1.7 1-1.7 2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="22" cy="21" r=".85" fill="currentColor" />
+    </svg>
+  );
+}
+
+function TedExamIcon() {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" className="h-7 w-7" aria-hidden="true">
+      <path d="M7 3.5h14l4 4V27H7V3.5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M21 3.5V8h4M12.2 12.2l1.4 1.4 2.5-2.8M18.5 13h3.2M11 18h3M16.5 18h5.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="13" cy="23.2" r="2.2" stroke="currentColor" strokeWidth="1.4" />
+      <path d="m11.7 25-.6 3 1.9-1 1.9 1-.6-3" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+    </svg>
   );
 }
