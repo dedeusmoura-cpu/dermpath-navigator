@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/cryoglobulinemic-vasculitis.png";
 
 const TARGET_NODE_ID = "dx-chapel-hill-vasculite-crioglobulinemica";
 
@@ -98,11 +100,11 @@ export function VasculiteCrioglobulinemicaGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Vasculite crioglobulinêmica tipos II e III"
+          title="Vasculite crioglobulinêmica"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Púrpura + artralgia + neuropatia + C4 baixo em paciente com hepatite C = pense em crioglobulinemia mista.</>}
+          aside={<StudyNoteImageAside title="Esquema: crioglobulinas" image={diagramImage} alt="Vasculite por crioglobulinas com púrpura e eixos sistêmicos" legend={[{ label: "Complexos IgM-IgG", color: "bg-sky-600" }, { label: "LCV de pequenos vasos", color: "bg-violet-700" }, { label: "HCV, nervo e rim", color: "bg-amber-600" }]} footer="Púrpura + C4 baixo + crioglobulinas." />}
           pearl={
             <>
               Sempre investigar <Highlight>hepatite C</Highlight> — os antivirais de ação direta mudaram o prognóstico desta

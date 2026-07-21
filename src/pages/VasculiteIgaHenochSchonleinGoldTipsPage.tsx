@@ -27,10 +27,10 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
       title: "Conceito",
       icon: <BookIcon />,
       bullets: [
-        <>Vasculite de pequenos vasos mediada por depósitos de <Highlight>IgA (IgA1)</Highlight> nas paredes vasculares.</>,
-        <>Forma mais comum de vasculite na infância (pico aos 6 anos; 90% &lt;10 anos).</>,
-        <>Tétrade clássica: <Highlight>púrpura palpável, artrite, dor abdominal e hematúria</Highlight> — mas pode ser limitada à pele.</>,
-        <>Frequentemente precedida por infecção de vias aéreas superiores (1–2 semanas antes).</>,
+        <>Vasculite de <Highlight>pequenos vasos</Highlight>.</>,
+        <>Deposição vascular dominante de <Highlight>IgA</Highlight>.</>,
+        <>Mais comum em <Highlight>crianças &lt;10 anos</Highlight>.</>,
+        <>Pode ser cutânea ou sistêmica.</>,
       ],
     },
     {
@@ -40,10 +40,10 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Vasculite leucocitoclástica clássica de pequenos vasos dérmicos.</>,
-        <>IFD com depósito predominante e intenso de <Highlight>IgA</Highlight> na parede vascular (achado definidor).</>,
-        <>C3 e IgM podem coexistir, mas de forma menos proeminente.</>,
-        <>Ausência de eosinófilos associada a maior risco de acometimento renal em adultos.</>,
+        <><Highlight>Vasculite leucocitoclástica</Highlight> em pequenos vasos dérmicos.</>,
+        <>Neutrófilos com leucocitoclasia.</>,
+        <><Highlight>Necrose fibrinoide</Highlight> da parede vascular.</>,
+        <><Highlight>Extravasamento de hemácias</Highlight>.</>,
       ],
     },
   ];
@@ -56,23 +56,23 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
       title: "Pistas clínicas",
       icon: <StethoscopeIcon />,
       bullets: [
-        <>Púrpura palpável simétrica em <Highlight>membros inferiores e nádegas</Highlight>, podendo evoluir com necrose central.</>,
-        <>Artrite/artralgia (até 75%), predominando em joelhos e tornozelos.</>,
-        <>Dor abdominal em cólica, sangramento GI (50–75% dos casos).</>,
-        <>Hematúria/proteinúria em 40–50%; monitorar função renal por até 6 meses.</>,
+        <><Highlight>Púrpura palpável</Highlight>.</>,
+        <>Máculas eritematosas / pápulas urticariformes iniciais.</>,
+        <>Predomínio em <Highlight>membros inferiores e nádegas</Highlight>.</>,
+        <>Frequente após <Highlight>IVAS</Highlight>.</>,
       ],
     },
     {
-      id: "causas",
+      id: "manifestacoes-sistemicas",
       number: "4",
       color: "orange",
-      title: "Causas / avaliação",
+      title: "Manifestações sistêmicas",
       icon: <ClipboardIcon />,
       bullets: [
-        <>Investigar infecção respiratória alta recente; ASLO pode estar positivo (sem papel causal comprovado).</>,
-        <>Em <Highlight>adultos</Highlight>, considerar rastreio de neoplasia sólida (pulmão), especialmente em homens.</>,
-        <>Monitorar urina (hematúria/proteinúria) periodicamente — risco de nefrite até 6 meses após o quadro cutâneo.</>,
-        <>Tratamento predominantemente de suporte; corticoide não previne nefrite, mas trata artrite/dor abdominal.</>,
+        <><Highlight>Artralgia / artrite</Highlight>.</>,
+        <><Highlight>Dor abdominal</Highlight> / sangramento GI.</>,
+        <><Highlight>Hematúria / proteinúria</Highlight>.</>,
+        <>Monitorar rim nas primeiras semanas.</>,
       ],
     },
   ];
@@ -98,15 +98,15 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Vasculite por IgA (Henoch-Schönlein)"
+          title="Vasculite por IgA"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>IgA de forma predominante na IFD é o achado definidor da vasculite por IgA.</>}
+          aside={<IgAVascularDiagram />}
           pearl={
             <>
-              Em crianças &lt;10 anos com púrpura palpável em membros inferiores/nádegas após infecção respiratória, pense
-              sempre em <Highlight>Henoch-Schönlein</Highlight>.
+              Diante de <Highlight>púrpura palpável</Highlight> em pernas e nádegas, especialmente com artralgia ou dor
+              abdominal, lembre da <Highlight>vasculite por IgA</Highlight>.
             </>
           }
           source={
@@ -117,5 +117,54 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
         />
       </div>
     </Layout>
+  );
+}
+
+function IgAVascularDiagram() {
+  return (
+    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
+      <h3 className="mx-auto mb-3 max-w-[15rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
+        Esquema: depósito vascular de IgA
+      </h3>
+
+      <svg viewBox="0 0 320 330" className="mx-auto min-h-0 w-full max-w-[22rem] flex-1" role="img" aria-label="Depósitos de IgA em vaso dérmico">
+        <defs>
+          <linearGradient id="iga-skin" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#ffd6cf" />
+            <stop offset="1" stopColor="#fff0e8" />
+          </linearGradient>
+          <linearGradient id="iga-vessel" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#d44747" />
+            <stop offset="1" stopColor="#8f202d" />
+          </linearGradient>
+        </defs>
+        <path d="M4 33 C35 6 70 45 104 25 S170 40 208 21 S274 39 316 18 L316 324 L4 324Z" fill="url(#iga-skin)" />
+        <path d="M4 41 C40 15 71 54 106 32 S173 47 210 29 S275 48 316 25" fill="none" stroke="#c56b76" strokeWidth="7" />
+        <path d="M4 57 C42 30 75 66 110 46 S177 60 214 43 S278 61 316 40" fill="none" stroke="#e28d99" strokeWidth="5" />
+        <path d="M-8 259 C48 222 95 273 146 227 S244 208 331 157" fill="none" stroke="#7a202e" strokeWidth="38" strokeLinecap="round" />
+        <path d="M-8 259 C48 222 95 273 146 227 S244 208 331 157" fill="none" stroke="url(#iga-vessel)" strokeWidth="28" strokeLinecap="round" />
+        <path d="M-8 259 C48 222 95 273 146 227 S244 208 331 157" fill="none" stroke="#f18478" strokeWidth="6" strokeLinecap="round" opacity=".8" />
+        {[[42,236],[67,242],[99,241],[130,230],[157,210],[184,197],[214,190],[242,181],[272,168]].map(([x,y], index) => (
+          <g key={index} transform={`translate(${x} ${y})`}>
+            <circle r="8" fill="#56a55b" stroke="#236c39" strokeWidth="2" />
+            <path d="M-3-2h6M0-5v6" stroke="#d9f0aa" strokeWidth="1.7" strokeLinecap="round" />
+          </g>
+        ))}
+        {[[45,126],[78,157],[111,120],[139,166],[177,123],[209,151],[245,111],[274,140],[299,93]].map(([x,y], index) => (
+          <g key={index} transform={`translate(${x} ${y})`} opacity=".9">
+            <circle r="10" fill="#c7a4df" />
+            <circle cx="-3" cy="-1" r="2.7" fill="#775aa2" /><circle cx="3" cy="2" r="2.7" fill="#775aa2" />
+          </g>
+        ))}
+        <circle cx="250" cy="246" r="66" fill="#fff7ef" stroke="#1261a9" strokeWidth="3" />
+        <path d="M194 246 C218 228 239 258 263 236 S302 231 317 215" fill="none" stroke="#a62735" strokeWidth="25" strokeLinecap="round" />
+        <path d="M194 246 C218 228 239 258 263 236 S302 231 317 215" fill="none" stroke="#e2605c" strokeWidth="15" strokeLinecap="round" />
+        {[206,226,247,268,290].map((x, index) => <circle key={index} cx={x} cy={index % 2 ? 242 : 236} r="6" fill="#55a65a" stroke="#236c39" strokeWidth="1.5" />)}
+      </svg>
+
+      <p className="mt-2 text-center font-hand text-base leading-6 text-[#1c2b45]">
+        <span className="font-bold">DIF:</span> <Highlight>IgA</Highlight> nas paredes vasculares — achado patológico definidor.
+      </p>
+    </div>
   );
 }

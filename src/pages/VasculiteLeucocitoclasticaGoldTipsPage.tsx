@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/leukocytoclastic-vasculitis.png";
 
 const TARGET_NODE_ID = "dx-vasculite-lc";
 
@@ -106,7 +108,7 @@ export function VasculiteLeucocitoclasticaGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Biópsia precoce aumenta o rendimento diagnóstico.</>}
+          aside={<StudyNoteImageAside title="Esquema: LCV" image={diagramImage} alt="Vasculite leucocitoclástica em vênula dérmica" legend={[{ label: "Necrose fibrinoide", color: "bg-rose-500" }, { label: "Neutrófilos + leucocitoclasia", color: "bg-violet-700" }, { label: "Hemácias extravasadas", color: "bg-red-500" }]} footer="LCV é um padrão histológico." />}
           pearl={
             <>
               LCV é um <Highlight>padrão histológico</Highlight> — o contexto clínico, a <Highlight>DIF</Highlight> e a pesquisa de{" "}

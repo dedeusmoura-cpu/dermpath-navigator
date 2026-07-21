@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/superficial-thrombophlebitis.png";
 
 const TARGET_NODE_ID = "dx-grandes-vasos-veia-nao-leucocitoclastica";
 
@@ -102,7 +104,7 @@ export function TromboflebiteGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Cordão inflamatório ao longo de uma veia, sem leucocitoclasia à biópsia, aponta para tromboflebite, não para vasculite leucocitoclástica verdadeira.</>}
+          aside={<StudyNoteImageAside title="Esquema: veia trombosada" image={diagramImage} alt="Tromboflebite superficial com trombo organizado e recanalização" legend={[{ label: "Trombo venoso organizado", color: "bg-red-700" }, { label: "Inflamação da parede", color: "bg-violet-700" }, { label: "Recanalização", color: "bg-sky-600" }]} footer="Cordão linear segue o trajeto venoso." />}
           pearl={
             <>
               Tromboflebite <Highlight>migratória e recorrente</Highlight> deve sempre levantar a suspeita de neoplasia

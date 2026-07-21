@@ -5,6 +5,7 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import eedEvolutionDiagram from "../assets/study-notes/eritema-elevatum-diutinum-evolution.png";
 
 const TARGET_NODE_ID = "dx-venulas-granuloma-facial-eritema-elevatum";
 
@@ -27,10 +28,10 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
       title: "Conceito",
       icon: <BookIcon />,
       bullets: [
-        <>Dermatose crônica rara, considerada <Highlight>vasculite leucocitoclástica fibrosante</Highlight> de pequenos vasos.</>,
-        <>Lesões evoluem de vasculite neutrofílica aguda para <Highlight>fibrose progressiva</Highlight>.</>,
-        <>Associada a imunocomplexos circulantes com deposição repetida nos vasos dérmicos.</>,
-        <>Pode ocorrer em associação com HIV, estreptococos, gamopatia monoclonal por IgA e doenças autoimunes.</>,
+        <>Dermatose <Highlight>rara e crônica</Highlight>.</>,
+        <>Variante de <Highlight>vasculite leucocitoclástica</Highlight> cutânea.</>,
+        <>Pápulas / placas / nódulos <Highlight>vermelho-violáceos</Highlight> a <Highlight>castanho-avermelhados</Highlight>.</>,
+        <>Curso <Highlight>persistente e fibrosante</Highlight>.</>,
       ],
     },
     {
@@ -40,10 +41,10 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Lesões precoces: vasculite leucocitoclástica com infiltrado neutrofílico denso na derme superior e média.</>,
-        <>Lesões tardias: <Highlight>fibrose perivascular concêntrica ou estoriforme</Highlight> com poucos neutrófilos remanescentes.</>,
-        <><Highlight>Lipidização intracelular</Highlight> ("colesterolose extracelular") é achado clássico tardio.</>,
-        <>Ausência de zona de Grenz (diferencia de granuloma facial).</>,
+        <>Lesões iniciais: <Highlight>vasculite leucocitoclástica</Highlight> com <Highlight>infiltrado neutrofílico</Highlight>.</>,
+        <>Lesões tardias: <Highlight>fibrose dérmica perivascular / estoriforme</Highlight>.</>,
+        <>Pode haver <Highlight>granulação tecidual</Highlight> e <Highlight>necrose fibrinoide</Highlight>.</>,
+        <><Highlight>Lipidose intracelular</Highlight> pode aparecer nas fases tardias.</>,
       ],
     },
   ];
@@ -56,23 +57,23 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
       title: "Pistas clínicas",
       icon: <StethoscopeIcon />,
       bullets: [
-        <>Pápulas, placas e nódulos violáceos a castanho-avermelhados, <Highlight>simétricos</Highlight>.</>,
-        <>Predomínio em <Highlight>superfícies extensoras</Highlight> (cotovelos, joelhos, mãos, tornozelos).</>,
-        <>Consistência endurecida/borrachosa nas lesões mais antigas, por fibrose.</>,
-        <>Curso crônico recidivante, podendo durar de 5 a 40 anos.</>,
+        <>Lesões <Highlight>simétricas</Highlight>.</>,
+        <>Predomínio em <Highlight>superfícies extensoras</Highlight>.</>,
+        <>Frequente sobre <Highlight>articulações</Highlight>.</>,
+        <><Highlight>Mãos, cotovelos, joelhos e tornozelos</Highlight> são sítios clássicos.</>,
       ],
     },
     {
-      id: "causas",
+      id: "associacoes-diferenciais",
       number: "4",
       color: "orange",
-      title: "Causas / avaliação",
+      title: "Associações / diferenciais",
       icon: <ClipboardIcon />,
       bullets: [
-        <>Rastrear <Highlight>gamopatia monoclonal por IgA</Highlight>, HIV, estreptococos, hepatite B, tuberculose, sífilis.</>,
-        <>Associação com doenças autoimunes (LES, artrite reumatoide, DII) e neoplasias hematológicas.</>,
-        <><Highlight>Dapsona</Highlight> é o tratamento de escolha, com recidiva frequente à suspensão.</>,
-        <>Diferencial: xantoma tuberoso, granuloma anular, nódulos reumatoides (lesões tardias).</>,
+        <>Pode se associar a <Highlight>infecções, gamopatias e doenças autoimunes</Highlight>.</>,
+        <><Highlight>HIV</Highlight> pode estar associado a início mais precoce.</>,
+        <><Highlight>Diferenciais iniciais:</Highlight> Sweet, dermatite neutrofílica reumatoide, PNGD.</>,
+        <><Highlight>Diferenciais tardios:</Highlight> xantomas, granuloma anular, nódulo reumatoide.</>,
       ],
     },
   ];
@@ -102,10 +103,12 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Fibrose progressiva sobre vasculite leucocitoclástica em superfícies extensoras simétricas = EED.</>}
+          aside={<EedEvolutionDiagram />}
           pearl={
             <>
-              Sempre rastrear <Highlight>gamopatia por IgA</Highlight> e HIV — são as associações mais características do EED.
+              Diante de pápulas ou placas <Highlight>simétricas em superfícies extensoras</Highlight>, especialmente sobre
+              articulações, lembre do EED; histologicamente, pense em <Highlight>vasculite leucocitoclástica</Highlight> nas fases
+              iniciais e <Highlight>fibrose nas tardias</Highlight>.
             </>
           }
           source={
@@ -116,5 +119,36 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
         />
       </div>
     </Layout>
+  );
+}
+
+function EedEvolutionDiagram() {
+  return (
+    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
+      <h3 className="mx-auto mb-3 max-w-[15rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
+        Esquema: evolução do EED
+      </h3>
+
+      <figure className="overflow-hidden rounded-xl border border-rose-100 bg-[#fff8f3]">
+        <img
+          src={eedEvolutionDiagram}
+          alt="Evolução histológica do eritema elevatum diutinum, da vasculite neutrofílica à fibrose perivascular"
+          className="aspect-[4/5] w-full object-cover"
+        />
+      </figure>
+
+      <div className="mt-3 grid gap-2 font-hand text-sm font-semibold leading-5 text-[#1c2b45]">
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1.5">
+          <span className="text-emerald-700">Fase inicial:</span> LCV + neutrófilos
+        </div>
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5">
+          <span className="text-amber-700">Fase tardia:</span> fibrose perivascular + lipidose
+        </div>
+      </div>
+
+      <p className="mt-3 text-center font-hand text-base font-semibold leading-6 text-[#173f78]">
+        Vasculite leucocitoclástica fibrosante.
+      </p>
+    </div>
   );
 }

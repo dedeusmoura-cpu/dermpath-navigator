@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/septic-vasculitis.png";
 
 const TARGET_NODE_ID = "dx-vasculite-septica";
 
@@ -102,7 +104,7 @@ export function VasculiteSepticaGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Trombo + neutrófilos sem leucocitoclasia proeminente sugere vasculite séptica, não LCV clássica.</>}
+          aside={<StudyNoteImageAside title="Esquema: vasculite séptica" image={diagramImage} alt="Vaso dérmico com trombo, bactérias e inflamação neutrofílica" legend={[{ label: "Microrganismos intravasculares", color: "bg-indigo-700" }, { label: "Trombo de fibrina", color: "bg-rose-500" }, { label: "Hemorragia e necrose", color: "bg-red-600" }]} footer="Infecção vascular direta é emergência." />}
           pearl={
             <>
               Correlacionar sempre com <Highlight>contexto infeccioso agudo</Highlight> — a trombose luminal fala mais alto que a

@@ -5,6 +5,7 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import lymphocyticPatternImage from "../assets/study-notes/lymphocytic-vasculitis-pattern.png";
 
 const TARGET_NODE_ID = "dx-perniose-epifenomeno-les";
 
@@ -27,52 +28,53 @@ export function PernioseEpifenomenoLesGoldTipsPage() {
       title: "Conceito",
       icon: <BookIcon />,
       bullets: [
-        <>Padrão vascular <Highlight>linfocítico</Highlight> das vênulas dérmicas, desencadeado pelo frio (perniose) ou associado ao LES.</>,
-        <>Reflete resposta vascular exagerada ao frio, com vasoconstrição e hipóxia tecidual.</>,
-        <>Pode ser idiopática (perniose clássica) ou fenômeno satélite de doença autoimune sistêmica (lúpus pérnio).</>,
-        <>Há sobreposição clínico-histológica importante entre perniose idiopática e lúpus pérnio.</>,
+        <><Highlight>Não é vasculite primária</Highlight> convencional.</>,
+        <>Termo descritivo / <Highlight>padrão histológico</Highlight>.</>,
+        <>Infiltrado linfocítico perivascular com <Highlight>dano vascular</Highlight>.</>,
+        <>Exige <Highlight>correlação clinicopatológica</Highlight>.</>,
       ],
     },
     {
-      id: "histopatologia",
+      id: "onde-e-mais-vista",
       number: "3",
       color: "purple",
-      title: "Achados histopatológicos",
-      icon: <MicroscopeIcon />,
+      title: "Onde é mais vista",
+      icon: <StethoscopeIcon />,
       bullets: [
-        <>Infiltrado <Highlight>linfocítico perivascular</Highlight>, inclusive ao redor de vasos profundos da derme.</>,
-        <>Edema da derme papilar, por vezes com necrose de queratinócitos basais.</>,
-        <>Pode haver <Highlight>vacuolização da junção dermoepidérmica</Highlight> quando associado a lúpus.</>,
-        <>Ausência de leucocitoclasia ou necrose fibrinoide proeminente (diferencia da LCV clássica).</>,
+        <><Highlight>Perniose</Highlight>.</>,
+        <><Highlight>PLEVA</Highlight>.</>,
+        <>Infecções <Highlight>rickettsiais e virais</Highlight>.</>,
+        <>Doenças do <Highlight>tecido conjuntivo autoimunes</Highlight>.</>,
+        <><Highlight>Behçet</Highlight>.</>,
       ],
     },
   ];
 
   const sectionsRight: StudyNoteSectionData[] = [
     {
-      id: "pistas-clinicas",
+      id: "histopatologia",
       number: "2",
       color: "blue",
-      title: "Pistas clínicas",
-      icon: <StethoscopeIcon />,
+      title: "Achados histopatológicos",
+      icon: <MicroscopeIcon />,
       bullets: [
-        <>Pápulas e placas eritêmato-violáceas, dolorosas ou pruriginosas, em dedos, nariz e orelhas.</>,
-        <>Piora característica com <Highlight>exposição ao frio</Highlight> e melhora no calor.</>,
-        <>Quando associada a LES, pode acompanhar artralgia e fotossensibilidade.</>,
-        <>Curso sazonal (inverno) na perniose idiopática.</>,
+        <>Infiltrado dérmico <Highlight>perivascular linfocítico</Highlight>.</>,
+        <><Highlight>Extravasamento</Highlight> de hemácias.</>,
+        <><Highlight>Edema</Highlight> ou hiperplasia endotelial.</>,
+        <><Highlight>Fibrina / necrose fibrinoide</Highlight> em alguns casos.</>,
       ],
     },
     {
-      id: "causas",
+      id: "outras-associacoes",
       number: "4",
       color: "orange",
-      title: "Causas / avaliação",
+      title: "Outras associações",
       icon: <ClipboardIcon />,
       bullets: [
-        <>Exposição ao <Highlight>frio/umidade</Highlight> (perniose idiopática, mais comum em climas úmidos e frios).</>,
-        <><Highlight>LES</Highlight> e outras doenças do tecido conjuntivo — pesquisar FAN e história clínica.</>,
-        <>Crioglobulinemia e síndromes de hipercoagulabilidade como diferencial.</>,
-        <>Correlação clínico-patológica é essencial para distinguir perniose isolada de epifenômeno lúpico.</>,
+        <>Distúrbios <Highlight>hipercoaguláveis</Highlight> (ex.: Sneddon).</>,
+        <><Highlight>Arterite trombofílica linfocítica</Highlight> / arterite macular.</>,
+        <>Paniculites, inclusive <Highlight>lúpica</Highlight>.</>,
+        <>Pode ocorrer <Highlight>infiltrado angiocêntrico</Highlight> em alguns linfomas cutâneos.</>,
       ],
     },
   ];
@@ -98,15 +100,15 @@ export function PernioseEpifenomenoLesGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Perniose / epifenômeno no LES"
+          title="Vasculite linfocítica"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Padrão linfocítico + ausência de leucocitoclasia = pense em perniose/lúpus, não em LCV clássica.</>}
+          aside={<LymphocyticPatternDiagram />}
           pearl={
             <>
-              <Highlight>Sazonalidade</Highlight> e localização acral com piora ao frio são a chave clínica para suspeitar de
-              perniose.
+              Ao ver infiltrado linfocítico perivascular com dano vascular, pense mais em <Highlight>padrão histológico</Highlight>
+              do que em <Highlight>vasculite primária</Highlight>; perniose e PLEVA são contextos clássicos.
             </>
           }
           source={
@@ -117,5 +119,33 @@ export function PernioseEpifenomenoLesGoldTipsPage() {
         />
       </div>
     </Layout>
+  );
+}
+
+function LymphocyticPatternDiagram() {
+  return (
+    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
+      <h3 className="mx-auto mb-3 max-w-[15rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
+        Esquema: padrão linfocítico
+      </h3>
+
+      <figure className="overflow-hidden rounded-xl border border-rose-100 bg-[#fff8f3]">
+        <img
+          src={lymphocyticPatternImage}
+          alt="Corte da pele com infiltrado linfocítico perivascular e hemácias extravasadas"
+          className="aspect-[4/5] w-full object-cover"
+        />
+      </figure>
+
+      <div className="mt-3 grid gap-1.5 font-hand text-sm font-semibold leading-5 text-[#1c2b45]">
+        <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-violet-700" />Infiltrado linfocítico perivascular</p>
+        <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-rose-400" />Edema endotelial</p>
+        <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-red-500" />Hemácias extravasadas</p>
+      </div>
+
+      <p className="mt-2 text-center font-hand text-lg font-semibold leading-6 text-[#173f78]">
+        Padrão histológico, não entidade específica.
+      </p>
+    </div>
   );
 }
