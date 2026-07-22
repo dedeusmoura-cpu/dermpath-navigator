@@ -79,7 +79,7 @@ export function TedRandomPage() {
 
   return (
     <Layout>
-      <div className="space-y-8">
+      <div className="ted-config-page space-y-6">
         <TedHeader
           title="Questões aleatórias"
           subtitle={
@@ -93,7 +93,7 @@ export function TedRandomPage() {
         <ScopeSelector value={scope} onChange={setScope} />
 
         <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[28px] border border-[#efd7b5] bg-white/94 p-6 shadow-panel">
+          <div className="ted-config-panel rounded-[28px] border border-[#d8c9a8] bg-[#fffdf8] p-6 shadow-panel">
             <div className="space-y-6">
               <div className="space-y-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b56d00]">Configuração do treino</p>
@@ -193,14 +193,14 @@ export function TedRandomPage() {
               <button
                 type="button"
                 onClick={startRandomTraining}
-                className="w-full rounded-full bg-[linear-gradient(90deg,#ea8c00_0%,#f7b130_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_44px_-24px_rgba(156,94,0,0.4)] transition hover:-translate-y-0.5"
+                className="ted-primary-action w-full rounded-full bg-[linear-gradient(90deg,#0a376d_0%,#12477f_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_20px_44px_-24px_rgba(8,47,96,0.55)] transition hover:-translate-y-0.5"
               >
                 Iniciar treino aleatório
               </button>
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-[#efd7b5] bg-white/94 p-6 shadow-panel">
+          <div className="ted-config-panel rounded-[28px] border border-[#d8c9a8] bg-[#fffdf8] p-6 shadow-panel">
             <div className="space-y-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>

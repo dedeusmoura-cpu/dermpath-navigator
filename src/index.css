@@ -25,6 +25,35 @@ body {
   min-height: 100vh;
 }
 
+/* Configuradores TED — linguagem visual navy, dourado e marfim */
+.ted-config-page .ted-config-panel {
+  background:
+    radial-gradient(circle at top right, rgba(223, 193, 107, 0.1), transparent 24%),
+    #fffdf8;
+  box-shadow: 0 28px 62px -44px rgba(8, 47, 96, 0.42);
+}
+
+.ted-config-page .ted-config-panel h2 {
+  color: #082f60;
+}
+
+.ted-config-page .ted-config-panel button:focus-visible,
+.ted-config-page .ted-primary-action:focus-visible {
+  outline: 2px solid #caa548;
+  outline-offset: 3px;
+}
+
+.ted-config-page .ted-primary-action:hover {
+  box-shadow: 0 22px 46px -22px rgba(8, 47, 96, 0.68);
+}
+
+@media (max-width: 639px) {
+  .ted-config-page .ted-config-panel {
+    border-radius: 22px;
+    padding: 1.15rem;
+  }
+}
+
 ::selection {
   background: rgba(169, 122, 31, 0.24);
 }
