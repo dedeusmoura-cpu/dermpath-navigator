@@ -29,6 +29,7 @@ import { OverviewPage } from "./pages/OverviewPage";
 import { PalisadedDermatitisHistopathologyPage } from "./pages/PalisadedDermatitisHistopathologyPage";
 import { PalisadedNeutrophilicGranulomatousDermatitisPage } from "./pages/PalisadedNeutrophilicGranulomatousDermatitisPage";
 import { PernioseEpifenomenoLesGoldTipsPage } from "./pages/PernioseEpifenomenoLesGoldTipsPage";
+import { PerivascularStudyNotePage } from "./pages/PerivascularStudyNotePage";
 import { PmleHistopathologyPage } from "./pages/PmleHistopathologyPage";
 import { PoliangiteMicroscopicaGoldTipsPage } from "./pages/PoliangiteMicroscopicaGoldTipsPage";
 import { PoliarteriteNodosaVasculiteGoldTipsPage } from "./pages/PoliarteriteNodosaVasculiteGoldTipsPage";
@@ -213,6 +214,8 @@ export default function App() {
           <Route path="/tome-nota/tromboflebite" element={<TromboflebiteGoldTipsPage />} />
           <Route path="/tome-nota/poliarterite-nodosa-vasculite" element={<PoliarteriteNodosaVasculiteGoldTipsPage />} />
           <Route path="/tome-nota/vasculite-nodular" element={<VasculiteNodularGoldTipsPage />} />
+          <Route path="/tome-nota/dermatites-perivasculares/:nodeId" element={<PerivascularStudyNotePage />} />
+          <Route path="/tome-nota/dermatites/:nodeId" element={<PerivascularStudyNotePage />} />
           <Route
             path="/entenda-melhor/dermatite-neutrofilica-granulomatosa-palicada"
             element={<PalisadedNeutrophilicGranulomatousDermatitisPage />}
