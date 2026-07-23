@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/eosinophilic-granulomatosis-polyangiitis.png";
 
 const TARGET_NODE_ID = "dx-chapel-hill-granulomatose-poliangiite-eosinofilia-limitada-pele";
 
@@ -98,11 +100,11 @@ export function GranulomatosePoliangiteEosinofiliaGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Granulomatose com poliangite e eosinofilia (Churg-Strauss)"
+          title="EGPA (Churg-Strauss)"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Asma + eosinofilia periférica + vasculite = tríade da EGPA.</>}
+          aside={<StudyNoteImageAside title="Esquema: EGPA" image={diagramImage} alt="Vasculite e granuloma ricos em eosinófilos na EGPA" legend={[{ label: "Eosinófilos abundantes", color: "bg-orange-500" }, { label: "Granuloma extravascular", color: "bg-violet-700" }, { label: "Asma / doença pulmonar", color: "bg-sky-600" }]} footer="Asma + eosinofilia + vasculite." />}
           pearl={
             <>
               Pense em EGPA sempre que um paciente <Highlight>asmático de longa data</Highlight> desenvolver púrpura ou

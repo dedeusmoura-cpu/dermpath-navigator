@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/nodular-vasculitis.png";
 
 const TARGET_NODE_ID = "dx-grandes-vasos-arteria-nao-leucocitoclastica";
 
@@ -102,7 +104,7 @@ export function VasculiteNodularGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Vasculite arterial sem leucocitoclasia associada a paniculite nodular nas pernas = pense no espectro eritema indurado/vasculite nodular.</>}
+          aside={<StudyNoteImageAside title="Esquema: paniculite lobular" image={diagramImage} alt="Vasculite nodular com paniculite lobular granulomatosa" legend={[{ label: "Paniculite lobular", color: "bg-amber-500" }, { label: "Granulomas e necrose", color: "bg-violet-700" }, { label: "Vasculite profunda", color: "bg-rose-500" }]} footer="Panturrilhas: nódulos que podem ulcerar." />}
           pearl={
             <>
               Sempre investigar <Highlight>tuberculose</Highlight> diante de nódulos dolorosos recorrentes nas panturrilhas —

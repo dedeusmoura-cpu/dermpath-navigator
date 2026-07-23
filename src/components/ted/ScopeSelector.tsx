@@ -7,22 +7,22 @@ interface Props {
 
 export function ScopeSelector({ value, onChange }: Props) {
   return (
-    <div className="space-y-2">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#b56d00]">
+    <div className="space-y-3 rounded-[24px] border border-[#d9c99f] bg-[#f4ecdd] p-4 sm:p-5">
+      <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#99711f]">
         Escopo das questões
       </p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         <button
           type="button"
           onClick={() => onChange("dermatopatologia")}
-          className={`flex items-center gap-3 rounded-[20px] border px-4 py-3 text-left transition ${
+          className={`flex items-center gap-3 rounded-[18px] border px-4 py-3.5 text-left transition ${
             value === "dermatopatologia"
-              ? "border-[#1f2f4c] bg-[#1f2f4c] text-white"
-              : "border-[#efdfc6] bg-white text-ink hover:border-[#e9aa50]"
+              ? "border-[#0b3e76] bg-[#0a376d] text-white shadow-[0_18px_34px_-26px_rgba(8,47,96,0.7)]"
+              : "border-[#d8c9a8] bg-[#fffdf8] text-[#082f60] hover:border-[#c6a653]"
           }`}
         >
           <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-base ${
-            value === "dermatopatologia" ? "bg-white/15" : "bg-[#f5ede0]"
+            value === "dermatopatologia" ? "bg-white/10 text-[#dfc16b]" : "bg-[#ede3d0]"
           }`}>
             🔬
           </span>
@@ -39,14 +39,14 @@ export function ScopeSelector({ value, onChange }: Props) {
         <button
           type="button"
           onClick={() => onChange("ted_completo")}
-          className={`flex items-center gap-3 rounded-[20px] border px-4 py-3 text-left transition ${
+          className={`flex items-center gap-3 rounded-[18px] border px-4 py-3.5 text-left transition ${
             value === "ted_completo"
-              ? "border-[#1f2f4c] bg-[#1f2f4c] text-white"
-              : "border-[#efdfc6] bg-white text-ink hover:border-[#e9aa50]"
+              ? "border-[#0b3e76] bg-[#0a376d] text-white shadow-[0_18px_34px_-26px_rgba(8,47,96,0.7)]"
+              : "border-[#d8c9a8] bg-[#fffdf8] text-[#082f60] hover:border-[#c6a653]"
           }`}
         >
           <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-base ${
-            value === "ted_completo" ? "bg-white/15" : "bg-[#f5ede0]"
+            value === "ted_completo" ? "bg-white/10 text-[#dfc16b]" : "bg-[#ede3d0]"
           }`}>
             🏅
           </span>

@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/granulomatosis-with-polyangiitis.png";
 
 const TARGET_NODE_ID = "dx-chapel-hill-granulomatose-poliangiite-wegener-limitada-pele";
 
@@ -98,11 +100,11 @@ export function GranulomatosePoliangiteWegenerGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Granulomatose com poliangite (Wegener)"
+          title="GPA (Wegener)"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Via aérea superior destrutiva + glomerulonefrite pauci-imune + c-ANCA/PR3 = pense em GPA.</>}
+          aside={<StudyNoteImageAside title="Esquema: GPA" image={diagramImage} alt="Granuloma necrosante e vasculite na granulomatose com poliangite" legend={[{ label: "Granuloma necrosante", color: "bg-violet-700" }, { label: "Vasculite pauci-imune", color: "bg-rose-500" }, { label: "Vias aéreas + pulmão", color: "bg-sky-600" }]} footer="Granulomas diferenciam GPA de MPA." />}
           pearl={
             <>
               <Highlight>Gengiva em morango</Highlight> e nariz em sela são pistas clínicas quase patognomônicas de GPA.

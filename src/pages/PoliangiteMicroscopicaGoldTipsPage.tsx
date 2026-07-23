@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/microscopic-polyangiitis.png";
 
 const TARGET_NODE_ID = "dx-chapel-hill-poliangiite-microscopica-limitada-pele";
 
@@ -102,7 +104,7 @@ export function PoliangiteMicroscopicaGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Vasculite de pequenos vasos + glomerulonefrite + ausência de granulomas e de sintomas sinonasais = pense em MPA.</>}
+          aside={<StudyNoteImageAside title="Esquema: MPA pauci-imune" image={diagramImage} alt="Vasculite necrosante de pequenos vasos com glomérulo renal" legend={[{ label: "Vasculite necrosante", color: "bg-rose-500" }, { label: "Ausência de granulomas", color: "bg-slate-500" }, { label: "Eixo pulmão-rim", color: "bg-sky-600" }]} footer="Pequenos vasos, rim e pulmão." />}
           pearl={
             <>
               MPA é a <Highlight>"irmã sem granulomas"</Highlight> da GPA — mesma gravidade renal e pulmonar, sem a via aérea

@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/igm-igg-immune-complex-vasculitis.png";
 
 const TARGET_NODE_ID = "dx-chapel-hill-vasculite-cutanea-igm-igg";
 
@@ -98,11 +100,11 @@ export function VasculiteCutaneaIgmIggGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Vasculite cutânea por depósito imune de IgM e IgG"
+          title="Vasculite IgM/IgG"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>É essencialmente a mesma entidade da vasculite leucocitoclástica clássica — o termo "IgM/IgG" vem da nomenclatura de Chapel Hill para diferenciá-la de causas mais específicas.</>}
+          aside={<StudyNoteImageAside title="Esquema: IgM/IgG na DIF" image={diagramImage} alt="Vasculite cutânea com depósitos granulares de IgM, IgG e C3" legend={[{ label: "LCV clássica", color: "bg-violet-700" }, { label: "IgM / IgG / C3 granulares", color: "bg-lime-500" }, { label: "Sem predomínio de IgA", color: "bg-slate-500" }]} footer="Diagnóstico de exclusão, limitado à pele." />}
           pearl={
             <>
               Termo <Highlight>"provisório"</Highlight> porque IgM/IgG são achados inespecíficos — o diagnóstico continua

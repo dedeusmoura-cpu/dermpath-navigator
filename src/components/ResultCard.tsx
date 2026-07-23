@@ -3,6 +3,7 @@ import { FavoriteToggleButton } from "./FavoriteToggleButton";
 import { useLanguage } from "../context/LanguageContext";
 import { capitalizeFirstLetter, getTranslatedTerminalLabel, translateList, translateNodeDescription, translateNodeResultTitle } from "../i18n/translations";
 import type { AlgorithmNode } from "../types/algorithm";
+import { buildPathToNode } from "../utils/tree";
 
 interface ResultCardProps {
   node: AlgorithmNode;
@@ -20,7 +21,7 @@ const GOLD_TIPS_TARGET_TITLE = "Membrana basal espessada / interface borrada / e
 const ROSACEA_GOLD_TIPS_TARGET_TITLE = "Rosácea granulomatosa";
 const PRP_HISTOPATHOLOGY_TARGET_ID = "dx-pitiríase-rubra-pilar";
 const PALISADED_DERMATITIS_TARGET_ID = "group-intersticial-outros";
-const NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_ID = "group-pv-neutrofilos";
+const NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_IDS = ["group-pv-neutrofilos", "dx-pvi-dun"];
 const PMLE_HISTOPATHOLOGY_TARGET_ID = "dx-erupcao-polimorfa-luz";
 const LIQUEN_PLANO_HISTOPATHOLOGY_TARGET_ID = "dx-liquen-plano";
 const CERATOSE_LIQUENOIDE_HISTOPATHOLOGY_TARGET_ID = "dx-ceratose-liquenoide";
@@ -76,8 +77,8 @@ export function ResultCard({
   const showPrpHistopathologyButton = node.id === PRP_HISTOPATHOLOGY_TARGET_ID;
   const showUnderstandBetterButton = node.id === PALISADED_DERMATITIS_TARGET_ID;
   const showPalisadedHistopathologyButton = node.id === PALISADED_DERMATITIS_TARGET_ID;
-  const showNeutrophilicUrticarialDermatosisGoldButton = node.id === NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_ID;
-  const showNeutrophilicUrticarialDermatosisHistopathologyButton = node.id === NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_ID;
+  const showNeutrophilicUrticarialDermatosisGoldButton = NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_IDS.includes(node.id);
+  const showNeutrophilicUrticarialDermatosisHistopathologyButton = NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_IDS.includes(node.id);
   const showPmleHistopathologyButton = node.id === PMLE_HISTOPATHOLOGY_TARGET_ID;
   const showLiquenPlanoHistopathologyButton = node.id === LIQUEN_PLANO_HISTOPATHOLOGY_TARGET_ID;
   const showCeratoseLiquenoideHistopathologyButton = node.id === CERATOSE_LIQUENOIDE_HISTOPATHOLOGY_TARGET_ID;
@@ -92,7 +93,8 @@ export function ResultCard({
   const showLiquenNitidoHistopathologyButton = node.id === LIQUEN_NITIDO_HISTOPATHOLOGY_TARGET_ID;
   const showPrurigo = node.id === PRURIGO_PIGMENTOSO_TARGET_ID;
   const showEritemaAnularCentrifugo = node.id === ERITEMA_ANULAR_CENTRIFUGO_TARGET_ID;
-  const showVasculiteLcTomeNotaButton = node.id === VASCULITE_LC_TARGET_ID;
+  const showVasculiteLcTomeNotaButton = node.id === VASCULITE_LC_TARGET_ID || node.id === "dx-pvi-vasculite";
+  const isDermatitisTerminal = buildPathToNode(node.id).some((item) => item.id === "dermatite");
   const showVasculiteSepticaButton = node.id === VASCULITE_SEPTICA_TARGET_ID;
   const showVasculopatiaLivedoideButton = node.id === VASCULOPATIA_LIVEDOIDE_TARGET_ID;
   const showPernioseLesButton = node.id === PERNIOSE_LES_TARGET_ID;
@@ -176,6 +178,32 @@ export function ResultCard({
         ) : null}
 
         {showRosaceaGoldButton ? <TomeNotaLink to="/tome-nota/rosacea" nodeId={node.id} title="Classificação da Rosácea" /> : null}
+        {isDermatitisTerminal &&
+        !showLupusGoldButton &&
+        !showRosaceaGoldButton &&
+        !showNeutrophilicUrticarialDermatosisGoldButton &&
+        !showVasculiteLcTomeNotaButton &&
+        !showVasculiteSepticaButton &&
+        !showVasculopatiaLivedoideButton &&
+        !showPernioseLesButton &&
+        !showVasculitesTorpidasButtons &&
+        !showPoliangiteMicroscopicaButton &&
+        !showGpaWegenerButton &&
+        !showEgpaButton &&
+        !showCrioglobulinemicaButton &&
+        !showIgaHspButton &&
+        !showUrticarialHipocomplementemicaButton &&
+        !showIgmIggButton &&
+        !showTromboflebiteButton &&
+        !showPanVasculiteButton &&
+        !showVasculiteNodularButton &&
+        !showUnderstandBetterButton ? (
+          <TomeNotaLink
+            to={`/tome-nota/dermatites/${encodeURIComponent(node.id)}`}
+            nodeId={node.id}
+            title={resultTitle}
+          />
+        ) : null}
         {showVasculiteLcTomeNotaButton ? (
           <TomeNotaLink
             to="/tome-nota/vasculite-leucocitoclastica"
@@ -453,4 +481,3 @@ function MicroscopeIcon() {
     </span>
   );
 }
-

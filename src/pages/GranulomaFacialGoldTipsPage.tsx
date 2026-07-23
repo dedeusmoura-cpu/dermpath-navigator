@@ -5,6 +5,7 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import granulomaFacialDiagram from "../assets/study-notes/granuloma-facial-grenz-zone.png";
 
 const TARGET_NODE_ID = "dx-venulas-granuloma-facial-eritema-elevatum";
 
@@ -27,10 +28,10 @@ export function GranulomaFacialGoldTipsPage() {
       title: "Conceito",
       icon: <BookIcon />,
       bullets: [
-        <>Dermatose inflamatória crônica considerada uma forma de <Highlight>vasculite de pequenos vasos limitada à pele</Highlight>.</>,
-        <>Mais comum em <Highlight>homens brancos de meia-idade</Highlight>.</>,
-        <>Lesão geralmente solitária, sem associação com doença sistêmica.</>,
-        <>Fisiopatologia pouco esclarecida; envolve deposição de imunocomplexos na parede vascular.</>,
+        <>Dermatose <Highlight>inflamatória crônica benigna</Highlight>.</>,
+        <>Placas / pápulas <Highlight>faciais eritemato-violáceas</Highlight>.</>,
+        <>Predomínio em <Highlight>homens de meia-idade</Highlight>.</>,
+        <>Apesar do nome, <Highlight>não é granuloma verdadeiro</Highlight>.</>,
       ],
     },
     {
@@ -40,10 +41,11 @@ export function GranulomaFacialGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Infiltrado denso perivascular e intersticial de neutrófilos, linfócitos, plasmócitos e <Highlight>numerosos eosinófilos</Highlight>.</>,
-        <><Highlight>Zona de Grenz</Highlight> (faixa de colágeno normal na derme papilar, poupada pela inflamação) — achado característico.</>,
-        <>Leucocitoclasia mais proeminente nas lesões iniciais; fibrose nas lesões antigas.</>,
-        <>Pode mimetizar doença relacionada a IgG4 (plasmócitos IgG4+).</>,
+        <><Highlight>Grenz zone</Highlight> subepidérmica.</>,
+        <>Infiltrado dérmico <Highlight>polimorfo denso</Highlight>.</>,
+        <>Eosinófilos, neutrófilos e plasmócitos.</>,
+        <><Highlight>Vasculite leucocitoclástica</Highlight> / dano vascular.</>,
+        <><Highlight>Hemossiderina</Highlight> pode estar presente.</>,
       ],
     },
   ];
@@ -56,23 +58,24 @@ export function GranulomaFacialGoldTipsPage() {
       title: "Pistas clínicas",
       icon: <StethoscopeIcon />,
       bullets: [
-        <>Placa ou nódulo <Highlight>solitário</Highlight>, castanho-avermelhado a violáceo, na face (bochecha, nariz, região malar).</>,
-        <>Assintomático, com aberturas foliculares proeminentes.</>,
-        <>Raramente múltiplo ou extrafacial (orelhas, couro cabeludo, tronco).</>,
-        <>Curso persistente, resistente a tratamento.</>,
+        <><Highlight>Lesão solitária</Highlight> ou poucas lesões.</>,
+        <>Face: <Highlight>nariz, região malar e fronte</Highlight>.</>,
+        <>Coloração <Highlight>vermelho-acastanhada</Highlight> / violácea.</>,
+        <>Pode haver <Highlight>telangiectasias</Highlight>.</>,
       ],
     },
     {
-      id: "causas",
+      id: "diferenciais",
       number: "4",
       color: "orange",
-      title: "Causas / avaliação",
+      title: "Diferenciais",
       icon: <ClipboardIcon />,
       bullets: [
-        <>Diagnóstico predominantemente clínico-histopatológico; sem causa sistêmica identificada.</>,
-        <>Diferencial: rosácea granulomatosa, linfoma cutâneo, hiperplasia angiolinfoide com eosinofilia, hanseníase, sarcoidose.</>,
-        <>Principal diferencial histológico: <Highlight>eritema elevatum diutinum</Highlight> (distribuição extensora simétrica e mais fibrose).</>,
-        <>Primeira linha: corticoide tópico/intralesional e inibidores tópicos de calcineurina.</>,
+        <>Rosácea.</>,
+        <>Lúpus discoide / lúpus túmido.</>,
+        <>Sarcoidose.</>,
+        <>Linfoma ou pseudolinfoma cutâneo.</>,
+        <>Eritema elevatum diutinum.</>,
       ],
     },
   ];
@@ -102,11 +105,11 @@ export function GranulomaFacialGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Zona de Grenz + eosinófilos abundantes na face = pense em granuloma facial.</>}
+          aside={<GranulomaFacialDiagram />}
           pearl={
             <>
-              Clinicamente restrito à face, <Highlight>sem doença sistêmica associada</Highlight> — diferente do EED, que é
-              simétrico em superfícies extensoras.
+              O granuloma facial pode ser entendido como uma <Highlight>vasculite leucocitoclástica crônica e tórpida</Highlight>,
+              pertencente ao mesmo espectro histopatológico do <Highlight>eritema elevatum diutinum</Highlight>.
             </>
           }
           source={
@@ -117,5 +120,33 @@ export function GranulomaFacialGoldTipsPage() {
         />
       </div>
     </Layout>
+  );
+}
+
+function GranulomaFacialDiagram() {
+  return (
+    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
+      <h3 className="mx-auto mb-3 max-w-[16rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
+        Esquema: Grenz zone e infiltrado misto
+      </h3>
+
+      <figure className="overflow-hidden rounded-xl border border-rose-100 bg-[#fff8f3]">
+        <img
+          src={granulomaFacialDiagram}
+          alt="Pele com Grenz zone subepidérmica e infiltrado dérmico misto denso"
+          className="aspect-[4/5] w-full object-cover"
+        />
+      </figure>
+
+      <div className="mt-3 grid gap-1.5 font-hand text-sm font-semibold leading-5 text-[#1c2b45]">
+        <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-amber-100 ring-1 ring-amber-300" />Grenz zone subepidérmica pálida</p>
+        <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-violet-700" />Infiltrado dérmico polimorfo</p>
+        <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-rose-500" />Eosinófilos e dano vascular</p>
+      </div>
+
+      <p className="mt-3 text-center font-hand text-lg font-semibold leading-6 text-[#173f78]">
+        Grenz zone + infiltrado misto rico em eosinófilos.
+      </p>
+    </div>
   );
 }

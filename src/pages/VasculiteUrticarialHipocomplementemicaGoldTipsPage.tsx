@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/hypocomplementemic-urticarial-vasculitis.png";
 
 const TARGET_NODE_ID = "dx-chapel-hill-vasculite-urticarial-hipocomplementemica";
 
@@ -98,11 +100,11 @@ export function VasculiteUrticarialHipocomplementemicaGoldTipsPage() {
         </div>
 
         <StudyNoteCard
-          title="Vasculite urticarial hipocomplementêmica"
+          title="Vasculite urticarial"
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Urticária que dura mais de 24h e deixa hiperpigmentação residual não é urticária comum — pense em vasculite urticarial.</>}
+          aside={<StudyNoteImageAside title="Esquema: urticária + LCV" image={diagramImage} alt="Lesões urticariformes persistentes e vasculite leucocitoclástica" legend={[{ label: "Urticas persistentes >24 h", color: "bg-rose-400" }, { label: "Púrpura residual", color: "bg-purple-700" }, { label: "Hipocomplementemia / anti-C1q", color: "bg-sky-600" }]} footer="Urtica persistente que deixa marca." />}
           pearl={
             <>
               <Highlight>Hipocomplementemia</Highlight> é o principal marcador prognóstico: sinaliza maior chance de doença

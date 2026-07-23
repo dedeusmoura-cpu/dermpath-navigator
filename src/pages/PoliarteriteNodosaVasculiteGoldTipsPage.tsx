@@ -5,6 +5,8 @@ import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
+import { StudyNoteImageAside } from "../components/StudyNoteImageAside";
+import diagramImage from "../assets/study-notes/cutaneous-polyarteritis-nodosa.png";
 
 const TARGET_NODE_ID = "dx-grandes-vasos-arteria-leucocitoclastica";
 
@@ -102,7 +104,7 @@ export function PoliarteriteNodosaVasculiteGoldTipsPage() {
           subtitle="Resumo prático para dermatopatologia"
           sectionsLeft={sectionsLeft}
           sectionsRight={sectionsRight}
-          note={<>Nódulos dolorosos + livedo racemoso + ausência de glomerulonefrite/ANCA aponta para poliarterite nodosa, não para uma vasculite ANCA-associada.</>}
+          aside={<StudyNoteImageAside title="Esquema: artéria muscular" image={diagramImage} alt="Poliarterite nodosa com vasculite transmural de artéria muscular" legend={[{ label: "Necrose transmural segmentar", color: "bg-rose-500" }, { label: "Trombose / microaneurisma", color: "bg-red-700" }, { label: "Nódulos + livedo racemoso", color: "bg-purple-700" }]} footer="Médio vaso: derme profunda e hipoderme." />}
           pearl={
             <>
               Diante de livedo racemoso <Highlight>"em rajada"</Highlight> com nódulos subcutâneos, sempre descartar hepatite

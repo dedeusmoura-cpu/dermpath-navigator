@@ -18,6 +18,7 @@ interface StudyNoteCardProps {
   sectionsLeft: StudyNoteSectionData[];
   sectionsRight: StudyNoteSectionData[];
   note?: ReactNode;
+  aside?: ReactNode;
   pearl?: ReactNode;
   source?: ReactNode;
 }
@@ -71,6 +72,7 @@ export function StudyNoteCard({
   sectionsLeft,
   sectionsRight,
   note,
+  aside,
   pearl,
   source,
 }: StudyNoteCardProps) {
@@ -104,20 +106,24 @@ export function StudyNoteCard({
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {sections.map((section) => (
-            <SectionCard key={section.id} section={section} className={sections.length === 1 ? "md:col-span-2" : ""} />
-          ))}
+        <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${aside ? "xl:grid-cols-[1fr_1fr_0.78fr]" : ""}`}>
+          <div className={`grid grid-cols-1 gap-4 md:col-span-2 md:grid-cols-2 ${aside ? "xl:col-span-2 xl:col-start-1 xl:row-start-1" : ""}`}>
+            {sections.map((section) => (
+              <SectionCard key={section.id} section={section} compact={Boolean(aside)} className={sections.length === 1 ? "md:col-span-2" : ""} />
+            ))}
+          </div>
+
+          {aside ? <aside className="md:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1">{aside}</aside> : null}
 
           {note ? (
-            <div className="flex items-center gap-3 rounded-xl border border-sky-200 bg-sky-50/90 px-4 py-2.5 md:col-span-2 md:row-start-3">
+            <div className={`flex items-center gap-3 rounded-xl border border-sky-200 bg-sky-50/90 px-4 py-2.5 md:col-span-2 ${aside ? "xl:col-span-3" : ""}`}>
               <StarIcon />
               <p className="font-hand text-base leading-6 text-[#1c2b45]">{note}</p>
             </div>
           ) : null}
 
           {pearl ? (
-            <div className="flex items-center gap-4 rounded-xl border-2 border-dashed border-amber-300 bg-amber-50/90 px-5 py-3 md:col-span-2 md:row-start-4">
+            <div className={`flex items-center gap-4 rounded-xl border-2 border-dashed border-amber-300 bg-amber-50/90 px-5 py-3 md:col-span-2 ${aside ? "xl:col-span-3" : ""}`}>
               <DiamondIcon />
               <p className="font-hand text-lg leading-8 text-[#1c2b45]">
                 <span className="font-bold text-rose-600">Pérola: </span>
@@ -133,15 +139,15 @@ export function StudyNoteCard({
   );
 }
 
-function SectionCard({ section, className = "" }: { section: StudyNoteSectionData; className?: string }) {
+function SectionCard({ section, className = "", compact = false }: { section: StudyNoteSectionData; className?: string; compact?: boolean }) {
   const c = COLOR_STYLES[section.color];
 
   return (
-    <section className={`rounded-[20px] border-2 ${c.border} bg-white/90 p-4 shadow-sm ${className}`}>
-      <div className="mb-2.5 flex items-center justify-between gap-3">
+    <section className={`rounded-[20px] border-2 ${c.border} bg-white/90 ${compact ? "p-3" : "p-4"} shadow-sm ${className}`}>
+      <div className={`${compact ? "mb-2" : "mb-2.5"} flex items-center justify-between gap-3`}>
         <div className="flex items-center gap-2.5">
           <span className={`font-hand text-3xl font-bold leading-none ${c.number}`}>{section.number}</span>
-          <h3 className="font-hand text-xl font-bold text-[#1c2b45] lg:text-2xl">
+          <h3 className={`font-hand text-xl font-bold text-[#1c2b45] ${compact ? "lg:text-xl" : "lg:text-2xl"}`}>
             <span className={`inline-block -rotate-1 rounded px-2 py-0.5 ${c.highlight}`}>{section.title}</span>
           </h3>
         </div>
@@ -149,8 +155,8 @@ function SectionCard({ section, className = "" }: { section: StudyNoteSectionDat
           {section.icon}
         </span>
       </div>
-      <div className={`rounded-[13px] border border-dashed ${c.dashed} px-3.5 py-3`}>
-        <ul className="space-y-1.5 font-hand text-[0.96rem] leading-[1.35rem] text-[#2a3550] lg:text-base">
+      <div className={`rounded-[13px] border border-dashed ${c.dashed} ${compact ? "px-3 py-2.5" : "px-3.5 py-3"}`}>
+        <ul className={`${compact ? "space-y-1 text-[0.9rem] leading-[1.22rem]" : "space-y-1.5 text-[0.96rem] leading-[1.35rem] lg:text-base"} font-hand text-[#2a3550]`}>
           {section.bullets.map((bullet, index) => (
             <li key={index} className="flex items-start gap-2">
               <span className={`mt-2 h-2 w-2 flex-none rounded-full ${c.dot}`} />
