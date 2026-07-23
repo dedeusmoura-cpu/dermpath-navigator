@@ -11,7 +11,7 @@ import { algorithmTree } from "../data/algorithm";
 import { translateNodeResultTitle } from "../i18n/translations";
 import { searchNodes } from "../utils/search";
 import { buildPathToNode } from "../utils/tree";
-import dermPathLogo from "../assets/dermpath-logo-final.png";
+import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
 
 interface FocusedTreeMapLocationState {
   trail?: string[];
@@ -45,15 +45,29 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
   }
 
   return (
-    <div className="mb-4 flex items-center gap-3">
-      <NavLink to="/" className="shrink-0">
-        <img src={dermPathLogo} alt="DermPath Navigator" className="h-[44px] w-auto sm:h-[52px]" />
-      </NavLink>
+    <header className="relative z-20 mb-4 rounded-[24px] border border-[#d9c9a4]/60 bg-[#082d5c] px-5 py-4 shadow-[0_24px_60px_-40px_rgba(4,31,68,0.7)] sm:px-8">
+      <div className="lg:flex lg:items-center lg:gap-6">
+        <div className="flex items-center justify-between gap-3">
+          <NavLink
+            to="/"
+            className="group -ml-2 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]"
+            aria-label="DermPath Navigator"
+          >
+            <img
+              src={dermPathLogoNavyGold}
+              alt="DermPath Navigator"
+              className="h-auto w-[172px] transition duration-300 group-hover:brightness-110 sm:w-[210px]"
+            />
+          </NavLink>
+          <div className="lg:hidden">
+            <TreeMapLanguageSwitcher language={language} setLanguage={setLanguage} />
+          </div>
+        </div>
 
-      <div className="flex flex-1 items-center gap-2 justify-end">
-        <div ref={wrapperRef} className="relative flex-1 max-w-xs sm:max-w-sm">
-          <div className="flex items-center gap-2 rounded-full border border-sand bg-white/95 px-4 py-2 shadow-sm focus-within:border-accent/50 focus-within:shadow-[0_0_0_3px_rgba(169,122,31,0.08)]">
-            <svg className="h-4 w-4 shrink-0 text-steel/70" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={2}>
+        <div className="mt-4 flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:justify-end lg:mt-0">
+          <div ref={wrapperRef} className="relative w-full sm:min-w-0 sm:flex-1 lg:max-w-sm">
+            <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.09] px-4 py-2 text-white shadow-inner transition focus-within:border-[#d6b766]/70 focus-within:bg-white/[0.13] focus-within:shadow-[0_0_0_3px_rgba(214,183,102,0.12)]">
+              <svg className="h-4 w-4 shrink-0 text-[#e1c77e]" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={2}>
               <circle cx="9" cy="9" r="6" />
               <path d="m14 14 3.5 3.5" strokeLinecap="round" />
             </svg>
@@ -62,10 +76,10 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
               onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
               onFocus={() => setOpen(true)}
               placeholder={t("nav_search")}
-              className="w-full bg-transparent text-sm text-ink placeholder:text-steel/60 outline-none"
+              className="w-full bg-transparent text-sm text-white placeholder:text-white/45 outline-none"
             />
             {query && (
-              <button type="button" onClick={() => { setQuery(""); setOpen(false); }} className="shrink-0 text-steel/50 hover:text-steel">
+              <button type="button" onClick={() => { setQuery(""); setOpen(false); }} className="shrink-0 text-white/45 transition hover:text-white">
                 <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
                 </svg>
@@ -88,10 +102,11 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
           )}
         </div>
 
-        <Link
-          to={treeViewUrl}
-          className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-sand bg-white/95 px-3 py-2 text-xs font-semibold text-steel shadow-sm transition hover:bg-sand hover:text-ink"
-        >
+          <div className="flex items-center justify-end gap-2">
+            <Link
+              to={treeViewUrl}
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white/75 transition hover:border-[#d6b766]/55 hover:bg-white/[0.11] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]"
+            >
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <rect x="8" y="2" width="8" height="5" rx="1.5"/>
             <rect x="1" y="15" width="7" height="5" rx="1.5"/>
@@ -103,34 +118,46 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
             <line x1="19.5" y1="15" x2="19.5" y2="11"/>
             <line x1="4.5" y1="11" x2="19.5" y2="11"/>
           </svg>
-          {language === "en" ? "Full tree" : "Árvore expandível"}
-        </Link>
+              {language === "en" ? "Full tree" : "Árvore expandível"}
+            </Link>
 
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="shrink-0 rounded-full border border-sand bg-white/95 px-3 py-2 text-sm font-semibold text-steel shadow-sm transition hover:bg-white hover:text-accent"
-        >
-          {t("back")}
-        </button>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="shrink-0 rounded-full border border-white/20 bg-white/[0.06] px-3 py-2 text-sm font-semibold text-white/75 transition hover:border-[#d6b766]/55 hover:bg-white/[0.11] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]"
+            >
+              {t("back")}
+            </button>
 
-        <div className="inline-flex shrink-0 rounded-full border border-sand bg-white/95 p-[3px] shadow-sm">
-          <button
-            type="button"
-            onClick={() => setLanguage("pt")}
-            className={`rounded-full px-3 py-1 text-sm font-semibold transition ${language === "pt" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"}`}
-          >
-            PT
-          </button>
-          <button
-            type="button"
-            onClick={() => setLanguage("en")}
-            className={`rounded-full px-3 py-1 text-sm font-semibold transition ${language === "en" ? "bg-ink text-white" : "text-steel hover:bg-white hover:text-accent"}`}
-          >
-            EN
-          </button>
+            <div className="hidden lg:block">
+              <TreeMapLanguageSwitcher language={language} setLanguage={setLanguage} />
+            </div>
+          </div>
         </div>
       </div>
+    </header>
+  );
+}
+
+function TreeMapLanguageSwitcher({
+  language,
+  setLanguage,
+}: {
+  language: "pt" | "en";
+  setLanguage: (language: "pt" | "en") => void;
+}) {
+  return (
+    <div className="inline-flex shrink-0 rounded-full border border-white/20 bg-white/[0.06] p-1" aria-label={language === "pt" ? "Idioma" : "Language"}>
+      {(["pt", "en"] as const).map((item) => (
+        <button
+          key={item}
+          type="button"
+          onClick={() => setLanguage(item)}
+          className={`rounded-full px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-wider transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] ${language === item ? "bg-[#d6b766] text-[#082d5c]" : "text-white/65 hover:text-white"}`}
+        >
+          {item}
+        </button>
+      ))}
     </div>
   );
 }

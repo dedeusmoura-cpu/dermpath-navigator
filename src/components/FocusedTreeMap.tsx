@@ -138,6 +138,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
     () => buildFocusedTreeColumns(selectedPath, openedFinalNodeIds, childMap, language),
     [selectedPath, openedFinalNodeIds, childMap, language],
   );
+  const isInitialState = selectedPathIds.length === 0;
   const edges = useMemo(() => buildEdges(columns, childMap), [columns, childMap]);
 
   const activeCatLineConfig = (() => {
@@ -301,41 +302,75 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
 
   return (
     <section>
-      <div className="mb-2 flex items-center justify-end gap-1 pr-1">
-        <button
-          type="button"
-          onClick={handleZoomFit}
-          title="Ajustar à tela"
-          className="rounded-full border border-sand bg-white px-2.5 py-1 text-xs font-semibold text-steel shadow-sm transition hover:bg-sand hover:text-ink"
-        >
-          Ajustar
-        </button>
-        <div className="inline-flex items-center rounded-full border border-sand bg-white shadow-sm">
-          <button
-            type="button"
-            onClick={handleZoomOut}
-            disabled={zoom <= ZOOM_MIN}
-            title="Zoom out"
-            className="rounded-l-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
-          >
-            −
-          </button>
-          <span className="min-w-[3rem] text-center text-xs font-semibold text-steel tabular-nums select-none">
-            {Math.round(zoom * 100)}%
-          </span>
-          <button
-            type="button"
-            onClick={handleZoomIn}
-            disabled={zoom >= ZOOM_MAX}
-            title="Zoom in"
-            className="rounded-r-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
-          >
-            +
-          </button>
+      <div ref={scrollAreaRef} className={`relative overflow-auto rounded-[32px] border border-sand bg-white shadow-panel ${isInitialState ? "p-4 sm:p-5" : "p-5"}`}>
+        <div className="relative z-30 mb-2 flex flex-wrap items-center justify-between gap-3 border-b border-[#d8c8a3]/45 pb-3">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-7 bg-[#d6b766]" aria-hidden="true" />
+            <p className="font-serif text-lg tracking-[-0.02em] text-[#082d5c] sm:text-xl">
+              {language === "en" ? "Diagnostic navigation" : "Navegação diagnóstica"}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={handleZoomFit}
+              title={language === "en" ? "Fit to screen" : "Ajustar à tela"}
+              className="rounded-full border border-sand bg-paper/90 px-2.5 py-1 text-xs font-semibold text-steel shadow-sm transition hover:bg-sand hover:text-ink"
+            >
+              {language === "en" ? "Fit" : "Ajustar"}
+            </button>
+            <div className="inline-flex items-center rounded-full border border-sand bg-paper/90 shadow-sm">
+              <button
+                type="button"
+                onClick={handleZoomOut}
+                disabled={zoom <= ZOOM_MIN}
+                title="Zoom out"
+                className="rounded-l-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
+              >
+                −
+              </button>
+              <span className="min-w-[3rem] text-center text-xs font-semibold text-steel tabular-nums select-none">
+                {Math.round(zoom * 100)}%
+              </span>
+              <button
+                type="button"
+                onClick={handleZoomIn}
+                disabled={zoom >= ZOOM_MAX}
+                title="Zoom in"
+                className="rounded-r-full px-2.5 py-1 text-sm font-semibold text-steel transition hover:bg-sand hover:text-ink disabled:opacity-30"
+              >
+                +
+              </button>
+            </div>
+            {extraControls}
+          </div>
         </div>
-        {extraControls}
-      </div>
-      <div ref={scrollAreaRef} className="overflow-auto rounded-[32px] border border-sand bg-white p-5 shadow-panel">
+
+        {isInitialState ? (
+          <div className="pointer-events-none absolute bottom-5 left-[330px] right-5 top-20 hidden items-center justify-center md:flex">
+            <div className="max-w-sm text-center">
+              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-[#d6b766]/45 bg-[#f9f6ed] text-[#a07926] shadow-[0_18px_36px_-28px_rgba(8,45,92,0.45)]">
+                <svg viewBox="0 0 32 32" fill="none" className="h-8 w-8" aria-hidden="true">
+                  <circle cx="16" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="7" cy="23.5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="16" cy="23.5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
+                  <circle cx="25" cy="23.5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M16 8.5v7M7 21v-5.5h18V21M16 15.5V21" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <p className="mt-5 font-serif text-2xl tracking-[-0.025em] text-[#082d5c]">
+                {language === "en" ? "Choose a category" : "Escolha uma categoria"}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-steel/75">
+                {language === "en"
+                  ? "Select the starting point on the left to reveal the diagnostic pathway."
+                  : "Selecione o ponto de partida à esquerda para revelar o caminho diagnóstico."}
+              </p>
+            </div>
+          </div>
+        ) : null}
+
         <div ref={containerRef} className="relative flex min-w-max flex-nowrap items-start gap-10 pb-3" style={{ zoom }}>
           <svg className="pointer-events-none absolute inset-0 h-full w-full overflow-visible" aria-hidden="true">
             {lines.map((line) => (
@@ -400,7 +435,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
               ref={(element) => {
                 columnRefs.current[columnIndex] = element;
               }}
-              className={`relative z-10 flex w-[270px] min-w-[270px] shrink-0 flex-col justify-center gap-3 py-4${columnIndex === enteringColumnIndex ? " focused-tree-map-column-enter" : ""}`}
+              className={`relative z-10 flex w-[270px] min-w-[270px] shrink-0 flex-col justify-center ${isInitialState && columnIndex === 0 ? "gap-2.5 py-2" : "gap-3 py-4"}${columnIndex === enteringColumnIndex ? " focused-tree-map-column-enter" : ""}`}
             >
               {column.map((item) => {
                 const node = algorithmTree.nodes[item.nodeId];
@@ -441,11 +476,11 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
                         nodeRefs.current[item.mapId] = element;
                       }}
                       onClick={() => onSelectNode(item, columnIndex)}
-                      className={`relative w-full rounded-[1.45rem] border px-6 py-5 pr-20 text-left text-[1.08rem] font-semibold leading-[1.28] transition duration-200 hover:-translate-y-0.5 ${
+                      className={`group relative w-full rounded-[1.45rem] border px-6 ${isInitialState && columnIndex === 0 ? "py-4" : "py-5"} pr-20 text-left text-[1.08rem] font-semibold leading-[1.28] transition duration-200 hover:-translate-y-0.5 ${
                         isFocusNode
                           ? "border-white/20 text-white"
                           : isSelectedPath
-                            ? "border-[#dccdff] text-[#8b63d9]"
+                            ? "border-2 border-[#dccdff] text-[#8b63d9]"
                             : isCategoryTile
                               ? "hover:brightness-[0.975]"
                               : "border-[#eadff3] bg-white text-[#8b63d9] shadow-[0_18px_28px_-24px_rgba(39,19,71,0.16),0_10px_18px_-16px_rgba(39,19,71,0.12)] hover:border-[#d8c1ef] hover:shadow-[0_22px_34px_-24px_rgba(39,19,71,0.2),0_12px_22px_-16px_rgba(39,19,71,0.14)]"
@@ -470,6 +505,21 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
                               d="M7 5.5 12 10l-5 4.5"
                               stroke={activeCatLineConfig?.arrowColor ?? "#ff4f5e"}
                               strokeWidth="2.4"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </span>
+                      ) : item.kind !== "result" ? (
+                        <span
+                          aria-hidden="true"
+                          className="absolute right-6 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-current/15 bg-white/55 opacity-55 transition duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+                        >
+                          <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none">
+                            <path
+                              d="M7 5.5 12 10l-5 4.5"
+                              stroke={isCategoryTile ? catConfig.arrowColor : "currentColor"}
+                              strokeWidth="2"
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
