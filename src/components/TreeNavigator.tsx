@@ -1,4 +1,5 @@
-﻿import fibrosanteImage from "../assets/Dermatites/fibrosante.png";
+﻿import { useState } from "react";
+import fibrosanteImage from "../assets/Dermatites/fibrosante.png";
 import foliculitePerifoliculiteImage from "../assets/Dermatites/foliculite-perifoliculite.png";
 import dermatosesInvisiveisImage from "../assets/Dermatites/Dermatoses_invisiveis.png";
 import nodulaDifusaImage from "../assets/Dermatites/nodula-difusa.png";
@@ -233,6 +234,7 @@ const processCircularPositions: Record<string, { angle: number; radius: number }
 
 export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: TreeNavigatorProps) {
   const { language, t } = useLanguage();
+  const [processView, setProcessView] = useState<"orbit" | "list">("orbit");
 
   if (!node.options?.length) {
     return (
@@ -271,26 +273,58 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
             <h2 className="mt-2 font-serif text-2xl text-ink">{getDisplayedNodeTitle(node, language)}</h2>
           </div>
         ) : (
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("brand_kicker")}</p>
-            <h2 className="mt-1 font-serif text-2xl text-ink">{t("home_start")}</h2>
-            <p className="mt-1 text-sm leading-relaxed text-steel">{t("process_hub_instruction")}</p>
+          <div className="max-w-2xl">
+            <p className="flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-[#9c7425]">
+              <span className="h-px w-8 bg-[#b68d35]/65" aria-hidden="true" />
+              {language === "pt" ? "Exploração guiada" : "Guided exploration"}
+            </p>
+            <h2 className="mt-3 font-serif text-3xl tracking-[-0.025em] text-[#082d5c] sm:text-4xl">
+              {language === "pt" ? "Por onde começa o padrão?" : "Where does the pattern begin?"}
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-[#65717d] sm:text-base">
+              {language === "pt"
+                ? "Escolha o processo patológico predominante para percorrer o raciocínio diagnóstico."
+                : "Choose the predominant pathological process to follow the diagnostic reasoning."}
+            </p>
           </div>
         )}
 
-        <FavoriteToggleButton nodeId={node.id} favorite={favorite} onToggleFavorite={onToggleFavorite} className="shrink-0" />
+        <div className="flex shrink-0 items-center gap-2">
+          {isProcessHub ? (
+            <div className="hidden rounded-full border border-[#d8c8a3]/75 bg-[#f9f6ed] p-1 xl:inline-flex" aria-label={language === "pt" ? "Modo de visualização" : "View mode"}>
+              <button
+                type="button"
+                onClick={() => setProcessView("orbit")}
+                aria-pressed={processView === "orbit"}
+                className={`rounded-full px-3 py-1.5 text-[0.64rem] font-bold uppercase tracking-[0.1em] transition ${processView === "orbit" ? "bg-[#082d5c] text-white shadow-sm" : "text-[#65717d] hover:text-[#082d5c]"}`}
+              >
+                {language === "pt" ? "Órbita" : "Orbit"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setProcessView("list")}
+                aria-pressed={processView === "list"}
+                className={`rounded-full px-3 py-1.5 text-[0.64rem] font-bold uppercase tracking-[0.1em] transition ${processView === "list" ? "bg-[#082d5c] text-white shadow-sm" : "text-[#65717d] hover:text-[#082d5c]"}`}
+              >
+                {language === "pt" ? "Lista" : "List"}
+              </button>
+            </div>
+          ) : null}
+          <FavoriteToggleButton nodeId={node.id} favorite={favorite} onToggleFavorite={onToggleFavorite} className="shrink-0" />
+        </div>
       </div>
 
       {isProcessHub ? (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:hidden">
-            {node.options.map((option) => (
+          <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ${processView === "list" ? "xl:grid" : "xl:hidden"}`}>
+            {node.options.map((option, index) => (
               <button
                 key={`${node.id}-${option.nextNodeId}`}
                 type="button"
                 onClick={() => onNavigate(option.nextNodeId)}
-                className="group flex flex-col items-center gap-0 overflow-visible bg-transparent text-center transition duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                className="group relative flex flex-col items-center overflow-hidden rounded-[22px] border border-[#d8c8a3]/75 bg-[#fffdf7] p-3 text-center shadow-[0_18px_38px_-30px_rgba(8,45,92,0.5)] transition duration-300 hover:-translate-y-1 hover:border-[#b68d35] hover:shadow-[0_24px_46px_-28px_rgba(8,45,92,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]/60 focus-visible:ring-offset-2 lg:last:col-start-2 xl:last:col-start-auto"
               >
+                <span className="absolute left-4 top-4 z-10 font-serif text-xs text-[#9c7425]">{String(index + 1).padStart(2, "0")}</span>
                 <div className="w-full overflow-visible bg-transparent">
                   {processCategoryImages[option.nextNodeId] ? (
                     <img
@@ -305,16 +339,17 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     </div>
                   )}
                 </div>
-                <div className="mt-2 flex w-full items-center justify-center rounded-full border border-[#c5d4ff] bg-white px-3 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
-                  <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
+                <div className="flex w-full items-center justify-between gap-3 border-t border-[#d8c8a3]/60 px-1 pb-1 pt-3 text-left">
+                  <h3 className="text-[0.72rem] font-bold uppercase leading-tight tracking-[0.08em] text-[#082d5c]">
                     {translateOptionLabel(node.id, option, language)}
                   </h3>
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-[#b68d35]/45 text-[#9c7425] transition group-hover:translate-x-0.5 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]">→</span>
                 </div>
               </button>
             ))}
           </div>
 
-          <div className="relative hidden min-h-[900px] overflow-hidden bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 pb-8 pt-2 xl:block">
+          <div className={`relative min-h-[780px] overflow-hidden bg-[radial-gradient(circle_at_center,_rgba(36,95,231,0.12),_transparent_55%)] px-8 ${processView === "orbit" ? "hidden xl:block" : "hidden"}`}>
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a9c5ff]/80 bg-[radial-gradient(circle,_rgba(255,255,255,0.99)_0%,_rgba(236,243,255,0.94)_56%,_rgba(208,223,255,0.42)_100%)] shadow-[inset_0_18px_42px_rgba(255,255,255,0.62),0_34px_90px_-50px_rgba(36,95,231,0.38)]" />
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-[690px] w-[690px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[2.5px] border-[#6d96ff]/75 shadow-[0_0_0_10px_rgba(109,150,255,0.08)]" />
             <div
@@ -341,7 +376,7 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                 />
             </div>
 
-            {node.options.map((option) => {
+            {node.options.map((option, index) => {
               const imageSrc = processCategoryImages[option.nextNodeId];
               const position = processCircularPositions[option.nextNodeId] ?? { angle: -90, radius: 0 };
               const angleInRadians = (position.angle * Math.PI) / 180;
@@ -358,8 +393,9 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                       top: `calc(50% + ${orbitY.toFixed(2)}%)`,
                       transform: "translate(-50%, -50%)",
                     }}
-                    className="group absolute flex w-[228px] flex-col items-center gap-0 overflow-visible bg-transparent text-center transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2"
+                    className="group absolute flex w-[228px] flex-col items-center overflow-hidden rounded-[22px] border border-[#d8c8a3]/80 bg-[#fffdf7]/95 p-3 text-center shadow-[0_20px_42px_-28px_rgba(8,45,92,0.48)] backdrop-blur-sm transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] hover:border-[#b68d35] hover:shadow-[0_26px_50px_-26px_rgba(8,45,92,0.55)] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[#b68d35]/60 focus-visible:ring-offset-2"
                   >
+                    <span className="absolute left-4 top-4 z-10 font-serif text-xs text-[#9c7425]">{String(index + 1).padStart(2, "0")}</span>
                     <div className="w-full overflow-visible bg-transparent">
                       {imageSrc ? (
                         <img
@@ -374,10 +410,11 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                         </div>
                       )}
                     </div>
-                    <div className="mt-2 flex w-full items-center justify-center rounded-full border border-[#c5d4ff] bg-white px-4 py-1.5 shadow-[0_2px_10px_rgba(37,99,235,0.18)] transition duration-300 group-hover:border-[#1A47BF]/40 group-hover:shadow-[0_4px_14px_rgba(37,99,235,0.28)]">
-                      <h3 className="text-[0.78rem] font-bold uppercase leading-none tracking-[0.08em] text-[#1A47BF]">
+                    <div className="flex w-full items-center justify-between gap-3 border-t border-[#d8c8a3]/60 px-1 pb-1 pt-3 text-left">
+                      <h3 className="text-[0.7rem] font-bold uppercase leading-tight tracking-[0.08em] text-[#082d5c]">
                         {translateOptionLabel(node.id, option, language)}
                       </h3>
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-[#b68d35]/45 text-[#9c7425] transition group-hover:translate-x-0.5 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]">→</span>
                     </div>
                   </button>
                 );
@@ -700,4 +737,3 @@ function renderImageCard(
     </button>
   );
 }
-
