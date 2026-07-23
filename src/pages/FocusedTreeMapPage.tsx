@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
+  buildTerminalBridgeId,
   buildSelectedMapPath,
   getConcreteNodeIdFromMapPath,
   FocusedTreeMap,
@@ -259,10 +260,27 @@ export function FocusedTreeMapPage() {
           }
 
           const isAlreadyOpen = openedFinalNodeIds.includes(item.nodeId);
-          setOpenedFinalNodeIds(isAlreadyOpen ? [] : [item.nodeId]);
+          const nextOpenedFinalNodeIds = isAlreadyOpen
+            ? openedFinalNodeIds.filter((nodeId) => nodeId !== item.nodeId)
+            : [...openedFinalNodeIds, item.nodeId];
+
+          setOpenedFinalNodeIds(nextOpenedFinalNodeIds);
           setSelectedPath((prev) => {
             const isAlreadyActive = prev[level] === item.mapId;
-            return isAlreadyActive || isAlreadyOpen ? prev.slice(0, level) : [...prev.slice(0, level), item.mapId];
+
+            if (!isAlreadyOpen) {
+              return [...prev.slice(0, level), item.mapId];
+            }
+
+            if (!isAlreadyActive) {
+              return prev;
+            }
+
+            const fallbackNodeId = nextOpenedFinalNodeIds[nextOpenedFinalNodeIds.length - 1];
+            const fallbackParentId = fallbackNodeId ? algorithmTree.nodes[fallbackNodeId]?.parentId : undefined;
+            return fallbackNodeId && fallbackParentId
+              ? [...prev.slice(0, level), buildTerminalBridgeId(fallbackParentId, fallbackNodeId)]
+              : prev.slice(0, level);
           });
           return;
         }
