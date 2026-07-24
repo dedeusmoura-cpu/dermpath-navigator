@@ -1,8 +1,8 @@
 ﻿import { useState } from "react";
-import fibrosanteImage from "../assets/Dermatites/fibrosante-atlas-v3.png";
-import foliculitePerifoliculiteImage from "../assets/Dermatites/foliculite-perifoliculite-atlas-v3.png";
+import fibrosanteImage from "../assets/Dermatites/fibrosante-atlas-v4.png";
+import foliculitePerifoliculiteImage from "../assets/Dermatites/foliculite-perifoliculite-atlas-v4.png";
 import dermatosesInvisiveisImage from "../assets/Dermatites/Dermatoses_invisiveis.png";
-import nodulaDifusaImage from "../assets/Dermatites/nodula-difusa-atlas-v3.png";
+import nodulaDifusaImage from "../assets/Dermatites/nodula-difusa-atlas-v4.png";
 import nodularDifusaEosinofilosImage from "../assets/Dermatites/Nodular-Difusa/eosinofilos.png";
 import nodularDifusaHistiocitosImage from "../assets/Dermatites/Nodular-Difusa/histiocitos.png";
 import nodularDifusaHistiocitosIntersticialImage from "../assets/Dermatites/Nodular-Difusa/Histiocitos/Intersticial.png";
@@ -15,18 +15,18 @@ import nodularDifusaLinfocitosAnormaisImage from "../assets/Dermatites/Nodular-D
 import nodularDifusaPequenosLinfocitosImage from "../assets/Dermatites/Nodular-Difusa/Linfocitos Predominam/pequenos_linfocitos.png";
 import nodularDifusaMistoImage from "../assets/Dermatites/Nodular-Difusa/Neutrofilos_poeiranuclear+eosinofilos_plasmocitos.png";
 import nodularDifusaNeutrofilosImage from "../assets/Dermatites/Nodular-Difusa/neutrofilos.png";
-import paniculiteImage from "../assets/Dermatites/paniculite-atlas-v3.png";
-import perivascularImage from "../assets/Dermatites/perivascular-atlas-v3.png";
-import perivascularBalonizanteImage from "../assets/Dermatites/Perivasculares/perivascular-balonizante-atlas-v3.png";
+import paniculiteImage from "../assets/Dermatites/paniculite-atlas-v4.png";
+import perivascularImage from "../assets/Dermatites/perivascular-atlas-v4.png";
+import perivascularBalonizanteImage from "../assets/Dermatites/Perivasculares/perivascular-balonizante-atlas-v4.png";
 import perivascularBalonizanteApenasImage from "../assets/Dermatites/Perivasculares/Balonizante/Balonizante-apenas.png";
 import perivascularBalonizanteInterfaceImage from "../assets/Dermatites/Perivasculares/Balonizante/Balonizante-interface.png";
 import perivascularBalonizantePsoriasiformeImage from "../assets/Dermatites/Perivasculares/Balonizante/Balonizante-psoriasiforme.png";
-import perivascularEspongioticaImage from "../assets/Dermatites/Perivasculares/perivascular-espongiotica-atlas-v3.png";
-import perivascularInterfaceLiquenoideImage from "../assets/Dermatites/Perivasculares/Interface/liquenoide-atlas-v2.png";
+import perivascularEspongioticaImage from "../assets/Dermatites/Perivasculares/perivascular-espongiotica-atlas-v4.png";
+import perivascularInterfaceLiquenoideImage from "../assets/Dermatites/Perivasculares/Interface/liquenoide-atlas-v4.png";
 import perivascularInterfaceLiquenoideHistiocitosImage from "../assets/Dermatites/Perivasculares/Interface/liquenoide/histiocitos.png";
 import perivascularInterfaceLiquenoideLangerhansImage from "../assets/Dermatites/Perivasculares/Interface/liquenoide/Langerhans.png";
 import perivascularInterfaceLiquenoideLinfocitosImage from "../assets/Dermatites/Perivasculares/Interface/liquenoide/linfocitos.png";
-import perivascularInterfaceVacuolarImage from "../assets/Dermatites/Perivasculares/Interface/vacuolar-atlas-v2.png";
+import perivascularInterfaceVacuolarImage from "../assets/Dermatites/Perivasculares/Interface/vacuolar-atlas-v3.png";
 import perivascularInterfaceVacuolarMistoImage from "../assets/Dermatites/Perivasculares/Interface/vacuolar/linfocitos_neutrofilos_e_eosinofilos.png";
 import perivascularInterfaceVacuolarSomenteLinfocitosImage from "../assets/Dermatites/Perivasculares/Interface/vacuolar/Somente_linfócitos.png";
 import perivascularInterfaceVacuolarLinfocitosBalonizacaoImage from "../assets/Dermatites/Perivasculares/Interface/vacuolar/Linfocitos predominam/Balonização_e_queratinócitos_necróticos.png";
@@ -47,7 +47,7 @@ import perivascularApenasLinfocitosImage from "../assets/Dermatites/Perivascular
 import perivascularApenasLinfocitosEEosinofilosImage from "../assets/Dermatites/Perivasculares/Sem alteração epidérmica/Apenas perivascular/linfocitos_e_eosinofilos.png";
 import perivascularApenasLinfocitosEHistiocitosImage from "../assets/Dermatites/Perivasculares/Sem alteração epidérmica/Apenas perivascular/linfocitos_e_histiocitos.png";
 import perivascularApenasLinfocitosEPlasmocitosImage from "../assets/Dermatites/Perivasculares/Sem alteração epidérmica/Apenas perivascular/linfocitos_e_plasmocitos.png";
-import perivascularPsoriasiformeImage from "../assets/Dermatites/Perivasculares/perivascular-psoriasiforme-atlas-v3.png";
+import perivascularPsoriasiformeImage from "../assets/Dermatites/Perivasculares/perivascular-psoriasiforme-atlas-v4.png";
 import espongioticaApenasImage from "../assets/Dermatites/Perivasculares/Espongiotica/espongiotica-apenas.png";
 import espongioticaApenasEosinofilosImage from "../assets/Dermatites/Perivasculares/Espongiotica/Espongiotica apenas/eosinofilos-proeminentes.png";
 import espongioticaApenasLinfocitosImage from "../assets/Dermatites/Perivasculares/Espongiotica/Espongiotica apenas/linfocitos-predominam.png";
@@ -56,16 +56,16 @@ import espongioticaPsoriasiformeImage from "../assets/Dermatites/Perivasculares/
 import espongioticaPsoriasiformeLiquenoideImage from "../assets/Dermatites/Perivasculares/Espongiotica/espongiotica-psoriasiforme-liquenoide.png";
 import perivascularPsoriasiformeApenasImage from "../assets/Dermatites/Perivasculares/Psoriasiforme/perivascular-apenas.png";
 import perivascularPsoriasiformeELiquenoideImage from "../assets/Dermatites/Perivasculares/Psoriasiforme/perivascular-e-liquenoide.png";
-import perivascularSemAlteracaoEpidermicaImage from "../assets/Dermatites/Perivasculares/perivascular-sem-alteracao-epidermica-atlas-v3.png";
+import perivascularSemAlteracaoEpidermicaImage from "../assets/Dermatites/Perivasculares/perivascular-sem-alteracao-epidermica-atlas-v5.png";
 import processoCistoImage from "../assets/ProcessoPatologico/processo-cisto.png";
 import processoDepositoImage from "../assets/ProcessoPatologico/processo-deposito.png";
 import processoDermatiteImage from "../assets/ProcessoPatologico/processo-dermatite.png";
 import processoHamartomaMalformacaoImage from "../assets/ProcessoPatologico/processo-hamartoma-malformacao.png";
 import processoNeoplasiaImage from "../assets/ProcessoPatologico/processo-neoplasia.png";
 import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
-import pustulosaImage from "../assets/Dermatites/pustulosa-atlas-v3.png";
-import vasculiteImage from "../assets/Dermatites/vasculite-atlas-v3.png";
-import vesicoBolhosaImage from "../assets/Dermatites/vesico-bolhosa-atlas-v4.png";
+import pustulosaImage from "../assets/Dermatites/pustulosa-atlas-v5.png";
+import vasculiteImage from "../assets/Dermatites/vasculite-atlas-v4.png";
+import vesicoBolhosaImage from "../assets/Dermatites/vesico-bolhosa-atlas-v5.png";
 import { FavoriteToggleButton } from "./FavoriteToggleButton";
 import { useLanguage } from "../context/LanguageContext";
 import { translateNodeTitle, translateOptionHint, translateOptionLabel } from "../i18n/translations";
@@ -107,17 +107,6 @@ const dermatiteCategoryImages: Record<string, string> = {
   fibrosantes: fibrosanteImage,
   paniculites: paniculiteImage,
   "dermatoses-invisiveis": dermatosesInvisiveisImage,
-};
-
-const dermatitisPatternDescriptions: Record<string, { pt: string; en: string }> = {
-  perivascular: { pt: "Manguitos inflamatórios ao redor dos vasos", en: "Inflammatory cuffs around vessels" },
-  "nodular-difusa": { pt: "Agregados densos ocupando a derme", en: "Dense aggregates throughout the dermis" },
-  "vesico-bolhosa": { pt: "Clivagem com formação de vesícula ou bolha", en: "Clefting with vesicle or bulla formation" },
-  vasculites: { pt: "Inflamação e dano da parede vascular", en: "Inflammation and vessel-wall damage" },
-  pustulosas: { pt: "Coleções epidérmicas de neutrófilos", en: "Epidermal collections of neutrophils" },
-  "foliculite-perifoliculite": { pt: "Inflamação centrada na unidade folicular", en: "Inflammation centered on the follicular unit" },
-  fibrosantes: { pt: "Colágeno espessado e remodelamento dérmico", en: "Thickened collagen and dermal remodeling" },
-  paniculites: { pt: "Inflamação lobular ou septal da hipoderme", en: "Lobular or septal inflammation of subcutis" },
 };
 
 const perivascularCategoryImages: Record<string, string> = {
@@ -450,7 +439,6 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {node.options.map((option, index) => {
             const isDermatosesInvisiveis = option.nextNodeId === "dermatoses-invisiveis";
-            const description = dermatitisPatternDescriptions[option.nextNodeId];
 
             return (
               <div
@@ -474,14 +462,10 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#fffdf7]/45 to-transparent" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
-                    <p className="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-[#9c7425]">
-                      {language === "pt" ? "Padrão de dermatite" : "Dermatitis pattern"}
-                    </p>
-                    <h3 className="mt-2 font-serif text-xl leading-tight tracking-[-0.015em] text-[#082d5c]">
+                    <h3 className="font-serif text-xl leading-tight tracking-[-0.015em] text-[#082d5c]">
                       {translateOptionLabel(node.id, option, language)}
                     </h3>
-                    {description ? <p className="mt-2 text-xs leading-5 text-[#65717d]">{description[language]}</p> : null}
-                    <div className="mt-auto flex items-center justify-between border-t border-[#d8c8a3]/55 pt-4 text-[0.65rem] font-bold uppercase tracking-[0.11em] text-[#805f1f]">
+                    <div className="mt-5 flex items-center justify-between border-t border-[#d8c8a3]/55 pt-4 text-[0.65rem] font-bold uppercase tracking-[0.11em] text-[#805f1f]">
                       <span>{language === "pt" ? "Explorar padrão" : "Explore pattern"}</span>
                       <span className="grid h-8 w-8 place-items-center rounded-full border border-[#b68d35]/45 transition group-hover:translate-x-1 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]">→</span>
                     </div>
@@ -512,21 +496,24 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
         </div>
       ) : isPerivascularHub ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {node.options.map((option) =>
-            renderImageCard(
-              translateOptionLabel(node.id, option, language),
+          {node.options.map((option) => {
+            const translatedLabel = translateOptionLabel(node.id, option, language);
+            const label = option.nextNodeId === "perivascular-espongiotica"
+              ? translatedLabel.charAt(0).toUpperCase() + translatedLabel.slice(1)
+              : translatedLabel;
+
+            return renderImageCard(
+              label,
               translateOptionHint(node.id, option, language) || undefined,
               perivascularCategoryImages[option.nextNodeId],
               () => onNavigate(option.nextNodeId),
               "default",
               undefined,
-              option.nextNodeId === "perivascular-sem-epiderme" ||
-                option.nextNodeId === "perivascular-balonizante" ||
-                option.nextNodeId === "perivascular-espongiotica"
-                ? "!p-1.5"
-                : undefined,
-            ),
-          )}
+              "relative !aspect-[3/2] !p-2 bg-[#fffdf8]",
+              "hover:!border-[#74324a]/70 hover:!shadow-[0_20px_38px_-22px_rgba(116,50,74,0.38)]",
+              language === "pt" ? "Explorar padrão" : "Explore pattern",
+            );
+          })}
         </div>
       ) : isPerivascularBalonizanteHub ? (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -741,6 +728,7 @@ function renderImageCard(
   imageClassName?: string,
   imageContainerClassName?: string,
   className?: string,
+  actionLabel?: string,
 ) {
   const compact = size === "compact";
   const thumbnail = size === "thumbnail";
@@ -772,8 +760,13 @@ function renderImageCard(
         ) : (
           <div className="flex h-full items-center justify-center bg-paper text-sm text-steel">{label}</div>
         )}
+        {actionLabel ? (
+          <span className="pointer-events-none absolute bottom-3 right-3 translate-y-1 rounded-full border border-white/55 bg-[#74324a]/94 px-3 py-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-white opacity-0 shadow-md backdrop-blur-sm transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+            {actionLabel} <span aria-hidden="true">→</span>
+          </span>
+        ) : null}
       </div>
-      <div className={`flex items-center justify-center text-center ${thumbnail ? "min-h-[72px] px-4 py-4" : compact ? "min-h-[70px] px-3 py-3" : "min-h-[84px] px-4 py-4"}`}>
+      <div className={`flex items-center justify-center text-center ${thumbnail ? "min-h-[72px] px-4 py-4" : compact ? "min-h-[70px] px-3 py-3" : actionLabel ? "min-h-[74px] px-4 py-3" : "min-h-[84px] px-4 py-4"}`}>
         <div className="space-y-1">
           <h3 className={`${thumbnail ? "text-[0.92rem] leading-6" : compact ? "text-sm leading-5 xl:text-[0.95rem]" : "text-base leading-6"} font-semibold text-ink`}>
             {label}
