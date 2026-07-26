@@ -110,11 +110,6 @@ export function VasculiteUrticarialHipocomplementemicaGoldTipsPage() {
               leucocitoclasia e dano vascular focal</Highlight>; se não aparecer de início, examine níveis adicionais.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

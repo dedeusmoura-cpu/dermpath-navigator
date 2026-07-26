@@ -110,11 +110,6 @@ export function VasculiteCrioglobulinemicaGoldTipsPage() {
               sugerem tipo I. Em ambos, a confirmação é clínica e sorológica.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

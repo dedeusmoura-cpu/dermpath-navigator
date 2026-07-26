@@ -108,11 +108,6 @@ export function VasculopatiaLivedoideGoldTipsPage() {
               trombótica, e <Highlight>não uma vasculite verdadeira</Highlight>.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
-            </>
-          }
         />
       </div>
     </Layout>

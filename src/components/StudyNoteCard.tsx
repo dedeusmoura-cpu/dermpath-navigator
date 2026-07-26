@@ -20,7 +20,6 @@ interface StudyNoteCardProps {
   note?: ReactNode;
   aside?: ReactNode;
   pearl?: ReactNode;
-  source?: ReactNode;
 }
 
 const COLOR_STYLES: Record<
@@ -74,7 +73,6 @@ export function StudyNoteCard({
   note,
   aside,
   pearl,
-  source,
 }: StudyNoteCardProps) {
   const sections = [sectionsLeft[0], sectionsRight[0], sectionsLeft[1], sectionsRight[1]].filter(
     (section): section is StudyNoteSectionData => Boolean(section),
@@ -133,7 +131,6 @@ export function StudyNoteCard({
           ) : null}
         </div>
 
-        {source ? <p className="mt-4 text-center font-sans text-xs text-slate-500 sm:text-sm">{source}</p> : null}
       </div>
     </div>
   );

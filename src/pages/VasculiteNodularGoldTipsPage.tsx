@@ -110,11 +110,6 @@ export function VasculiteNodularGoldTipsPage() {
               a inflamação da gordura fica concentrada ao redor da artéria acometida.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

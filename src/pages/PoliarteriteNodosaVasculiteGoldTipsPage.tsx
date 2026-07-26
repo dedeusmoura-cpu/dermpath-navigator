@@ -110,11 +110,6 @@ export function PoliarteriteNodosaVasculiteGoldTipsPage() {
               segmentar</Highlight> e solicite níveis. Paniculite lobular difusa favorece vasculite nodular.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

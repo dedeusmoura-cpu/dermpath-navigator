@@ -53,7 +53,7 @@ export function LupusGoldTipsPage() {
           items={[
             "Lúpus discoide, tipo localizado, apenas no polo cefálico, com 5% de associação com lúpus sistêmico; e tipo generalizado, presente em 2 segmentos corporais, saindo do polo cefálico, com 15% de associação.",
             "Geralmente epiderme muito atrófica, espessamento de membrana basal e alopécia em couro cabeludo.",
-            "Lúpus tímido: subtipo de lúpus discoide sem acometimento da epiderme.",
+            "Lúpus túmido: subtipo de lúpus discoide sem acometimento da epiderme.",
             "Paniculite lúpica: 3 topografias clássicas, rosto, ombro e nádegas.",
             "Paniculite lúpica: ocorre de forma isolada, com acometimento apenas de hipoderme.",
             "Lúpus profundo: associado a alterações de lúpus na pele sobrejacente.",

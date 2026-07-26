@@ -115,11 +115,6 @@ export function VasculiteLeucocitoclasticaGoldTipsPage() {
               <Highlight>acometimento sistêmico</Highlight> definem o diagnóstico final.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
-            </>
-          }
         />
       </div>
     </Layout>

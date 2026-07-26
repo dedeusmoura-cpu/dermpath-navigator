@@ -110,11 +110,6 @@ export function PoliangiteMicroscopicaGoldTipsPage() {
               síndrome pulmão-rim e p-ANCA/anti-MPO estabelecem a correlação decisiva.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

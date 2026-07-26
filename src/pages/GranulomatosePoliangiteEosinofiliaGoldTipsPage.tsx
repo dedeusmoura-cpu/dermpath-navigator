@@ -110,11 +110,6 @@ export function GranulomatosePoliangiteEosinofiliaGoldTipsPage() {
               depende da combinação com asma, eosinofilia periférica e demais manifestações sistêmicas.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

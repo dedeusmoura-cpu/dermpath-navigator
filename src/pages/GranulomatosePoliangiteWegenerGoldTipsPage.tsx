@@ -110,11 +110,6 @@ export function GranulomatosePoliangiteWegenerGoldTipsPage() {
               ausência não exclui o diagnóstico; correlacione com vias aéreas, pulmão, rim e c-ANCA/anti-PR3.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
-            </>
-          }
         />
       </div>
     </Layout>

@@ -1779,7 +1779,6 @@ export function PerivascularStudyNotePage() {
   const returnToNodeId = (location.state as { returnToNodeId?: string } | null)?.returnToNodeId ?? node.id;
   const enrichmentMatchText = [node.title, ...(node.result?.possibilities ?? [])].join(" | ");
   const enrichment = getEnrichment(enrichmentMatchText);
-  const usesSurvivalGuide = SURVIVAL_GUIDE_OVERRIDES.some((rule) => rule.match.test(enrichmentMatchText));
   const pathIds = path.map((item) => item.id);
   const sectionsLeft: StudyNoteSectionData[] = [
     {
@@ -1841,9 +1840,6 @@ export function PerivascularStudyNotePage() {
         sectionsLeft={sectionsLeft}
         sectionsRight={sectionsRight}
         pearl={enrichment.pearl}
-        source={usesSurvivalGuide
-          ? "Fontes: Bolognia — Dermatology, 2-volume set; Billings & Cotton — Inflammatory Dermatopathology."
-          : "Fonte: Bolognia — Dermatology, 2-volume set."}
       />
     </Layout>
   );
