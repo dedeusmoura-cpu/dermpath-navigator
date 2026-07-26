@@ -377,16 +377,18 @@ function HistopathologyLink({ to, nodeId, title }: { to: string; nodeId: string;
     <Link
       to={to}
       state={{ returnToNodeId: nodeId }}
-      className="group flex w-full items-center justify-between gap-4 rounded-[22px] border border-transparent bg-[linear-gradient(135deg,#ff5b87_0%,#ef4f92_42%,#b45ae6_100%)] px-5 py-4 text-left text-white shadow-[0_18px_34px_rgba(212,77,178,0.26)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(212,77,178,0.34)]"
+      className="group relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-[22px] border border-[#d6b766]/45 bg-[radial-gradient(circle_at_top_left,_rgba(214,183,102,0.24),_transparent_34%),linear-gradient(135deg,#082d5c_0%,#0a4a86_62%,#1268a5_100%)] px-5 py-4 text-left text-white shadow-[0_18px_36px_-18px_rgba(8,45,92,0.72)] transition duration-200 hover:-translate-y-0.5 hover:border-[#e1c77e]/75 hover:shadow-[0_24px_44px_-18px_rgba(8,45,92,0.82)]"
     >
+      <span className="pointer-events-none absolute -right-8 -top-12 h-32 w-32 rounded-full border border-white/10 bg-white/[0.04]" aria-hidden="true" />
       <div className="flex min-w-0 items-center gap-4">
         <MicroscopeIcon />
         <div className="min-w-0">
+          <p className="mb-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[#e1c77e]">{t("didactic_slides")}</p>
           <p className="font-serif text-xl leading-tight text-white sm:text-2xl">{title ? tx(title) : t("histopathology")}</p>
         </div>
       </div>
-      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm">
-        <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#ef4f92]" aria-hidden="true" fill="none">
+      <span className="relative flex h-14 w-14 flex-none items-center justify-center rounded-full border border-white/30 bg-[#d6b766] shadow-[0_10px_24px_-14px_rgba(0,0,0,0.55)] transition group-hover:bg-[#e1c77e]">
+        <svg viewBox="0 0 24 24" className="h-6 w-6 text-[#082d5c]" aria-hidden="true" fill="none">
           <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
@@ -467,7 +469,7 @@ function TomeNotaIcon({ compact = false }: { compact?: boolean }) {
 
 function MicroscopeIcon() {
   return (
-    <span className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-white/25 bg-white/14 shadow-sm">
+    <span className="relative flex h-14 w-14 flex-none items-center justify-center rounded-2xl border border-[#e1c77e]/45 bg-white/10 shadow-sm backdrop-blur-sm">
       <svg viewBox="0 0 64 64" className="h-9 w-9" aria-hidden="true" fill="none">
         <path d="M25 10h10l4 8-10 6-4-8Z" fill="white" fillOpacity="0.92" />
         <path d="m39 18 5 5-9 9-5-5" fill="white" fillOpacity="0.82" />

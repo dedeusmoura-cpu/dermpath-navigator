@@ -73,7 +73,8 @@ export default function App() {
   const isHomePage = location.pathname === "/";
   const isDiagnosticPage = location.pathname === "/diagnostico";
   const isStudyNotePage = location.pathname.startsWith("/tome-nota/") || location.pathname.startsWith("/dicas-que-valem-ouro");
-  const usesNavyHeader = isDiagnosticPage || isStudyNotePage;
+  const isHistopathologyPage = location.pathname.startsWith("/histopatologico/");
+  const usesNavyHeader = isDiagnosticPage || isStudyNotePage || isHistopathologyPage;
   const isTreeMapPage = location.pathname === "/mapa-da-arvore" || location.pathname === "/arvore-interativa";
 
   useEffect(() => {
