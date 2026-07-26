@@ -1,7 +1,6 @@
 ﻿import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { FavoritesDrawer } from "../components/FavoritesDrawer";
 import { Layout } from "../components/Layout";
 import { ResultCard } from "../components/ResultCard";
 import { SearchPanel } from "../components/SearchPanel";
@@ -26,7 +25,7 @@ export function DiagnosticPage() {
   const { language, t } = useLanguage();
   const locationState = (location.state as DiagnosticLocationState | null) ?? null;
   const requestedNodeId = searchParams.get("nodeId") ?? locationState?.nodeId ?? algorithmTree.rootId;
-  const { favorites, isFavorite, toggleFavorite } = useFavorites();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const currentNode = algorithmTree.nodes[requestedNodeId] ?? algorithmTree.nodes[algorithmTree.rootId];
   const path = useMemo(() => {
@@ -46,11 +45,6 @@ export function DiagnosticPage() {
   }, [currentNode.id, locationState?.trail]);
   const breadcrumb = path.map((item) => translateNodeTitle(item, language)).join(" > ");
   const isTerminal = ["diagnosis", "morphologic_terminal", "placeholder", "info"].includes(currentNode.type);
-  const isProcessHub = currentNode.id === "root";
-  const isDermatiteHub = currentNode.id === "dermatite";
-  const isPerivascularHub = currentNode.id === "perivascular";
-  const hideSidebar = isProcessHub || isDermatiteHub || isPerivascularHub;
-
   useEffect(() => {
     const stateNodeId = locationState?.nodeId;
     if (!stateNodeId || searchParams.get("nodeId")) return;
@@ -99,7 +93,7 @@ export function DiagnosticPage() {
 
   return (
     <Layout title={t("diagnostic_title")} subtitle={t("diagnostic_subtitle")}>
-      <div className={hideSidebar ? "grid gap-6" : "grid gap-6 xl:grid-cols-[1.3fr_0.7fr]"}>
+      <div className="grid gap-6">
         <div className="space-y-6">
           <Breadcrumbs
             path={path}
@@ -132,12 +126,8 @@ export function DiagnosticPage() {
             />
           )}
 
-          {isProcessHub ? <FavoritesDrawer favorites={favorites} onOpenNode={navigateTo} /> : null}
-
           <SearchPanel onOpenNode={navigateTo} />
         </div>
-
-        {!hideSidebar ? <FavoritesDrawer favorites={favorites} onOpenNode={navigateTo} /> : null}
       </div>
     </Layout>
   );
@@ -194,4 +184,3 @@ function persistTrail(nodeId: string, trail: string[]) {
     // Ignore sessionStorage issues and keep navigation functional.
   }
 }
-

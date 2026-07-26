@@ -4,6 +4,7 @@ import dermPathLogo from "./assets/dermpath-logo-final.png";
 import dermPathLogoNavyGold from "./assets/dermpath-logo-navy-gold-concept.png";
 import quizButtonImage from "./assets/Quiz-branco.png";
 import { MobileLandscapeHint } from "./components/MobileLandscapeHint";
+import { FavoritesMenu } from "./components/FavoritesMenu";
 import { useLanguage } from "./context/LanguageContext";
 import { CeratoseLiquenoideHistopathologyPage } from "./pages/CeratoseLiquenoideHistopathologyPage";
 import { DermatiteEosinofilicaHistopathologyPage } from "./pages/DermatiteEosinofilicaHistopathologyPage";
@@ -114,12 +115,12 @@ export default function App() {
       />
 
       {!isTedPage && !isHomePage && !isTreeMapPage && <header className={`fixed inset-x-0 top-0 z-30 border-b shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur ${usesNavyHeader ? "border-[#d6b766]/25 bg-[#082d5c]/95" : "border-sand/90 bg-white/92"}`}>
-        <div className={`mx-auto flex max-w-7xl justify-between gap-3 px-4 sm:px-6 lg:items-center ${usesNavyHeader ? "items-center py-3" : "items-start py-1.5"}`}>
+        <div className={`site-canvas flex justify-between gap-3 lg:items-center ${usesNavyHeader ? "items-center py-3" : "items-start py-1.5"}`}>
           <NavLink to="/" className={`shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 ${usesNavyHeader ? "focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" : "focus-visible:ring-accent"}`}>
             <img
               src={usesNavyHeader ? dermPathLogoNavyGold : dermPathLogo}
               alt={t("home_title")}
-              className={usesNavyHeader ? "h-auto w-[172px] sm:w-[226px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
+              className={usesNavyHeader ? "h-auto w-[132px] sm:w-[226px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
             />
           </NavLink>
 
@@ -133,6 +134,8 @@ export default function App() {
                 <img src={quizButtonImage} alt="Quiz" className="h-8 w-auto object-contain" />
               </button>
             ) : null}
+
+            {isDiagnosticPage ? <FavoritesMenu tone="navy" /> : null}
 
             <nav className={`hidden gap-1 rounded-full border p-[3px] md:flex ${usesNavyHeader ? "border-white/20 bg-white/[0.06]" : "border-sand bg-paper/90"}`}>
               <button
@@ -179,7 +182,7 @@ export default function App() {
         </div>
       </header>}
 
-      <main className={`mx-auto max-w-7xl px-4 pb-6 sm:px-6 lg:px-8 ${isTedPage || isHomePage || isTreeMapPage ? "pt-4" : "pt-16 sm:pt-24"}`}>
+      <main className={`site-canvas pb-6 ${isTedPage || isHomePage || isTreeMapPage ? "pt-3 sm:pt-4" : "pt-16 sm:pt-24"}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/video-de-boas-vindas" element={<WelcomeVideoPage />} />

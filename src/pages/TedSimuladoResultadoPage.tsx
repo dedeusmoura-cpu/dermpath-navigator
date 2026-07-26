@@ -313,7 +313,7 @@ export function TedSimuladoResultadoPage() {
 
       {/* Sticky footer with scroll-to-top */}
       <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-[#efd8b7] bg-white/95 shadow-[0_-8px_24px_-12px_rgba(20,27,43,0.18)] backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="site-canvas flex items-center gap-3 py-3">
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

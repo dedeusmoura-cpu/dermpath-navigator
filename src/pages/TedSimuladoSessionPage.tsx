@@ -671,7 +671,7 @@ export function TedSimuladoSessionPage() {
 
       {/* Sticky footer — always visible */}
       <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-[#efd8b7] bg-white/95 shadow-[0_-8px_24px_-12px_rgba(20,27,43,0.18)] backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="site-canvas flex items-center justify-between gap-4 py-3">
           <div className="flex items-center gap-3">
             <button
               type="button"
