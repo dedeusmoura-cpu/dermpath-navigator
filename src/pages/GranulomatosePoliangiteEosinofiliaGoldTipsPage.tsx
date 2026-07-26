@@ -42,10 +42,9 @@ export function GranulomatosePoliangiteEosinofiliaGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Infiltrado rico em <Highlight>eosinófilos</Highlight>, granulomas extravasculares e vasculite necrosante de pequenos a médios vasos.</>,
-        <>Lesões papulonecróticas mostram dermatite neutrofílica/eosinofílica em paliçada com necrobiose.</>,
-        <>Acomete tanto artérias quanto veias.</>,
-        <>Vasculite cutânea leucocitoclástica nas lesões purpúricas.</>,
+        <><Highlight>Vasculite leucocitoclástica rica em eosinófilos</Highlight>, geralmente na derme superficial e média.</>,
+        <>Eosinófilos intersticiais e figuras em chama podem acompanhar o dano vascular.</>,
+        <>Granulomas extravasculares podem ocorrer, mas não precisam estar presentes na biópsia cutânea.</>,
       ],
     },
   ];
@@ -107,13 +106,13 @@ export function GranulomatosePoliangiteEosinofiliaGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: EGPA" image={diagramImage} alt="Vasculite e granuloma ricos em eosinófilos na EGPA" legend={[{ label: "Eosinófilos abundantes", color: "bg-orange-500" }, { label: "Granuloma extravascular", color: "bg-violet-700" }, { label: "Asma / doença pulmonar", color: "bg-sky-600" }]} footer="Asma + eosinofilia + vasculite." />}
           pearl={
             <>
-              Pense em EGPA sempre que um paciente <Highlight>asmático de longa data</Highlight> desenvolver púrpura ou
-              mononeurite múltipla.
+              Diante de LCV com <Highlight>eosinófilos em número significativo</Highlight>, considere EGPA. A confirmação
+              depende da combinação com asma, eosinofilia periférica e demais manifestações sistêmicas.
             </>
           }
           source={
             <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
             </>
           }
         />

@@ -42,10 +42,9 @@ export function VasculiteNodularGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Vasculite <Highlight>granulomatosa/necrosante</Highlight> de artérias de médio calibre na hipoderme, sem leucocitoclasia proeminente.</>,
-        <>Paniculite lobular associada, com necrose caseosa-like nos casos ligados a TB.</>,
-        <>Pode haver granulomas tuberculoides quando de etiologia tuberculosa.</>,
-        <>Trombose secundária do vaso acometido é comum.</>,
+        <><Highlight>Paniculite lobular</Highlight> com granulomas e necrose adiposa.</>,
+        <>Vasculite de artérias e/ou veias septais; lesões iniciais podem mostrar necrose fibrinoide.</>,
+        <>Nas lesões tardias, o dano pode se limitar a tumefação endotelial e inflamação mural mista.</>,
       ],
     },
   ];
@@ -107,13 +106,13 @@ export function VasculiteNodularGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: paniculite lobular" image={diagramImage} alt="Vasculite nodular com paniculite lobular granulomatosa" legend={[{ label: "Paniculite lobular", color: "bg-amber-500" }, { label: "Granulomas e necrose", color: "bg-violet-700" }, { label: "Vasculite profunda", color: "bg-rose-500" }]} footer="Panturrilhas: nódulos que podem ulcerar." />}
           pearl={
             <>
-              Sempre investigar <Highlight>tuberculose</Highlight> diante de nódulos dolorosos recorrentes nas panturrilhas —
-              o eritema indurado de Bazin é a face tuberculosa dessa mesma vasculite nodular.
+              Em pequeno aumento, procure inflamação que ocupa <Highlight>todo o lóbulo e dano vascular</Highlight>. Na PAN,
+              a inflamação da gordura fica concentrada ao redor da artéria acometida.
             </>
           }
           source={
             <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
             </>
           }
         />

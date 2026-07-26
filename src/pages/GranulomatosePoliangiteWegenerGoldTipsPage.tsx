@@ -42,10 +42,9 @@ export function GranulomatosePoliangiteWegenerGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Inflamação <Highlight>granulomatosa</Highlight> associada a vasculite de pequenos e médios vasos.</>,
-        <>Na pele: LCV e/ou dermatite neutrofílica e granulomatosa em paliçada (PNGD) nas lesões papulonecróticas.</>,
-        <>Necrose basofílica central circundada por paliçada histiocitária/neutrofílica.</>,
-        <>Pode acometer veia de grande calibre com padrão leucocitoclástico.</>,
+        <>Os achados são variáveis; o mais comum na pele é <Highlight>vasculite leucocitoclástica</Highlight> difusa, alcançando diferentes níveis da derme.</>,
+        <>Quando presente, inflamação granulomatosa necrosante ou em paliçada fortalece muito o diagnóstico.</>,
+        <>Uma amostra pode demonstrar apenas um componente do espectro; granulomas podem estar ausentes.</>,
       ],
     },
   ];
@@ -107,12 +106,13 @@ export function GranulomatosePoliangiteWegenerGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: GPA" image={diagramImage} alt="Granuloma necrosante e vasculite na granulomatose com poliangite" legend={[{ label: "Granuloma necrosante", color: "bg-violet-700" }, { label: "Vasculite pauci-imune", color: "bg-rose-500" }, { label: "Vias aéreas + pulmão", color: "bg-sky-600" }]} footer="Granulomas diferenciam GPA de MPA." />}
           pearl={
             <>
-              <Highlight>Gengiva em morango</Highlight> e nariz em sela são pistas clínicas quase patognomônicas de GPA.
+              A GPA pode mostrar <Highlight>apenas vasculite leucocitoclástica</Highlight> na pele. Granulomas ajudam, mas sua
+              ausência não exclui o diagnóstico; correlacione com vias aéreas, pulmão, rim e c-ANCA/anti-PR3.
             </>
           }
           source={
             <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
             </>
           }
         />

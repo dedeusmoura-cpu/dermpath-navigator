@@ -42,10 +42,9 @@ export function PoliarteriteNodosaVasculiteGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Vasculite necrosante segmentar de <Highlight>artéria muscular de médio calibre</Highlight>, na derme profunda/hipoderme.</>,
-        <>Neutrófilos, debris nucleares e fibrina na parede arterial, com disrupção da lâmina elástica.</>,
-        <>Pode haver dilatação aneurismática ou estenose focal do vaso acometido.</>,
-        <>IFD pode mostrar C3, IgM e fibrina na parede vascular, de significado incerto.</>,
+        <><Highlight>Vasculite leucocitoclástica de artéria muscular</Highlight> na derme profunda ou hipoderme.</>,
+        <>Os achados podem ser focais; níveis adicionais frequentemente são necessários.</>,
+        <>A necrose adiposa permanece ao redor do vaso, sem paniculite lobular difusa.</>,
       ],
     },
   ];
@@ -107,13 +106,13 @@ export function PoliarteriteNodosaVasculiteGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: artéria muscular" image={diagramImage} alt="Poliarterite nodosa com vasculite transmural de artéria muscular" legend={[{ label: "Necrose transmural segmentar", color: "bg-rose-500" }, { label: "Trombose / microaneurisma", color: "bg-red-700" }, { label: "Nódulos + livedo racemoso", color: "bg-purple-700" }]} footer="Médio vaso: derme profunda e hipoderme." />}
           pearl={
             <>
-              Diante de livedo racemoso <Highlight>"em rajada"</Highlight> com nódulos subcutâneos, sempre descartar hepatite
-              B e investigar acometimento sistêmico antes de rotular como forma cutânea isolada.
+              O diagnóstico pode estar escondido em um único vaso profundo: procure <Highlight>artéria muscular com dano
+              segmentar</Highlight> e solicite níveis. Paniculite lobular difusa favorece vasculite nodular.
             </>
           }
           source={
             <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
             </>
           }
         />

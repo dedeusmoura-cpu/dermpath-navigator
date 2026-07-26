@@ -72,6 +72,8 @@ export default function App() {
   const isTedPage = location.pathname.startsWith("/treinamento-ted");
   const isHomePage = location.pathname === "/";
   const isDiagnosticPage = location.pathname === "/diagnostico";
+  const isStudyNotePage = location.pathname.startsWith("/tome-nota/") || location.pathname.startsWith("/dicas-que-valem-ouro");
+  const usesNavyHeader = isDiagnosticPage || isStudyNotePage;
   const isTreeMapPage = location.pathname === "/mapa-da-arvore" || location.pathname === "/arvore-interativa";
 
   useEffect(() => {
@@ -110,13 +112,13 @@ export default function App() {
         message={language === "pt" ? "Para visualizar melhor o quiz, gire o celular para a horizontal." : "For a better quiz view, rotate your phone to landscape."}
       />
 
-      {!isTedPage && !isHomePage && !isTreeMapPage && <header className={`fixed inset-x-0 top-0 z-30 border-b shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur ${isDiagnosticPage ? "border-[#d6b766]/25 bg-[#082d5c]/95" : "border-sand/90 bg-white/92"}`}>
-        <div className={`mx-auto flex max-w-7xl justify-between gap-3 px-4 sm:px-6 lg:items-center ${isDiagnosticPage ? "items-center py-3" : "items-start py-1.5"}`}>
-          <NavLink to="/" className={`shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 ${isDiagnosticPage ? "focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" : "focus-visible:ring-accent"}`}>
+      {!isTedPage && !isHomePage && !isTreeMapPage && <header className={`fixed inset-x-0 top-0 z-30 border-b shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur ${usesNavyHeader ? "border-[#d6b766]/25 bg-[#082d5c]/95" : "border-sand/90 bg-white/92"}`}>
+        <div className={`mx-auto flex max-w-7xl justify-between gap-3 px-4 sm:px-6 lg:items-center ${usesNavyHeader ? "items-center py-3" : "items-start py-1.5"}`}>
+          <NavLink to="/" className={`shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 ${usesNavyHeader ? "focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" : "focus-visible:ring-accent"}`}>
             <img
-              src={isDiagnosticPage ? dermPathLogoNavyGold : dermPathLogo}
+              src={usesNavyHeader ? dermPathLogoNavyGold : dermPathLogo}
               alt={t("home_title")}
-              className={isDiagnosticPage ? "h-auto w-[172px] sm:w-[226px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
+              className={usesNavyHeader ? "h-auto w-[172px] sm:w-[226px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
             />
           </NavLink>
 
@@ -131,11 +133,11 @@ export default function App() {
               </button>
             ) : null}
 
-            <nav className={`hidden gap-1 rounded-full border p-[3px] md:flex ${isDiagnosticPage ? "border-white/20 bg-white/[0.06]" : "border-sand bg-paper/90"}`}>
+            <nav className={`hidden gap-1 rounded-full border p-[3px] md:flex ${usesNavyHeader ? "border-white/20 bg-white/[0.06]" : "border-sand bg-paper/90"}`}>
               <button
                 type="button"
                 onClick={openSearchPanel}
-                className={`nav-link-hover rounded-full px-3 py-1 text-sm font-semibold transition ${isDiagnosticPage ? "text-white/70 hover:bg-white/10 hover:text-[#e1c77e]" : "text-steel hover:bg-white hover:text-accent"}`}
+                className={`nav-link-hover rounded-full px-3 py-1 text-sm font-semibold transition ${usesNavyHeader ? "text-white/70 hover:bg-white/10 hover:text-[#e1c77e]" : "text-steel hover:bg-white hover:text-accent"}`}
               >
                 {t("nav_search")}
               </button>
@@ -143,21 +145,21 @@ export default function App() {
                 <button
                   type="button"
                   onClick={goBack}
-                  className={`nav-link-hover rounded-full px-3 py-1 text-sm font-semibold transition ${isDiagnosticPage ? "text-white/70 hover:bg-white/10 hover:text-[#e1c77e]" : "text-steel hover:bg-white hover:text-accent"}`}
+                  className={`nav-link-hover rounded-full px-3 py-1 text-sm font-semibold transition ${usesNavyHeader ? "text-white/70 hover:bg-white/10 hover:text-[#e1c77e]" : "text-steel hover:bg-white hover:text-accent"}`}
                 >
                   {t("back")}
                 </button>
               ) : null}
             </nav>
 
-            <div className={`hidden h-6 w-px md:block ${isDiagnosticPage ? "bg-white/15" : "bg-sand/80"}`} aria-hidden="true" />
+            <div className={`hidden h-6 w-px md:block ${usesNavyHeader ? "bg-white/15" : "bg-sand/80"}`} aria-hidden="true" />
 
-            <div className={`inline-flex w-fit rounded-full border p-[3px] ${isDiagnosticPage ? "border-white/20 bg-white/[0.06]" : "border-sand bg-paper/95"}`}>
+            <div className={`inline-flex w-fit rounded-full border p-[3px] ${usesNavyHeader ? "border-white/20 bg-white/[0.06]" : "border-sand bg-paper/95"}`}>
               <button
                 type="button"
                 onClick={() => setLanguage("pt")}
                 className={`rounded-full px-3 py-1 text-sm font-semibold transition sm:px-3 ${
-                  language === "pt" ? (isDiagnosticPage ? "bg-[#d6b766] text-[#082d5c]" : "bg-ink text-white") : (isDiagnosticPage ? "text-white/65 hover:text-white" : "text-steel hover:bg-white hover:text-accent")
+                  language === "pt" ? (usesNavyHeader ? "bg-[#d6b766] text-[#082d5c]" : "bg-ink text-white") : (usesNavyHeader ? "text-white/65 hover:text-white" : "text-steel hover:bg-white hover:text-accent")
                 }`}
               >
                 PT
@@ -166,7 +168,7 @@ export default function App() {
                 type="button"
                 onClick={() => setLanguage("en")}
                 className={`rounded-full px-3 py-1 text-sm font-semibold transition sm:px-3 ${
-                  language === "en" ? (isDiagnosticPage ? "bg-[#d6b766] text-[#082d5c]" : "bg-ink text-white") : (isDiagnosticPage ? "text-white/65 hover:text-white" : "text-steel hover:bg-white hover:text-accent")
+                  language === "en" ? (usesNavyHeader ? "bg-[#d6b766] text-[#082d5c]" : "bg-ink text-white") : (usesNavyHeader ? "text-white/65 hover:text-white" : "text-steel hover:bg-white hover:text-accent")
                 }`}
               >
                 EN

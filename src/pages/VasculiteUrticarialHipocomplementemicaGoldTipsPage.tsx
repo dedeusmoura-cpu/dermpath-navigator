@@ -42,10 +42,9 @@ export function VasculiteUrticarialHipocomplementemicaGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <><Highlight>Leucocitoclasia com necrose da parede vascular</Highlight>, com ou sem fibrina, inflamação perivascular ou extravasamento de hemácias.</>,
-        <>Infiltrado neutrofílico intersticial mais comum na forma hipocomplementêmica.</>,
-        <>IFD positiva em ~70% (Ig, C3, fibrinogênio perivascular); padrão granular na JDE em ~80% sugere LES.</>,
-        <>Eosinófilos podem estar presentes.</>,
+        <><Highlight>Vasculite leucocitoclástica sutil e focal</Highlight>, com poucos neutrófilos, poeira nuclear e hemácias extravasadas.</>,
+        <>O dano vascular pode ser mínimo; eosinófilos perivasculares são frequentes.</>,
+        <>Níveis adicionais podem ser necessários para demonstrar a alteração vascular.</>,
       ],
     },
   ];
@@ -107,13 +106,13 @@ export function VasculiteUrticarialHipocomplementemicaGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: urticária + LCV" image={diagramImage} alt="Lesões urticariformes persistentes e vasculite leucocitoclástica" legend={[{ label: "Urticas persistentes >24 h", color: "bg-rose-400" }, { label: "Púrpura residual", color: "bg-purple-700" }, { label: "Hipocomplementemia / anti-C1q", color: "bg-sky-600" }]} footer="Urtica persistente que deixa marca." />}
           pearl={
             <>
-              <Highlight>Hipocomplementemia</Highlight> é o principal marcador prognóstico: sinaliza maior chance de doença
-              sistêmica e sobreposição com LES.
+              Uma urtica persistente pode ter biópsia quase igual à urticária comum. Procure <Highlight>qualquer
+              leucocitoclasia e dano vascular focal</Highlight>; se não aparecer de início, examine níveis adicionais.
             </>
           }
           source={
             <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              <span className="font-semibold">Fontes:</span> Bolognia et al. <em>Dermatology</em>; Billings &amp; Cotton. <em>Inflammatory Dermatopathology</em>.
             </>
           }
         />
