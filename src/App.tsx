@@ -23,6 +23,7 @@ import { HomePage } from "./pages/HomePage";
 import { LiquenPlanoHistopathologyPage } from "./pages/LiquenPlanoHistopathologyPage";
 import { LiquenNitidoHistopathologyPage } from "./pages/LiquenNitidoHistopathologyPage";
 import { LupusGoldTipsPage } from "./pages/LupusGoldTipsPage";
+import { LupusTumidoHistopathologyPage } from "./pages/LupusTumidoHistopathologyPage";
 import { LscHistopathologyPage } from "./pages/LscHistopathologyPage";
 import { MpoxHistopathologyPage } from "./pages/MpoxHistopathologyPage";
 import { NecrobioseLipoidicaHistopathologyPage } from "./pages/NecrobioseLipoidicaHistopathologyPage";
@@ -199,6 +200,7 @@ export default function App() {
           <Route path="/histopatologico/erupcao-polimorfa-a-luz" element={<PmleHistopathologyPage />} />
           <Route path="/histopatologico/liquen-plano" element={<LiquenPlanoHistopathologyPage />} />
           <Route path="/histopatologico/liquen-nitido" element={<LiquenNitidoHistopathologyPage />} />
+          <Route path="/histopatologico/lupus-tumido" element={<LupusTumidoHistopathologyPage />} />
           <Route path="/histopatologico/mpox" element={<MpoxHistopathologyPage />} />
           <Route path="/histopatologico/necrobiose-lipoidica" element={<NecrobioseLipoidicaHistopathologyPage />} />
           <Route path="/histopatologico/liquen-simples-cronico" element={<LscHistopathologyPage />} />

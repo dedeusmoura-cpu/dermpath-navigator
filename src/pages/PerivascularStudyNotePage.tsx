@@ -132,6 +132,37 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
+    match: /^(lúpus túmido|lupus eritematoso tumido|lupus tumido)(?:\s|\||$)/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      concept: [
+        <>Forma de <Highlight>lúpus cutâneo crônico</Highlight> centrada na <Highlight>derme e nos anexos</Highlight>, com epiderme habitualmente poupada.</>,
+        <>O padrão combina infiltrado linfocitário <Highlight>superficial e profundo</Highlight> com <Highlight>mucina dérmica proeminente</Highlight>.</>,
+        <>As lesões são frequentemente <Highlight>fotoinduzíveis</Highlight> e têm baixa associação com doença sistêmica ou alterações sorológicas relevantes.</>,
+      ],
+      clinical: [
+        <><Highlight>Pápulas e placas eritematosas ou violáceas, firmes e edematosas</Highlight>, por vezes anulares e com clareamento central.</>,
+        <>Ausência de <Highlight>escama e plugs foliculares</Highlight>; podem lembrar placas urticariformes, porém são fixas.</>,
+        <>Predomina em <Highlight>face e tronco superior</Highlight>, podendo acometer as superfícies extensoras dos antebraços.</>,
+        <>Em geral resolve <Highlight>sem cicatriz, atrofia ou discromia</Highlight>; a fotoprovocação pode reproduzir as lesões.</>,
+      ],
+      histology: [
+        <>Epiderme relativamente preservada; quando presente, a <Highlight>alteração de interface é sutil e por vezes focal</Highlight>.</>,
+        <>Infiltrado <Highlight>linfocitário perivascular e perifolicular</Highlight>, envolvendo a derme <Highlight>superficial e profunda</Highlight>.</>,
+        <><Highlight>Mucina intersticial na derme</Highlight>, frequentemente abundante, separando os feixes de colágeno.</>,
+        <>Em contraste com o lúpus discoide, não se esperam atrofia epidérmica, hiperqueratose, plugs foliculares ou espessamento significativo da membrana basal.</>,
+      ],
+      evaluation: [
+        <><Highlight>Infiltrado linfocitário de Jessner:</Highlight> pode ser muito semelhante, mas costuma ter pouca ou nenhuma mucina dérmica.</>,
+        <><Highlight>REM:</Highlight> mucina e linfócitos tendem a ser mais superficiais e dispersos; há possível continuidade espectral com o lúpus túmido.</>,
+        <><Highlight>Erupção polimorfa à luz:</Highlight> tende a mostrar menos mucina e edema mais pronunciado na derme superficial.</>,
+        <>A imunofluorescência direta é frequentemente <Highlight>negativa ou inespecífica</Highlight>; resultado negativo não exclui o diagnóstico.</>,
+      ],
+      pearl: <>Muitos casos rotulados como <Highlight>“variante profunda de eritema anular centrífugo”</Highlight> na verdade correspondem a lúpus túmido. Procure <Highlight>alteração sutil de interface</Highlight>, por vezes focal, e <Highlight>mucina na derme</Highlight>.</>,
+    },
+  },
+  {
     match: /lúpus|dermatomiosite|erupção polimorfa.*luz|fotodermatite/i,
     data: {
       clinical: ["Fotodistribuição, fotossensibilidade e sinais sistêmicos orientam a interpretação."],

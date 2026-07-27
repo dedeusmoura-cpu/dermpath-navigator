@@ -23,6 +23,7 @@ const PRP_HISTOPATHOLOGY_TARGET_ID = "dx-pitiríase-rubra-pilar";
 const PALISADED_DERMATITIS_TARGET_ID = "group-intersticial-outros";
 const NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_IDS = ["group-pv-neutrofilos", "dx-pvi-dun"];
 const PMLE_HISTOPATHOLOGY_TARGET_ID = "dx-erupcao-polimorfa-luz";
+const LUPUS_TUMIDO_HISTOPATHOLOGY_TARGET_ID = "dx-lupus-tumido";
 const LIQUEN_PLANO_HISTOPATHOLOGY_TARGET_ID = "dx-liquen-plano";
 const CERATOSE_LIQUENOIDE_HISTOPATHOLOGY_TARGET_ID = "dx-ceratose-liquenoide";
 const DERMATOFITOSE_PSORIASIFORME_HISTOPATHOLOGY_TARGET_ID = "dx-psor-dermatofitose";
@@ -80,6 +81,7 @@ export function ResultCard({
   const showNeutrophilicUrticarialDermatosisGoldButton = NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_IDS.includes(node.id);
   const showNeutrophilicUrticarialDermatosisHistopathologyButton = NEUTROPHILIC_URTICARIAL_DERMATOSIS_TARGET_IDS.includes(node.id);
   const showPmleHistopathologyButton = node.id === PMLE_HISTOPATHOLOGY_TARGET_ID;
+  const showLupusTumidoHistopathologyButton = node.id === LUPUS_TUMIDO_HISTOPATHOLOGY_TARGET_ID;
   const showLiquenPlanoHistopathologyButton = node.id === LIQUEN_PLANO_HISTOPATHOLOGY_TARGET_ID;
   const showCeratoseLiquenoideHistopathologyButton = node.id === CERATOSE_LIQUENOIDE_HISTOPATHOLOGY_TARGET_ID;
   const showDermatofitosePsoriasiformeHistopathologyButton = node.id === DERMATOFITOSE_PSORIASIFORME_HISTOPATHOLOGY_TARGET_ID;
@@ -287,6 +289,9 @@ export function ResultCard({
           />
         ) : null}
         {showPmleHistopathologyButton ? <HistopathologyLink to="/histopatologico/erupcao-polimorfa-a-luz" nodeId={node.id} /> : null}
+        {showLupusTumidoHistopathologyButton ? (
+          <HistopathologyLink to="/histopatologico/lupus-tumido" nodeId={node.id} title="Histopatológico: Lúpus túmido" />
+        ) : null}
         {showPrpHistopathologyButton ? <HistopathologyLink to="/histopatologico/prp" nodeId={node.id} /> : null}
         {showLiquenPlanoHistopathologyButton ? <HistopathologyLink to="/histopatologico/liquen-plano" nodeId={node.id} /> : null}
         {showCeratoseLiquenoideHistopathologyButton ? <HistopathologyLink to="/histopatologico/ceratose-liquenoide" nodeId={node.id} /> : null}
