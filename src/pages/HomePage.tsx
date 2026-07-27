@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import authorImage from "../assets/Rafael.png.png";
-import dermpathTexture from "../assets/dermpath-illustration@2x.png";
+import dermpathTexture from "../assets/dermpath-illustration-no-r@2x.png";
 import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
