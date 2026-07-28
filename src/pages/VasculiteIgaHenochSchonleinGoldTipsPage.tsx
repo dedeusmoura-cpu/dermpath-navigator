@@ -40,10 +40,9 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <><Highlight>Vasculite leucocitoclástica</Highlight> em pequenos vasos dérmicos.</>,
-        <>Neutrófilos com leucocitoclasia.</>,
-        <><Highlight>Necrose fibrinoide</Highlight> da parede vascular.</>,
-        <><Highlight>Extravasamento de hemácias</Highlight>.</>,
+        <><Highlight>Vasculite leucocitoclástica</Highlight> de pequenos vasos dérmicos, indistinguível no HE de outras vasculites por imunocomplexos.</>,
+        <>IFD mostra <Highlight>depósitos perivasculares de IgA</Highlight> em vasos lesados e não lesados.</>,
+        <>A sensibilidade da IFD cai em lesões com mais de 48 horas.</>,
       ],
     },
   ];
@@ -105,13 +104,8 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
           aside={<IgAVascularDiagram />}
           pearl={
             <>
-              Diante de <Highlight>púrpura palpável</Highlight> em pernas e nádegas, especialmente com artralgia ou dor
-              abdominal, lembre da <Highlight>vasculite por IgA</Highlight>.
-            </>
-          }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              O HE reconhece LCV, mas <Highlight>IgA perivascular na IFD</Highlight> estabelece o diagnóstico. Colha uma lesão
+              recente e correlacione com púrpura, sintomas gastrointestinais, articulares e renais.
             </>
           }
         />

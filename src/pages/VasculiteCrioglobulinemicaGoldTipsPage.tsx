@@ -42,10 +42,9 @@ export function VasculiteCrioglobulinemicaGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Vasculite <Highlight>leucocitoclástica clássica</Highlight> à histologia.</>,
-        <>IFD com depósitos granulares predominantemente de <Highlight>IgM e C3</Highlight> na derme papilar.</>,
-        <>Pode haver componente de médio vaso (padrão misto).</>,
-        <>Diferencia-se do tipo I por não haver oclusão trombótica isolada sem inflamação.</>,
+        <><Highlight>Tipos II e III:</Highlight> vasculite leucocitoclástica envolvendo derme superficial e profunda, podendo alcançar a hipoderme.</>,
+        <><Highlight>Tipo I monoclonal:</Highlight> vasos ocluídos por material eosinofílico PAS-positivo, com pouca inflamação e sem vasculite verdadeira.</>,
+        <>A morfologia das formas mistas se sobrepõe a outras vasculites sistêmicas.</>,
       ],
     },
   ];
@@ -107,13 +106,8 @@ export function VasculiteCrioglobulinemicaGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: crioglobulinas" image={diagramImage} alt="Vasculite por crioglobulinas com púrpura e eixos sistêmicos" legend={[{ label: "Complexos IgM-IgG", color: "bg-sky-600" }, { label: "LCV de pequenos vasos", color: "bg-violet-700" }, { label: "HCV, nervo e rim", color: "bg-amber-600" }]} footer="Púrpura + C4 baixo + crioglobulinas." />}
           pearl={
             <>
-              Sempre investigar <Highlight>hepatite C</Highlight> — os antivirais de ação direta mudaram o prognóstico desta
-              vasculite.
-            </>
-          }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              <Highlight>Vasculite difusa</Highlight> sugere crioglobulinemia mista; trombos eosinofílicos paucicelulares
+              sugerem tipo I. Em ambos, a confirmação é clínica e sorológica.
             </>
           }
         />

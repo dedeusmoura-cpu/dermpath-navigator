@@ -112,11 +112,6 @@ export function GranulomaFacialGoldTipsPage() {
               pertencente ao mesmo espectro histopatológico do <Highlight>eritema elevatum diutinum</Highlight>.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
-            </>
-          }
         />
       </div>
     </Layout>

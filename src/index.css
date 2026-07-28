@@ -6,7 +6,7 @@
 
 :root {
   color: #141b2b;
-  background: #fcfaf4;
+  background: #f9f6ed;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,9 +16,11 @@
 body {
   margin: 0;
   min-width: 320px;
+  background-color: #f9f6ed;
   background:
-    radial-gradient(circle at top left, rgba(201, 162, 39, 0.08), transparent 22%),
-    linear-gradient(180deg, #fffdf8 0%, #fcfaf4 48%, #f7f2e7 100%);
+    radial-gradient(circle at top left, rgba(201, 162, 39, 0.07), transparent 24%),
+    radial-gradient(circle at top right, rgba(8, 45, 92, 0.035), transparent 30%),
+    #f9f6ed;
 }
 
 #root {
@@ -59,10 +61,30 @@ body {
 }
 
 .app-shell {
+  background-color: #f9f6ed;
   background:
-    radial-gradient(circle at top right, rgba(169, 122, 31, 0.12), transparent 28%),
-    radial-gradient(circle at top left, rgba(20, 27, 43, 0.05), transparent 24%),
-    linear-gradient(180deg, #fffdf8 0%, #fcfaf4 44%, #f7f2e7 100%);
+    radial-gradient(circle at top right, rgba(169, 122, 31, 0.075), transparent 30%),
+    radial-gradient(circle at top left, rgba(20, 27, 43, 0.035), transparent 26%),
+    #f9f6ed;
+}
+
+/* Canvas editorial compartilhado: amplo no desktop, com respiro controlado. */
+.site-canvas {
+  width: calc(100% - 1.5rem);
+  max-width: 100rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .site-canvas {
+    width: calc(100% - 2.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-canvas {
+    width: calc(100% - 4rem);
+  }
 }
 
 /* ─── Nav link underline slide-in ──────────────────────────────────────────── */

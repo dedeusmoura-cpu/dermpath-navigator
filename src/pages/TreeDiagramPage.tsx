@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import dermPathLogo from "../assets/dermpath-logo-final.png";
 import { InteractiveTreeDiagram } from "../components/InteractiveTreeDiagram";
+import { FavoritesMenu } from "../components/FavoritesMenu";
 import { useLanguage } from "../context/LanguageContext";
 import { algorithmTree } from "../data/algorithm";
 import { translateNodeResultTitle } from "../i18n/translations";
@@ -39,13 +40,13 @@ function TreeViewTopBar() {
   }
 
   return (
-    <div className="mb-4 flex items-center gap-3">
+    <header className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
       <NavLink to="/" className="shrink-0">
         <img src={dermPathLogo} alt="DermPath Navigator" className="h-[44px] w-auto sm:h-[52px]" />
       </NavLink>
 
-      <div className="flex flex-1 items-center gap-2 justify-end">
-        <div ref={wrapperRef} className="relative flex-1 max-w-xs sm:max-w-sm">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-end gap-2">
+        <div ref={wrapperRef} className="relative order-last w-full sm:order-none sm:max-w-sm sm:flex-1">
           <div className="flex items-center gap-2 rounded-full border border-sand bg-white/95 px-4 py-2 shadow-sm focus-within:border-accent/50 focus-within:shadow-[0_0_0_3px_rgba(169,122,31,0.08)]">
             <svg className="h-4 w-4 shrink-0 text-steel/70" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={2}>
               <circle cx="9" cy="9" r="6" />
@@ -100,6 +101,8 @@ function TreeViewTopBar() {
           {language === "en" ? "Tree map" : "Mapa da árvore"}
         </NavLink>
 
+        <FavoritesMenu tone="light" compact />
+
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -125,7 +128,7 @@ function TreeViewTopBar() {
           </button>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 

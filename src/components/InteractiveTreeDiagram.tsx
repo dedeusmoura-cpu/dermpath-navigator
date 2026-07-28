@@ -534,7 +534,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
 
   return (
     <div className={isFullscreen ? "fixed inset-0 z-50 flex flex-col bg-[#f5f0eb] p-4" : "space-y-3"}>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={expandAll}
@@ -549,7 +549,7 @@ export function InteractiveTreeDiagram({ rootNodeId }: Props) {
         >
           {language === "en" ? "Collapse" : "Recolher"}
         </button>
-        <span className="text-xs text-steel/70">
+        <span className="hidden text-xs text-steel/70 md:inline">
           {language === "en"
             ? "Click any node to expand / collapse"
             : "Clique em qualquer nó para expandir / recolher"}

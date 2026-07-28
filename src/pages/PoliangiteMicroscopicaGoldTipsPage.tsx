@@ -42,10 +42,9 @@ export function PoliangiteMicroscopicaGoldTipsPage() {
       title: "Achados histopatológicos",
       icon: <MicroscopeIcon />,
       bullets: [
-        <>Vasculite necrosante segmentar de <Highlight>pequenos vasos</Highlight> (capilares, vênulas, arteríolas).</>,
-        <>Pode acometer artérias de pequeno/médio calibre.</>,
-        <><Highlight>Ausência de granulomas</Highlight> — achado-chave que diferencia de GPA.</>,
-        <>Padrão de vasculite leucocitoclástica clássica na pele.</>,
+        <><Highlight>Vasculite leucocitoclástica difusa</Highlight>, envolvendo vasos da derme superficial e profunda, por vezes até a hipoderme.</>,
+        <><Highlight>Ausência de granulomas</Highlight> — principal diferença morfológica em relação à GPA.</>,
+        <>Não há achado cutâneo isolado específico: o padrão pode ser idêntico ao de outras vasculites sistêmicas.</>,
       ],
     },
   ];
@@ -107,13 +106,8 @@ export function PoliangiteMicroscopicaGoldTipsPage() {
           aside={<StudyNoteImageAside title="Esquema: MPA pauci-imune" image={diagramImage} alt="Vasculite necrosante de pequenos vasos com glomérulo renal" legend={[{ label: "Vasculite necrosante", color: "bg-rose-500" }, { label: "Ausência de granulomas", color: "bg-slate-500" }, { label: "Eixo pulmão-rim", color: "bg-sky-600" }]} footer="Pequenos vasos, rim e pulmão." />}
           pearl={
             <>
-              MPA é a <Highlight>"irmã sem granulomas"</Highlight> da GPA — mesma gravidade renal e pulmonar, sem a via aérea
-              superior destrutiva.
-            </>
-          }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
+              A lâmina mostra uma LCV profunda, mas <Highlight>não define MPA isoladamente</Highlight>. Ausência de granulomas,
+              síndrome pulmão-rim e p-ANCA/anti-MPO estabelecem a correlação decisiva.
             </>
           }
         />

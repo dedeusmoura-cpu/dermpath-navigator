@@ -7,6 +7,7 @@ import {
   FocusedTreeMap,
 } from "../components/FocusedTreeMap";
 import { Layout } from "../components/Layout";
+import { FavoritesMenu } from "../components/FavoritesMenu";
 import { useLanguage } from "../context/LanguageContext";
 import { algorithmTree } from "../data/algorithm";
 import { translateNodeResultTitle } from "../i18n/translations";
@@ -104,6 +105,7 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
         </div>
 
           <div className="flex items-center justify-end gap-2">
+            <FavoritesMenu tone="navy" compact />
             <Link
               to={treeViewUrl}
               className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white/75 transition hover:border-[#d6b766]/55 hover:bg-white/[0.11] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766]"

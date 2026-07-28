@@ -879,7 +879,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-eritema-figurado", "Eritema figurado", "diagnosis", "pv-apenas-linfocitos", "padrão compatível quando a clínica mostra lesão anular.", blocks("O diagnóstico depende fortemente da correlação clínica."), ["eritema figurado", "lesão anular"]),
   terminal("dx-eritrasma", "Eritrasma", "diagnosis", "pv-apenas-linfocitos", "Cocos e filamentos bacterianos na camada córnea, tipicamente em axila.", blocks("Considerar correlação com topografia e luz de Wood."), ["eritrasma", "axila", "bactéria"]),
   terminal("dx-ceratolise-punctata", "Ceratólise punctata", "diagnosis", "pv-apenas-linfocitos", "Cocos e filamentos bacterianos na camada córnea volar.", blocks("Frequentemente associada a hiperidrose e odor plantar."), ["ceratólise punctata", "volar"], ["ceratolise punctata"]),
-  terminal("dx-lupus-tumido", "Lúpus eritematoso tímido", "diagnosis", "pv-apenas-linfocitos", "Mucina intersticial em padrão perivascular com mínima alteração epidérmica.", blocks("Pode haver necessidade de integração com a clínica e imunologia."), ["lúpus eritematoso tímido", "mucina"], ["lupus eritematoso tumido", "lupus tumido"]),
+  terminal("dx-lupus-tumido", "Lúpus túmido", "diagnosis", "pv-apenas-linfocitos", "Mucina intersticial em padrão perivascular com mínima alteração epidérmica.", blocks("Pode haver necessidade de integração com a clínica e imunologia."), ["lúpus túmido", "mucina"], ["lupus eritematoso tumido", "lupus tumido"]),
   terminal("dx-erupcao-polimorfa-luz", "Erupção polimorfa luz", "diagnosis", "pv-apenas-linfocitos", "Edema em derme papilar em contexto de fotodermatose.", blocks("A história de fotoexposição ajuda a sustentar o diagnóstico."), ["erupção polimorfa à luz", "fotodermatose"], ["erupcao polimorfa a luz"]),
   terminal("dx-schamberg", "Doença de Schamberg", "diagnosis", "pv-apenas-linfocitos", "Hemácias extravasadas e siderófagos apontam para doença de Schamberg.", blocks("Também aparece no braço perivascular e intersticial com predomínio de linfócitos."), ["schamberg", "doença de schamberg", "siderófagos"]),
   diagnosisGroup("dx-exantema-viral-erupcao-droga", "Exantema viral / Erupção por drogas", "pv-apenas-linfocitos", "Sem outras anormalidades específicas, permanecem duas possibilidades Diagnósticas principais.", ["Exantema viral", "Erupção por drogas"], blocks("Usar cronologia, distribuição das lesões e contexto clínico para discriminar."), ["exantema viral", "erupção por drogas", "farmacodermia"], ["erupcao por drogas"]),
@@ -1579,5 +1579,4 @@ export const algorithmTree: AlgorithmTree = {
   rootId: "root",
   nodes: Object.fromEntries(nodesArray.map((entry) => [entry.id, entry])),
 };
-
 

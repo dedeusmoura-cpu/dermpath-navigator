@@ -1,7 +1,6 @@
-import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import authorImage from "../assets/Rafael.png.png";
-import dermpathTexture from "../assets/dermpath-illustration@2x.png";
+import dermpathTexture from "../assets/dermpath-illustration-no-r@2x.png";
 import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
 import { Layout } from "../components/Layout";
 import { useLanguage } from "../context/LanguageContext";
@@ -128,7 +127,6 @@ export function HomePage() {
                 title={t(path.titleKey)}
                 body={t(path.bodyKey)}
                 label={t(path.labelKey)}
-                icon={path.icon}
               />
             ))}
           </div>
@@ -191,23 +189,57 @@ export function HomePage() {
   );
 }
 
-function HomePathCard({ to, number, title, body, label, icon }: { to: string; number: string; title: string; body: string; label: string; icon: ReactNode }) {
+function HomePathCard({ to, number, title, body, label }: { to: string; number: string; title: string; body: string; label: string }) {
+  const dark = number === "01" || number === "04";
+  const cardTone = {
+    "01": "border-[#173f70] bg-[linear-gradient(145deg,#061f42_0%,#0a376d_100%)]",
+    "02": "border-[#d8c8a3]/80 bg-[#fffdf7]",
+    "03": "border-[#d3b45d]/65 bg-[linear-gradient(145deg,#fbf5df_0%,#f1dfaa_100%)]",
+    "04": "border-[#805164] bg-[linear-gradient(145deg,#542c3d_0%,#713b4e_55%,#452435_100%)]",
+  }[number];
+
   return (
     <Link
       to={to}
-      className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-[22px] border border-[#d8c8a3]/70 bg-[#fffdf7] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#b68d35] hover:shadow-[0_22px_44px_-28px_rgba(8,45,92,0.42)] focus-visible:-translate-y-1 focus-visible:border-[#b68d35] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f9f6ed]"
+      className={`group relative flex min-h-[330px] flex-col overflow-hidden rounded-[24px] border p-6 transition duration-500 hover:-translate-y-1.5 hover:border-[#c9a957] hover:shadow-[0_26px_50px_-25px_rgba(8,45,92,0.5)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f9f6ed] ${cardTone}`}
     >
-      <div className="flex items-start justify-between">
-        <span className="grid h-14 w-14 place-items-center rounded-full bg-[#082d5c] text-[#d6b766] shadow-[0_10px_24px_-16px_rgba(8,45,92,0.8)] transition-colors duration-300 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]">{icon}</span>
-        <span className="font-serif text-sm text-[#b68d35]">{number}</span>
+      <CardMotif number={number} />
+      <div className="relative flex justify-end">
+        <span className={`flex items-center gap-2 font-serif text-sm ${dark ? "text-[#dfc16b]" : "text-[#a17620]"}`}><span className={`h-px w-7 ${dark ? "bg-[#dfc16b]/55" : "bg-[#b68d35]/45"}`} />{number}</span>
       </div>
-      <h3 className="mt-8 font-serif text-[1.55rem] leading-tight tracking-[-0.02em] text-[#082d5c]">{title}</h3>
-      <p className="mt-3 text-sm leading-6 text-[#68727c]">{body}</p>
-      <div className="mt-auto flex items-center justify-between border-t border-[#d8c8a3]/55 pt-5 text-[0.7rem] font-bold uppercase tracking-[0.11em] text-[#8d6a21]">
+      <h3 className={`relative mt-[4.75rem] font-serif text-[1.65rem] leading-[1.08] tracking-[-0.025em] ${dark ? "text-white" : "text-[#082d5c]"}`}>{title}</h3>
+      <p className={`relative mt-4 text-sm leading-6 ${dark ? "text-[#dbe5f0]/75" : "text-[#65717d]"}`}>{body}</p>
+      <div className={`relative mt-auto flex items-end justify-between border-t pt-5 text-[0.68rem] font-bold uppercase tracking-[0.13em] ${dark ? "border-white/15 text-[#dfc16b]" : "border-[#b99a52]/35 text-[#805f1f]"}`}>
         <span>{label}</span>
-        <span className="grid h-8 w-8 place-items-center rounded-full border border-[#c6a557]/60 transition group-hover:translate-x-0.5 group-hover:bg-[#d6b766] group-hover:text-[#082d5c]"><ArrowIcon /></span>
+        <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition duration-300 group-hover:translate-x-1 group-hover:bg-[#d6b766] group-hover:text-[#082d5c] ${dark ? "border-[#d6b766]/50" : "border-[#b68d35]/45"}`}><ArrowIcon /></span>
       </div>
     </Link>
+  );
+}
+
+function CardMotif({ number }: { number: string }) {
+  if (number === "01") return (
+    <svg viewBox="0 0 240 190" fill="none" aria-hidden="true" className="pointer-events-none absolute -right-10 -top-7 h-52 w-64 text-[#d6b766] opacity-[0.14] transition duration-700 group-hover:translate-x-1 group-hover:opacity-25">
+      <path d="M120 18v34M120 52 70 84m50-32 50 32M70 84v38m0-38-32 35m32 3-25 36m125-74v38m0-38 33 35m-33 3 25 36" stroke="currentColor" strokeWidth="1.5" />
+      {[120,70,170,38,70,45,170,203,195].map((cx, index) => <circle key={index} cx={cx} cy={[18,84,84,119,122,158,122,119,158][index]} r="7" stroke="currentColor" strokeWidth="1.5" />)}
+    </svg>
+  );
+  if (number === "02") return (
+    <svg viewBox="0 0 260 170" fill="none" aria-hidden="true" className="pointer-events-none absolute -right-12 -top-1 h-44 w-64 text-[#0b3b70] opacity-[0.08] transition duration-700 group-hover:-translate-x-1 group-hover:opacity-[0.16]">
+      <path d="M4 52c32-25 51 19 84-2s55 18 87-2 54 14 81-3v94H4V52Z" stroke="currentColor" strokeWidth="2" />
+      <path d="M4 79c32-25 51 19 84-2s55 18 87-2 54 14 81-3M4 108c35-16 55 14 90-2s60 16 94-1 47 8 68-2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M32 127c13-12 25 10 39-1s25 10 39-1m23 3c13-12 25 10 39-1s25 10 39-1" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+  if (number === "03") return (
+    <svg viewBox="0 0 210 210" fill="none" aria-hidden="true" className="pointer-events-none absolute -right-10 -top-12 h-60 w-60 text-[#8c681e] opacity-[0.09] transition duration-700 group-hover:rotate-6 group-hover:opacity-[0.17]">
+      <circle cx="105" cy="105" r="78" stroke="currentColor" strokeWidth="2" /><circle cx="105" cy="105" r="55" stroke="currentColor" /><circle cx="77" cy="88" r="11" stroke="currentColor" /><circle cx="125" cy="126" r="16" stroke="currentColor" /><circle cx="133" cy="72" r="7" stroke="currentColor" /><circle cx="70" cy="134" r="6" stroke="currentColor" />
+    </svg>
+  );
+  return (
+    <svg viewBox="0 0 210 230" fill="none" aria-hidden="true" className="pointer-events-none absolute -right-8 -top-5 h-64 w-56 text-[#e4a9b8] opacity-[0.15] transition duration-700 group-hover:-translate-y-1 group-hover:opacity-25">
+      <path d="M48 15h93l27 27v171H48V15Z" stroke="currentColor" strokeWidth="1.7" /><path d="M141 15v29h27M76 80l8 8 15-17m17 12h27M76 119h14m18 0h35M76 147h14m18 0h35" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /><circle cx="84" cy="183" r="15" stroke="currentColor" strokeWidth="1.7" />
+    </svg>
   );
 }
 

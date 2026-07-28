@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
@@ -10,11 +11,11 @@ import { useFavorites } from "../hooks/useFavorites";
 import { buildPathToNode } from "../utils/tree";
 
 type Enrichment = {
-  concept: string[];
-  clinical: string[];
-  histology: string[];
-  evaluation: string[];
-  pearl: string;
+  concept: ReactNode[];
+  clinical: ReactNode[];
+  histology: ReactNode[];
+  evaluation: ReactNode[];
+  pearl: ReactNode;
 };
 
 const DEFAULT_ENRICHMENT: Enrichment = {
@@ -31,7 +32,7 @@ const DEFAULT_ENRICHMENT: Enrichment = {
   pearl: "o padrão perivascular é um ponto de partida morfológico; o diagnóstico final depende da integração entre epiderme, infiltrado, distribuição e clínica.",
 };
 
-const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclusive?: boolean }> = [
+const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclusive?: boolean; replaceDefaults?: boolean }> = [
   {
     match: /pitiríase liquenoide|PLEVA/i,
     exclusive: true,
@@ -85,7 +86,35 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /dermatofitose|pitiríase versicolor/i,
+    match: /pitiríase versicolor/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      concept: [
+        <>Micose superficial de resposta inflamatória <Highlight>mínima ou ausente</Highlight>, limitada à <Highlight>camada córnea</Highlight>.</>,
+        <>Ocorre quando a forma leveduriforme de <em>Malassezia</em> se transforma na <Highlight>forma micelial</Highlight>; seu caráter lipofílico explica a predileção por <Highlight>áreas ricas em sebo</Highlight>.</>,
+      ],
+      clinical: [
+        <>Múltiplas máculas, manchas ou placas finas, ovais a arredondadas, com <Highlight>escama fina e furfurácea</Highlight> que pode se tornar evidente apenas ao <Highlight>raspar ou estirar a pele</Highlight>.</>,
+        <>As lesões podem confluir no centro das áreas acometidas e predominam em <Highlight>regiões seborreicas</Highlight>, sobretudo <Highlight>tronco superior e ombros</Highlight>.</>,
+        <>A cor varia entre <Highlight>castanha</Highlight> (hiperpigmentada), <Highlight>branco-acastanhada</Highlight> (hipopigmentada) e, menos frequentemente, rosada por inflamação discreta.</>,
+        <>Face — <Highlight>especialmente em crianças</Highlight> —, couro cabeludo, fossas antecubitais, região inframamária e virilhas podem ser acometidos; o envolvimento flexural é denominado <Highlight>pitiríase versicolor inversa</Highlight>.</>,
+        <>Geralmente <Highlight>assintomática</Highlight>, é mais comum em <Highlight>adolescentes e adultos jovens</Highlight> e favorecida por <Highlight>clima quente e úmido, pele oleosa e sudorese excessiva</Highlight>.</>,
+      ],
+      histology: [
+        <>Pode se apresentar como uma <Highlight>"dermatose invisível"</Highlight> histopatologicamente, com <Highlight>inflamação mínima ou ausente</Highlight>.</>,
+        <><Highlight>Esporos arredondados e hifas fúngicas curtas basofílicas</Highlight> estão presentes na <Highlight>camada córnea</Highlight> e geralmente são <Highlight>facilmente identificáveis no HE</Highlight>.</>,
+      ],
+      evaluation: [
+        <>Em "dermatoses invisíveis", avaliar sempre a <Highlight>camada córnea em busca de fungos</Highlight>.</>,
+        <>Dermatófitos apresentam-se como <Highlight>hifas septadas hialinas</Highlight>, de difícil identificação no HE; em geral, <Highlight>PAS ou Grocott</Highlight> são necessários para demonstrá-los.</>,
+        <>Em comparação com a pitiríase versicolor, a <Highlight>dermatofitose costuma ser mais inflamatória</Highlight>, com <Highlight>espongiose, hiperplasia psoriasiforme, alterações vesicobolhosas</Highlight> e inflamação dérmica mais intensa.</>,
+      ],
+      pearl: <>Pitiríase versicolor apresenta <Highlight>esporos e hifas fúngicas basofílicas</Highlight> na camada córnea, no padrão <Highlight>"espaguete com almôndegas"</Highlight>. Em contraste, a colonização não patogênica por <em>Malassezia</em> sp. apresenta <Highlight>apenas esporos, sem formação de hifas</Highlight>.</>,
+    },
+  },
+  {
+    match: /dermatofitose/i,
     data: {
       clinical: ["Correlacionar descamação, topografia e fatores predisponentes; apresentações tratadas podem ser discretas."],
       histology: ["Pesquisar fungos na camada córnea em múltiplos níveis; PAS ou Grocott aumentam a sensibilidade."],
@@ -100,6 +129,37 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
       histology: ["Manguitos linfocíticos perivasculares e focos de paraceratose devem ser interpretados com a configuração clínica."],
       evaluation: ["Excluir dermatofitose e revisar fármacos, infecções e doenças sistêmicas quando o curso for persistente."],
       pearl: "em lesões anulares, a localização da descamação e a correlação com a borda ativa valem tanto quanto o padrão histológico.",
+    },
+  },
+  {
+    match: /^(lúpus túmido|lupus eritematoso tumido|lupus tumido)(?:\s|\||$)/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      concept: [
+        <>Forma de <Highlight>lúpus cutâneo crônico</Highlight> centrada na <Highlight>derme e nos anexos</Highlight>, com epiderme habitualmente poupada.</>,
+        <>O padrão combina infiltrado linfocitário <Highlight>superficial e profundo</Highlight> com <Highlight>mucina dérmica proeminente</Highlight>.</>,
+        <>As lesões são frequentemente <Highlight>fotoinduzíveis</Highlight> e têm baixa associação com doença sistêmica ou alterações sorológicas relevantes.</>,
+      ],
+      clinical: [
+        <><Highlight>Pápulas e placas eritematosas ou violáceas, firmes e edematosas</Highlight>, por vezes anulares e com clareamento central.</>,
+        <>Ausência de <Highlight>escama e plugs foliculares</Highlight>; podem lembrar placas urticariformes, porém são fixas.</>,
+        <>Predomina em <Highlight>face e tronco superior</Highlight>, podendo acometer as superfícies extensoras dos antebraços.</>,
+        <>Em geral resolve <Highlight>sem cicatriz, atrofia ou discromia</Highlight>; a fotoprovocação pode reproduzir as lesões.</>,
+      ],
+      histology: [
+        <>Epiderme relativamente preservada; quando presente, a <Highlight>alteração de interface é sutil e por vezes focal</Highlight>.</>,
+        <>Infiltrado <Highlight>linfocitário perivascular e perifolicular</Highlight>, envolvendo a derme <Highlight>superficial e profunda</Highlight>.</>,
+        <><Highlight>Mucina intersticial na derme</Highlight>, frequentemente abundante, separando os feixes de colágeno.</>,
+        <>Em contraste com o lúpus discoide, não se esperam atrofia epidérmica, hiperqueratose, plugs foliculares ou espessamento significativo da membrana basal.</>,
+      ],
+      evaluation: [
+        <><Highlight>Infiltrado linfocitário de Jessner:</Highlight> pode ser muito semelhante, mas costuma ter pouca ou nenhuma mucina dérmica.</>,
+        <><Highlight>REM:</Highlight> mucina e linfócitos tendem a ser mais superficiais e dispersos; há possível continuidade espectral com o lúpus túmido.</>,
+        <><Highlight>Erupção polimorfa à luz:</Highlight> tende a mostrar menos mucina e edema mais pronunciado na derme superficial.</>,
+        <>A imunofluorescência direta é frequentemente <Highlight>negativa ou inespecífica</Highlight>; resultado negativo não exclui o diagnóstico.</>,
+      ],
+      pearl: <>Muitos casos rotulados como <Highlight>“variante profunda de eritema anular centrífugo”</Highlight> na verdade correspondem a lúpus túmido. Procure <Highlight>alteração sutil de interface</Highlight>, por vezes focal, e <Highlight>mucina na derme</Highlight>.</>,
     },
   },
   {
@@ -160,6 +220,36 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
       ],
       evaluation: ["Clinicamente pode ser confundida com vasculite cutânea de pequenos vasos; a ausência de necrose fibrinoide na biópsia ajuda a diferenciar."],
       pearl: "a combinação de capilarite (hemácias extravasadas, hemossiderina) com um infiltrado liquenoide é a assinatura da púrpura de Gougerot-Blum, sem a necrose fibrinoide da vasculite.",
+    },
+  },
+  {
+    match: /urticária plenamente desenvolvida/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      concept: [
+        <>Reação cutânea mediada principalmente por <Highlight>mastócitos</Highlight>: a liberação de histamina aumenta a permeabilidade das vênulas pós-capilares e produz <Highlight>edema transitório da derme superficial</Highlight>.</>,
+        <>Na lesão plenamente desenvolvida, o edema se associa a <Highlight>infiltrado inflamatório misto</Highlight>, sem dano verdadeiro da parede vascular.</>,
+      ],
+      clinical: [
+        <>As urticas são <Highlight>pruriginosas</Highlight>, róseas ou pálidas, elevadas e circundadas por <Highlight>halo eritematoso</Highlight>.</>,
+        <>Cada lesão costuma desaparecer em <Highlight>menos de 24 horas</Highlight>, sem púrpura nem hiperpigmentação residual — pista clínica central.</>,
+        <>O <Highlight>angioedema</Highlight> acomete derme profunda e subcutâneo, tende a ser mais doloroso que pruriginoso e pode persistir por <Highlight>2–3 dias</Highlight>.</>,
+        <>Urticas recorrentes por <Highlight>mais de 6 semanas</Highlight> definem urticária crônica; revisar fármacos, infecções e sintomas sistêmicos.</>,
+      ],
+      histology: [
+        <><Highlight>Epiderme sem alterações</Highlight>, edema da derme papilar e infiltrado geralmente <Highlight>escasso</Highlight>, superficial ou superficial e profundo; em pequeno aumento, a biópsia pode parecer pele normal.</>,
+        <><Highlight>Fase inicial:</Highlight> linfócitos, neutrófilos e eosinófilos concentram-se <Highlight>ao redor das vênulas</Highlight>.</>,
+        <><Highlight>Fase plenamente desenvolvida:</Highlight> neutrófilos e eosinófilos deixam o compartimento perivascular e ficam <Highlight>dispersos no interstício</Highlight>.</>,
+        <><Highlight>Fase tardia:</Highlight> predominam linfócitos perivenulares, isoladamente ou acompanhados por <Highlight>eosinófilos residuais</Highlight>.</>,
+        <>Pequenos agrupamentos de <Highlight>neutrófilos no lúmen vascular</Highlight> são uma pista útil; não deve haver necrose fibrinoide nem destruição da parede vascular.</>,
+      ],
+      evaluation: [
+        <><Highlight>Vasculite urticariforme</Highlight>: lesões por mais de 24 horas, dor ou ardor, púrpura/hiperpigmentação residual e, na histologia, <Highlight>leucocitoclasia, extravasamento de hemácias e dano vascular</Highlight>.</>,
+        <><Highlight>Dermatose urticariforme neutrofílica</Highlight>: neutrófilos intersticiais, perivasculares e perianexiais com poeira nuclear, porém sem vasculite; febre ou artralgia favorecem doença sistêmica associada.</>,
+        <><Highlight>Penfigoide bolhoso pré-bolhoso</Highlight>: placas persistentes, prurido intenso e espongiose eosinofílica; se houver suspeita, colher <Highlight>biópsia perilesional para imunofluorescência direta</Highlight>.</>,
+      ],
+      pearl: <>A urticária pode parecer <Highlight>pele normal em pequeno aumento</Highlight>: procure edema papilar e <Highlight>neutrófilos no lúmen vascular</Highlight>. Um infiltrado misto denso favorece reação a artrópode ou síndrome de Wells, e o diagnóstico definitivo exige <Highlight>boa correlação clínica</Highlight>.</>,
     },
   },
   {
@@ -1077,6 +1167,457 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
   },
 ];
 
+type SurvivalGuideOverride = {
+  match: RegExp;
+  histology: ReactNode[];
+  pearl: ReactNode;
+};
+
+const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
+  {
+    match: /^(dermatite atópica|dermatite de contato(?: irritativa| por irritante)?|dermatite numular|dermatite disidrótica|reação id|dermatite seborreica|pitiríase alba)(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Fase aguda:</Highlight> espongiose, por vezes com microvesículas, edema papilar e infiltrado perivascular superficial com linfócitos e eosinófilos.</>,
+      <><Highlight>Fase subaguda:</Highlight> paraceratose, acantose e espongiose residual, com pouco edema dérmico.</>,
+      <><Highlight>Fase crônica:</Highlight> hiperqueratose compacta, acantose, espongiose mínima e possível fibrose superficial.</>,
+    ],
+    pearl: <>As dermatites eczematosas compartilham o mesmo espectro microscópico. <Highlight>Microabscessos de Langerhans</Highlight> favorecem contato alérgico; neutrófilos na camada córnea exigem excluir <Highlight>fungos e psoríase</Highlight>.</>,
+  },
+  {
+    match: /^dermatite de estase(?:\s|\||$)/i,
+    histology: [
+      <>Espongiose e acantose variáveis sobre <Highlight>proliferação lobular de vasos espessados</Highlight> na derme superficial.</>,
+      <><Highlight>Hemácias extravasadas e siderófagos</Highlight> são frequentes; pode coexistir dermatite eczematosa.</>,
+    ],
+    pearl: <>Em biópsia da perna, a pista principal é <Highlight>vascular</Highlight>: vasos superficiais espessados em lóbulos, hemorragia e siderófagos. Se a lesão simular neoplasia, examine níveis mais profundos.</>,
+  },
+  {
+    match: /^pitiríase rósea(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Montículos focais de paraceratose</Highlight> sobre epiderme espongiótica.</>,
+      <>Hemorragia na derme papilar e infiltrado linfocitário perivascular discreto.</>,
+    ],
+    pearl: <>Os <Highlight>montículos discretos de paraceratose</Highlight> são a melhor pista. Neutrófilos sugerem psoríase gutata; eosinófilos conspícuos levantam erupção medicamentosa pitiríase-rósea-símile.</>,
+  },
+  {
+    match: /^psoríase \|/i,
+    histology: [
+      <><Highlight>Paraceratose confluente e seca</Highlight>, hipogranulose e neutrófilos na camada córnea ou epiderme.</>,
+      <>Hiperplasia psoriasiforme regular, adelgaçamento suprapapilar e capilares papilares dilatados e tortuosos.</>,
+    ],
+    pearl: <>Neutrófilos na camada córnea exigem pensar em <Highlight>psoríase ou dermatofitose</Highlight>. Eosinófilos dérmicos não são usuais e favorecem psoríase induzida por fármaco.</>,
+  },
+  {
+    match: /^psoríase eruptiva\/gutata(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Montículos discretos de paraceratose com neutrófilos</Highlight>; as alterações epidérmicas são menos desenvolvidas que na psoríase vulgar.</>,
+      <>Vasos papilares dilatados, geralmente sem eosinófilos.</>,
+    ],
+    pearl: <>Montículos de paraceratose com neutrófilos favorecem <Highlight>psoríase gutata</Highlight>. Sem neutrófilos, a distinção de pitiríase rósea pode depender inteiramente da clínica.</>,
+  },
+  {
+    match: /^psoríase pustulosa(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Grandes coleções de neutrófilos</Highlight> subcórneas ou intraepidérmicas.</>,
+      <>Pouca alteração epidérmica em lesões rápidas, com camada granulosa parcialmente preservada e <Highlight>ausência de eosinófilos</Highlight>.</>,
+    ],
+    pearl: <>Antes de concluir psoríase pustulosa, exclua fungos. <Highlight>Eosinófilos</Highlight> favorecem PEGA/erupção pustulosa por droga ou infecção fúngica.</>,
+  },
+  {
+    match: /^pitiríase rubra pilar(?:\s|\||$)/i,
+    histology: [
+      <>Hiperplasia psoriasiforme com camada granulosa preservada ou espessada e <Highlight>tampões foliculares</Highlight>.</>,
+      <><Highlight>Alternância vertical e horizontal</Highlight> de ortoqueratose e paraceratose, formando padrão em tabuleiro de xadrez.</>,
+    ],
+    pearl: <>O padrão em tabuleiro pode ser sutil. <Highlight>Tampão folicular com granulosa preservada</Highlight> favorece pitiríase rubra pilar; biópsias precoces ou de pápulas foliculares podem ser inespecíficas.</>,
+  },
+  {
+    match: /^(líquen simples crônico|prurigo nodular)(?:\s|\||$)/i,
+    histology: [
+      <>Hiperqueratose compacta, hipergranulose e acantose, por vezes pseudoepiteliomatosa no prurigo nodular.</>,
+      <><Highlight>Feixes colágenos espessados e verticais</Highlight> na derme papilar, com infiltrado geralmente escasso.</>,
+    ],
+    pearl: <>O <Highlight>“sinal da palma pilosa”</Highlight> - epiderme acralizada em pele com folículos - e o colágeno vertical favorecem líquen simples/prurigo. Inflamação intensa ou eosinófilos sugerem dermatite subjacente.</>,
+  },
+  {
+    match: /^líquen plano \|/i,
+    histology: [
+      <>Hiperqueratose compacta <Highlight>sem paraceratose</Highlight>, hipergranulose e cristas em dentes de serra.</>,
+      <>Infiltrado liquenoide com vacuolização basal e queratinócitos disceratóticos; <Highlight>eosinófilos não são esperados</Highlight>.</>,
+    ],
+    pearl: <>Paraceratose ou eosinófilos conspícuos afastam o líquen plano clássico e favorecem <Highlight>reação liquenoide medicamentosa</Highlight>.</>,
+  },
+  {
+    match: /^(eritema pigmentar fixo|eritema pigmentar fixo,|erupção fixa por droga)(?:\s|\||$)/i,
+    histology: [
+      <>Estrato córneo em cesta ou com paraceratose focal, sem hipergranulose importante.</>,
+      <><Highlight>Dermatite de interface intensa</Highlight> com queratinócitos necróticos, eosinófilos e melanófagos.</>,
+    ],
+    pearl: <>O diagnóstico exige história de recorrência no mesmo local. <Highlight>Melanófagos</Highlight> apoiam lesão em evolução ou recorrente, e o dano de interface costuma ser maior que na erupção morbiliforme.</>,
+  },
+  {
+    match: /^erupção por droga(?:\s|\||$)/i,
+    histology: [
+      <>Epiderme normal ou com interface discreta e infiltrado perivascular superficial geralmente <Highlight>leve</Highlight>, por vezes profundo.</>,
+      <>Linfócitos e eosinófilos compõem o infiltrado, mas os <Highlight>eosinófilos podem ser escassos</Highlight>.</>,
+    ],
+    pearl: <>Um infiltrado perivascular <Highlight>escasso</Highlight> em erupção disseminada é uma pista útil, mas a confirmação depende da cronologia medicamentosa.</>,
+  },
+  {
+    match: /^eritema multiforme(?:, grave)?(?:\s|\||$)/i,
+    histology: [
+      <>Estrato córneo em cesta, infiltrado perivascular linfocitário discreto e vacuolização basal.</>,
+      <><Highlight>Queratinócitos necróticos em todos os níveis</Highlight>; necrose epidérmica confluente ou total favorece SJS/NET.</>,
+    ],
+    pearl: <>No espectro EM/SJS/NET, o <Highlight>dano epidérmico é desproporcional ao infiltrado</Highlight>. Clivagem superficial sem disceratose sugere síndrome da pele escaldada estafilocócica.</>,
+  },
+  {
+    match: /^doença enxerto versus hospedeiro/i,
+    histology: [
+      <>Vacuolização basal, queratinócitos disceratóticos variáveis e infiltrado perivascular linfocitário discreto.</>,
+      <><Highlight>Satelitose linfocitária</Highlight> de queratinócitos necróticos é uma pista; formas crônicas podem ser liquenoides ou esclerodermoides.</>,
+    ],
+    pearl: <>A histologia pode atrasar em relação à clínica. Em biópsia muito precoce, níveis adicionais ou nova amostra podem revelar a doença; eosinófilos só favorecem fármaco quando <Highlight>numerosos</Highlight>.</>,
+  },
+  {
+    match: /^(pitiríase liquenoide|PLEVA|pitiríase liquenoide e varioliforme aguda)/i,
+    histology: [
+      <><Highlight>PLEVA:</Highlight> paraceratose, espongiose, vacuolização basal, queratinócitos necróticos, infiltrado perivascular superficial e profundo e hemorragia papilar.</>,
+      <><Highlight>PLC:</Highlight> paraceratose, acantose variável, necrose focal de queratinócitos e interface discreta com infiltrado superficial.</>,
+    ],
+    pearl: <>A combinação de <Highlight>interface e hemorragia</Highlight> é especialmente útil para PLEVA. Lesão ulcerada pode ser inespecífica; prefira rebiópsia de pápula recente.</>,
+  },
+  {
+    match: /^(eritema anular centrífugo|eritema figurado)(?:\s|\||$)/i,
+    histology: [
+      <>Infiltrado linfocitário perivascular superficial ou superficial e profundo em padrão <Highlight>“manga de casaco”</Highlight>.</>,
+      <>A variante superficial pode ter escama e espongiose discreta; a profunda geralmente poupa a epiderme.</>,
+    ],
+    pearl: <>O manguito linfocitário é característico, mas não específico. Em lesão anular descamativa, faça <Highlight>PAS</Highlight> e procure interface/mucina para excluir fungo e lúpus.</>,
+  },
+  {
+    match: /^(dermatose púrprica pigmentada|doença de schamberg|púrpura liquenoide de gougerot)/i,
+    histology: [
+      <>Dermatite perivascular superficial com pouca alteração epidérmica e infiltrado linfocitário discreto.</>,
+      <><Highlight>Hemácias extravasadas e siderófagos</Highlight>, ocasionalmente com padrão liquenoide, sem necrose fibrinoide.</>,
+    ],
+    pearl: <>Lesões iniciais podem ter hemácias sem siderófagos. A <Highlight>ausência de dano vascular</Highlight> separa a dermatose purpúrica de vasculite leucocitoclástica.</>,
+  },
+  {
+    match: /^urticária pigmentosa(?:\s|\||$)/i,
+    histology: [
+      <>Infiltrado perivascular superficial moderado de <Highlight>mastócitos</Highlight>, por vezes acompanhado por eosinófilos.</>,
+      <>TMEP tende a ser escassa; mastocitoma forma lençóis densos de mastócitos.</>,
+    ],
+    pearl: <>Mais de <Highlight>15 mastócitos por campo de grande aumento</Highlight> é uma regra prática útil. Em casos sutis, conte vários campos e compare com pele normal.</>,
+  },
+  {
+    match: /^erupção polimorfa.*luz(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Edema subepidérmico proeminente</Highlight> e infiltrado linfocitário com redução gradual da densidade em profundidade.</>,
+      <>Pode haver espongiose, queratinócitos necróticos focais e hemácias extravasadas.</>,
+    ],
+    pearl: <>Edema papilar acentuado em erupção pruriginosa fotoexposta favorece EPL. Mucina intensa, atrofia ou espessamento da membrana basal apontam para <Highlight>lúpus</Highlight>.</>,
+  },
+  {
+    match: /^(insulto por artrópode|insulto por artrópodes|reação de hipersensibilidade|síndrome de wells)/i,
+    histology: [
+      <><Highlight>Infiltrado rico em eosinófilos</Highlight>, frequentemente em cunha e podendo alcançar a hipoderme.</>,
+      <>Lesão precoce pode mostrar vesícula espongiótica no ponto de inoculação; lesões tardias têm epiderme pouco alterada e menos eosinófilos.</>,
+      <>Figuras em chama podem ocorrer em qualquer dermatite eosinofílica e <Highlight>não são específicas de Wells</Highlight>.</>,
+    ],
+    pearl: <>Infiltrado moderado a denso com muitos eosinófilos favorece artrópode; células CD30+ podem aparecer e simular papulose linfomatoide. <Highlight>Figuras em chama isoladas não fecham Wells</Highlight>.</>,
+  },
+  {
+    match: /^pseudolinfoma/i,
+    histology: [
+      <>Hiperplasia linfoide “top-heavy”, preservando anexos, com centros germinativos polarizados e <Highlight>macrófagos de corpos tingíveis</Highlight>.</>,
+      <>Células B restritas aos centros, células T ao redor, população mista e ausência de restrição de cadeia leve.</>,
+    ],
+    pearl: <>A distinção de linfoma B indolente pode ser difícil: arquitetura reativa, polarização e ausência de restrição favorecem pseudolinfoma, mas <Highlight>imunofenotipagem e correlação clínica</Highlight> são quase sempre necessárias.</>,
+  },
+  {
+    match: /síndrome de sweet/i,
+    histology: [
+      <><Highlight>Infiltrado dérmico difuso de neutrófilos</Highlight> com leucocitoclasia e edema papilar.</>,
+      <>Pode haver tumefação endotelial e hemácias extravasadas, mas não vasculite primária.</>,
+    ],
+    pearl: <>Leucocitoclasia não basta para chamar vasculite: em Sweet, falta dano parietal primário. Exclua infecção e considere variante <Highlight>histiocitoide</Highlight> com MPO se o infiltrado parecer mononuclear.</>,
+  },
+  {
+    match: /^sarcoidose(?: subcutânea)?(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Granulomas epitelioides “nus”</Highlight>, bem formados e com manguito linfocitário escasso.</>,
+      <>Corpos asteroides ou de Schaumann podem ocorrer, mas não são específicos.</>,
+    ],
+    pearl: <>Sarcoidose é diagnóstico de exclusão: procure material polarizável e use <Highlight>Grocott e Fite</Highlight>, além de cultura quando não houver diagnóstico sistêmico estabelecido.</>,
+  },
+  {
+    match: /^granuloma anular(?: subcutâneo)?(?:\s|\||$)/i,
+    histology: [
+      <>Padrão em paliçada ou intersticial com histiócitos envolvendo colágeno alterado e <Highlight>mucina dérmica</Highlight>.</>,
+      <>O processo costuma ser regional, sem ocupar difusamente toda a derme; a paliçada pode ser incompleta.</>,
+    ],
+    pearl: <>Examine primeiro em pequeno aumento. <Highlight>Mucina</Highlight> favorece granuloma anular; plasmócitos e padrão estratificado favorecem necrobiose lipoídica, enquanto interface/eosinófilos sugerem fármaco.</>,
+  },
+  {
+    match: /^necrobiose lipo[ií]dica(?:\s|\||$)/i,
+    histology: [
+      <>Comprometimento dérmico difuso com <Highlight>camadas horizontais</Highlight> de inflamação alternando com colágeno necrobiótico.</>,
+      <>Agregados linfoides e plasmócitos são frequentes; o processo pode alcançar a hipoderme superficial.</>,
+    ],
+    pearl: <>O padrão estratificado em pequeno aumento e os <Highlight>plasmócitos</Highlight> favorecem necrobiose lipoídica sobre granuloma anular.</>,
+  },
+  {
+    match: /^nódulo reumatoide(?:\s|\||$)/i,
+    histology: [
+      <>Granuloma em paliçada na derme profunda/hipoderme envolvendo centro de <Highlight>fibrina acelular intensamente eosinofílica</Highlight>.</>,
+      <>Pouco manguito linfocitário e ausência de mucina abundante.</>,
+    ],
+    pearl: <>A localização profunda e a <Highlight>fibrina central</Highlight> favorecem nódulo reumatoide; mucina abundante aponta para granuloma anular profundo.</>,
+  },
+  {
+    match: /^morf(eia|ea)(?: |\(|\||$)/i,
+    histology: [
+      <>Na fase inicial, infiltrado perivascular e perianexial <Highlight>linfoplasmocitário</Highlight> pode preceder a esclerose evidente.</>,
+      <>Na fase estabelecida, feixes colágenos compactados, com redução dos espaços intersticiais e aprisionamento/perda de anexos.</>,
+    ],
+    pearl: <>O “bloco quadrado” em pequeno aumento não basta, pois o dorso normal pode parecer espesso. A pista é a <Highlight>redução dos espaços entre feixes colágenos</Highlight>; lesão precoce pode mostrar apenas plasmócitos.</>,
+  },
+  {
+    match: /^líquen escleroso e atrófico(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Inicial:</Highlight> infiltrado liquenoide linfoplasmocitário, possível hiperplasia psoriasiforme e espessamento da membrana basal.</>,
+      <><Highlight>Estabelecido:</Highlight> derme papilar homogeneizada/esclerótica, epiderme atrófica com hiperqueratose compacta e infiltrado abaixo do colágeno alterado.</>,
+    ],
+    pearl: <>Considere líquen escleroso em toda dermatite de interface genital. Quando houver sobreposição com líquen plano ou morfeia, um diagnóstico descritivo de <Highlight>dermatite liquenoide/esclerosante</Highlight> é apropriado.</>,
+  },
+  {
+    match: /^dermatopatia fibrosante nefrogênica(?:\s|\||$)/i,
+    histology: [
+      <>Fibrose dérmica com proliferação de <Highlight>fibroblastos CD34+</Highlight> e mucina intersticial.</>,
+      <>Corpos escleróticos, por vezes ossificados, podem estar presentes; fibroblastos diminuem em lesões tardias.</>,
+    ],
+    pearl: <>Fibrose celular com mucina e corpos escleróticos favorece dermatopatia fibrosante nefrogênica. O diagnóstico exige contexto de <Highlight>insuficiência renal/exposição a gadolínio</Highlight>.</>,
+  },
+  {
+    match: /^doença de grover(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Focos pequenos de acantólise e disceratose</Highlight>, em padrões semelhantes a Darier, Hailey-Hailey, pênfigo vulgar ou dermatite espongiótica.</>,
+      <>Infiltrado linfocitário perivascular superficial discreto; diferentes padrões podem coexistir na mesma amostra.</>,
+    ],
+    pearl: <>A <Highlight>focalidade</Highlight> e a multiplicidade de padrões são as melhores pistas. Como o achado pode ser muito pequeno, níveis adicionais frequentemente revelam a lesão.</>,
+  },
+  {
+    match: /^pênfigo vulgar urticariforme(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Bolha suprabasal acantolítica</Highlight> com camada basal preservada em “fileira de lápides” e extensão ao epitélio folicular.</>,
+      <>IFD perilesional com IgG, com ou sem C3, em padrão intercelular reticulado.</>,
+    ],
+    pearl: <>A extensão da acantólise aos anexos e por áreas amplas favorece pênfigo vulgar; Grover é focal e Darier acrescenta <Highlight>disceratose</Highlight>.</>,
+  },
+  {
+    match: /^penfigoide bolhoso urticariforme(?:\s|\||$)/i,
+    histology: [
+      <>Na fase urticariforme pode haver apenas <Highlight>espongiose eosinofílica</Highlight> e eosinófilos alinhados na camada basal.</>,
+      <>Na fase bolhosa, clivagem subepidérmica rica em eosinófilos; IFD perilesional linear para C3 e IgG.</>,
+    ],
+    pearl: <>Em idoso com prurido e espongiose eosinofílica, pense em <Highlight>penfigoide pré-bolhoso</Highlight>. A IFD deve ser perilesional; pele lesional ou da perna aumenta falsos negativos.</>,
+  },
+  {
+    match: /^pênfigo cicatricial(?:\s|\||$)/i,
+    histology: [
+      <>Clivagem subepitelial semelhante ao penfigoide bolhoso, com infiltrado variável e <Highlight>fibrose/cicatrização</Highlight> nas lesões antigas.</>,
+      <>IFD perilesional linear na junção dermoepidérmica.</>,
+    ],
+    pearl: <>Achados de penfigoide em <Highlight>mucosa de paciente idoso</Highlight>, sobretudo com cicatriz, devem levantar penfigoide de membranas mucosas.</>,
+  },
+  {
+    match: /^dermatite herpetiforme(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Lesão inicial:</Highlight> microabscessos de neutrófilos nas pontas das papilas dérmicas.</>,
+      <><Highlight>Lesão desenvolvida:</Highlight> vesícula subepidérmica com neutrófilos; IFD mostra IgA granular, acentuada nas papilas.</>,
+    ],
+    pearl: <>A histologia se sobrepõe a IgA linear, lúpus bolhoso e EBA inflamatória. Sem <Highlight>imunofluorescência direta</Highlight>, prefira diagnóstico descritivo.</>,
+  },
+  {
+    match: /^iga linear(?:\s|\||$)/i,
+    histology: [
+      <>Vesícula subepidérmica com neutrófilos, geralmente mais <Highlight>dispersos</Highlight> que na dermatite herpetiforme.</>,
+      <>IFD perilesional com <Highlight>depósito linear de IgA</Highlight> na membrana basal; casos por fármaco podem ser ricos em eosinófilos.</>,
+    ],
+    pearl: <>A separação de dermatite herpetiforme é impossível apenas no HE: <Highlight>IgA linear</Highlight> na IFD define a doença, enquanto IgA granular papilar favorece dermatite herpetiforme.</>,
+  },
+  {
+    match: /epidermólise bolhosa/i,
+    histology: [
+      <>Padrão mais comum: bolha subepidérmica <Highlight>paucicelular</Highlight>, com fibrina e poucas células; formas inflamatórias podem ter neutrófilos e eosinófilos.</>,
+      <>Lesões antigas podem cicatrizar com mílios; IFD linear para IgG/C3 e, na pele salino-clivada, depósito no <Highlight>assoalho</Highlight>.</>,
+    ],
+    pearl: <>Bolha subepidérmica pouco inflamatória em área de trauma favorece EBA. No salt-split, <Highlight>assoalho = EBA</Highlight> e teto = penfigoide bolhoso.</>,
+  },
+  {
+    match: /porfiria cutânea tarda|porfiria variegata|porfiria eritropoiética/i,
+    histology: [
+      <>Bolha subepidérmica paucicelular com <Highlight>festonamento das papilas</Highlight> e vasos papilares espessados.</>,
+      <>Corpos em lagarta podem ocorrer; IFD mostra depósitos na membrana basal e depósitos vasculares céreos.</>,
+    ],
+    pearl: <>Festonamento mais vasos espessados é a combinação prática. <Highlight>PAS</Highlight> destaca glicoproteína vascular; pseudoporfiria é histologicamente idêntica e exige correlação clínica.</>,
+  },
+  {
+    match: /^calcifilaxia(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Calcificação de arteríolas e artérias pequenas/médias</Highlight> da hipoderme, com proliferação intimal, trombos de fibrina e necrose adiposa.</>,
+      <>Pode haver cálcio em tecidos moles e ao redor de glândulas écrinas.</>,
+    ],
+    pearl: <>A lesão costuma estar na hipoderme: <Highlight>biópsia superficial pode ser não diagnóstica</Highlight>. Calcificação vascular associada a necrose em paciente com insuficiência renal é a pista central.</>,
+  },
+  {
+    match: /^eritema nodoso(?:\s|\||$)/i,
+    histology: [
+      <>Paniculite predominantemente <Highlight>septal</Highlight>, com edema e neutrófilos nas fases iniciais e septos alargados por inflamação/fibrose posteriormente.</>,
+      <>Granulomas radiais de Miescher podem ocorrer; <Highlight>vasculite verdadeira não é característica</Highlight>.</>,
+    ],
+    pearl: <>Classifique primeiro em pequeno aumento: eritema nodoso é o protótipo da <Highlight>paniculite septal sem vasculite</Highlight>. Uma biópsia profunda é indispensável.</>,
+  },
+  {
+    match: /^(eritema indurado|vasculite nodular)(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Paniculite lobular</Highlight> com granulomas, necrose adiposa e vasculite de artérias ou veias nos septos.</>,
+      <>Lesões iniciais podem ter necrose fibrinoide; nas tardias predominam tumefação endotelial e inflamação mural mista.</>,
+    ],
+    pearl: <>O comprometimento difuso do lóbulo com <Highlight>dano vascular</Highlight> separa vasculite nodular de PAN, cuja inflamação adiposa fica concentrada ao redor do vaso.</>,
+  },
+  {
+    match: /^lipodermatoesclerose(?:\s|\||$)/i,
+    histology: [
+      <>Fibrose septal e lobular relativamente paucicelular, com <Highlight>microcistos adiposos</Highlight> e necrose lipomembranosa PAS-positiva.</>,
+      <>A derme sobrejacente costuma apresentar alterações de estase.</>,
+    ],
+    pearl: <>Os <Highlight>microcistos e lipomembranas</Highlight> são a melhor pista em uma paniculite pouco inflamatória; a história de insuficiência venosa completa o diagnóstico.</>,
+  },
+  {
+    match: /^(paniculite factícia|paniculite traumática|paniculite ao frio)(?:\s|\||$)/i,
+    histology: [
+      <>Achados variáveis: inflamação septal e lobular, necrose adiposa, hemorragia e, tardiamente, fibrose e lipomembranas.</>,
+      <>Material injetado pode produzir supuração ou padrão em “queijo suíço” com pseudocistos e células gigantes.</>,
+    ],
+    pearl: <>Pense em causa factícia quando clínica e histologia não concordarem. <Highlight>Polarize a lâmina</Highlight> e, se houver supuração/necrose, exclua infecção com colorações e cultura.</>,
+  },
+  {
+    match: /^paniculite pancreática(?:\s|\||$)/i,
+    histology: [
+      <>Paniculite lobular com <Highlight>necrose enzimática extensa</Highlight>, adipócitos-fantasma e calcificação fina por saponificação.</>,
+      <>Neutrófilos e poeira nuclear concentram-se na periferia da gordura necrótica.</>,
+    ],
+    pearl: <>Calcificação dentro da gordura necrótica e adipócitos-fantasma favorecem <Highlight>paniculite pancreática</Highlight>; na calcifilaxia, o cálcio predomina na parede vascular.</>,
+  },
+  {
+    match: /^necrose gordurosa subcutânea do recém-nascido(?:\s|\||$)/i,
+    histology: [
+      <>Necrose lobular extensa com <Highlight>cristais eosinofílicos radiais nos adipócitos</Highlight>.</>,
+      <>Infiltrado misto exuberante com neutrófilos, linfócitos e histiócitos.</>,
+    ],
+    pearl: <>Cristais radiais em adipócitos e inflamação intensa favorecem necrose gordurosa do recém-nascido; no <Highlight>esclerema neonatal</Highlight>, cristais podem existir, mas faltam necrose e inflamação exuberantes.</>,
+  },
+  {
+    match: /^alopécia androgenética(?:\s|\||$)/i,
+    histology: [
+      <>Número folicular normal ou quase normal, com redução de terminais e aumento de <Highlight>fios miniaturizados</Highlight>.</>,
+      <>Tratos fibrosos abaixo dos folículos miniaturizados e infiltrado perifolicular discreto; glândulas sebáceas preservadas e proeminentes.</>,
+    ],
+    pearl: <>Miniaturização sem infiltrado peribulbar favorece alopecia androgenética. <Highlight>Enxame de abelhas e tratos pigmentados</Highlight> apontam para alopecia areata.</>,
+  },
+  {
+    match: /^alopécia areata(?:\s|\||$)/i,
+    histology: [
+      <>Número de folículos preservado, com infiltrado linfocitário <Highlight>peribulbar em “enxame de abelhas”</Highlight> e aumento de catágenos.</>,
+      <>Tratos foliculares pigmentados; fases tardias mostram miniaturização acentuada.</>,
+    ],
+    pearl: <>O infiltrado pode desaparecer em lesões antigas: procure <Highlight>catágenos aumentados, miniaturização e tratos pigmentados</Highlight>. Plasmócitos exigem excluir sífilis secundária.</>,
+  },
+  {
+    match: /^tricotilomania(?:\s|\||$)/i,
+    histology: [
+      <>Número e calibre folicular globalmente preservados, com aumento de catágenos/telógenos.</>,
+      <><Highlight>Moldes pigmentares, fios deformados</Highlight> e apoptose da bainha radicular externa, sem inflamação significativa.</>,
+    ],
+    pearl: <>Moldes pigmentares e fios traumatizados sem infiltrado são a combinação mais útil; miniaturização importante favorece alopecia androgenética ou areata.</>,
+  },
+  {
+    match: /^eflúvio telógeno(?:\s|\||$)/i,
+    histology: [
+      <>Número e tamanho dos folículos preservados, com <Highlight>20–50% em telógeno</Highlight>.</>,
+      <>Sem miniaturização significativa e sem infiltrado inflamatório relevante.</>,
+    ],
+    pearl: <>A lâmina pode parecer quase normal. O diagnóstico repousa no <Highlight>aumento proporcional dos telógenos</Highlight> e na história de evento desencadeante.</>,
+  },
+  {
+    match: /^foliculite decalvante(?:\s|\||$)/i,
+    histology: [
+      <>Folículos dilatados e queratóticos com <Highlight>abscesso neutrofílico intrafolicular</Highlight>.</>,
+      <>Ruptura seguida por infiltrado perifolicular linfoplasmocitário, destruição folicular e cicatriz.</>,
+    ],
+    pearl: <>Abscesso folicular e plasmócitos em alopecia cicatricial sugerem foliculite decalvante. Faça <Highlight>Gram e cultura</Highlight>; cocos Gram-positivos podem ser demonstrados.</>,
+  },
+  {
+    match: /^(varicela|infecção por herpesvírus|infecções por herpesvírus)(?:\s|\||$)/i,
+    histology: [
+      <>Vesícula intraepidérmica com balonização, acantólise e <Highlight>queratinócitos multinucleados</Highlight>.</>,
+      <>Inclusões intranucleares em vidro fosco com marginação da cromatina; folículos são frequentemente acometidos.</>,
+    ],
+    pearl: <>Se a epiderme estiver ulcerada, procure efeito viral em <Highlight>folículos e queratinócitos necróticos</Highlight>. Sem inclusões, considere herpes incognito e correlacione com PCR.</>,
+  },
+  {
+    match: /^(dermatofitose|tinea capitis)(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Neutrófilos na camada córnea</Highlight>, acantose por vezes psoriasiforme e infiltrado perivascular com eosinófilos.</>,
+      <>Hifas podem ser discretas no HE; PAS ou Grocott evidenciam organismos na camada córnea, folículo ou haste.</>,
+    ],
+    pearl: <>Neutrófilos na camada córnea, lesão anular ou falha a corticoide devem disparar <Highlight>PAS/Grocott</Highlight>, mesmo quando os fungos não são visíveis no HE.</>,
+  },
+  {
+    match: /^candidíase(?:\s|\||$)/i,
+    histology: [
+      <>Pústulas neutrofílicas e espongiose com <Highlight>leveduras e pseudohifas</Highlight> na camada córnea/epiderme superficial.</>,
+      <>Infiltrado dérmico misto, frequentemente com eosinófilos.</>,
+    ],
+    pearl: <>Pseudohifas podem superar muito as leveduras e tendem a ficar <Highlight>perpendiculares à superfície</Highlight>; a tonalidade lilás no HE é uma pista útil.</>,
+  },
+  {
+    match: /^(eritrasma|ceratólise punctata)(?:\s|\||$)/i,
+    histology: [
+      <>Epiderme quase normal com <Highlight>bactérias filamentosas na camada córnea</Highlight>.</>,
+      <>Gram ou PAS evidencia pequenos cocobacilos.</>,
+    ],
+    pearl: <>Em pele axilar ou plantar aparentemente normal, examine a camada córnea. <Highlight>Organismos pequenos e pouca inflamação</Highlight> favorecem infecção por Corynebacterium.</>,
+  },
+  {
+    match: /^(vitiligo|alteração pigmentar pós-inflamatória)(?:\s|\||$)/i,
+    histology: [
+      <><Highlight>Vitiligo:</Highlight> redução acentuada ou ausência de melanócitos e melanina; confirme com SOX10 ou Melan-A comparando pele normal.</>,
+      <><Highlight>Alteração pós-inflamatória:</Highlight> epiderme pouco alterada, infiltrado perivascular discreto e melanófagos, com melanócitos preservados.</>,
+    ],
+    pearl: <>A pergunta decisiva é se os melanócitos foram perdidos. <Highlight>Melanófagos favorecem alteração pós-inflamatória</Highlight>; exclua pitiríase versicolor com PAS/Grocott.</>,
+  },
+  {
+    match: /^(amiloidose macular|amiloidose maculosa|amiloidose papulosa|amiloidose macular)/i,
+    histology: [
+      <><Highlight>Depósitos homogêneos róseo-opacos</Highlight> nas papilas dérmicas, que ficam alargadas.</>,
+      <>Melanófagos acompanham os depósitos; hiperqueratose e hipergranulose podem refletir escoriação.</>,
+    ],
+    pearl: <>Na amiloidose macular/liquenoide, o HE costuma ser mais sensível que o Congo vermelho. A restrição do material à <Highlight>derme papilar</Highlight> favorece forma cutânea localizada.</>,
+  },
+  {
+    match: /^condrodermatite nodular da hélice(?:\s|\||$)/i,
+    histology: [
+      <>Ulceração com hiperplasia epidérmica reativa adjacente e <Highlight>degeneração fibrinoide do colágeno</Highlight> logo abaixo.</>,
+      <>Proliferação vascular reativa sob o colágeno alterado, com pouca inflamação.</>,
+    ],
+    pearl: <>Em biópsia da hélice/anti-hélice, a degeneração fibrinoide central é a pista. Não confunda a <Highlight>hiperplasia pseudoepiteliomatosa reativa</Highlight> com carcinoma espinocelular.</>,
+  },
+];
+
 function getEnrichment(matchText: string): Enrichment {
   const matches = ENRICHMENT_RULES.filter((rule) => rule.match.test(matchText));
   const exclusiveMatches = matches.filter((rule) => rule.exclusive);
@@ -1084,7 +1625,10 @@ function getEnrichment(matchText: string): Enrichment {
   // (e.g. a diagnosisGroup node whose title/possibilities span several distinct diagnoses),
   // picking one arbitrarily would silently discard the others, so fall back to merging everything.
   const selectedRules = exclusiveMatches.length === 1 ? exclusiveMatches : matches;
-  return selectedRules.reduce<Enrichment>(
+  const initialEnrichment = selectedRules.some((rule) => rule.replaceDefaults)
+    ? { ...DEFAULT_ENRICHMENT, clinical: [], histology: [], evaluation: [] }
+    : DEFAULT_ENRICHMENT;
+  const baseEnrichment = selectedRules.reduce<Enrichment>(
     (result, rule) => ({
       concept: [...result.concept, ...(rule.data.concept ?? [])],
       clinical: [...result.clinical, ...(rule.data.clinical ?? [])],
@@ -1092,8 +1636,12 @@ function getEnrichment(matchText: string): Enrichment {
       evaluation: [...result.evaluation, ...(rule.data.evaluation ?? [])],
       pearl: rule.data.pearl ?? result.pearl,
     }),
-    DEFAULT_ENRICHMENT,
+    initialEnrichment,
   );
+  const survivalGuideOverride = SURVIVAL_GUIDE_OVERRIDES.find((rule) => rule.match.test(matchText));
+  return survivalGuideOverride
+    ? { ...baseEnrichment, histology: survivalGuideOverride.histology, pearl: survivalGuideOverride.pearl }
+    : baseEnrichment;
 }
 
 function getPatternConcept(pathIds: string[]): string[] {
@@ -1322,9 +1870,7 @@ export function PerivascularStudyNotePage() {
         subtitle="Resumo prático para dermatopatologia"
         sectionsLeft={sectionsLeft}
         sectionsRight={sectionsRight}
-        note={<>Conteúdo de revisão estruturado a partir do <Highlight>Bolognia Dermatology</Highlight> e do padrão morfológico do diagnóstico.</>}
         pearl={enrichment.pearl}
-        source="Fonte: Bolognia — Dermatology, 2-volume set."
       />
     </Layout>
   );

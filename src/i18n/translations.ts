@@ -72,6 +72,7 @@ const uiTranslations = {
     search_suggestions_label: "Sugestões",
     favorites_kicker: "Favoritos",
     favorites_title: "Atalhos pessoais",
+    favorites_close: "Fechar favoritos",
     favorites_empty: "Você ainda não favoritou nós. Use a estrela dos resultados finais para montar sua lista.",
     process_hub_instruction: "Selecione o processo patológico para iniciar a navegação",
     next_decision: "Próxima decisão",
@@ -170,6 +171,7 @@ const uiTranslations = {
     search_suggestions_label: "Suggestions",
     favorites_kicker: "Favorites",
     favorites_title: "Personal shortcuts",
+    favorites_close: "Close favorites",
     favorites_empty: "You have not favorited any nodes yet. Use the star on final results to build your list.",
     process_hub_instruction: "Select the pathological process to begin navigation",
     next_decision: "Next decision",
@@ -1560,6 +1562,5 @@ export function getTranslatedTerminalLabel(type: NodeType, language: Language): 
       return "Decision";
   }
 }
-
 
 

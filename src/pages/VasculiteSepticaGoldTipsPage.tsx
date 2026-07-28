@@ -111,11 +111,6 @@ export function VasculiteSepticaGoldTipsPage() {
               leucocitoclasia neste cenário.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
-            </>
-          }
         />
       </div>
     </Layout>

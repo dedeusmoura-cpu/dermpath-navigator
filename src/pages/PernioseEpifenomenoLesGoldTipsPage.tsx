@@ -111,11 +111,6 @@ export function PernioseEpifenomenoLesGoldTipsPage() {
               do que em <Highlight>vasculite primária</Highlight>; perniose e PLEVA são contextos clássicos.
             </>
           }
-          source={
-            <>
-              <span className="font-semibold">Fonte:</span> Bolognia et al. <em>Dermatology</em>. Capítulo: Cutaneous Vasculitis.
-            </>
-          }
         />
       </div>
     </Layout>

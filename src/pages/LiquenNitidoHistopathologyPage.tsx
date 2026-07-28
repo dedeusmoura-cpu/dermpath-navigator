@@ -29,34 +29,34 @@ export function LiquenNitidoHistopathologyPage() {
           <button
             type="button"
             onClick={goBackToDiagnosis}
-            className="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent"
+            className="rounded-full bg-[#082d5c] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_-18px_rgba(8,45,92,0.7)] transition hover:-translate-y-0.5 hover:bg-[#0a4a86]"
           >
             {t("return_to_diagnosis")}
           </button>
           <Link
             to="/diagnostico"
-            className="rounded-full border border-sand bg-white px-5 py-3 text-sm font-semibold text-ink transition hover:border-accent/30 hover:bg-[#fffaf0]"
+            className="rounded-full border border-[#b8c9df] bg-white px-5 py-3 text-sm font-semibold text-[#082d5c] transition hover:border-[#d6b766] hover:bg-[#f5f8fc]"
           >
             {t("back")}
           </Link>
           <FavoriteToggleButton nodeId={favoriteNodeId} />
         </div>
 
-        <section className="overflow-hidden rounded-[30px] border border-sand bg-white shadow-panel">
-          <div className="border-b border-sand bg-[radial-gradient(circle_at_top_left,_rgba(169,122,31,0.16),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(20,27,43,0.08),_transparent_38%)] px-6 py-6 sm:px-8">
+        <section className="overflow-hidden rounded-[30px] border border-[#b8c9df] bg-white shadow-[0_28px_70px_-40px_rgba(8,45,92,0.45)]">
+          <div className="border-b border-[#d6b766]/25 bg-[radial-gradient(circle_at_top_left,_rgba(214,183,102,0.28),_transparent_32%),linear-gradient(135deg,#082d5c_0%,#0a4a86_58%,#1268a5_100%)] px-6 py-7 sm:px-8 sm:py-8">
             <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{t("didactic_slides")}</p>
-              <h2 className="font-serif text-3xl text-ink sm:text-4xl">{tx("Histopatológico — Líquen nítido")}</h2>
-              <p className="max-w-4xl text-sm leading-6 text-steel">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#e1c77e]">{t("didactic_slides")}</p>
+              <h2 className="font-serif text-3xl leading-tight text-white sm:text-4xl">{tx("Histopatológico — Líquen nítido")}</h2>
+              <p className="max-w-4xl text-sm leading-6 text-white/70">
                 {tx("Visualização ampliada das 4 imagens histopatológicas, priorizando leitura ampla e confortável.")}
               </p>
             </div>
           </div>
 
-          <div className="bg-paper px-3 py-3 sm:px-4 sm:py-4 lg:px-6">
+          <div className="bg-[linear-gradient(180deg,#eef4fb_0%,#f8fbff_100%)] px-3 py-4 sm:px-4 sm:py-5 lg:px-6">
             <div className="space-y-6">
               {images.map((image) => (
-                <figure key={image.alt} className="overflow-hidden rounded-[24px] border border-sand bg-white p-3 shadow-panel sm:p-4">
+                <figure key={image.alt} className="overflow-hidden rounded-[24px] border border-[#c7d6e8] bg-white p-3 shadow-[0_22px_50px_-34px_rgba(8,45,92,0.4)] sm:p-4">
                   <img src={image.src} alt={image.alt} className="h-auto w-full rounded-[18px] object-contain" />
                 </figure>
               ))}
