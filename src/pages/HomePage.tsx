@@ -202,6 +202,7 @@ function HomePathCard({
   body,
   label,
   artwork,
+  tone,
   primary = false,
 }: {
   to: string;
@@ -209,6 +210,7 @@ function HomePathCard({
   body: string;
   label: string;
   artwork: string;
+  tone: string;
   primary?: boolean;
 }) {
   const frameTone = primary
@@ -224,13 +226,17 @@ function HomePathCard({
       className={`group relative flex min-h-[380px] flex-col overflow-hidden rounded-[24px] border bg-[#fffdf7] transition duration-500 hover:-translate-y-1.5 hover:border-[#c5a14c] hover:shadow-[0_28px_56px_-30px_rgba(8,45,92,0.56)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f9f6ed] motion-reduce:transform-none motion-reduce:transition-none ${frameTone}`}
     >
       <div
-        className="relative h-[205px] shrink-0 overflow-hidden bg-[#082d5c]"
+        className={`relative h-[205px] shrink-0 overflow-hidden bg-gradient-to-br ${tone}`}
         style={{ clipPath: "polygon(0 0, 100% 0, 100% 84%, 63% 96%, 0 86%)" }}
       >
         <img
           src={artwork}
           alt=""
           aria-hidden="true"
+          width={1400}
+          height={788}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 ease-out group-hover:scale-[1.035] motion-reduce:transform-none motion-reduce:transition-none"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#031b3a]/55 via-transparent to-[#031b3a]/10" />
