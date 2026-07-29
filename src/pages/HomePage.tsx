@@ -226,8 +226,8 @@ function HomePathCard({
       className={`group relative flex min-h-[380px] flex-col overflow-hidden rounded-[24px] border bg-[#fffdf7] transition duration-500 hover:-translate-y-1.5 hover:border-[#c5a14c] hover:shadow-[0_28px_56px_-30px_rgba(8,45,92,0.56)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b68d35]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f9f6ed] motion-reduce:transform-none motion-reduce:transition-none ${frameTone}`}
     >
       <div
-        className={`relative h-[205px] shrink-0 overflow-hidden bg-gradient-to-br ${tone}`}
-        style={{ clipPath: "polygon(0 0, 100% 0, 100% 84%, 63% 96%, 0 86%)" }}
+        className={`relative aspect-[16/9] shrink-0 overflow-hidden bg-gradient-to-br ${tone}`}
+        style={{ clipPath: "polygon(0 0, 100% 0, 100% 94%, 63% 100%, 0 95%)" }}
       >
         <img
           src={artwork}
@@ -239,7 +239,7 @@ function HomePathCard({
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 ease-out group-hover:scale-[1.035] motion-reduce:transform-none motion-reduce:transition-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#031b3a]/55 via-transparent to-[#031b3a]/10" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-[#031b3a]/25" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#f0d384]/75 to-transparent" />
       </div>
 
