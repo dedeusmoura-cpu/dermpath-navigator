@@ -248,7 +248,8 @@ function HomePathCard({
           <span className="flex items-center gap-2 font-serif text-sm"><span className="h-px w-7 bg-current opacity-60" />{number}</span>
         </div>
 
-        <div className="absolute left-1/2 top-[54%] z-10 grid h-[104px] w-[104px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[24px] border border-[#f1d57e]/25 bg-[#fff8e8]/[0.07] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_32px_-24px_rgba(0,0,0,0.58)] backdrop-blur-[1px] transition duration-500 group-hover:-translate-y-[57%] group-hover:scale-[1.035] group-hover:border-[#f1d57e]/45 group-hover:bg-[#fff8e8]/[0.1] motion-reduce:transform-none [&>svg]:h-[78px] [&>svg]:w-[78px]">
+        <div className="absolute left-1/2 top-[54%] z-10 -translate-x-1/2 -translate-y-1/2 rounded-[3px] border border-[#f1d57e]/25 px-3 py-2 transition duration-500 group-hover:-translate-y-[57%] group-hover:scale-[1.03] group-hover:border-[#f1d57e]/45 motion-reduce:transform-none [&>svg]:h-[80px] [&>svg]:w-[96px]">
+          <span aria-hidden="true" className="pointer-events-none absolute inset-[3px] rounded-[2px] border border-[#f1d57e]/15" />
           {icon}
         </div>
       </div>
@@ -293,53 +294,97 @@ function CardMotif({ number }: { number: string }) {
 
 function ArrowIcon() { return <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>; }
 
+const tissueWave = "c2.5-2.5 4 2 6.5 0s4 2 6.5 0 4 2 6.5 0";
+const tissueWaveWide = "c3.5-3 6 2 9.5 0s6 2 9.5 0 6 2 9.5 0";
+const slideWave = "c4-3.5 7 2.5 11 0s7 2.5 11 0 7 2.5 11 0 7 2.5 11 0";
+
 function DiagnosticPathIcon() {
   return (
-    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <circle cx="40" cy="13" r="6" fill="#F2D77E" fillOpacity=".16" stroke="#F2D77E" strokeWidth="2.6" />
-      <circle cx="19" cy="60" r="6.5" fill="#F2D77E" stroke="#F2D77E" strokeWidth="2.6" />
-      <circle cx="61" cy="60" r="6.5" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
-      <path d="M40 20v10c0 5.5 4.5 10 10 10h1c5.5 0 10 4.5 10 10v3.5" stroke="#FFF8E8" strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M40 20v10c0 5.5-4.5 10-10 10h-1c-5.5 0-10 4.5-10 10v3.5" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" />
-      <path d="m16.2 60 2 2.1 4.1-4.6" stroke="#082D5C" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+    <svg viewBox="0 0 96 80" fill="none" aria-hidden="true">
+      <rect x="33" y="6" width="30" height="19" rx="3" stroke="#FFF8E8" strokeWidth="1.6" />
+      <path d={`M38 16${tissueWave}`} stroke="#E9A2B8" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M38 20.5h19" stroke="#FFF8E8" strokeOpacity=".3" strokeWidth=".8" strokeLinecap="round" />
+      {[41, 48, 55].map((cx) => <circle key={cx} cx={cx} cy="11.5" r=".9" fill="#E9A2B8" fillOpacity=".85" />)}
+
+      <path d="M48 25v7M18 32h60M78 32v14" stroke="#FFF8E8" strokeOpacity=".55" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M18 32v14" stroke="#F2D77E" strokeWidth="1.8" strokeLinecap="round" />
+
+      <rect x="4" y="46" width="28" height="19" rx="3" stroke="#F2D77E" strokeWidth="1.8" />
+      <path d={`M8 56${tissueWave}`} stroke="#E9A2B8" strokeWidth="1.6" strokeLinecap="round" />
+      <rect x="64" y="46" width="28" height="19" rx="3" stroke="#FFF8E8" strokeOpacity=".45" strokeWidth="1.4" />
+      <path d={`M68 56${tissueWave}`} stroke="#E9A2B8" strokeOpacity=".5" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   );
 }
 
 function SkinExploreIcon() {
   return (
-    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <circle cx="34" cy="33" r="22" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
-      <path d="m50 49 16 16" stroke="#F2D77E" strokeWidth="3.4" strokeLinecap="round" />
-      <path d="M18 27c5.5-4.5 9 4.5 14.5 0s9 4.5 14.5 0M18 35c5.5-4.5 9 4.5 14.5 0s9 4.5 14.5 0M20 43c4.5-3.5 7.5 3.5 12 0s7.5 3.5 12 0" stroke="#FFF8E8" strokeWidth="2.6" strokeLinecap="round" />
-      <circle cx="37" cy="35" r="4" fill="#F2D77E" />
-      <circle cx="37" cy="35" r="1.5" fill="#082D5C" fillOpacity=".72" />
+    <svg viewBox="0 0 96 80" fill="none" aria-hidden="true">
+      <path d="M3 15c6-4 12 3 18 0s12 3 18 0 12 3 18 0 12 3 18 0 12 3 18 0" stroke="#FFF8E8" strokeOpacity=".75" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M3 20c6-4 12 3 18 0s12 3 18 0 12 3 18 0 12 3 18 0 12 3 18 0" stroke="#FFF8E8" strokeOpacity=".35" strokeWidth=".9" strokeLinecap="round" />
+      <path d="M3 31c6 7 12-7 18 0s12-7 18 0 12-7 18 0 12-7 18 0 12-7 18 0" stroke="#E9A2B8" strokeWidth="1.6" strokeLinecap="round" />
+      {[12, 24, 36, 48, 60, 72, 84].map((cx) => <circle key={cx} cx={cx} cy="25.5" r="1" fill="#E9A2B8" fillOpacity=".8" />)}
+
+      {[43, 52, 61].map((cy) => (
+        <path key={cy} d={`M5 ${cy}c7-4 13 3 20 0s13 3 20 0 13 3 20 0 13 3 20 0`} stroke="#FFF8E8" strokeOpacity=".3" strokeWidth=".9" strokeLinecap="round" />
+      ))}
+      {[[20, 47], [52, 57], [70, 48]].map(([cx, cy]) => <circle key={cx} cx={cx} cy={cy} r=".9" fill="#E9A2B8" fillOpacity=".6" />)}
+
+      <circle cx="66" cy="38" r="18" stroke="#F2D77E" strokeWidth="2" />
+      <circle cx="66" cy="38" r="14.5" stroke="#FFF8E8" strokeOpacity=".28" strokeWidth=".8" />
+      <path d="m78.7 50.7 9.3 9.3" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 }
 
 function QuizSlideIcon() {
   return (
-    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <rect x="17" y="8" width="46" height="64" rx="10" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
-      <path d="M32 24a8 8 0 1 1 10.1 7.7c-2.8.9-4 2.6-4 5.2" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" />
-      <circle cx="38" cy="44" r="2.2" fill="#F2D77E" />
-      <circle cx="29" cy="59" r="6" fill="#F2D77E" />
-      <path d="m26.2 59 2 2.1 4.1-4.6" stroke="#082D5C" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M40 59h12" stroke="#FFF8E8" strokeWidth="2.6" strokeLinecap="round" />
+    <svg viewBox="0 0 96 80" fill="none" aria-hidden="true">
+      <rect x="5" y="10" width="86" height="60" rx="2" stroke="#FFF8E8" strokeWidth="1.6" />
+      <path d="M31 10v60" stroke="#FFF8E8" strokeOpacity=".7" strokeWidth=".9" />
+      <path d="M14.4 28a3.6 3.6 0 1 1 4.5 3.5c-1.2.4-1.7 1.1-1.7 2.2" stroke="#F2D77E" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="17" cy="37.5" r="1" fill="#F2D77E" />
+      {[9, 15, 21].map((x) => (
+        <path key={x} d={`M${x} 62l6-10`} stroke="#FFF8E8" strokeOpacity=".3" strokeWidth=".8" strokeLinecap="round" />
+      ))}
+
+      <rect x="36" y="16" width="48" height="48" stroke="#FFF8E8" strokeOpacity=".22" strokeWidth=".8" />
+      <path d={`M38 26${slideWave}`} stroke="#FFF8E8" strokeOpacity=".35" strokeWidth=".9" strokeLinecap="round" />
+      {[44, 54, 64, 74].map((cx) => <circle key={cx} cx={cx} cy="33" r="1" fill="#E9A2B8" fillOpacity=".85" />)}
+      <path d={`M38 40${slideWave}`} stroke="#E9A2B8" strokeWidth="1.6" strokeLinecap="round" />
+      {[44, 54, 64, 74].map((cx) => <circle key={`b${cx}`} cx={cx} cy="47" r="1" fill="#E9A2B8" fillOpacity=".55" />)}
+      <path d={`M38 54${slideWave}`} stroke="#E9A2B8" strokeOpacity=".45" strokeWidth="1.2" strokeLinecap="round" />
     </svg>
   );
 }
 
 function TedExamIcon() {
   return (
-    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <circle cx="39" cy="43" r="24" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
-      <path d="M39 19a24 24 0 0 1 22 33.5" stroke="#F2D77E" strokeWidth="4.5" strokeLinecap="round" />
-      <path d="M32 9h14M39 9v10M39 43l10-9" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="39" cy="43" r="2.8" fill="#F2D77E" />
-      <circle cx="61" cy="61" r="8" fill="#F2D77E" stroke="#FFF8E8" strokeWidth="1.8" />
-      <path d="m57.4 61 2.4 2.5 4.8-5.4" stroke="#082D5C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg viewBox="0 0 96 80" fill="none" aria-hidden="true">
+      <path d="M43 4h10M48 4v8" stroke="#F2D77E" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="48" cy="42" r="30" stroke="#FFF8E8" strokeWidth="1.6" />
+      <circle cx="48" cy="42" r="25.5" stroke="#FFF8E8" strokeOpacity=".28" strokeWidth=".8" />
+      {Array.from({ length: 12 }, (_, index) => {
+        const angle = ((index * 30 - 90) * Math.PI) / 180;
+        const major = index % 3 === 0;
+        return (
+          <path
+            key={index}
+            d={`M${(48 + 25.5 * Math.cos(angle)).toFixed(1)} ${(42 + 25.5 * Math.sin(angle)).toFixed(1)}L${(48 + 29 * Math.cos(angle)).toFixed(1)} ${(42 + 29 * Math.sin(angle)).toFixed(1)}`}
+            stroke="#FFF8E8"
+            strokeOpacity={major ? ".85" : ".4"}
+            strokeWidth={major ? 1.4 : 0.9}
+            strokeLinecap="round"
+          />
+        );
+      })}
+
+      {[37, 48, 59].map((cx) => <circle key={cx} cx={cx} cy="48" r="1" fill="#E9A2B8" fillOpacity=".8" />)}
+      <path d={`M34 54${tissueWaveWide}`} stroke="#E9A2B8" strokeWidth="1.6" strokeLinecap="round" />
+      <path d={`M34 62${tissueWaveWide}`} stroke="#FFF8E8" strokeOpacity=".3" strokeWidth=".9" strokeLinecap="round" />
+
+      <path d="m48 42 12-10" stroke="#F2D77E" strokeWidth="2.2" strokeLinecap="round" />
+      <circle cx="48" cy="42" r="2" fill="#F2D77E" />
     </svg>
   );
 }
