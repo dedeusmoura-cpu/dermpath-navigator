@@ -332,7 +332,7 @@ function TedExamIcon() {
       <circle cx="36" cy="39" r="20" stroke="#FFF8E8" strokeWidth="2.25" />
       <path d="M30 10h12M36 10v9" stroke="#F2D77E" strokeWidth="2.6" strokeLinecap="round" />
       <path d="M22 44c5-5 8 4 14 0s9 4 14 0" stroke="#FFF8E8" strokeWidth="2.25" strokeLinecap="round" />
-      <path d="M36 39V28" stroke="#F2D77E" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="m36 39 8-7" stroke="#F2D77E" strokeWidth="2.6" strokeLinecap="round" />
       <circle cx="36" cy="39" r="2.4" fill="#F2D77E" />
     </svg>
   );
