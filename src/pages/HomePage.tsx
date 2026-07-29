@@ -248,7 +248,7 @@ function HomePathCard({
           <span className="flex items-center gap-2 font-serif text-sm"><span className="h-px w-7 bg-current opacity-60" />{number}</span>
         </div>
 
-        <div className="absolute left-1/2 top-[54%] z-10 grid h-[106px] w-[106px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#fff3cb]/25 bg-[#041c3c]/15 transition duration-500 group-hover:-translate-y-[57%] group-hover:scale-[1.035] group-hover:border-[#fff3cb]/45 motion-reduce:transform-none [&>svg]:h-[68px] [&>svg]:w-[68px]">
+        <div className="absolute left-1/2 top-[54%] z-10 grid h-[104px] w-[104px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[24px] border border-[#f1d57e]/25 bg-[#fff8e8]/[0.07] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_32px_-24px_rgba(0,0,0,0.58)] backdrop-blur-[1px] transition duration-500 group-hover:-translate-y-[57%] group-hover:scale-[1.035] group-hover:border-[#f1d57e]/45 group-hover:bg-[#fff8e8]/[0.1] motion-reduce:transform-none [&>svg]:h-[78px] [&>svg]:w-[78px]">
           {icon}
         </div>
       </div>
@@ -295,45 +295,51 @@ function ArrowIcon() { return <svg viewBox="0 0 24 24" fill="none" className="h-
 
 function DiagnosticPathIcon() {
   return (
-    <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
-      <circle cx="36" cy="14" r="5.5" stroke="#F2D77E" strokeWidth="2.25" />
-      <circle cx="18" cy="54" r="5.5" stroke="#FFF8E8" strokeWidth="2.25" />
-      <circle cx="54" cy="54" r="5.5" stroke="#FFF8E8" strokeWidth="2.25" />
-      <path d="M36 20v8c0 5-4 8-9 8h-1c-4.5 0-8 3.5-8 8v4.5M36 28c0 5 4 8 9 8h1c4.5 0 8 3.5 8 8v4.5" stroke="#FFF8E8" strokeWidth="2.25" strokeLinecap="round" />
-      <circle cx="36" cy="28" r="2.5" fill="#F2D77E" />
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <circle cx="40" cy="13" r="6" fill="#F2D77E" fillOpacity=".16" stroke="#F2D77E" strokeWidth="2.6" />
+      <circle cx="19" cy="60" r="6.5" fill="#F2D77E" stroke="#F2D77E" strokeWidth="2.6" />
+      <circle cx="61" cy="60" r="6.5" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
+      <path d="M40 20v10c0 5.5 4.5 10 10 10h1c5.5 0 10 4.5 10 10v3.5" stroke="#FFF8E8" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M40 20v10c0 5.5-4.5 10-10 10h-1c-5.5 0-10 4.5-10 10v3.5" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" />
+      <path d="m16.2 60 2 2.1 4.1-4.6" stroke="#082D5C" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 function SkinExploreIcon() {
   return (
-    <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
-      <circle cx="31" cy="31" r="18" stroke="#FFF8E8" strokeWidth="2.25" />
-      <path d="m44 44 14 14" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" />
-      <path d="M18 27c5-4 8 4 13 0s8 4 13 0M18 35c5-4 8 4 13 0s8 4 13 0" stroke="#FFF8E8" strokeWidth="2.25" strokeLinecap="round" />
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <circle cx="34" cy="33" r="22" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
+      <path d="m50 49 16 16" stroke="#F2D77E" strokeWidth="3.4" strokeLinecap="round" />
+      <path d="M18 27c5.5-4.5 9 4.5 14.5 0s9 4.5 14.5 0M18 35c5.5-4.5 9 4.5 14.5 0s9 4.5 14.5 0M20 43c4.5-3.5 7.5 3.5 12 0s7.5 3.5 12 0" stroke="#FFF8E8" strokeWidth="2.6" strokeLinecap="round" />
+      <circle cx="37" cy="35" r="4" fill="#F2D77E" />
+      <circle cx="37" cy="35" r="1.5" fill="#082D5C" fillOpacity=".72" />
     </svg>
   );
 }
 
 function QuizSlideIcon() {
   return (
-    <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
-      <rect x="18" y="10" width="36" height="52" rx="8" stroke="#FFF8E8" strokeWidth="2.25" />
-      <path d="M24 24c4-4 6 3 10 0s6 3 10 0" stroke="#FFF8E8" strokeWidth="2.25" strokeLinecap="round" />
-      <path d="M30 34a6.5 6.5 0 1 1 8.2 6.3c-2.2.7-3.2 2-3.2 4.2" stroke="#F2D77E" strokeWidth="2.6" strokeLinecap="round" />
-      <circle cx="35" cy="51" r="1.8" fill="#F2D77E" />
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <rect x="17" y="8" width="46" height="64" rx="10" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
+      <path d="M32 24a8 8 0 1 1 10.1 7.7c-2.8.9-4 2.6-4 5.2" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="38" cy="44" r="2.2" fill="#F2D77E" />
+      <circle cx="29" cy="59" r="6" fill="#F2D77E" />
+      <path d="m26.2 59 2 2.1 4.1-4.6" stroke="#082D5C" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M40 59h12" stroke="#FFF8E8" strokeWidth="2.6" strokeLinecap="round" />
     </svg>
   );
 }
 
 function TedExamIcon() {
   return (
-    <svg viewBox="0 0 72 72" fill="none" aria-hidden="true">
-      <circle cx="36" cy="39" r="20" stroke="#FFF8E8" strokeWidth="2.25" />
-      <path d="M30 10h12M36 10v9" stroke="#F2D77E" strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M22 44c5-5 8 4 14 0s9 4 14 0" stroke="#FFF8E8" strokeWidth="2.25" strokeLinecap="round" />
-      <path d="m36 39 8-7" stroke="#F2D77E" strokeWidth="2.6" strokeLinecap="round" />
-      <circle cx="36" cy="39" r="2.4" fill="#F2D77E" />
+    <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <circle cx="39" cy="43" r="24" fill="#FFF8E8" fillOpacity=".06" stroke="#FFF8E8" strokeWidth="2.6" />
+      <path d="M39 19a24 24 0 0 1 22 33.5" stroke="#F2D77E" strokeWidth="4.5" strokeLinecap="round" />
+      <path d="M32 9h14M39 9v10M39 43l10-9" stroke="#F2D77E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="39" cy="43" r="2.8" fill="#F2D77E" />
+      <circle cx="61" cy="61" r="8" fill="#F2D77E" stroke="#FFF8E8" strokeWidth="1.8" />
+      <path d="m57.4 61 2.4 2.5 4.8-5.4" stroke="#082D5C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
