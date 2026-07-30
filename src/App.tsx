@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import dermPathLogo from "./assets/dermpath-logo-final.png";
-import dermPathLogoNavyGold from "./assets/dermpath-logo-navy-gold-concept.png";
+import dermPathLogoIvoryGold from "./assets/dermpath-logo-wordmark-ivory-gold.png";
 import quizButtonImage from "./assets/Quiz-branco.png";
 import { MobileLandscapeHint } from "./components/MobileLandscapeHint";
 import { FavoritesMenu } from "./components/FavoritesMenu";
@@ -119,9 +119,9 @@ export default function App() {
         <div className={`site-canvas flex justify-between gap-3 lg:items-center ${usesNavyHeader ? "items-center py-3" : "items-start py-1.5"}`}>
           <NavLink to="/" className={`shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 ${usesNavyHeader ? "focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" : "focus-visible:ring-accent"}`}>
             <img
-              src={usesNavyHeader ? dermPathLogoNavyGold : dermPathLogo}
+              src={usesNavyHeader ? dermPathLogoIvoryGold : dermPathLogo}
               alt={t("home_title")}
-              className={usesNavyHeader ? "h-auto w-[132px] sm:w-[226px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
+              className={usesNavyHeader ? "h-auto w-[150px] sm:w-[280px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
             />
           </NavLink>
 

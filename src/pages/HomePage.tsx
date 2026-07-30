@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import authorImage from "../assets/Rafael.png.png";
 import dermpathTexture from "../assets/dermpath-illustration-no-r@2x.png";
-import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
+import dermPathLogoIvoryGold from "../assets/dermpath-logo-wordmark-ivory-gold.png";
 import navigationDiagnosticArtwork from "../assets/home-paths/navigation-diagnostic-product.jpg";
 import guidedExplorationArtwork from "../assets/home-paths/guided-exploration-product.jpg";
 import algorithmicQuizArtwork from "../assets/home-paths/algorithmic-quiz-product.jpg";
@@ -54,9 +54,9 @@ export function HomePage() {
         <header className="flex items-center justify-between border-b border-[#c7a553]/30 bg-[#082d5c] px-5 py-4 sm:px-8 lg:px-10">
           <Link to="/" className="group -ml-2 block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" aria-label="DermPath Navigator">
             <img
-              src={dermPathLogoNavyGold}
+              src={dermPathLogoIvoryGold}
               alt="DermPath Navigator"
-              className="h-auto w-[172px] transition duration-300 group-hover:brightness-110 sm:w-[226px]"
+              className="h-auto w-[160px] transition duration-300 group-hover:brightness-110 sm:w-[280px]"
             />
           </Link>
 

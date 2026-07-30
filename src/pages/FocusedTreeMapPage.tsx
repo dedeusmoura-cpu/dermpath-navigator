@@ -13,7 +13,7 @@ import { algorithmTree } from "../data/algorithm";
 import { translateNodeResultTitle } from "../i18n/translations";
 import { searchNodes } from "../utils/search";
 import { buildPathToNode } from "../utils/tree";
-import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
+import dermPathLogoIvoryGold from "../assets/dermpath-logo-wordmark-ivory-gold.png";
 
 interface FocusedTreeMapLocationState {
   trail?: string[];
@@ -56,9 +56,9 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
             aria-label="DermPath Navigator"
           >
             <img
-              src={dermPathLogoNavyGold}
+              src={dermPathLogoIvoryGold}
               alt="DermPath Navigator"
-              className="h-auto w-[172px] transition duration-300 group-hover:brightness-110 sm:w-[210px]"
+              className="h-auto w-[160px] transition duration-300 group-hover:brightness-110 sm:w-[260px]"
             />
           </NavLink>
           <div className="lg:hidden">
