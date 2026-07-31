@@ -8,6 +8,7 @@ import {
   createHorizontalEdgeIds,
   useQuizTreeLines,
 } from "../hooks/useQuizTreeLines";
+import { DiagnosticNavigationEmblem } from "./icons/DiagnosticNavigationEmblem";
 
 interface FocusedTreeMapProps {
   selectedPath: string[];
@@ -133,6 +134,9 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   const isFirstColumnRunRef = useRef<boolean>(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const previousVisibleLineKeysRef = useRef<Set<string>>(new Set());
+  // Mantém o emblema montado enquanto a bússola gira e o bloco esmaece.
+  const [emblemExiting, setEmblemExiting] = useState(false);
+  const emblemExitTimerRef = useRef<number | null>(null);
 
   const { columns, selectedPathIds, focusedMapId } = useMemo(
     () => buildFocusedTreeColumns(selectedPath, openedFinalNodeIds, childMap, language),
@@ -140,6 +144,19 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   );
   const isInitialState = selectedPathIds.length === 0;
   const edges = useMemo(() => buildEdges(columns, childMap), [columns, childMap]);
+
+  const handleSelectNode = (item: ColumnItem, level: number) => {
+    if (isInitialState && !prefersReducedMotion) {
+      setEmblemExiting(true);
+      if (emblemExitTimerRef.current) window.clearTimeout(emblemExitTimerRef.current);
+      emblemExitTimerRef.current = window.setTimeout(() => setEmblemExiting(false), 780);
+    }
+    onSelectNode(item, level);
+  };
+
+  useEffect(() => () => {
+    if (emblemExitTimerRef.current) window.clearTimeout(emblemExitTimerRef.current);
+  }, []);
 
   const activeCatLineConfig = (() => {
     const first = selectedPathIds[0];
@@ -347,19 +364,15 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
           </div>
         </div>
 
-        {isInitialState ? (
-          <div className="pointer-events-none absolute bottom-5 left-[330px] right-5 top-20 hidden items-center justify-center md:flex">
-            <div className="max-w-sm text-center">
-              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-[#d6b766]/45 bg-[#f9f6ed] text-[#a07926] shadow-[0_18px_36px_-28px_rgba(8,45,92,0.45)]">
-                <svg viewBox="0 0 32 32" fill="none" className="h-8 w-8" aria-hidden="true">
-                  <circle cx="16" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-                  <circle cx="7" cy="23.5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-                  <circle cx="16" cy="23.5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-                  <circle cx="25" cy="23.5" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-                  <path d="M16 8.5v7M7 21v-5.5h18V21M16 15.5V21" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-              <p className="mt-5 font-serif text-2xl tracking-[-0.025em] text-[#082d5c]">
+        {isInitialState || emblemExiting ? (
+          <div className="pointer-events-none absolute bottom-5 left-[330px] right-5 top-20 z-20 hidden items-center justify-center md:flex">
+            <div className={`max-w-md text-center${emblemExiting ? " dermpath-emblem-exit" : ""}`}>
+              <DiagnosticNavigationEmblem className="mx-auto h-[230px] w-[330px]" spinning={emblemExiting} />
+              <span
+                aria-hidden="true"
+                className="mx-auto mt-[18px] block h-px w-[78px] bg-[linear-gradient(90deg,transparent,#d6b766,transparent)]"
+              />
+              <p className="mt-[18px] font-serif text-2xl tracking-[-0.025em] text-[#082d5c]">
                 {language === "en" ? "Choose a category" : "Escolha uma categoria"}
               </p>
               <p className="mt-2 text-sm leading-6 text-steel/75">
@@ -475,7 +488,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
                       ref={(element) => {
                         nodeRefs.current[item.mapId] = element;
                       }}
-                      onClick={() => onSelectNode(item, columnIndex)}
+                      onClick={() => handleSelectNode(item, columnIndex)}
                       className={`group relative w-full rounded-[1.45rem] border px-6 ${isInitialState && columnIndex === 0 ? "py-4" : "py-5"} pr-20 text-left text-[1.08rem] font-semibold leading-[1.28] transition duration-200 hover:-translate-y-0.5 ${
                         isFocusNode
                           ? "border-white/20 text-white"

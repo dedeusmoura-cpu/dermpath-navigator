@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import authorImage from "../assets/Rafael.png.png";
-import dermpathTexture from "../assets/dermpath-illustration-no-r@2x.png";
+import dermpathTexture from "../assets/dermpath-illustration-full@2x.png";
 import dermPathLogoIvoryGold from "../assets/dermpath-logo-wordmark-ivory-gold.png";
 import navigationDiagnosticArtwork from "../assets/home-paths/navigation-diagnostic-product.jpg";
-import guidedExplorationArtwork from "../assets/home-paths/guided-exploration-product.jpg";
+import guidedExplorationArtwork from "../assets/home-paths/guided-exploration-product-v2.jpg";
 import algorithmicQuizArtwork from "../assets/home-paths/algorithmic-quiz-product.jpg";
 import tedTrainingArtwork from "../assets/home-paths/ted-training-product.jpg";
 import { Layout } from "../components/Layout";
@@ -85,7 +85,7 @@ export function HomePage() {
             src={dermpathTexture}
             alt=""
             aria-hidden="true"
-            className="absolute -bottom-16 -right-28 -z-10 w-[720px] max-w-[68%] rotate-[-3deg] opacity-[0.17] mix-blend-screen grayscale sm:-right-16"
+            className="absolute bottom-8 right-8 -z-10 w-[560px] max-w-[52%] rotate-[-3deg] opacity-[0.17] mix-blend-screen grayscale sm:right-12"
           />
           <div className="absolute right-[7%] top-10 -z-10 h-56 w-56 rounded-full border border-[#b38b45]/60" />
           <div className="absolute right-[11%] top-20 -z-10 h-40 w-40 rounded-full border border-[#b38b45]/40" />
@@ -248,7 +248,10 @@ function HomePathCard({
         <p className="mt-3 text-sm leading-6 text-[#65717d]">{body}</p>
         <div className={`-mx-2 -mb-2 mt-auto flex min-h-14 items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-[0.66rem] font-bold uppercase tracking-[0.12em] transition duration-300 group-hover:border-[#d6b766]/45 group-hover:bg-[#f1e3be]/70 group-hover:text-[#5f4515] ${actionTone}`}>
           <span className="leading-4">{label}</span>
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#b68d35]/50 bg-[#fffdf7] transition duration-300 group-hover:translate-x-0.5 group-hover:border-[#d6b766] group-hover:bg-[#d6b766] group-hover:text-[#082d5c] motion-reduce:transform-none"><ArrowIcon /></span>
+          <span className="relative isolate grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full border border-[#b68d35]/55 bg-[linear-gradient(145deg,#fffdf7_12%,#f4e7c2_100%)] text-[#082d5c] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_5px_14px_-9px_rgba(8,45,92,0.8)] transition duration-300 group-hover:translate-x-0.5 group-hover:border-[#c59b3d] group-hover:bg-[linear-gradient(145deg,#ead080_0%,#d6b766_100%)] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_7px_16px_-9px_rgba(8,45,92,0.9)] motion-reduce:transform-none">
+            <span className="absolute inset-[3px] -z-10 rounded-full border border-[#082d5c]/10" aria-hidden="true" />
+            <CardArrowIcon />
+          </span>
         </div>
       </div>
     </Link>
@@ -256,3 +259,32 @@ function HomePathCard({
 }
 
 function ArrowIcon() { return <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>; }
+
+function CardArrowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="h-[1.1rem] w-[1.1rem] overflow-visible" aria-hidden="true">
+      <circle
+        cx="4.25"
+        cy="12"
+        r="1.2"
+        fill="currentColor"
+        className="origin-center opacity-55 transition duration-300 group-hover:scale-75 group-hover:opacity-80 motion-reduce:transform-none"
+      />
+      <path
+        d="M7.5 12H18.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transform-none"
+      />
+      <path
+        d="m14.25 7.75 4.25 4.25-4.25 4.25"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transform-none"
+      />
+    </svg>
+  );
+}
