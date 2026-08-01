@@ -120,6 +120,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   const childMap = useMemo(() => getChildMap(), []);
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const emblemContentRef = useRef<HTMLDivElement | null>(null);
   const [zoom, setZoom] = useState(1);
   const columnRefs = useRef<Array<HTMLDivElement | null>>([]);
   const nodeRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -136,6 +137,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   const previousVisibleLineKeysRef = useRef<Set<string>>(new Set());
   // Mantém o emblema montado enquanto a bússola gira e o bloco esmaece.
   const [emblemExiting, setEmblemExiting] = useState(false);
+  const [emblemExitTop, setEmblemExitTop] = useState<number | null>(null);
   const emblemExitTimerRef = useRef<number | null>(null);
 
   const { columns, selectedPathIds, focusedMapId } = useMemo(
@@ -147,9 +149,26 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
 
   const handleSelectNode = (item: ColumnItem, level: number) => {
     if (isInitialState && !prefersReducedMotion) {
+      const scrollArea = scrollAreaRef.current;
+      const emblemContent = emblemContentRef.current;
+
+      if (scrollArea && emblemContent) {
+        const scrollRect = scrollArea.getBoundingClientRect();
+        const emblemRect = emblemContent.getBoundingClientRect();
+
+        // A nova coluna aumenta a altura da árvore. Guardar a posição atual
+        // evita que o emblema seja recentralizado enquanto a bússola gira.
+        setEmblemExitTop(
+          emblemRect.top - scrollRect.top - scrollArea.clientTop + scrollArea.scrollTop,
+        );
+      }
+
       setEmblemExiting(true);
       if (emblemExitTimerRef.current) window.clearTimeout(emblemExitTimerRef.current);
-      emblemExitTimerRef.current = window.setTimeout(() => setEmblemExiting(false), 780);
+      emblemExitTimerRef.current = window.setTimeout(() => {
+        setEmblemExiting(false);
+        setEmblemExitTop(null);
+      }, 780);
     }
     onSelectNode(item, level);
   };
@@ -365,20 +384,23 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
         </div>
 
         {isInitialState || emblemExiting ? (
-          <div className="pointer-events-none absolute bottom-5 left-[330px] right-5 top-20 z-20 hidden items-center justify-center md:flex">
-            <div className={`max-w-md text-center${emblemExiting ? " dermpath-emblem-exit" : ""}`}>
-              <DiagnosticNavigationEmblem className="mx-auto h-[230px] w-[330px]" spinning={emblemExiting} />
+          <div
+            className={`pointer-events-none absolute left-[330px] right-5 z-20 hidden justify-center md:flex${
+              emblemExiting && emblemExitTop !== null ? " items-start" : " bottom-5 top-20 items-center"
+            }`}
+            style={emblemExiting && emblemExitTop !== null ? { top: emblemExitTop } : undefined}
+          >
+            <div
+              ref={emblemContentRef}
+              className={`max-w-md text-center${emblemExiting ? " dermpath-emblem-exit" : ""}`}
+            >
+              <DiagnosticNavigationEmblem className="mx-auto h-[276px] w-[396px]" spinning={emblemExiting} />
               <span
                 aria-hidden="true"
                 className="mx-auto mt-[18px] block h-px w-[78px] bg-[linear-gradient(90deg,transparent,#d6b766,transparent)]"
               />
               <p className="mt-[18px] font-serif text-2xl tracking-[-0.025em] text-[#082d5c]">
                 {language === "en" ? "Choose a category" : "Escolha uma categoria"}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-steel/75">
-                {language === "en"
-                  ? "Select the starting point on the left to reveal the diagnostic pathway."
-                  : "Selecione o ponto de partida à esquerda para revelar o caminho diagnóstico."}
               </p>
             </div>
           </div>

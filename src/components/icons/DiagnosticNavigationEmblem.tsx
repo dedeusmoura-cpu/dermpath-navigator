@@ -10,6 +10,18 @@ interface DiagnosticNavigationEmblemProps {
 // Centro do anel da bússola dentro do PNG (963x518), usado como eixo do giro.
 const COMPASS_PIVOT = "43.51% 55.02%";
 
+const NORTH_MASK_STYLE = {
+  WebkitMaskImage: `url(${dermpathSkin})`,
+  maskImage: `url(${dermpathSkin})`,
+  WebkitMaskPosition: "center",
+  maskPosition: "center",
+  WebkitMaskRepeat: "no-repeat",
+  maskRepeat: "no-repeat",
+  WebkitMaskSize: "100% 100%",
+  maskSize: "100% 100%",
+  clipPath: "inset(1.15% 0.83% 90.73% 93.76%)",
+};
+
 /**
  * Brand mark for the tree map empty state.
  *
@@ -25,7 +37,7 @@ export function DiagnosticNavigationEmblem({ className, spinning = false }: Diag
     <div className={`relative grid place-items-center ${className ?? ""}`}>
       <span
         aria-hidden="true"
-        className="absolute h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,#fffcf4_0%,rgba(252,247,235,0.85)_42%,rgba(252,250,244,0)_70%)]"
+        className="absolute aspect-square w-[90.91%] rounded-full bg-[radial-gradient(circle,#fffcf4_0%,rgba(252,247,235,0.85)_42%,rgba(252,250,244,0)_70%)]"
       />
       <svg className="absolute inset-0 h-full w-full" viewBox="0 0 330 230" fill="none" aria-hidden="true">
         <circle cx="165" cy="115" r="98" stroke="#d6b766" strokeOpacity="0.38" strokeWidth="1" />
@@ -37,7 +49,7 @@ export function DiagnosticNavigationEmblem({ className, spinning = false }: Diag
           <path d="M263 115h9" />
         </g>
       </svg>
-      <span className="relative block w-[300px] max-w-full">
+      <span className="relative block w-[90.91%] max-w-full">
         <img
           src={dermpathSkin}
           alt=""
@@ -50,6 +62,11 @@ export function DiagnosticNavigationEmblem({ className, spinning = false }: Diag
           aria-hidden="true"
           style={{ transformOrigin: COMPASS_PIVOT }}
           className={`absolute inset-0 block w-full${spinning ? " dermpath-compass-spin" : ""}`}
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[#f52235]"
+          style={NORTH_MASK_STYLE}
         />
       </span>
     </div>

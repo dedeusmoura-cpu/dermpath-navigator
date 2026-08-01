@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import authorImage from "../assets/Rafael.png.png";
 import dermpathTexture from "../assets/dermpath-illustration-full@2x.png";
-import dermPathLogoIvoryGold from "../assets/dermpath-logo-wordmark-ivory-gold.png";
 import navigationDiagnosticArtwork from "../assets/home-paths/navigation-diagnostic-product.jpg";
 import guidedExplorationArtwork from "../assets/home-paths/guided-exploration-product-v2.jpg";
 import algorithmicQuizArtwork from "../assets/home-paths/algorithmic-quiz-product.jpg";
 import tedTrainingArtwork from "../assets/home-paths/ted-training-product.jpg";
 import { Layout } from "../components/Layout";
+import { BrandWordmark } from "../components/BrandWordmark";
 import { useLanguage } from "../context/LanguageContext";
 
 const paths = [
@@ -53,9 +53,7 @@ export function HomePage() {
       <div className="overflow-hidden rounded-[28px] border border-[#d9c9a4]/60 bg-[#f9f6ed] shadow-[0_28px_80px_-48px_rgba(4,31,68,0.45)]">
         <header className="flex items-center justify-between border-b border-[#c7a553]/30 bg-[#082d5c] px-5 py-4 sm:px-8 lg:px-10">
           <Link to="/" className="group -ml-2 block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" aria-label="DermPath Navigator">
-            <img
-              src={dermPathLogoIvoryGold}
-              alt="DermPath Navigator"
+            <BrandWordmark
               className="h-auto w-[160px] transition duration-300 group-hover:brightness-110 sm:w-[280px]"
             />
           </Link>

@@ -8,12 +8,12 @@ import {
 } from "../components/FocusedTreeMap";
 import { Layout } from "../components/Layout";
 import { FavoritesMenu } from "../components/FavoritesMenu";
+import { BrandWordmark } from "../components/BrandWordmark";
 import { useLanguage } from "../context/LanguageContext";
 import { algorithmTree } from "../data/algorithm";
 import { translateNodeResultTitle } from "../i18n/translations";
 import { searchNodes } from "../utils/search";
 import { buildPathToNode } from "../utils/tree";
-import dermPathLogoIvoryGold from "../assets/dermpath-logo-wordmark-ivory-gold.png";
 
 interface FocusedTreeMapLocationState {
   trail?: string[];
@@ -55,9 +55,7 @@ function TreeMapTopBar({ treeViewUrl }: { treeViewUrl: string }) {
             className="group -ml-2 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]"
             aria-label="DermPath Navigator"
           >
-            <img
-              src={dermPathLogoIvoryGold}
-              alt="DermPath Navigator"
+            <BrandWordmark
               className="h-auto w-[160px] transition duration-300 group-hover:brightness-110 sm:w-[260px]"
             />
           </NavLink>
