@@ -62,7 +62,7 @@ import processoDepositoImage from "../assets/ProcessoPatologico/processo-deposit
 import processoDermatiteImage from "../assets/ProcessoPatologico/processo-dermatite.png";
 import processoHamartomaMalformacaoImage from "../assets/ProcessoPatologico/processo-hamartoma-malformacao.png";
 import processoNeoplasiaImage from "../assets/ProcessoPatologico/processo-neoplasia.png";
-import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
+import dermpathTexture from "../assets/dermpath-illustration-full@2x.png";
 import pustulosaImage from "../assets/Dermatites/pustulosa-atlas-v5.png";
 import vasculiteImage from "../assets/Dermatites/vasculite-atlas-v4.png";
 import vesicoBolhosaImage from "../assets/Dermatites/vesico-bolhosa-atlas-v5.png";
@@ -381,13 +381,12 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                 ].join(", "),
               }}
             >
-                <img
-                  src={navegacaoDiagnosticaCompassIcon}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-[228px] w-[228px] object-contain"
-                  style={{ filter: "drop-shadow(0 8px 24px rgba(17,50,160,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.3))" }}
-                />
+              <img
+                src={dermpathTexture}
+                alt=""
+                aria-hidden="true"
+                className="h-[390px] w-[390px] rotate-[-4deg] object-contain opacity-[0.2] mix-blend-screen grayscale contrast-125"
+              />
             </div>
 
             {node.options.map((option, index) => {
