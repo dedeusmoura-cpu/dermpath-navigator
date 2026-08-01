@@ -1,0 +1,191 @@
+<svg width="1400" height="788" viewBox="0 0 1400 788" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="background" x1="126" y1="40" x2="1260" y2="788" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06183C"/>
+      <stop offset="0.52" stop-color="#031435"/>
+      <stop offset="1" stop-color="#020D26"/>
+    </linearGradient>
+    <radialGradient id="violetGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(446 341) rotate(38) scale(486 328)">
+      <stop stop-color="#8D6DFF" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#8D6DFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="goldGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1007 438) rotate(137) scale(421 290)">
+      <stop stop-color="#DDB963" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#DDB963" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="violetCard" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FCFAFF"/>
+      <stop offset="0.56" stop-color="#F0E9FF"/>
+      <stop offset="1" stop-color="#E4D8FF"/>
+    </linearGradient>
+    <linearGradient id="ivoryCard" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFEFA"/>
+      <stop offset="0.62" stop-color="#F6F1E6"/>
+      <stop offset="1" stop-color="#EAE1D0"/>
+    </linearGradient>
+    <linearGradient id="goldCard" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFF9E8"/>
+      <stop offset="0.58" stop-color="#F4E4B6"/>
+      <stop offset="1" stop-color="#E3C778"/>
+    </linearGradient>
+    <linearGradient id="violetStroke" x1="145" y1="183" x2="870" y2="579" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BDA5FF"/>
+      <stop offset="1" stop-color="#7654D8"/>
+    </linearGradient>
+    <linearGradient id="ivoryStroke" x1="790" y1="380" x2="1260" y2="673" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8E8"/>
+      <stop offset="1" stop-color="#BFAF8D"/>
+    </linearGradient>
+    <linearGradient id="goldStroke" x1="63" y1="586" x2="354" y2="684" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5D982"/>
+      <stop offset="1" stop-color="#B98726"/>
+    </linearGradient>
+    <linearGradient id="connectorViolet" x1="402" y1="285" x2="715" y2="405" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A37EFF"/>
+      <stop offset="1" stop-color="#E6DBFF"/>
+    </linearGradient>
+    <linearGradient id="connectorGold" x1="697" y1="334" x2="1109" y2="571" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFBEF"/>
+      <stop offset="1" stop-color="#D8C8A3"/>
+    </linearGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" stroke="#AABCDD" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <filter id="nodeShadow" x="-20%" y="-30%" width="140%" height="170%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="15" flood-color="#00091C" flood-opacity="0.48"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#00102E" flood-opacity="0.4"/>
+    </filter>
+    <filter id="junctionGlow" x="-120%" y="-120%" width="340%" height="340%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#A888FF" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="788" fill="url(#background)"/>
+  <rect width="1400" height="788" fill="url(#grid)"/>
+  <rect width="1400" height="788" fill="url(#violetGlow)"/>
+  <rect width="1400" height="788" fill="url(#goldGlow)"/>
+  <path d="M70 104C278 13 526 9 714 58" stroke="#91A5CE" stroke-opacity="0.06" stroke-width="2"/>
+  <path d="M886 735C1083 775 1244 741 1369 654" stroke="#D9BE77" stroke-opacity="0.07" stroke-width="2"/>
+
+  <!-- Connectors: dark underlay keeps the tree crisp over the atmospheric background. -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M700 252V323" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+    <path d="M700 323H494C441 323 420 345 420 382" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+    <path d="M700 323H940C983 323 990 345 990 382" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+    <path d="M420 468C420 520 391 539 337 539H209C176 539 157 557 157 590" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+    <path d="M420 468C420 521 448 539 501 539C537 539 553 556 553 590" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+    <path d="M990 468C990 520 965 539 918 539C885 539 872 556 872 590" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+    <path d="M990 468C990 520 1018 539 1067 539H1186C1222 539 1243 557 1243 590" stroke="#00102C" stroke-width="9" stroke-opacity="0.72"/>
+
+    <path d="M700 252V323" stroke="url(#connectorViolet)" stroke-width="4"/>
+    <path d="M700 323H494C441 323 420 345 420 382" stroke="url(#connectorViolet)" stroke-width="4"/>
+    <path d="M700 323H940C983 323 990 345 990 382" stroke="url(#connectorGold)" stroke-width="4"/>
+    <path d="M420 468C420 520 391 539 337 539H209C176 539 157 557 157 590" stroke="url(#connectorViolet)" stroke-width="4"/>
+    <path d="M420 468C420 521 448 539 501 539C537 539 553 556 553 590" stroke="url(#connectorGold)" stroke-width="4"/>
+    <path d="M990 468C990 520 965 539 918 539C885 539 872 556 872 590" stroke="url(#connectorGold)" stroke-width="4"/>
+    <path d="M990 468C990 520 1018 539 1067 539H1186C1222 539 1243 557 1243 590" stroke="url(#connectorGold)" stroke-width="4"/>
+  </g>
+
+  <!-- Root card -->
+  <g filter="url(#nodeShadow)">
+    <rect x="532" y="150" width="336" height="106" rx="29" fill="#0B1737" fill-opacity="0.68"/>
+    <rect x="532" y="145" width="336" height="106" rx="29" fill="url(#violetCard)" stroke="url(#violetStroke)" stroke-width="3"/>
+    <rect x="539" y="152" width="322" height="92" rx="23" stroke="white" stroke-opacity="0.78" stroke-width="2"/>
+    <rect x="550" y="165" width="52" height="52" rx="16" fill="#8B6BE7" fill-opacity="0.13"/>
+    <path d="M576 178L589 191L576 204L563 191L576 178Z" fill="#8B6BE7" fill-opacity="0.16" stroke="#8060DE" stroke-width="2"/>
+    <circle cx="576" cy="191" r="4" fill="#8060DE"/>
+    <rect x="621" y="174" width="122" height="10" rx="5" fill="#6F52C4" fill-opacity="0.32"/>
+    <rect x="621" y="195" width="174" height="8" rx="4" fill="#6F52C4" fill-opacity="0.15"/>
+    <rect x="621" y="213" width="102" height="8" rx="4" fill="#6F52C4" fill-opacity="0.1"/>
+    <circle cx="823" cy="198" r="24" fill="white" fill-opacity="0.62" stroke="#9B7CEB" stroke-width="2"/>
+    <circle cx="823" cy="198" r="18" stroke="#9B7CEB" stroke-opacity="0.22"/>
+    <path d="M817 188L827 198L817 208" stroke="#7654D8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Middle left card -->
+  <g filter="url(#nodeShadow)">
+    <rect x="270" y="382" width="300" height="90" rx="25" fill="#0B1737" fill-opacity="0.7"/>
+    <rect x="270" y="377" width="300" height="90" rx="25" fill="url(#violetCard)" stroke="url(#violetStroke)" stroke-width="3"/>
+    <rect x="277" y="384" width="286" height="76" rx="19" stroke="white" stroke-opacity="0.74" stroke-width="2"/>
+    <rect x="288" y="397" width="44" height="44" rx="14" fill="#8766E5" fill-opacity="0.13"/>
+    <circle cx="310" cy="419" r="9" fill="#8766E5" fill-opacity="0.18" stroke="#8060DE" stroke-width="2"/>
+    <circle cx="310" cy="419" r="3.5" fill="#8060DE"/>
+    <rect x="348" y="401" width="105" height="9" rx="4.5" fill="#6F52C4" fill-opacity="0.3"/>
+    <rect x="348" y="421" width="142" height="8" rx="4" fill="#6F52C4" fill-opacity="0.13"/>
+    <circle cx="527" cy="422" r="21" fill="white" fill-opacity="0.6" stroke="#9B7CEB" stroke-width="2"/>
+    <path d="M522 413L531 422L522 431" stroke="#7654D8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Middle right card -->
+  <g filter="url(#nodeShadow)">
+    <rect x="840" y="382" width="300" height="90" rx="25" fill="#0B1737" fill-opacity="0.7"/>
+    <rect x="840" y="377" width="300" height="90" rx="25" fill="url(#ivoryCard)" stroke="url(#ivoryStroke)" stroke-width="3"/>
+    <rect x="847" y="384" width="286" height="76" rx="19" stroke="white" stroke-opacity="0.76" stroke-width="2"/>
+    <rect x="858" y="397" width="44" height="44" rx="14" fill="#B28D42" fill-opacity="0.12"/>
+    <path d="M871 419H889M880 410V428" stroke="#A27B31" stroke-opacity="0.76" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="918" y="401" width="103" height="9" rx="4.5" fill="#8A7040" fill-opacity="0.26"/>
+    <rect x="918" y="421" width="139" height="8" rx="4" fill="#8A7040" fill-opacity="0.12"/>
+    <circle cx="1097" cy="422" r="21" fill="white" fill-opacity="0.62" stroke="#B9A982" stroke-width="2"/>
+    <path d="M1092 413L1101 422L1092 431" stroke="#9D7D3D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Leaf cards -->
+  <g filter="url(#nodeShadow)">
+    <rect x="64" y="594" width="286" height="88" rx="24" fill="#091735" fill-opacity="0.72"/>
+    <rect x="64" y="589" width="286" height="88" rx="24" fill="url(#goldCard)" stroke="url(#goldStroke)" stroke-width="3"/>
+    <rect x="71" y="596" width="272" height="74" rx="18" stroke="#FFFDF4" stroke-opacity="0.7" stroke-width="2"/>
+    <circle cx="98" cy="633" r="13" fill="#C69A37" fill-opacity="0.18" stroke="#B98726" stroke-width="2"/>
+    <path d="M93 633H103M98 628V638" stroke="#A87820" stroke-width="2" stroke-linecap="round"/>
+    <rect x="126" y="615" width="86" height="9" rx="4.5" fill="#7A5A1D" fill-opacity="0.3"/>
+    <rect x="126" y="636" width="112" height="8" rx="4" fill="#7A5A1D" fill-opacity="0.14"/>
+    <circle cx="311" cy="633" r="20" fill="#FFF9E9" fill-opacity="0.68" stroke="#C69A37" stroke-width="2"/>
+    <path d="M306 625L314 633L306 641" stroke="#A87820" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g filter="url(#nodeShadow)">
+    <rect x="410" y="594" width="286" height="88" rx="24" fill="#091735" fill-opacity="0.72"/>
+    <rect x="410" y="589" width="286" height="88" rx="24" fill="url(#ivoryCard)" stroke="url(#ivoryStroke)" stroke-width="3"/>
+    <rect x="417" y="596" width="272" height="74" rx="18" stroke="white" stroke-opacity="0.75" stroke-width="2"/>
+    <circle cx="444" cy="633" r="13" fill="#9D8660" fill-opacity="0.12" stroke="#B4A582" stroke-width="2"/>
+    <circle cx="444" cy="633" r="3.5" fill="#A68E63"/>
+    <rect x="472" y="615" width="84" height="9" rx="4.5" fill="#74674E" fill-opacity="0.25"/>
+    <rect x="472" y="636" width="111" height="8" rx="4" fill="#74674E" fill-opacity="0.12"/>
+    <circle cx="657" cy="633" r="20" fill="white" fill-opacity="0.6" stroke="#B9A982" stroke-width="2"/>
+    <path d="M652 625L660 633L652 641" stroke="#9A8458" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g filter="url(#nodeShadow)">
+    <rect x="704" y="594" width="286" height="88" rx="24" fill="#091735" fill-opacity="0.72"/>
+    <rect x="704" y="589" width="286" height="88" rx="24" fill="url(#ivoryCard)" stroke="url(#ivoryStroke)" stroke-width="3"/>
+    <rect x="711" y="596" width="272" height="74" rx="18" stroke="white" stroke-opacity="0.75" stroke-width="2"/>
+    <circle cx="738" cy="633" r="13" fill="#9D8660" fill-opacity="0.12" stroke="#B4A582" stroke-width="2"/>
+    <path d="M733 633L738 638L745 629" stroke="#9A8458" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="766" y="615" width="86" height="9" rx="4.5" fill="#74674E" fill-opacity="0.25"/>
+    <rect x="766" y="636" width="110" height="8" rx="4" fill="#74674E" fill-opacity="0.12"/>
+    <circle cx="951" cy="633" r="20" fill="white" fill-opacity="0.6" stroke="#B9A982" stroke-width="2"/>
+    <path d="M946 625L954 633L946 641" stroke="#9A8458" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g filter="url(#nodeShadow)">
+    <rect x="1050" y="594" width="286" height="88" rx="24" fill="#091735" fill-opacity="0.72"/>
+    <rect x="1050" y="589" width="286" height="88" rx="24" fill="url(#ivoryCard)" stroke="url(#ivoryStroke)" stroke-width="3"/>
+    <rect x="1057" y="596" width="272" height="74" rx="18" stroke="white" stroke-opacity="0.75" stroke-width="2"/>
+    <circle cx="1084" cy="633" r="13" fill="#9D8660" fill-opacity="0.12" stroke="#B4A582" stroke-width="2"/>
+    <path d="M1078 633H1090" stroke="#9A8458" stroke-width="2.3" stroke-linecap="round"/>
+    <rect x="1112" y="615" width="84" height="9" rx="4.5" fill="#74674E" fill-opacity="0.25"/>
+    <rect x="1112" y="636" width="109" height="8" rx="4" fill="#74674E" fill-opacity="0.12"/>
+    <circle cx="1297" cy="633" r="20" fill="white" fill-opacity="0.6" stroke="#B9A982" stroke-width="2"/>
+    <path d="M1292 625L1300 633L1292 641" stroke="#9A8458" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Junctions sit above the cards and connectors. -->
+  <g filter="url(#junctionGlow)">
+    <circle cx="700" cy="323" r="11" fill="#071634" stroke="#E2D7FF" stroke-width="4"/>
+    <circle cx="420" cy="377" r="8" fill="#071634" stroke="#9B7CEB" stroke-width="4"/>
+    <circle cx="990" cy="377" r="8" fill="#071634" stroke="#F2E9D7" stroke-width="4"/>
+    <circle cx="157" cy="589" r="8" fill="#071634" stroke="#D8AA46" stroke-width="4"/>
+    <circle cx="553" cy="589" r="8" fill="#071634" stroke="#E9DECA" stroke-width="4"/>
+    <circle cx="872" cy="589" r="8" fill="#071634" stroke="#E9DECA" stroke-width="4"/>
+    <circle cx="1243" cy="589" r="8" fill="#071634" stroke="#E9DECA" stroke-width="4"/>
+  </g>
+</svg>

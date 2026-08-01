@@ -1,0 +1,160 @@
+<svg width="1400" height="788" viewBox="0 0 1400 788" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="background" x1="130" y1="28" x2="1260" y2="788" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071C43"/>
+      <stop offset="0.55" stop-color="#061637"/>
+      <stop offset="1" stop-color="#020D26"/>
+    </linearGradient>
+    <radialGradient id="violetGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(708 382) rotate(90) scale(430 730)">
+      <stop stop-color="#8562CB" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#8562CB" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFCF4"/>
+      <stop offset="0.6" stop-color="#F8EDDF"/>
+      <stop offset="1" stop-color="#EBDACA"/>
+    </linearGradient>
+    <linearGradient id="dermis" x1="0" y1="0" x2="0.92" y2="1">
+      <stop stop-color="#F8D8DA"/>
+      <stop offset="1" stop-color="#EFC2C8"/>
+    </linearGradient>
+    <linearGradient id="epidermis" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#76509E"/>
+      <stop offset="1" stop-color="#9B73BA"/>
+    </linearGradient>
+    <linearGradient id="nodule" x1="0.12" y1="0" x2="0.9" y2="1">
+      <stop stop-color="#B998D1"/>
+      <stop offset="1" stop-color="#7E5A9D"/>
+    </linearGradient>
+    <linearGradient id="deposit" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#A99BCB" stop-opacity="0.78"/>
+      <stop offset="1" stop-color="#746AA6" stop-opacity="0.58"/>
+    </linearGradient>
+    <pattern id="paperDots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#704D8F" fill-opacity="0.055"/>
+    </pattern>
+    <pattern id="noduleDots" width="22" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="3.4" fill="#FBECF1" fill-opacity="0.72" stroke="#694887" stroke-width="1.2"/>
+    </pattern>
+    <filter id="panelShadow" x="-15%" y="-20%" width="130%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="17" stdDeviation="18" flood-color="#000817" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000817" flood-opacity="0.36"/>
+    </filter>
+    <clipPath id="panelOne"><rect x="116" y="82" width="557" height="282" rx="25"/></clipPath>
+    <clipPath id="panelTwo"><rect x="727" y="82" width="557" height="282" rx="25"/></clipPath>
+    <clipPath id="panelThree"><rect x="116" y="424" width="557" height="282" rx="25"/></clipPath>
+    <clipPath id="panelFour"><rect x="727" y="424" width="557" height="282" rx="25"/></clipPath>
+  </defs>
+
+  <rect width="1400" height="788" fill="url(#background)"/>
+  <rect width="1400" height="788" fill="url(#violetGlow)"/>
+  <path d="M58 176C245 36 480 12 659 73" stroke="#91A4C8" stroke-opacity="0.07" stroke-width="2"/>
+  <path d="M738 727C946 787 1205 728 1362 596" stroke="#D8B966" stroke-opacity="0.07" stroke-width="2"/>
+
+  <!-- Wavy epidermis -->
+  <g filter="url(#panelShadow)">
+    <rect x="116" y="82" width="557" height="282" rx="25" fill="url(#paper)" stroke="#C49A49" stroke-width="3"/>
+  </g>
+  <g clip-path="url(#panelOne)">
+    <rect x="116" y="82" width="557" height="282" fill="url(#paperDots)"/>
+    <path d="M116 177C158 163 187 178 224 168C271 155 304 160 346 179C385 197 411 197 450 176C488 156 518 157 557 168C598 180 630 176 673 157V364H116V177Z" fill="url(#dermis)"/>
+    <path d="M116 151C159 137 188 153 226 143C271 131 307 138 346 154C387 171 414 173 452 151C488 131 519 133 558 143C600 155 634 151 673 134V188C635 205 603 210 565 197C531 186 503 185 482 202C462 218 450 253 427 254C401 254 407 204 377 200C349 196 340 248 316 249C289 249 300 196 271 190C245 185 232 234 207 232C180 230 188 181 160 178C145 177 132 184 116 190V151Z" fill="url(#epidermis)"/>
+    <path d="M116 143C159 129 190 145 227 135C273 123 307 130 348 146C386 162 415 164 452 143C489 123 520 126 558 136C601 147 635 143 673 126" stroke="#51366F" stroke-width="5" stroke-linecap="round"/>
+    <path d="M116 160C158 147 190 162 227 153C271 142 306 148 345 164C385 181 416 182 453 161C489 141 519 144 558 154C600 165 635 161 673 144" stroke="#DCC3E7" stroke-width="3" stroke-linecap="round"/>
+    <g fill="#6D4B8E" fill-opacity="0.62">
+      <ellipse cx="161" cy="237" rx="7" ry="3" transform="rotate(-24 161 237)"/>
+      <ellipse cx="221" cy="277" rx="8" ry="3" transform="rotate(18 221 277)"/>
+      <ellipse cx="296" cy="300" rx="8" ry="3" transform="rotate(-18 296 300)"/>
+      <ellipse cx="373" cy="270" rx="7" ry="3" transform="rotate(24 373 270)"/>
+      <ellipse cx="451" cy="309" rx="8" ry="3" transform="rotate(-12 451 309)"/>
+      <ellipse cx="531" cy="262" rx="7" ry="3" transform="rotate(20 531 262)"/>
+      <ellipse cx="608" cy="307" rx="8" ry="3" transform="rotate(-18 608 307)"/>
+    </g>
+    <g stroke="#CB889A" stroke-width="2" stroke-linecap="round" opacity="0.56">
+      <path d="M139 286C184 257 217 252 260 272"/>
+      <path d="M231 329C280 294 324 293 363 313"/>
+      <path d="M389 289C431 259 479 254 525 280"/>
+      <path d="M501 334C550 296 605 292 651 312"/>
+    </g>
+  </g>
+  <rect x="124" y="90" width="541" height="266" rx="19" stroke="white" stroke-opacity="0.62" stroke-width="2"/>
+
+  <!-- Nodular pattern -->
+  <g filter="url(#panelShadow)">
+    <rect x="727" y="82" width="557" height="282" rx="25" fill="url(#paper)" stroke="#C49A49" stroke-width="3"/>
+  </g>
+  <g clip-path="url(#panelTwo)">
+    <rect x="727" y="82" width="557" height="282" fill="url(#paperDots)"/>
+    <path d="M727 175C772 170 796 157 837 165C878 173 907 185 946 178C989 170 1013 151 1053 156C1096 161 1125 181 1165 176C1205 171 1242 155 1284 159V364H727V175Z" fill="url(#dermis)"/>
+    <path d="M727 142C779 143 815 128 861 135C910 143 944 151 989 143C1032 135 1066 121 1111 128C1153 135 1194 146 1232 140C1253 137 1269 133 1284 130V181C1231 188 1191 181 1152 174C1113 167 1081 176 1042 181C997 187 965 176 925 172C881 167 844 181 803 184C776 186 751 181 727 176V142Z" fill="url(#epidermis)"/>
+    <path d="M727 132C776 134 815 119 861 126C909 133 944 142 988 133C1033 124 1067 112 1111 119C1153 126 1192 137 1233 130C1251 127 1269 123 1284 121" stroke="#51366F" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="1012" cy="248" rx="130" ry="102" fill="#69498B" fill-opacity="0.12" stroke="#684887" stroke-width="4"/>
+    <ellipse cx="1012" cy="248" rx="114" ry="88" fill="url(#nodule)"/>
+    <ellipse cx="1012" cy="248" rx="105" ry="80" fill="url(#noduleDots)"/>
+    <ellipse cx="1012" cy="248" rx="116" ry="90" stroke="#E9D1EA" stroke-width="4"/>
+    <g fill="#76558F" fill-opacity="0.72">
+      <ellipse cx="791" cy="248" rx="8" ry="3" transform="rotate(62 791 248)"/>
+      <ellipse cx="832" cy="301" rx="8" ry="3" transform="rotate(28 832 301)"/>
+      <ellipse cx="1201" cy="247" rx="8" ry="3" transform="rotate(-56 1201 247)"/>
+      <ellipse cx="1242" cy="304" rx="8" ry="3" transform="rotate(-18 1242 304)"/>
+    </g>
+    <path d="M768 326C811 292 847 286 878 300M1148 313C1182 290 1220 288 1261 313" stroke="#C78398" stroke-width="2" stroke-linecap="round" opacity="0.52"/>
+  </g>
+  <rect x="735" y="90" width="541" height="266" rx="19" stroke="white" stroke-opacity="0.62" stroke-width="2"/>
+
+  <!-- Follicular pattern -->
+  <g filter="url(#panelShadow)">
+    <rect x="116" y="424" width="557" height="282" rx="25" fill="url(#paper)" stroke="#C49A49" stroke-width="3"/>
+  </g>
+  <g clip-path="url(#panelThree)">
+    <rect x="116" y="424" width="557" height="282" fill="url(#paperDots)"/>
+    <path d="M116 522C161 510 196 525 234 517C280 508 310 493 352 504C394 515 425 529 466 521C509 512 542 499 585 510C620 519 646 515 673 504V706H116V522Z" fill="url(#dermis)"/>
+    <path d="M116 493C157 482 193 495 230 488C274 479 310 465 351 477C393 489 426 501 468 494C510 486 543 473 584 484C619 493 646 489 673 478V530C645 540 616 543 584 536C544 527 513 536 476 542C432 549 399 536 359 526C319 516 284 531 244 537C197 544 157 532 116 539V493Z" fill="url(#epidermis)"/>
+    <path d="M116 483C157 472 192 485 230 478C275 469 310 455 351 467C393 478 426 491 468 484C510 476 544 463 584 474C620 483 646 479 673 468" stroke="#51366F" stroke-width="5" stroke-linecap="round"/>
+    <path d="M244 448C229 493 215 539 205 590C197 629 204 669 226 681C249 694 275 674 278 645C282 610 263 570 260 533C257 497 263 468 272 441" stroke="#4B315F" stroke-width="8" stroke-linecap="round"/>
+    <path d="M241 449C229 493 218 537 212 588C208 622 215 653 229 659C240 663 252 651 251 634C248 593 239 559 240 524C241 492 248 464 254 443" stroke="#F1C7CD" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="435" cy="592" rx="114" ry="104" fill="#FBEBE5" stroke="#5E3D78" stroke-width="7"/>
+    <ellipse cx="435" cy="592" rx="98" ry="89" stroke="#B982A5" stroke-width="4"/>
+    <path d="M385 629C403 611 418 606 436 594C458 579 473 552 467 528" stroke="#D9A6B0" stroke-width="5" stroke-linecap="round"/>
+    <path d="M403 646C429 628 451 619 472 592" stroke="#E4BBC1" stroke-width="3" stroke-linecap="round"/>
+    <g fill="#E3B7BE">
+      <ellipse cx="393" cy="561" rx="12" ry="5" transform="rotate(-42 393 561)"/>
+      <ellipse cx="431" cy="535" rx="11" ry="5" transform="rotate(18 431 535)"/>
+      <ellipse cx="481" cy="568" rx="12" ry="5" transform="rotate(52 481 568)"/>
+      <ellipse cx="451" cy="650" rx="12" ry="5" transform="rotate(-16 451 650)"/>
+    </g>
+    <g stroke="#6F4A89" stroke-width="3" fill="none">
+      <circle cx="581" cy="591" r="22"/>
+      <circle cx="581" cy="591" r="10"/>
+      <path d="M581 569V613M559 591H603M566 576L596 606M596 576L566 606"/>
+    </g>
+  </g>
+  <rect x="124" y="432" width="541" height="266" rx="19" stroke="white" stroke-opacity="0.62" stroke-width="2"/>
+
+  <!-- Dermal deposit pattern -->
+  <g filter="url(#panelShadow)">
+    <rect x="727" y="424" width="557" height="282" rx="25" fill="url(#paper)" stroke="#C49A49" stroke-width="3"/>
+  </g>
+  <g clip-path="url(#panelFour)">
+    <rect x="727" y="424" width="557" height="282" fill="url(#paperDots)"/>
+    <path d="M727 522C768 509 796 521 834 512C872 503 902 489 941 500C979 510 1009 526 1048 517C1086 509 1115 493 1153 503C1190 513 1223 526 1259 513C1268 510 1277 507 1284 503V706H727V522Z" fill="url(#dermis)"/>
+    <path d="M727 492C766 481 796 493 834 484C873 475 902 462 941 472C981 483 1009 498 1048 490C1087 481 1116 466 1154 476C1191 486 1223 498 1259 486C1269 482 1277 479 1284 476V530C1272 536 1258 540 1242 539C1207 536 1183 519 1151 520C1115 521 1088 539 1051 540C1012 541 986 520 949 520C911 520 886 540 848 541C804 542 768 527 727 539V492Z" fill="url(#epidermis)"/>
+    <path d="M727 482C766 471 796 483 834 474C873 465 902 452 941 462C981 473 1009 488 1048 480C1087 471 1116 456 1154 466C1191 476 1223 488 1259 476C1269 472 1277 469 1284 466" stroke="#51366F" stroke-width="5" stroke-linecap="round"/>
+    <path d="M850 607C869 584 894 581 918 587C936 568 966 568 985 583C1004 563 1033 566 1049 585C1070 571 1097 577 1108 598C1135 593 1155 610 1154 631C1153 652 1129 661 1108 655C1095 677 1065 682 1043 667C1025 685 993 683 976 664C950 679 918 671 908 651C882 660 852 643 850 620C849 615 849 611 850 607Z" fill="url(#deposit)" stroke="#766AA7" stroke-width="4"/>
+    <path d="M885 617C909 602 929 605 948 613C974 596 995 601 1014 616C1035 602 1059 603 1080 619C1096 612 1114 614 1128 625" stroke="#D5CCE9" stroke-width="4" stroke-linecap="round"/>
+    <g fill="#6D4B8E" fill-opacity="0.64">
+      <ellipse cx="787" cy="589" rx="8" ry="3" transform="rotate(-18 787 589)"/>
+      <ellipse cx="816" cy="650" rx="8" ry="3" transform="rotate(20 816 650)"/>
+      <ellipse cx="902" cy="683" rx="8" ry="3" transform="rotate(-12 902 683)"/>
+      <ellipse cx="1182" cy="588" rx="8" ry="3" transform="rotate(15 1182 588)"/>
+      <ellipse cx="1231" cy="650" rx="8" ry="3" transform="rotate(-24 1231 650)"/>
+      <ellipse cx="1165" cy="682" rx="8" ry="3" transform="rotate(10 1165 682)"/>
+    </g>
+    <g stroke="#CA8899" stroke-width="2" stroke-linecap="round" opacity="0.52">
+      <path d="M750 632C788 604 818 603 846 617"/>
+      <path d="M756 682C800 654 838 655 870 673"/>
+      <path d="M1127 573C1173 548 1216 555 1254 580"/>
+    </g>
+  </g>
+  <rect x="735" y="432" width="541" height="266" rx="19" stroke="white" stroke-opacity="0.62" stroke-width="2"/>
+</svg>

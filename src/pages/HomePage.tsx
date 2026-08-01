@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import authorImage from "../assets/Rafael.png.png";
 import dermpathTexture from "../assets/dermpath-illustration-full@2x.png";
-import navigationDiagnosticArtwork from "../assets/home-paths/navigation-diagnostic-product.jpg";
-import guidedExplorationArtwork from "../assets/home-paths/guided-exploration-product-v2.jpg";
+import navigationDiagnosticArtwork from "../assets/home-paths/navigation-diagnostic-product.svg";
+import guidedExplorationArtwork from "../assets/home-paths/guided-exploration-product.svg";
 import algorithmicQuizArtwork from "../assets/home-paths/algorithmic-quiz-product.jpg";
 import tedTrainingArtwork from "../assets/home-paths/ted-training-product.jpg";
 import { Layout } from "../components/Layout";
