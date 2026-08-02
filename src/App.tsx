@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { NavLink, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import dermPathLogo from "./assets/dermpath-logo-final.png";
-import dermPathLogoNavyGold from "./assets/dermpath-logo-navy-gold-concept.png";
 import quizButtonImage from "./assets/Quiz-branco.png";
+import { BrandWordmark } from "./components/BrandWordmark";
 import { MobileLandscapeHint } from "./components/MobileLandscapeHint";
 import { FavoritesMenu } from "./components/FavoritesMenu";
 import { useLanguage } from "./context/LanguageContext";
@@ -118,11 +118,15 @@ export default function App() {
       {!isTedPage && !isHomePage && !isTreeMapPage && <header className={`fixed inset-x-0 top-0 z-30 border-b shadow-[0_12px_36px_-30px_rgba(20,27,43,0.45)] backdrop-blur ${usesNavyHeader ? "border-[#d6b766]/25 bg-[#082d5c]/95" : "border-sand/90 bg-white/92"}`}>
         <div className={`site-canvas flex justify-between gap-3 lg:items-center ${usesNavyHeader ? "items-center py-3" : "items-start py-1.5"}`}>
           <NavLink to="/" className={`shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 ${usesNavyHeader ? "focus-visible:ring-[#d6b766] focus-visible:ring-offset-2 focus-visible:ring-offset-[#082d5c]" : "focus-visible:ring-accent"}`}>
-            <img
-              src={usesNavyHeader ? dermPathLogoNavyGold : dermPathLogo}
-              alt={t("home_title")}
-              className={usesNavyHeader ? "h-auto w-[132px] sm:w-[226px]" : "h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"}
-            />
+            {usesNavyHeader ? (
+              <BrandWordmark alt={t("home_title")} className="h-auto w-[150px] sm:w-[280px]" />
+            ) : (
+              <img
+                src={dermPathLogo}
+                alt={t("home_title")}
+                className="h-[44px] w-auto sm:h-[62px] lg:h-[68px] xl:h-[72px]"
+              />
+            )}
           </NavLink>
 
           <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 lg:flex-nowrap lg:justify-end">

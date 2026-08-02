@@ -62,7 +62,7 @@ import processoDepositoImage from "../assets/ProcessoPatologico/processo-deposit
 import processoDermatiteImage from "../assets/ProcessoPatologico/processo-dermatite.png";
 import processoHamartomaMalformacaoImage from "../assets/ProcessoPatologico/processo-hamartoma-malformacao.png";
 import processoNeoplasiaImage from "../assets/ProcessoPatologico/processo-neoplasia.png";
-import navegacaoDiagnosticaCompassIcon from "../assets/navegacao-diagnostica-compass-icon.svg";
+import dermpathTexture from "../assets/dermpath-illustration-full@2x.png";
 import pustulosaImage from "../assets/Dermatites/pustulosa-atlas-v5.png";
 import vasculiteImage from "../assets/Dermatites/vasculite-atlas-v4.png";
 import vesicoBolhosaImage from "../assets/Dermatites/vesico-bolhosa-atlas-v5.png";
@@ -222,12 +222,12 @@ const processCategoryImages: Record<string, string> = {
   "placeholder-hamartoma": processoHamartomaMalformacaoImage,
 };
 
-const processCircularPositions: Record<string, { angle: number; radius: number }> = {
-  dermatite: { angle: -90, radius: 35.5 },
-  "placeholder-neoplasia": { angle: -18, radius: 35.5 },
-  "placeholder-cisto": { angle: 54, radius: 35.5 },
-  deposito: { angle: 126, radius: 35.5 },
-  "placeholder-hamartoma": { angle: 198, radius: 35.5 },
+const processCircularPositions: Record<string, { angle: number; radiusPx: number }> = {
+  dermatite: { angle: -90, radiusPx: 280 },
+  "placeholder-neoplasia": { angle: -18, radiusPx: 280 },
+  "placeholder-cisto": { angle: 54, radiusPx: 280 },
+  deposito: { angle: 126, radiusPx: 280 },
+  "placeholder-hamartoma": { angle: 198, radiusPx: 280 },
 };
 
 
@@ -381,21 +381,20 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                 ].join(", "),
               }}
             >
-                <img
-                  src={navegacaoDiagnosticaCompassIcon}
-                  alt=""
-                  aria-hidden="true"
-                  className="h-[228px] w-[228px] object-contain"
-                  style={{ filter: "drop-shadow(0 8px 24px rgba(17,50,160,0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.3))" }}
-                />
+              <img
+                src={dermpathTexture}
+                alt=""
+                aria-hidden="true"
+                className="h-[390px] w-[390px] rotate-[-4deg] object-contain opacity-[0.2] mix-blend-screen grayscale contrast-125"
+              />
             </div>
 
             {node.options.map((option, index) => {
               const imageSrc = processCategoryImages[option.nextNodeId];
-              const position = processCircularPositions[option.nextNodeId] ?? { angle: -90, radius: 0 };
+              const position = processCircularPositions[option.nextNodeId] ?? { angle: -90, radiusPx: 0 };
               const angleInRadians = (position.angle * Math.PI) / 180;
-              const orbitX = Math.cos(angleInRadians) * position.radius;
-              const orbitY = Math.sin(angleInRadians) * position.radius;
+              const orbitX = Math.cos(angleInRadians) * position.radiusPx;
+              const orbitY = Math.sin(angleInRadians) * position.radiusPx;
 
                 return (
                   <button
@@ -403,8 +402,8 @@ export function TreeNavigator({ node, onNavigate, favorite, onToggleFavorite }: 
                     type="button"
                   onClick={() => onNavigate(option.nextNodeId)}
                     style={{
-                      left: `calc(50% + ${orbitX.toFixed(2)}%)`,
-                      top: `calc(50% + ${orbitY.toFixed(2)}%)`,
+                      left: `calc(50% + ${orbitX.toFixed(2)}px)`,
+                      top: `calc(50% + ${orbitY.toFixed(2)}px)`,
                       transform: "translate(-50%, -50%)",
                     }}
                     className="group absolute flex w-[228px] flex-col items-center overflow-hidden rounded-[22px] border border-[#d8c8a3]/80 bg-[#fffdf7]/95 p-3 text-center shadow-[0_20px_42px_-28px_rgba(8,45,92,0.48)] backdrop-blur-sm transition duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] hover:border-[#b68d35] hover:shadow-[0_26px_50px_-26px_rgba(8,45,92,0.55)] focus:outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-[#b68d35]/60 focus-visible:ring-offset-2"

@@ -1,9 +1,9 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { BrandWordmark } from "../components/BrandWordmark";
 import { Layout } from "../components/Layout";
 import { PerformanceCard } from "../components/ted/PerformanceCard";
 import { useLanguage } from "../context/LanguageContext";
-import dermPathLogoNavyGold from "../assets/dermpath-logo-navy-gold-concept.png";
 import type { TedSection } from "../types/ted";
 import { getAverageTedTime, getTedSectionPerformance, loadTedProgress } from "../utils/tedProgress";
 
@@ -169,7 +169,7 @@ export function TedLandingPage() {
       <div className="overflow-hidden rounded-[30px] border border-[#d8c69e]/60 bg-[#f8f3e9] shadow-[0_35px_90px_-55px_rgba(8,44,88,0.45)]">
         <header className="relative z-40 flex items-center justify-between border-b border-white/10 bg-[#082f60] px-5 py-4 sm:px-8 lg:px-10">
           <Link to="/" aria-label="Ir para a página inicial" className="shrink-0">
-            <img src={dermPathLogoNavyGold} alt="DermPath Navigator" className="h-auto w-[172px] sm:w-[226px]" />
+            <BrandWordmark className="h-auto w-[160px] sm:w-[280px]" />
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-3">

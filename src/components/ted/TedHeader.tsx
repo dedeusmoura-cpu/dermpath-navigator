@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { BrandWordmark } from "../BrandWordmark";
 import { useLanguage } from "../../context/LanguageContext";
-import dermPathLogoNavyGold from "../../assets/dermpath-logo-navy-gold-concept.png";
 import type { TedSection } from "../../types/ted";
 
 interface TedHeaderProps {
@@ -92,7 +92,7 @@ export function TedHeader({ title, subtitle, eyebrow, actionSlot, onBack }: TedH
       <div className="relative flex items-center justify-between gap-4 px-5 py-4 sm:px-7">
         <div className="flex min-w-0 items-center gap-3">
           <Link to="/" className="hidden shrink-0 sm:block" aria-label="Página inicial">
-            <img src={dermPathLogoNavyGold} alt="DermPath Navigator" className="h-auto w-[172px]" />
+            <BrandWordmark className="h-auto w-[212px]" />
           </Link>
           <span className="hidden h-8 w-px bg-white/15 sm:block" aria-hidden="true" />
           <div className="min-w-0">
