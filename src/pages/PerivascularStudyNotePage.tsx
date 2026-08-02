@@ -1859,7 +1859,7 @@ export function PerivascularStudyNotePage() {
       id: "avaliacao",
       number: "4",
       color: "orange",
-      title: "Avaliação / diferenciais",
+      title: "Diagnóstico Diferencial",
       icon: <ClipboardIcon />,
       bullets: focused?.evaluation ?? enrichment.evaluation,
     },
