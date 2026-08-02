@@ -1318,10 +1318,12 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-doenca-darier", "Doença de Darier", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Acantólise suprabasal focal com eosinófilos, sem espongiose e sem crostas, compatível com doença de Darier.", blocks("Mantido como desfecho específico deste braço."), ["doença de Darier", "darier"], ["doenca de darier"]),
   terminal("dx-doenca-grover", "Doença de Grover", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Acantólise suprabasal focal com eosinófilos, espongiose e crostas frequentes, compatível com doença de Grover.", blocks("Mantido como desfecho específico deste braço."), ["doença de Grover", "grover"], ["doenca de grover"]),
   node({ id: "vesico-acantolitica-suprabasal-difusa", title: "Difusa", type: "decision", parentId: "vesico-acantolitica-suprabasal", description: "Subdivida conforme a epiderme permaneça coesa ou seja amplamente acantolítica.", options: [
-    { label: "Epiderme em grande parte coesa", nextNodeId: "group-vesico-acantolitica-suprabasal-coesa" },
-    { label: "Epiderme em grande parte acantoltica, ao menos em focos", nextNodeId: "dx-hailey-hailey" },
+    { label: "Epiderme predominantemente coesa", nextNodeId: "group-vesico-acantolitica-suprabasal-coesa" },
+    { label: "Epiderme predominantemente acantolítica (ao menos focalmente), com disqueratose", nextNodeId: "dx-hailey-hailey" },
   ]}),
-  diagnosisGroup("group-vesico-acantolitica-suprabasal-coesa", "Epiderme em grande parte coesa", "vesico-acantolitica-suprabasal-difusa", "Neste ponto do algoritmo permanecem duas possibilidades principais.", ["Pênfigo vulgar", "Pênfigo foliáceo induzido por droga"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["pênfigo vulgar", "pênfigo foliáceo induzido por droga"], ["penfigo vulgar", "penicilamina", "rifampina"]),
+  // Id mantido como "group-…" por compatibilidade com favoritos, links salvos e o mapa de notas,
+  // embora o nó seja hoje um desfecho único.
+  terminal("group-vesico-acantolitica-suprabasal-coesa", "Pênfigo vulgar", "diagnosis", "vesico-acantolitica-suprabasal-difusa", "", blocks("Mantido como desfecho específico deste braço."), ["pênfigo vulgar"], ["penfigo vulgar"]),
   terminal("dx-hailey-hailey", "Doença de Hailey-Hailey", "diagnosis", "vesico-acantolitica-suprabasal-difusa", "Acantólise suprabasal difusa com epiderme em grande parte acantolítica ao menos em focos, compatível com doença de Hailey-Hailey.", blocks("Mantido como desfecho específico deste braço."), ["hailey-hailey", "doença de Hailey-Hailey"], ["doenca de hailey-hailey"]),
   node({ id: "vesico-subepidermica", title: "Subepidérmica", type: "decision", parentId: "vesico-bolhosa", description: "Classifique a dermatite vesicular subepidérmica conforme o infiltrado predominante.", options: [
     { label: "Pouco ou nenhum infiltrado", nextNodeId: "vesico-subepidermica-pouco-infiltrado" },

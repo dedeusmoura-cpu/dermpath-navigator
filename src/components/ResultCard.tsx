@@ -121,7 +121,9 @@ export function ResultCard({
           <div className="min-w-0 flex-1 space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#b07c15]">{t("final_result")}</p>
             <h2 className="font-serif text-3xl text-[#835fe0] sm:text-4xl">{resultTitle}</h2>
-            <p className="max-w-none text-sm leading-6 text-[#835fe0]">{translateNodeDescription(node, language)}</p>
+            {node.description ? (
+              <p className="max-w-none text-sm leading-6 text-[#835fe0]">{translateNodeDescription(node, language)}</p>
+            ) : null}
           </div>
           <div className="flex flex-none items-start gap-3">
             <span className="inline-flex w-fit rounded-full border border-[#e4d2fb] bg-white px-4 py-2 text-sm font-semibold text-[#835fe0] shadow-sm">

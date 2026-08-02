@@ -4,9 +4,11 @@ import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
+import { StudyNoteHighlightAside } from "../components/StudyNoteHighlightAside";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
 import { useLanguage } from "../context/LanguageContext";
 import { algorithmTree } from "../data/algorithm";
+import { VESICOBULLOUS_NOTES } from "../data/vesicobullousNotes";
 import { useFavorites } from "../hooks/useFavorites";
 import { buildPathToNode } from "../utils/tree";
 
@@ -16,6 +18,10 @@ type Enrichment = {
   histology: ReactNode[];
   evaluation: ReactNode[];
   pearl: ReactNode;
+  /** Painel lateral de destaque, usado quando um achado merece leitura isolada (ex.: IFD). */
+  highlight?: { eyebrow?: string; title: string; bullets: ReactNode[]; footer?: ReactNode };
+  /** Substitui o título do cartão quando o nó do algoritmo é morfológico mas a nota é de um diagnóstico. */
+  noteTitle?: string;
 };
 
 const DEFAULT_ENRICHMENT: Enrichment = {
@@ -1635,6 +1641,8 @@ function getEnrichment(matchText: string): Enrichment {
       histology: [...result.histology, ...(rule.data.histology ?? [])],
       evaluation: [...result.evaluation, ...(rule.data.evaluation ?? [])],
       pearl: rule.data.pearl ?? result.pearl,
+      highlight: rule.data.highlight ?? result.highlight,
+      noteTitle: rule.data.noteTitle ?? result.noteTitle,
     }),
     initialEnrichment,
   );
@@ -1811,6 +1819,14 @@ export function PerivascularStudyNotePage() {
   const enrichmentMatchText = [node.title, ...(node.result?.possibilities ?? [])].join(" | ");
   const enrichment = getEnrichment(enrichmentMatchText);
   const pathIds = path.map((item) => item.id);
+
+  // Os nós vésico-bolhosos têm nota fechada, escrita por nó; os demais continuam sendo montados
+  // pela mesclagem das ENRICHMENT_RULES.
+  const focused = VESICOBULLOUS_NOTES[node.id];
+  const noteTitle = focused?.title ?? enrichment.noteTitle ?? node.title;
+  const highlight = focused?.highlight ?? enrichment.highlight;
+  const pearl = focused?.pearl ?? enrichment.pearl;
+
   const sectionsLeft: StudyNoteSectionData[] = [
     {
       id: "conceito",
@@ -1818,7 +1834,7 @@ export function PerivascularStudyNotePage() {
       color: "green",
       title: "Conceito",
       icon: <BookIcon />,
-      bullets: enrichment.concept.length ? enrichment.concept : getPatternConcept(pathIds),
+      bullets: focused?.concept ?? (enrichment.concept.length ? enrichment.concept : getPatternConcept(pathIds)),
     },
     {
       id: "histopatologia",
@@ -1826,7 +1842,7 @@ export function PerivascularStudyNotePage() {
       color: "purple",
       title: "Histopatologia",
       icon: <MicroscopeIcon />,
-      bullets: enrichment.histology.length ? enrichment.histology : getFamilyHistology(pathIds),
+      bullets: focused?.histology ?? (enrichment.histology.length ? enrichment.histology : getFamilyHistology(pathIds)),
     },
   ];
 
@@ -1837,7 +1853,7 @@ export function PerivascularStudyNotePage() {
       color: "blue",
       title: "Pistas clínicas",
       icon: <StethoscopeIcon />,
-      bullets: enrichment.clinical,
+      bullets: focused?.clinical ?? enrichment.clinical,
     },
     {
       id: "avaliacao",
@@ -1845,7 +1861,7 @@ export function PerivascularStudyNotePage() {
       color: "orange",
       title: "Avaliação / diferenciais",
       icon: <ClipboardIcon />,
-      bullets: enrichment.evaluation,
+      bullets: focused?.evaluation ?? enrichment.evaluation,
     },
   ];
 
@@ -1866,11 +1882,16 @@ export function PerivascularStudyNotePage() {
       </div>
 
       <StudyNoteCard
-        title={node.title}
+        title={noteTitle}
         subtitle="Resumo prático para dermatopatologia"
         sectionsLeft={sectionsLeft}
         sectionsRight={sectionsRight}
-        pearl={enrichment.pearl}
+        aside={
+          highlight ? (
+            <StudyNoteHighlightAside title={highlight.title} bullets={highlight.bullets} footer={highlight.footer} />
+          ) : undefined
+        }
+        pearl={pearl}
       />
     </Layout>
   );
