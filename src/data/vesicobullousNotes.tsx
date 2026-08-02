@@ -123,32 +123,31 @@ const maoPeBoca: FocusedNote = {
 const impetigoBolhoso: FocusedNote = {
   title: "Impetigo bolhoso",
   concept: [
-    <>Infecção superficial por <Highlight>S. aureus</Highlight> produtor de toxina esfoliativa, que cliva a <Highlight>desmogleína 1</Highlight>.</>,
-    "É a forma localizada do mesmo mecanismo que gera a síndrome da pele escaldada estafilocócica.",
+    <>Infecção superficial por <Highlight>S. aureus</Highlight> produtor das toxinas esfoliativas ETA/ETB, que clivam a <Highlight>desmogleína 1</Highlight>.</>,
+    "É a expressão localizada do mesmo mecanismo que, quando disseminado pela circulação, causa a síndrome da pele escaldada estafilocócica.",
   ],
   clinical: [
-    "Bolhas flácidas superficiais que rompem e deixam colarete e crosta melicérica.",
-    "Predomina em crianças, em face e áreas intertriginosas; sem sintomas sistêmicos.",
+    <>Vesículas evoluem para <Highlight>bolhas flácidas e transparentes</Highlight>; a ruptura deixa erosão rasa com colarete de escamas e pouca inflamação ao redor.</>,
+    "Predomina em crianças e pode acometer face, tronco, nádegas, períneo, axilas e extremidades; sintomas sistêmicos costumam faltar.",
   ],
   histology: [
-    <>Clivagem <Highlight>subcórnea ou na granulosa</Highlight>, com poucas células acantolíticas.</>,
-    <>Neutrófilos na cavidade e, tipicamente, <Highlight>cocos gram-positivos dentro da bolha</Highlight>.</>,
-    "Infiltrado dérmico superficial misto, discreto.",
+    <>Clivagem acantolítica <Highlight>na camada granulosa</Highlight>, morfologicamente semelhante ao pênfigo foliáceo.</>,
+    <>Há pouca inflamação na cavidade; neutrófilos superficiais e <Highlight>cocos gram-positivos</Highlight> podem ser vistos.</>,
   ],
   evaluation: [
-    <>Clivagem idêntica à do <Highlight>pênfigo foliáceo</Highlight> e da SSSS — todas têm a Dsg1 como alvo.</>,
-    "A presença de bactérias na bolha e a IFD negativa resolvem o diferencial com o pênfigo foliáceo.",
-    "Na SSSS não há bactéria na pele: a toxina é hematogênica, a partir de foco a distância.",
+    <>Colher cultura do exsudato sob a crosta ou de <Highlight>bolha íntegra</Highlight>; a IFD é negativa.</>,
+    "Cocos favorecem impetigo no contexto agudo e localizado, mas não são absolutos: uma lesão de pênfigo pode sofrer infecção secundária.",
+    "Na SSSS, a bolha é estéril e a bactéria deve ser procurada no foco primário à distância.",
   ],
   highlight: {
-    title: "Bactéria na bolha",
+    title: "Cocos na bolha",
     bullets: [
-      <>Cocos no interior da bolha favorecem <Highlight>impetigo</Highlight> sobre pênfigo foliáceo e SSSS.</>,
-      <><Highlight>IFD negativa</Highlight> é obrigatória para sustentar o diagnóstico.</>,
+      <>Favorecem <Highlight>impetigo bolhoso</Highlight> quando a lesão é aguda e localizada.</>,
+      <>Não dispensam correlação com a clínica e a <Highlight>IFD</Highlight> se houver suspeita de pênfigo.</>,
     ],
-    footer: "Gram e cultura da bolha íntegra fecham o caso.",
+    footer: "Gram e cultura documentam o agente e orientam a suscetibilidade.",
   },
-  pearl: <>três doenças partilham a clivagem alta por lesão da Dsg1 — pênfigo foliáceo, SSSS e impetigo bolhoso; só o <Highlight>impetigo tem bactéria na bolha</Highlight>, e só o pênfigo tem IFD positiva.</>,
+  pearl: <>clivagem granulosa com <Highlight>cocos na bolha</Highlight> favorece impetigo; se a clínica não for típica, exclua pênfigo foliáceo com IFD.</>,
 };
 
 const orfOrdenhadores: FocusedNote = {
@@ -646,37 +645,101 @@ const penfigoVulgar: FocusedNote = {
   pearl: <>acantólise suprabasal em <Highlight>“fileira de lápides”</Highlight>, sem disqueratose e estendendo-se ao epitélio folicular, com <Highlight>IFD intercelular positiva</Highlight>, define o pênfigo vulgar.</>,
 };
 
-const penfigoFoliaceoGrupo: FocusedNote = {
-  title: "Pênfigo foliáceo, forma induzida por droga e SSSS",
+const penfigoFoliaceo: FocusedNote = {
+  title: "Pênfigo foliáceo",
   concept: [
-    <>Três doenças com o mesmo alvo — a <Highlight>desmogleína 1</Highlight> — e, portanto, a mesma clivagem alta.</>,
-    <>No pênfigo foliáceo o alvo é atacado por <Highlight>IgG</Highlight>; na SSSS, por <Highlight>toxina esfoliativa</Highlight> estafilocócica.</>,
+    <>Doença bolhosa autoimune superficial causada por autoanticorpos <Highlight>IgG contra a desmogleína 1</Highlight>.</>,
+    <>A perda de adesão produz <Highlight>acantólise na epiderme superior</Highlight>, dentro ou junto à camada granulosa.</>,
   ],
   clinical: [
-    <>Pênfigo foliáceo: erosões escamocrostosas em <Highlight>distribuição seborreica</Highlight>, <Highlight>sem lesão mucosa</Highlight>, podendo eritrodermizar.</>,
-    "Formas induzidas por droga associam-se a fármacos com grupo tiol (penicilamina, captopril) e a rifampicina.",
-    "SSSS: criança ou nefropata, com febre, dor cutânea, eritema flexural e descamação em lençol, sem mucosa.",
+    <>Erosões escamocrostosas bem delimitadas em <Highlight>face, couro cabeludo e tronco superior</Highlight>; a bolha é tão frágil que raramente permanece íntegra.</>,
+    <><Highlight>Não há acometimento mucoso clínico</Highlight>; Nikolsky pode ser positivo, e casos extensos podem evoluir para eritrodermia esfoliativa.</>,
+    "O início pode simular impetigo ou dermatite seborreica; revisar medicamentos, especialmente penicilamina e captopril.",
   ],
   histology: [
-    <>Acantólise <Highlight>subcórnea ou na granulosa</Highlight>, com poucas células acantolíticas, muitas vezes fusiformes ou em amêndoa.</>,
-    "A córnea pode simplesmente estar “ausente”, único vestígio da clivagem superficial.",
-    "Neutrófilos na cavidade e eosinófilos dérmicos são variáveis; espongiose eosinofílica pode ser a lesão inicial.",
+    <>Acantólise <Highlight>dentro ou junto à granulosa</Highlight>; o teto pode se perder, deixando apenas a camada córnea “ausente”.</>,
+    "Poucos queratinócitos acantolíticos, fusiformes ou em amêndoa, podem aderir ao teto ou ao assoalho.",
+    "Neutrófilos na bolha e eosinófilos dérmicos são variáveis; espongiose eosinofílica pode preceder a clivagem.",
   ],
   evaluation: [
-    "As três são histologicamente indistinguíveis — a morfologia não decide.",
-    "SSSS não tem bactéria na pele (toxina hematogênica) e a IFD é negativa.",
-    "Impetigo bolhoso mostra cocos dentro da bolha e IFD negativa.",
+    <>A IFD de pele perilesional mostra <Highlight>IgG intercelular</Highlight>; o C3 pode faltar, e a intensidade não precisa se restringir à epiderme superior.</>,
+    <>ELISA com <Highlight>anti-Dsg1 positivo</Highlight> e anti-Dsg3 negativo sustenta o fenótipo foliáceo.</>,
+    "IFD negativa põe o diagnóstico em séria dúvida. Cocos podem representar infecção secundária e, isoladamente, não confirmam impetigo.",
   ],
   highlight: {
     title: "IFD",
     bullets: [
-      <>IgG/C3 <Highlight>intercelular</Highlight> na epiderme, mais intenso nas camadas superiores = pênfigo foliáceo.</>,
-      <><Highlight>IFD negativa</Highlight> aponta SSSS ou impetigo bolhoso.</>,
-      "ELISA: anti-Dsg1 positivo e anti-Dsg3 negativo caracteriza o pênfigo foliáceo.",
+      <><Highlight>IgG intercelular</Highlight> em rede de pesca é o achado principal.</>,
+      <>O <Highlight>C3 pode estar presente ou ausente</Highlight>.</>,
+      "Amostra perilesional reduz o risco de falso-negativo.",
     ],
-    footer: "Revisão medicamentosa é obrigatória antes de rotular como idiopático.",
+    footer: "Amostra perilesional evita falso-negativo por degeneração antigênica na erosão.",
   },
-  pearl: <>clivagem alta é apenas o ponto de partida: <Highlight>IFD positiva</Highlight> = pênfigo foliáceo; negativa, procure a toxina (SSSS) ou a bactéria na bolha (impetigo).</>,
+  pearl: <>erosão escamocrostosa seborreica, sem mucosite, com acantólise granulosa e <Highlight>IgG intercelular</Highlight> define o eixo do pênfigo foliáceo.</>,
+};
+
+const penfigoIga: FocusedNote = {
+  title: "Pênfigo por IgA",
+  concept: [
+    <>Grupo raro de dermatoses vesicopustulosas definido por <Highlight>IgA1 intercelular</Highlight> contra a superfície dos queratinócitos, sem autoanticorpos IgG.</>,
+    "Tem dois subtipos: dermatose pustular subcórnea (SPD) e dermatose neutrofílica intraepidérmica (IEN).",
+  ],
+  clinical: [
+    <>Vesículas e pústulas flácidas, muito pruriginosas, que formam desenhos <Highlight>anulares ou circinados</Highlight>; o padrão em “girassol” favorece o subtipo IEN.</>,
+    "Axilas e virilhas são os locais mais comuns, seguidos de tronco e extremidades proximais; mucosa raramente é acometida.",
+    "Pode coexistir com mieloma por IgA ou retocolite ulcerativa.",
+  ],
+  histology: [
+    <>Pústulas <Highlight>subcórneas ou intraepidérmicas</Highlight> ricas em neutrófilos.</>,
+    <><Highlight>Acantólise geralmente não é vista</Highlight>.</>,
+    "No subtipo SPD, a pústula é alta; no IEN, pode ser suprabasal, baixa ou ocupar toda a espessura epidérmica.",
+  ],
+  evaluation: [
+    <>IFD com <Highlight>IgA intercelular</Highlight> confirma o diagnóstico: predomina no alto da epiderme no SPD e pode ocupar toda a espessura no IEN.</>,
+    "A desmocolina 1 é o principal alvo do subtipo SPD; o alvo do IEN permanece menos definido.",
+    "IgA linear na zona da membrana basal indica outro diagnóstico: dermatose bolhosa por IgA linear.",
+  ],
+  highlight: {
+    title: "IFD intercelular",
+    bullets: [
+      <><Highlight>IgA entre os queratinócitos</Highlight>, e não na membrana basal.</>,
+      "A distribuição pode ser superficial ou envolver maior espessura da epiderme.",
+    ],
+    footer: "A demonstração da IgA intercelular é essencial para separar os mimetizadores pustulosos.",
+  },
+  pearl: <>pústula intraepidérmica neutrofílica, geralmente sem acantólise, com <Highlight>IgA intercelular</Highlight> aponta para pênfigo por IgA.</>,
+};
+
+const sindromePeleEscaldada: FocusedNote = {
+  title: "Síndrome da pele escaldada estafilocócica",
+  concept: [
+    <>Doença sistêmica mediada pelas toxinas esfoliativas ETA/ETB de <Highlight>S. aureus</Highlight>, proteases que clivam a desmogleína 1.</>,
+    <>A toxina circulante produz <Highlight>clivagem superficial generalizada</Highlight>, sem bactéria na bolha.</>,
+  ],
+  clinical: [
+    "Predomina em neonatos e crianças; em adultos, procurar insuficiência renal, diabetes, neoplasia ou imunossupressão.",
+    <>Pródromo febril e dor cutânea precedem eritema que começa na <Highlight>face e nas flexuras</Highlight>, forma bolhas flácidas e evolui para descamação com Nikolsky positivo.</>,
+    <>Crosta e fissuras periorais ou perioculares são características; a <Highlight>mucosa oral é poupada</Highlight>.</>,
+  ],
+  histology: [
+    <>Clivagem bem delimitada <Highlight>na camada granulosa ou logo abaixo dela</Highlight>.</>,
+    <><Highlight>Inflamação mínima ou ausente</Highlight> na bolha e na derme superficial, sem organismos ao Gram.</>,
+  ],
+  evaluation: [
+    <><Highlight>IFD negativa</Highlight>; a combinação com inflamação mínima e clínica compatível sustenta o diagnóstico.</>,
+    "A bolha íntegra é estéril: cultivar conjuntiva, nasofaringe, região perianal ou outro foco purulento. Hemocultura costuma ser negativa na criança.",
+    "Cocos na bolha favorecem impetigo bolhoso; IgG intercelular favorece pênfigo foliáceo; necrose epidérmica total e mucosite apontam para NET.",
+  ],
+  highlight: {
+    title: "IFD negativa",
+    bullets: [
+      "Não há depósito autoimune intercelular.",
+      <><Highlight>Inflamação mínima</Highlight> e bolha estéril reforçam o mecanismo por toxina circulante.</>,
+      "Cultive o foco distante, não a bolha.",
+    ],
+    footer: "IFD negativa isoladamente não fecha o diagnóstico.",
+  },
+  pearl: <>criança com dor cutânea, eritema flexural, fissuras periorificiais e mucosa poupada, somados a clivagem granulosa estéril e <Highlight>IFD negativa</Highlight>, compõe o quadro da SSSS.</>,
 };
 
 const penfigoideMembranasMucosas: FocusedNote = {
@@ -1637,7 +1700,9 @@ export const VESICOBULLOUS_NOTES: Record<string, FocusedNote> = {
   "dx-doenca-grover": grover,
   "dx-hailey-hailey": haileyHailey,
   "group-vesico-acantolitica-suprabasal-coesa": penfigoVulgar,
-  "group-vesico-acantolitica-superior-sem-bacteria": penfigoFoliaceoGrupo,
+  "dx-penfigo-foliaceo": penfigoFoliaceo,
+  "dx-penfigo-iga": penfigoIga,
+  "dx-sindrome-pele-escaldada-estafilococica": sindromePeleEscaldada,
   "dx-penfigo-cicatricial": penfigoideMembranasMucosas,
 
   // Subepidérmicas imunomediadas

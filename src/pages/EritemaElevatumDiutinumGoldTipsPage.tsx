@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
+import { StudyNoteAsideFrame } from "../components/StudyNoteAsideFrame";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
@@ -80,7 +81,7 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-7xl space-y-4">
+      <div className="mx-auto max-w-[100rem] space-y-4">
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
@@ -119,12 +120,8 @@ export function EritemaElevatumDiutinumGoldTipsPage() {
 
 function EedEvolutionDiagram() {
   return (
-    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
-      <h3 className="mx-auto mb-3 max-w-[15rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
-        Esquema: evolução do EED
-      </h3>
-
-      <figure className="overflow-hidden rounded-xl border border-rose-100 bg-[#fff8f3]">
+    <StudyNoteAsideFrame title="Esquema: evolução do EED" footer="Vasculite leucocitoclástica fibrosante.">
+      <figure className="overflow-hidden rounded-xl border border-[#d9b9aa] bg-[#fff8f3]">
         <img
           src={eedEvolutionDiagram}
           alt="Evolução histológica do eritema elevatum diutinum, da vasculite neutrofílica à fibrose perivascular"
@@ -141,9 +138,6 @@ function EedEvolutionDiagram() {
         </div>
       </div>
 
-      <p className="mt-3 text-center font-hand text-base font-semibold leading-6 text-[#173f78]">
-        Vasculite leucocitoclástica fibrosante.
-      </p>
-    </div>
+    </StudyNoteAsideFrame>
   );
 }

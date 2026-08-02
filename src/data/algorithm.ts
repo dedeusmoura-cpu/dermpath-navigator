@@ -1291,16 +1291,20 @@ const nodesArray: AlgorithmNode[] = [
   ]}),
   terminal("dx-vesico-erupcao-fixa-droga", "Erupção fixa por droga / Eritema pigmentar fixo", "diagnosis", "vesico-espongiose-neutrofilos-eosinofilos", "Espongiose intraepidérmica com neutrófilos e eosinófilos, associada a alterações de interface, balonização e queratinócitos Necróticos, compatível com erupção fixa por droga / eritema pigmentar fixo.", blocks("Também indexado por fixed drug eruption."), ["eritema pigmentar fixo", "fixed drug eruption"], ["erupcao fixa por droga"]),
   node({ id: "vesico-acantolitica", title: "Acantólise", type: "decision", parentId: "vesico-intraepidermica", description: "Classifique conforme o nível predominante da acantólise.", options: [
-    { label: "Espinhosa superior / granular", nextNodeId: "vesico-acantolitica-superior" },
+    { label: "Clivagem/acantólise superficial", nextNodeId: "vesico-acantolitica-superior" },
     { label: "Espinhosa média", nextNodeId: "vesico-acantolitica-media" },
     { label: "Suprabasal", nextNodeId: "vesico-acantolitica-suprabasal" },
   ]}),
-  node({ id: "vesico-acantolitica-superior", title: "Espinhosa superior / granular", type: "decision", parentId: "vesico-acantolitica", description: "Subdivida conforme haja ou não bactária na bolha.", options: [
-    { label: "Bactária na bolha", nextNodeId: "dx-impetigo-bolhoso" },
-    { label: "Sem bactária na bolha", nextNodeId: "group-vesico-acantolitica-superior-sem-bacteria" },
+  node({ id: "vesico-acantolitica-superior", title: "Clivagem/acantólise superficial", type: "decision", parentId: "vesico-acantolitica", description: "Integre a pesquisa de cocos Gram-positivos na bolha, a IFD e o contexto clinicopatológico.", options: [
+    { label: "Cocos Gram-positivos na bolha", nextNodeId: "dx-impetigo-bolhoso" },
+    { label: "IFD intercelular com IgG ± C3", nextNodeId: "dx-penfigo-foliaceo" },
+    { label: "IFD intercelular com IgA", nextNodeId: "dx-penfigo-iga" },
+    { label: "IFD negativa + inflamação mínima + clínica compatível", nextNodeId: "dx-sindrome-pele-escaldada-estafilococica" },
   ]}),
-  terminal("dx-impetigo-bolhoso", "Impetigo bolhoso", "diagnosis", "vesico-acantolitica-superior", "Acantólise em espinhosa superior / granular com bactária na bolha, compatível com impetigo bolhoso.", blocks("Mantido como desfecho específico deste braço."), ["impetigo bolhoso"]),
-  diagnosisGroup("group-vesico-acantolitica-superior-sem-bacteria", "Sem bactária na bolha", "vesico-acantolitica-superior", "Este ponto do algoritmo abre trs possibilidades principais.", ["Pênfigo foliáceo", "Pênfigo foliáceo induzido por droga", "síndrome da pele escaldada estafilocócica"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["pênfigo foliáceo", "síndrome da pele escaldada estafilocócica", "ssss"], ["penfigo foliaceo", "penicilamina", "rifampina"]),
+  terminal("dx-impetigo-bolhoso", "Impetigo bolhoso", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com cocos Gram-positivos na bolha, compatível com impetigo bolhoso.", blocks("A presença de bactérias na bolha favorece impetigo bolhoso sobre pênfigo foliáceo e síndrome da pele escaldada estafilocócica."), ["impetigo bolhoso", "cocos Gram-positivos", "bactéria na bolha"], ["bacterias na bolha"]),
+  terminal("dx-penfigo-foliaceo", "Pênfigo foliáceo", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com IFD intercelular para IgG, com ou sem C3, compatível com pênfigo foliáceo.", blocks("Acentuação da fluorescência nas camadas superiores e ELISA anti-Dsg1 apoiam o diagnóstico; revisar medicamentos associados."), ["pênfigo foliáceo", "IgG intercelular", "C3", "desmogleína 1"], ["penfigo foliaceo", "fogo selvagem"]),
+  terminal("dx-penfigo-iga", "Pênfigo por IgA", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com IFD intercelular para IgA, compatível com pênfigo por IgA.", blocks("O padrão intercelular diferencia o pênfigo por IgA da dermatose bolhosa por IgA linear, que marca a zona da membrana basal."), ["pênfigo por IgA", "IgA intercelular", "pústula intraepidérmica"], ["penfigo por iga", "iga pemphigus"]),
+  terminal("dx-sindrome-pele-escaldada-estafilococica", "Síndrome da pele escaldada estafilocócica", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com IFD negativa, inflamação mínima e clínica compatível com síndrome da pele escaldada estafilocócica.", blocks("A toxina estafilocócica circulante causa clivagem na camada granulosa; as bolhas tendem a ser estéreis e a correlação clínica é indispensável."), ["síndrome da pele escaldada estafilocócica", "ssss", "IFD negativa", "inflamação mínima", "toxina esfoliativa"], ["pele escaldada", "staphylococcal scalded skin syndrome"]),
   node({ id: "vesico-acantolitica-media", title: "Espinhosa média", type: "decision", parentId: "vesico-acantolitica", description: "Subdivida conforme haja ou não núcleos em aço-cinza.", options: [
     { label: "Núcleos em aço-cinza", nextNodeId: "dx-vesico-acantolitica-herpesvirus" },
     { label: "Sem núcleos em aço-cinza", nextNodeId: "dx-dermatite-cantharidina" },
@@ -1581,4 +1585,3 @@ export const algorithmTree: AlgorithmTree = {
   rootId: "root",
   nodes: Object.fromEntries(nodesArray.map((entry) => [entry.id, entry])),
 };
-

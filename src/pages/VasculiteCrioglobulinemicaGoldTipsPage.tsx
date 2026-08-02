@@ -80,7 +80,7 @@ export function VasculiteCrioglobulinemicaGoldTipsPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-7xl space-y-4">
+      <div className="mx-auto max-w-[100rem] space-y-4">
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
