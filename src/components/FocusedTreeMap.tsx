@@ -746,6 +746,15 @@ function applyFinalColumnAlignment(
       wrapper.style.transform = "";
     }
   });
+  // Reset any previous source repositioning too, so a stale value doesn't
+  // linger once results close or a different card opens.
+  sourceColumn.forEach((item) => {
+    const wrapper = wrapperElements[item.mapId];
+    if (wrapper) {
+      wrapper.style.marginTop = "";
+      wrapper.style.transform = "";
+    }
+  });
 
   // Each result card wants to center on its own source bridge, but when
   // several bridges under the same parent are opened at once (e.g. clicking
@@ -754,7 +763,14 @@ function applyFinalColumnAlignment(
   // centering overlap the cards. Compute every desired position first, then
   // sweep top-to-bottom enforcing a minimum gap between them.
   const RESULT_GAP = 12; // matches the last column's `gap-3` (0.75rem)
-  const alignmentEntries: Array<{ wrapper: HTMLDivElement; naturalTop: number; height: number; desiredTop: number }> = [];
+  const alignmentEntries: Array<{
+    wrapper: HTMLDivElement;
+    naturalTop: number;
+    height: number;
+    desiredTop: number;
+    finalTop?: number;
+    sourceMapId: string;
+  }> = [];
 
   resultItems.forEach((item) => {
     const sourceMapId = sourceColumn.find(
@@ -782,6 +798,7 @@ function applyFinalColumnAlignment(
       naturalTop: targetRect.top,
       height: targetRect.height,
       desiredTop: sourceCenter - targetRect.height / 2,
+      sourceMapId,
     });
   });
 
@@ -791,6 +808,7 @@ function applyFinalColumnAlignment(
   alignmentEntries.forEach((entry) => {
     const top = Math.max(entry.desiredTop, prevBottom + RESULT_GAP);
     prevBottom = top + entry.height;
+    entry.finalTop = top;
 
     const offsetY = top - entry.naturalTop;
     if (!Number.isFinite(offsetY)) {
@@ -799,6 +817,84 @@ function applyFinalColumnAlignment(
 
     entry.wrapper.style.transform = Math.abs(offsetY) < 1 ? "" : `translateY(${offsetY}px)`;
   });
+
+  // Cada par (card de origem + seus próprios diagnósticos) "quer" ficar no
+  // mesmo nível. Só fazemos isso quando TODOS os cards-bridge da coluna estão
+  // abertos: nesse caso nenhum vizinho fica parado na posição natural, então
+  // um sweep completo pode reposicionar tudo sem sobrepor ninguém. Com apenas
+  // alguns abertos, mexer nisso poderia empurrar um card por cima de um
+  // vizinho ainda na posição original — nesse caso parcial não mexemos em
+  // nada (o comportamento default já é razoável).
+  //
+  // Cada par vira um "bloco" cuja altura é o MAIOR entre a altura do card de
+  // origem e a altura somada dos seus diagnósticos (com o gap entre eles).
+  // Sem isso, um card de origem bem mais alto que a pilha de diagnósticos que
+  // ele abre (ex.: um rótulo de 6 linhas com só 1-2 diagnósticos curtos)
+  // "invade" o espaço do próximo bloco durante o sweep e empurra o próximo
+  // par pra baixo do que seria seu alinhamento ideal — mesmo que aquele par
+  // sozinho coubesse perfeitamente alinhado.
+  const sourceBridgeItems = sourceColumn.filter((item) => item.kind === "terminal-bridge" || item.kind === "group-bridge");
+  const allSourceBridgesOpen =
+    sourceBridgeItems.length > 0 &&
+    sourceBridgeItems.every((item) => alignmentEntries.some((entry) => entry.sourceMapId === item.mapId));
+
+  if (allSourceBridgesOpen) {
+    type GroupBlock = {
+      sourceWrapper: HTMLDivElement;
+      sourceNaturalTop: number;
+      sourceHeight: number;
+      results: Array<{ wrapper: HTMLDivElement; height: number; naturalTop: number }>;
+      resultsHeight: number;
+      desiredCenter: number;
+      blockHeight: number;
+    };
+
+    const blocks: GroupBlock[] = [];
+
+    sourceBridgeItems.forEach((item) => {
+      const sourceWrapper = wrapperElements[item.mapId];
+      const sourceElement = nodeElements[item.mapId];
+      const ownResultEntries = alignmentEntries.filter((entry) => entry.sourceMapId === item.mapId);
+      if (!sourceWrapper || !sourceElement || !ownResultEntries.length) {
+        return;
+      }
+
+      const sourceRect = sourceElement.getBoundingClientRect();
+      const results = ownResultEntries.map((entry) => ({ wrapper: entry.wrapper, height: entry.height, naturalTop: entry.naturalTop }));
+      const resultsHeight = results.reduce((sum, r) => sum + r.height, 0) + RESULT_GAP * (results.length - 1);
+
+      blocks.push({
+        sourceWrapper,
+        sourceNaturalTop: sourceRect.top,
+        sourceHeight: sourceRect.height,
+        results,
+        resultsHeight,
+        desiredCenter: sourceRect.top + sourceRect.height / 2,
+        blockHeight: Math.max(sourceRect.height, resultsHeight),
+      });
+    });
+
+    blocks.sort((a, b) => a.desiredCenter - b.desiredCenter);
+
+    let prevBlockBottom = -Infinity;
+    blocks.forEach((block) => {
+      const desiredTop = block.desiredCenter - block.blockHeight / 2;
+      const top = Math.max(desiredTop, prevBlockBottom + RESULT_GAP);
+      prevBlockBottom = top + block.blockHeight;
+      const blockCenter = top + block.blockHeight / 2;
+
+      const sourceTop = blockCenter - block.sourceHeight / 2;
+      const sourceOffsetY = sourceTop - block.sourceNaturalTop;
+      block.sourceWrapper.style.transform = Math.abs(sourceOffsetY) < 1 ? "" : `translateY(${sourceOffsetY}px)`;
+
+      let resultTop = blockCenter - block.resultsHeight / 2;
+      block.results.forEach((result) => {
+        const resultOffsetY = resultTop - result.naturalTop;
+        result.wrapper.style.transform = Math.abs(resultOffsetY) < 1 ? "" : `translateY(${resultOffsetY}px)`;
+        resultTop += result.height + RESULT_GAP;
+      });
+    });
+  }
 
   // When the last column contains only terminal-bridge items (decision node whose
   // ALL children are terminals), push the column down with paddingTop so the
