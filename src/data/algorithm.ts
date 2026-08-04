@@ -900,7 +900,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Melanófagos proeminentes", nextNodeId: "group-pv-melanofagos" },
     { label: "Siderófagos proeminentes", nextNodeId: "dx-estase" },
   ]}),
-  terminal("dx-schamberg-2", "Dermatose Púrprica Pigmentada", "diagnosis", "pv-intersticial", "padrão sugestivo de Dermatose Púrprica Pigmentada, a ser corroborado por correlação clínica (especialmente em membros inferiores) e pela identificaão de Hemácias extravasadas e/ou hemossiderina (coloraão de Perls).", blocks("Buscar hemossiderina e clínica correspondente."), ["schamberg", "doença de schamberg", "dermatose purpúrica pigmentada", "dermatose purpurica pigmentada"]),
+  terminal("dx-schamberg-2", "Dermatose Purpúrica Pigmentada", "diagnosis", "pv-intersticial", "padrão sugestivo de Dermatose Purpúrica Pigmentada, a ser corroborado por correlação clínica (especialmente em membros inferiores) e pela identificaão de Hemácias extravasadas e/ou hemossiderina (coloraão de Perls).", blocks("Buscar hemossiderina e clínica correspondente."), ["schamberg", "doença de schamberg", "dermatose purpúrica pigmentada", "dermatose purpurica pigmentada"]),
   node({ id: "group-pv-neutrofilos", title: "Neutrófilos proeminentes", type: "decision", parentId: "pv-intersticial", description: "Avalie os diagnósticos diferenciais com neutrófilos proeminentes.", options: [
     { label: "Lúpus eritematoso cutâneo agudo", nextNodeId: "dx-pvi-lupus" },
     { label: "Dermatite herpetiforme", nextNodeId: "dx-pvi-dh" },
@@ -1345,20 +1345,20 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Papilas preservadas", nextNodeId: "dx-blister-por-succao" },
     { label: "Glóbulos de amiloide na derme superior", nextNodeId: "dx-amiloidose-bolhosa" },
   ]}),
-  node({ id: "group-subepi-sem-infiltrado-eb", title: "Sem outros achados", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre um grupo de dermatoses bolhosas com pouco ou nenhum infiltrado.", options: [
+  node({ id: "group-subepi-sem-infiltrado-eb", title: "Sem outros achados", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre um grupo de dermatoses bolhosas com pouco ou nenhum infiltrado.", groupBridge: true, options: [
     { label: "Epidermólise bolhosa hereditária", nextNodeId: "dx-subepi-pouco-eb-hereditaria" },
     { label: "Epidermólise bolhosa adquirida", nextNodeId: "dx-subepi-pouco-eb-adquirida" },
   ]}),
   terminal("dx-subepi-pouco-eb-hereditaria", "Epidermólise bolhosa hereditária", "diagnosis", "group-subepi-sem-infiltrado-eb", "Bolha subepidérmica quase sem infiltrado, hereditária, com clivagem na lâmina lúcida ou sublâmina densa, compatível com epidermólise bolhosa hereditária.", blocks("A correlação clínica e, quando necessário, estudos ultraestruturais ou imunomapeamento ajudam na definição do subtipo (juncional ou dermolítica)."), ["epidermólise bolhosa hereditária", "epidermólise bolhosa juncional", "epidermólise bolhosa dermolítica"], ["epidermolise bolhosa hereditaria", "epidermolise bolhosa juncional", "epidermolise bolhosa dermolitica"]),
   terminal("dx-subepi-pouco-eb-adquirida", "Epidermólise bolhosa adquirida", "diagnosis", "group-subepi-sem-infiltrado-eb", "Bolha subepidérmica quase sem infiltrado, adquirida, por autoanticorpos anti-colágeno VII, compatível com epidermólise bolhosa adquirida.", blocks("A correlação clínica e, quando necessário, estudos ultraestruturais ou imunomapeamento ajudam na definição."), ["epidermólise bolhosa adquirida"], ["epidermolise bolhosa adquirida"]),
   terminal("dx-eritema-multiforme-grave", "Eritema multiforme, grave", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com necrose da epiderme e infiltrado escasso, compatível com eritema multiforme grave.", blocks("Mantido separado do eritema multiforme de outros ramos para preservar o caminho específico."), ["eritema multiforme grave"]),
-  node({ id: "group-subepi-poucos-neutro-eos", title: "Poucos neutrófilos e eosinófilos", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre duas possibilidades principais.", options: [
+  node({ id: "group-subepi-poucos-neutro-eos", title: "Poucos neutrófilos e eosinófilos", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre duas possibilidades principais.", groupBridge: true, options: [
     { label: "Penfigoide bolhoso", nextNodeId: "dx-subepi-poucos-penfigoide-bolhoso" },
     { label: "Herpes gestationis, pobre em células", nextNodeId: "dx-subepi-poucos-herpes-gestacional" },
   ]}),
   terminal("dx-subepi-poucos-penfigoide-bolhoso", "Penfigoide bolhoso", "diagnosis", "group-subepi-poucos-neutro-eos", "Bolha subepidérmica com poucos neutrófilos e eosinófilos, papilas preservadas, compatível com penfigoide bolhoso (forma pobre em células).", blocks("A clínica e a imunopatologia ajudam a separar as possibilidades."), ["penfigoide bolhoso"]),
   terminal("dx-subepi-poucos-herpes-gestacional", "Herpes gestationis, pobre em células", "diagnosis", "group-subepi-poucos-neutro-eos", "Bolha subepidérmica com poucos neutrófilos e eosinófilos, papilas preservadas, compatível com herpes gestationis pobre em células.", blocks("A clínica e a imunopatologia ajudam a separar as possibilidades."), ["herpes gestationis", "herpes gestacional"]),
-  node({ id: "group-subepi-porfirias", title: "Papilas dérmicas preservadas com material homogêneo perivenular e elastose solar extensa", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre duas possibilidades principais.", options: [
+  node({ id: "group-subepi-porfirias", title: "Papilas dérmicas preservadas com material homogêneo perivenular e elastose solar extensa", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre duas possibilidades principais.", groupBridge: true, options: [
     { label: "Porfiria cutânea tarda", nextNodeId: "dx-subepi-porfiria-cutanea-tarda" },
     { label: "Pseudoporfiria", nextNodeId: "dx-subepi-pseudoporfiria" },
   ]}),

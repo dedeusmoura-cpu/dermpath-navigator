@@ -12,6 +12,10 @@ interface FocusedTreeMapProps {
   openedFinalNodeIds: string[];
   onSelectNode: (item: ColumnItem, level: number) => void;
   extraControls?: React.ReactNode;
+  // Quando true, o painel ocupa 100% da altura do contêiner pai em vez de
+  // encolher para a altura do conteúdo, e perde o cartão arredondado/margem
+  // — usado no modo tela cheia, onde sobrava um vão vazio abaixo do painel.
+  fullBleed?: boolean;
 }
 
 interface ColumnItem {
@@ -112,7 +116,7 @@ const ZOOM_STEPS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
 const ZOOM_MIN = 0.4;
 const ZOOM_MAX = 1.0;
 
-export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode, extraControls }: FocusedTreeMapProps) {
+export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode, extraControls, fullBleed }: FocusedTreeMapProps) {
   const { language } = useLanguage();
   const childMap = useMemo(() => getChildMap(), []);
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
@@ -323,8 +327,15 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   }
 
   return (
-    <section>
-      <div ref={scrollAreaRef} className={`relative overflow-auto rounded-[32px] border border-sand bg-white shadow-panel ${isInitialState ? "p-4 sm:p-5" : "p-5"}`}>
+    <section className={fullBleed ? "flex h-full flex-col" : undefined}>
+      <div
+        ref={scrollAreaRef}
+        className={
+          fullBleed
+            ? `relative flex-1 min-h-0 overflow-auto bg-white ${isInitialState ? "p-4 sm:p-5" : "p-5"}`
+            : `relative overflow-auto rounded-[32px] border border-sand bg-white shadow-panel ${isInitialState ? "p-4 sm:p-5" : "p-5"}`
+        }
+      >
         <div className="relative z-30 mb-2 flex flex-wrap items-center justify-between gap-3 border-b border-[#d8c8a3]/45 pb-3">
           <div className="flex items-center gap-3">
             <span className="h-px w-7 bg-[#d6b766]" aria-hidden="true" />
@@ -686,6 +697,11 @@ function buildColumnItems(parentId: string, childMap: Map<string, string[]>, lan
 export function isPureTerminalGroup(nodeId: string, childMap: Map<string, string[]>): boolean {
   const node = algorithmTree.nodes[nodeId];
   if (node?.type !== "decision") return false;
+  // Só achatamos quando o próprio nó de dados pede isso explicitamente
+  // (groupBridge: true). Sem essa marcação, um nó de decisão com filhos só-
+  // diagnóstico é um branch normal como qualquer outro: seus filhos aparecem
+  // como cartões próprios em outra coluna, preservando o rótulo do achado.
+  if (!node.groupBridge) return false;
   const children = childMap.get(nodeId) ?? [];
   if (!children.length) return false;
   return children.every((childId) => isTerminalTreeNode(algorithmTree.nodes[childId]));

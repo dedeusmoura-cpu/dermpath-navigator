@@ -247,11 +247,13 @@ export function FocusedTreeMapPage() {
     </button>
   );
 
-  const focusedTreeMap = (
+  function renderFocusedTreeMap(fullBleed: boolean) {
+    return (
     <FocusedTreeMap
       selectedPath={selectedPath}
       openedFinalNodeIds={openedFinalNodeIds}
       extraControls={fullscreenButton}
+      fullBleed={fullBleed}
       onSelectNode={(item, level) => {
         if (item.kind === "result") {
           persistFinalResultReturnContext(mapStateKey);
@@ -354,14 +356,13 @@ export function FocusedTreeMapPage() {
         });
       }}
     />
-  );
+    );
+  }
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col bg-[#f5f0eb] p-4">
-        <div className="flex-1 min-h-0 overflow-auto">
-          {focusedTreeMap}
-        </div>
+      <div className="fixed inset-0 z-50 flex flex-col bg-white">
+        {renderFocusedTreeMap(true)}
       </div>
     );
   }
@@ -369,7 +370,7 @@ export function FocusedTreeMapPage() {
   return (
     <Layout title={t("overview_title")} subtitle={t("tree_map_focus_subtitle")}>
       <TreeMapTopBar treeViewUrl={treeViewUrl} />
-      {focusedTreeMap}
+      {renderFocusedTreeMap(false)}
     </Layout>
   );
 }
