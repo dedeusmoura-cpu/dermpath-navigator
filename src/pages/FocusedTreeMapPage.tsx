@@ -4,6 +4,7 @@ import {
   buildTerminalBridgeId,
   buildSelectedMapPath,
   getConcreteNodeIdFromMapPath,
+  isPureTerminalGroup,
   FocusedTreeMap,
 } from "../components/FocusedTreeMap";
 import { Layout } from "../components/Layout";
@@ -13,7 +14,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { algorithmTree } from "../data/algorithm";
 import { translateNodeResultTitle } from "../i18n/translations";
 import { searchNodes } from "../utils/search";
-import { buildPathToNode } from "../utils/tree";
+import { buildPathToNode, getChildMap } from "../utils/tree";
 
 interface FocusedTreeMapLocationState {
   trail?: string[];
@@ -170,6 +171,7 @@ export function FocusedTreeMapPage() {
   const { t, language } = useLanguage();
   const locationState = (location.state as FocusedTreeMapLocationState | null) ?? null;
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const childMap = useMemo(() => getChildMap(), []);
 
   useEffect(() => {
     if (!isFullscreen) return;
@@ -194,6 +196,15 @@ export function FocusedTreeMapPage() {
   const [openedFinalNodeIds, setOpenedFinalNodeIds] = useState<string[]>(() =>
     buildInitialOpenedFinalNodes(focusNodeId),
   );
+  // Espelha o estado mais recente de forma síncrona: cliques em irmãos
+  // diferentes (bridge/group-bridge) no mesmo nível podem disparar antes do
+  // React re-renderizar entre eles, e ler `openedFinalNodeIds` da closure
+  // nesse caso pegaria um valor desatualizado, fazendo o clique seguinte
+  // sobrescrever o anterior em vez de acumular.
+  const openedFinalNodeIdsRef = useRef(openedFinalNodeIds);
+  useEffect(() => {
+    openedFinalNodeIdsRef.current = openedFinalNodeIds;
+  }, [openedFinalNodeIds]);
 
   useEffect(() => {
     const isReturning = hasFinalResultReturnContext(mapStateKey);
@@ -250,20 +261,15 @@ export function FocusedTreeMapPage() {
           return;
         }
 
-        if (item.kind === "terminal-bridge") {
-          if (item.sameAsResult) {
-            persistFinalResultReturnContext(mapStateKey);
-            navigate(`/diagnostico?nodeId=${item.nodeId}`, {
-              state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
-            });
-            return;
-          }
-
-          const isAlreadyOpen = openedFinalNodeIds.includes(item.nodeId);
+        if (item.kind === "group-bridge") {
+          const currentOpenedFinalNodeIds = openedFinalNodeIdsRef.current;
+          const descendantIds = childMap.get(item.nodeId) ?? [];
+          const isAlreadyOpen = descendantIds.some((nodeId) => currentOpenedFinalNodeIds.includes(nodeId));
           const nextOpenedFinalNodeIds = isAlreadyOpen
-            ? openedFinalNodeIds.filter((nodeId) => nodeId !== item.nodeId)
-            : [...openedFinalNodeIds, item.nodeId];
+            ? currentOpenedFinalNodeIds.filter((nodeId) => !descendantIds.includes(nodeId))
+            : [...currentOpenedFinalNodeIds, ...descendantIds.filter((nodeId) => !currentOpenedFinalNodeIds.includes(nodeId))];
 
+          openedFinalNodeIdsRef.current = nextOpenedFinalNodeIds;
           setOpenedFinalNodeIds(nextOpenedFinalNodeIds);
           setSelectedPath((prev) => {
             const isAlreadyActive = prev[level] === item.mapId;
@@ -277,15 +283,49 @@ export function FocusedTreeMapPage() {
             }
 
             const fallbackNodeId = nextOpenedFinalNodeIds[nextOpenedFinalNodeIds.length - 1];
-            const fallbackParentId = fallbackNodeId ? algorithmTree.nodes[fallbackNodeId]?.parentId : undefined;
-            return fallbackNodeId && fallbackParentId
-              ? [...prev.slice(0, level), buildTerminalBridgeId(fallbackParentId, fallbackNodeId)]
-              : prev.slice(0, level);
+            const fallbackBridgeMapId = fallbackNodeId ? resolveBridgeMapIdForFinalNode(fallbackNodeId, childMap) : undefined;
+            return fallbackBridgeMapId ? [...prev.slice(0, level), fallbackBridgeMapId] : prev.slice(0, level);
+          });
+          return;
+        }
+
+        if (item.kind === "terminal-bridge") {
+          if (item.sameAsResult) {
+            persistFinalResultReturnContext(mapStateKey);
+            navigate(`/diagnostico?nodeId=${item.nodeId}`, {
+              state: { trail: buildPathToNode(item.nodeId).map((node) => node.id) },
+            });
+            return;
+          }
+
+          const currentOpenedFinalNodeIds = openedFinalNodeIdsRef.current;
+          const isAlreadyOpen = currentOpenedFinalNodeIds.includes(item.nodeId);
+          const nextOpenedFinalNodeIds = isAlreadyOpen
+            ? currentOpenedFinalNodeIds.filter((nodeId) => nodeId !== item.nodeId)
+            : [...currentOpenedFinalNodeIds, item.nodeId];
+
+          openedFinalNodeIdsRef.current = nextOpenedFinalNodeIds;
+          setOpenedFinalNodeIds(nextOpenedFinalNodeIds);
+          setSelectedPath((prev) => {
+            const isAlreadyActive = prev[level] === item.mapId;
+
+            if (!isAlreadyOpen) {
+              return [...prev.slice(0, level), item.mapId];
+            }
+
+            if (!isAlreadyActive) {
+              return prev;
+            }
+
+            const fallbackNodeId = nextOpenedFinalNodeIds[nextOpenedFinalNodeIds.length - 1];
+            const fallbackBridgeMapId = fallbackNodeId ? resolveBridgeMapIdForFinalNode(fallbackNodeId, childMap) : undefined;
+            return fallbackBridgeMapId ? [...prev.slice(0, level), fallbackBridgeMapId] : prev.slice(0, level);
           });
           return;
         }
 
         setIsReturningFromFinalResult(false);
+        openedFinalNodeIdsRef.current = [];
         setOpenedFinalNodeIds([]);
 
         setSelectedPath((prev) => {
@@ -370,6 +410,23 @@ function buildInitialOpenedFinalNodes(focusNodeId: string) {
 
 function isFinalTreeNode(node: (typeof algorithmTree.nodes)[string] | undefined) {
   return ["diagnosis", "morphologic_terminal", "placeholder", "info"].includes(node?.type ?? "");
+}
+
+// Encontra o mapId de "bridge" que leva a este diagnóstico final na coluna
+// anterior. Quando o pai real do diagnóstico é um grupo achatado (ver
+// isPureTerminalGroup), a bridge aponta para o grupo (um nível acima), pois o
+// grupo em si não tem coluna própria na árvore expandível.
+function resolveBridgeMapIdForFinalNode(finalNodeId: string, childMap: Map<string, string[]>): string | undefined {
+  const node = algorithmTree.nodes[finalNodeId];
+  const parentId = node?.parentId;
+  if (!parentId) return undefined;
+
+  if (isPureTerminalGroup(parentId, childMap)) {
+    const grandParentId = algorithmTree.nodes[parentId]?.parentId;
+    return grandParentId ? buildTerminalBridgeId(grandParentId, parentId) : undefined;
+  }
+
+  return buildTerminalBridgeId(parentId, finalNodeId);
 }
 
 

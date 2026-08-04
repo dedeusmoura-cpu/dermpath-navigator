@@ -272,7 +272,10 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     data: {
       clinical: ["Distribuição, idade, prurido e configuração das vesículas ajudam a separar as dermatoses bolhosas por IgA."],
       histology: ["Neutrófilos papilares e clivagem subepidérmica podem ser sutis em lesões muito precoces."],
-      evaluation: ["A imunofluorescência direta perilesional é essencial: IgA granular nas papilas favorece dermatite herpetiforme; IgA linear favorece doença por IgA linear."],
+      evaluation: [
+        <>A imunofluorescência direta perilesional é essencial: <Highlight>IgA granular nas papilas favorece dermatite herpetiforme; IgA linear favorece doença por IgA linear</Highlight>.</>,
+        <>No lúpus bolhoso, a IFD mostra <Highlight>padrão "full house"</Highlight> (IgG, IgM, IgA e C3, às vezes C1q, na membrana basal, linear ou granular), diferente do IgA isolado da dermatite herpetiforme e da doença por IgA linear.</>,
+      ],
       pearl: "na suspeita de dermatose bolhosa por IgA, a biópsia perilesional para imunofluorescência é tão importante quanto a biópsia da lesão.",
     },
   },
@@ -1445,6 +1448,14 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
       <><Highlight>Lesão desenvolvida:</Highlight> vesícula subepidérmica com neutrófilos; IFD mostra IgA granular, acentuada nas papilas.</>,
     ],
     pearl: <>A histologia se sobrepõe a IgA linear, lúpus bolhoso e EBA inflamatória. Sem <Highlight>imunofluorescência direta</Highlight>, prefira diagnóstico descritivo.</>,
+  },
+  {
+    match: /^l(ú|u)pus bolhoso(?:\s|\||$)/i,
+    histology: [
+      <>Vesícula subepidérmica com neutrófilos e poeira nuclear, por vezes com mucina dérmica aumentada, podendo mimetizar dermatite herpetiforme.</>,
+      <>IFD perilesional mostra <Highlight>padrão "full house"</Highlight>: depósito de IgG, IgM, IgA e C3 (às vezes C1q) na membrana basal, em padrão linear ou granular.</>,
+    ],
+    pearl: <>O <Highlight>"full house"</Highlight> (IgG, IgA, IgM, C3, C1q) na IFD separa lúpus bolhoso da dermatite herpetiforme (IgA granular papilar isolado) e da doença por IgA linear (IgA linear isolado); soma-se à sorologia e clínica de lúpus.</>,
   },
   {
     match: /^iga linear(?:\s|\||$)/i,

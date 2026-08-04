@@ -4,10 +4,7 @@ import { algorithmTree } from "../data/algorithm";
 import { useLanguage } from "../context/LanguageContext";
 import { translateNodeTitle, translateOptionLabel } from "../i18n/translations";
 import { buildPathToNode, getChildMap } from "../utils/tree";
-import {
-  createHorizontalEdgeIds,
-  useQuizTreeLines,
-} from "../hooks/useQuizTreeLines";
+import { useQuizTreeLines } from "../hooks/useQuizTreeLines";
 import { DiagnosticNavigationEmblem } from "./icons/DiagnosticNavigationEmblem";
 
 interface FocusedTreeMapProps {
@@ -21,7 +18,7 @@ interface ColumnItem {
   mapId: string;
   nodeId: string;
   displayLabel: string;
-  kind: "branch" | "terminal-bridge" | "result";
+  kind: "branch" | "terminal-bridge" | "group-bridge" | "result";
   sameAsResult?: boolean;
 }
 
@@ -183,15 +180,6 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
     return CATEGORY_CONFIG[first.slice(5)] ?? null;
   })();
 
-  // Pares penúltima → última coluna (terminal-bridge → result). São
-  // posicionados via `applyFinalColumnAlignment` para casar alturas, então
-  // a linha deve ter inclinação zero — padrão descrito em
-  // docs/QUIZ_TREE_LINE_PATTERN.md.
-  const horizontalEdgeIds = useMemo(
-    () => createHorizontalEdgeIds(collectFinalColumnPairs(columns)),
-    [columns],
-  );
-
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
@@ -209,16 +197,14 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   // useLayoutEffect separado garante que o transform esteja no DOM antes
   // do hook `useQuizTreeLines` medir.
   useLayoutEffect(() => {
-    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current, columnRefs.current);
-  }, [columns]);
+    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current, columnRefs.current, childMap);
+  }, [columns, childMap]);
 
   const lines = useQuizTreeLines({
     containerRef,
     nodeRefs,
     edges,
-    horizontalEdgeIds,
   });
-
   useEffect(() => {
     const visibleLineKeys = new Set(lines.map((line) => line.id));
     const previousVisibleLineKeys = previousVisibleLineKeysRef.current;
@@ -611,7 +597,7 @@ function buildFocusedTreeColumns(
       break;
     }
 
-    if (selectedItem.kind === "terminal-bridge") {
+    if (selectedItem.kind === "terminal-bridge" || selectedItem.kind === "group-bridge") {
       pendingTerminalParentId = currentParentId;
       continue;
     }
@@ -663,14 +649,46 @@ function buildColumnItems(parentId: string, childMap: Map<string, string[]>, lan
     const isTerminalChild = isTerminalTreeNode(childNode);
     const optionLabel = optionLabelMap.get(childId);
     const resultLabel = translateNodeTitle(childNode, language);
+
+    if (isTerminalChild) {
+      return {
+        mapId: buildTerminalBridgeId(parentId, childId),
+        nodeId: childId,
+        displayLabel: optionLabel ?? resultLabel,
+        kind: "terminal-bridge" as const,
+        sameAsResult: (optionLabel ?? resultLabel) === resultLabel,
+      };
+    }
+
+    // Um nó de decisão cujos filhos são todos diagnósticos finais funciona,
+    // na árvore expandível, como um "grupo" de diagnósticos irmãos: um clique
+    // abre todos de uma vez na coluna final, ao lado de outros diagnósticos já
+    // abertos no mesmo nível — em vez de descer para uma coluna própria, o que
+    // faria os resultados já abertos desaparecerem (ver buildResultItems).
+    if (isPureTerminalGroup(childId, childMap)) {
+      return {
+        mapId: buildTerminalBridgeId(parentId, childId),
+        nodeId: childId,
+        displayLabel: optionLabel ?? resultLabel,
+        kind: "group-bridge" as const,
+      };
+    }
+
     return {
-      mapId: isTerminalChild ? buildTerminalBridgeId(parentId, childId) : buildNodeMapId(childId),
+      mapId: buildNodeMapId(childId),
       nodeId: childId,
       displayLabel: optionLabel ?? resultLabel,
-      kind: isTerminalChild ? "terminal-bridge" : "branch",
-      sameAsResult: isTerminalChild ? (optionLabel ?? resultLabel) === resultLabel : undefined,
+      kind: "branch" as const,
     };
   });
+}
+
+export function isPureTerminalGroup(nodeId: string, childMap: Map<string, string[]>): boolean {
+  const node = algorithmTree.nodes[nodeId];
+  if (node?.type !== "decision") return false;
+  const children = childMap.get(nodeId) ?? [];
+  if (!children.length) return false;
+  return children.every((childId) => isTerminalTreeNode(algorithmTree.nodes[childId]));
 }
 
 function buildResultItem(nodeId: string, language: "pt" | "en"): ColumnItem {
@@ -689,30 +707,18 @@ function buildResultItems(
   childMap: Map<string, string[]>,
   language: "pt" | "en",
 ) {
-  const allowedNodeIds = new Set((childMap.get(parentId) ?? []).filter((childId) => isTerminalTreeNode(algorithmTree.nodes[childId])));
+  const directChildren = childMap.get(parentId) ?? [];
+  const allowedNodeIds = new Set(directChildren.filter((childId) => isTerminalTreeNode(algorithmTree.nodes[childId])));
+  // Diagnósticos que moram um nível abaixo de um "grupo" (group-bridge) também
+  // contam como abertos neste mesmo nível, para que apareçam cumulativamente
+  // ao lado dos diagnósticos diretos já abertos por outros irmãos.
+  directChildren
+    .filter((childId) => isPureTerminalGroup(childId, childMap))
+    .forEach((groupId) => (childMap.get(groupId) ?? []).forEach((grandChildId) => allowedNodeIds.add(grandChildId)));
+
   return openedFinalNodeIds
     .filter((nodeId) => allowedNodeIds.has(nodeId))
     .map((nodeId) => buildResultItem(nodeId, language));
-}
-
-function collectFinalColumnPairs(columns: ColumnItem[][]): Array<{ from: string; to: string }> {
-  if (columns.length < 2) return [];
-
-  const lastColumn = columns[columns.length - 1];
-  const sourceColumn = columns[columns.length - 2];
-  const pairs: Array<{ from: string; to: string }> = [];
-
-  lastColumn.forEach((item) => {
-    if (item.kind !== "result") return;
-    const source = sourceColumn.find(
-      (entry) => entry.kind === "terminal-bridge" && entry.nodeId === item.nodeId,
-    );
-    if (source) {
-      pairs.push({ from: source.mapId, to: item.mapId });
-    }
-  });
-
-  return pairs;
 }
 
 function applyFinalColumnAlignment(
@@ -720,6 +726,7 @@ function applyFinalColumnAlignment(
   nodeElements: Record<string, HTMLElement | null>,
   wrapperElements: Record<string, HTMLDivElement | null>,
   columnElements: Array<HTMLDivElement | null>,
+  childMap: Map<string, string[]>,
 ) {
   // Reset last column paddingTop on every call so stale values don't persist.
   const lastColumnEl = columnElements[columns.length - 1];
@@ -750,7 +757,11 @@ function applyFinalColumnAlignment(
   const alignmentEntries: Array<{ wrapper: HTMLDivElement; naturalTop: number; height: number; desiredTop: number }> = [];
 
   resultItems.forEach((item) => {
-    const sourceMapId = sourceColumn.find((sourceItem) => sourceItem.kind === "terminal-bridge" && sourceItem.nodeId === item.nodeId)?.mapId;
+    const sourceMapId = sourceColumn.find(
+      (sourceItem) =>
+        (sourceItem.kind === "terminal-bridge" && sourceItem.nodeId === item.nodeId) ||
+        (sourceItem.kind === "group-bridge" && (childMap.get(sourceItem.nodeId) ?? []).includes(item.nodeId)),
+    )?.mapId;
     if (!sourceMapId) {
       return;
     }
@@ -794,7 +805,7 @@ function applyFinalColumnAlignment(
   // group is vertically centered on the parent card in the previous column.
   // Using paddingTop (layout space) instead of translateY (paint-only) keeps
   // content inside the scroll container and avoids overflow clipping.
-  const terminalBridgeItems = lastColumn.filter((item) => item.kind === "terminal-bridge");
+  const terminalBridgeItems = lastColumn.filter((item) => item.kind === "terminal-bridge" || item.kind === "group-bridge");
   if (terminalBridgeItems.length === 0 || resultItems.length > 0) return;
   if (!lastColumnEl) return;
 
@@ -841,8 +852,24 @@ export function buildSelectedMapPath(nodeId: string) {
     return [];
   }
 
+  const childMap = getChildMap();
+
   return buildPathToNode(nodeId).flatMap((node) => {
+    // Nós "grupo" (decisão cujos filhos são todos diagnósticos finais) não têm
+    // coluna própria na árvore expandível — seus diagnósticos aparecem
+    // diretamente na coluna do pai (ver isPureTerminalGroup/group-bridge em
+    // buildColumnItems). Por isso não emitem seu próprio "node:" na trilha.
+    if (isPureTerminalGroup(node.id, childMap)) {
+      return node.parentId ? [buildTerminalBridgeId(node.parentId, node.id)] : [];
+    }
+
     if (!isTerminalTreeNode(node)) {
+      return [buildNodeMapId(node.id)];
+    }
+
+    if (node.parentId && isPureTerminalGroup(node.parentId, childMap)) {
+      // Alcançado através de um grupo achatado: sem etapa de "bridge" própria,
+      // o resultado aparece direto ao lado dos demais diagnósticos do grupo.
       return [buildNodeMapId(node.id)];
     }
 

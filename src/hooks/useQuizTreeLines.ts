@@ -128,10 +128,26 @@ export function useQuizTreeLines({
       if (element) observer.observe(element);
     });
 
+    // `ResizeObserver` só dispara em mudanças de tamanho — o alinhamento da
+    // última coluna (`applyFinalColumnAlignment`) move os cards via
+    // `transform: translateY(...)`, que não altera o box de layout e por
+    // isso passa despercebido pelo ResizeObserver. Sem essa re-medição, as
+    // linhas podem "congelar" numa posição anterior (todas apontando para o
+    // mesmo ponto) quando vários irmãos são abertos em sequência rápida.
+    const mutationObserver = new MutationObserver(() => measure());
+    if (containerRef.current) {
+      mutationObserver.observe(containerRef.current, {
+        attributes: true,
+        attributeFilter: ["style"],
+        subtree: true,
+      });
+    }
+
     window.addEventListener("resize", measure);
     return () => {
       window.cancelAnimationFrame(rafId);
       observer.disconnect();
+      mutationObserver.disconnect();
       window.removeEventListener("resize", measure);
     };
   }, [enabled, containerRef, nodeRefs, edges, horizontalEdgeIds]);

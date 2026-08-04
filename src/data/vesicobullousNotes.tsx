@@ -1053,7 +1053,6 @@ const epidermoliseBolhosaGrupo: FocusedNote = {
   clinical: [
     "Bolhas desencadeadas por trauma mínimo, desde o nascimento nas formas hereditárias.",
     <>Juncional: tecido de granulação periorificial, distrofia ungueal e defeitos de esmalte. <Highlight>Distrófica</Highlight>: cicatriz, milia, sindactilia e risco de carcinoma espinocelular.</>,
-    <>Síndrome de Bart: <Highlight>aplasia cutânea congênita</Highlight> nos membros associada a epidermólise bolhosa.</>,
   ],
   histology: [
     <>Bolha subepidérmica <Highlight>quase sem infiltrado</Highlight> nas formas mecanobolhosas.</>,
@@ -1113,7 +1112,7 @@ const porfirias: FocusedNote = {
   title: "Porfirias cutâneas",
   concept: [
     <>Bolha por <Highlight>fotossensibilização de porfirinas</Highlight> acumuladas, com fragilidade da junção dermoepidérmica.</>,
-    "Porfiria cutânea tarda é a mais comum; formas variegata, eritropoiética, induzida por droga ou por diálise repetem o padrão.",
+    "Porfiria cutânea tarda é a mais comum; a pseudoporfiria repete a mesma histologia, com porfirinas normais.",
   ],
   clinical: [
     <>Bolhas e erosões em <Highlight>dorso das mãos</Highlight>, com <Highlight>fragilidade cutânea</Highlight>, milia e cicatrizes.</>,
@@ -1404,102 +1403,6 @@ const amiloidoseBolhosa: FocusedNote = {
   pearl: <>bolha hemorrágica ao trauma mínimo, com material amorfo perivascular <Highlight>Congo-positivo</Highlight>, é amiloidose sistêmica até prova em contrário.</>,
 };
 
-const bolhaSobreCicatriz: FocusedNote = {
-  title: "Bolha sobre cicatriz",
-  concept: [
-    <>Clivagem por <Highlight>fragilidade mecânica</Highlight> na junção alterada da pele cicatricial, sem mecanismo imunológico.</>,
-    "Fenômeno local, geralmente após trauma, atrito ou edema.",
-  ],
-  clinical: [
-    "Bolha tensa restrita ao território de uma cicatriz prévia.",
-    "Ausência de lesões a distância e de prurido generalizado.",
-    "Resolve com a proteção da área.",
-  ],
-  histology: [
-    <>Bolha subepidérmica sobre <Highlight>derme fibrótica</Highlight>, com colágeno em feixes paralelos e anexos ausentes.</>,
-    "Infiltrado escasso, desproporcional ao tamanho da bolha.",
-    "Epiderme adelgaçada, com apagamento das cristas.",
-  ],
-  evaluation: [
-    <>A <Highlight>EBA</Highlight> também deixa cicatriz e milia — a IFD é obrigatória se houver lesões fora da cicatriz.</>,
-    "Penfigoide pode ter fenômeno de Koebner sobre cicatriz.",
-    "Porfiria e trauma repetido completam o diferencial.",
-  ],
-  highlight: {
-    title: "IFD",
-    bullets: [
-      <>Negativa: confirma a natureza <Highlight>puramente mecânica</Highlight>.</>,
-      "Positiva: reclassifica o caso como doença bolhosa autoimune localizada.",
-    ],
-    footer: "Bolha restrita à cicatriz + IFD negativa = fenômeno local.",
-  },
-  pearl: <>a fibrose da cicatriz é um <Highlight>plano de clivagem pronto</Highlight>; só a ausência de lesões fora dela e a IFD negativa autorizam o diagnóstico mecânico.</>,
-};
-
-const bolhaEletrodissecacao: FocusedNote = {
-  title: "Bolha secundária a ceratose actínica eletrodissecada",
-  concept: [
-    <>Bolha <Highlight>iatrogênica</Highlight>, por dano térmico da eletrodissecação sobre pele fotodanificada e frágil.</>,
-    "É um artefato terapêutico, não uma doença bolhosa.",
-  ],
-  clinical: [
-    "Bolha localizada exatamente no sítio tratado, surgindo em horas a dias.",
-    "Base com elastose e outras ceratoses actínicas ao redor.",
-    "Evolui para crosta e reepitelização.",
-  ],
-  histology: [
-    <>Clivagem subepidérmica com <Highlight>alteração térmica</Highlight> — colágeno homogeneizado e núcleos alongados “em fila”.</>,
-    <><Highlight>Elastose solar</Highlight> acentuada e atipia queratinocítica residual nas bordas.</>,
-    "Infiltrado escasso; necrose superficial coagulativa.",
-  ],
-  evaluation: [
-    "Reconhecer o artefato térmico evita interpretar o quadro como doença bolhosa.",
-    "Porfiria e penfigoide devem ser lembrados se houver bolhas fora da área tratada.",
-    "Confirmar que a atipia residual não representa carcinoma invasivo.",
-  ],
-  highlight: {
-    title: "Artefato térmico",
-    bullets: [
-      <>Colágeno <Highlight>homogeneizado</Highlight> e núcleos alinhados denunciam a cauterização.</>,
-      "A história do procedimento é indispensável para o laudo.",
-    ],
-    footer: "Bolhas fora do sítio tratado exigem investigação autoimune.",
-  },
-  pearl: <>bolha no sítio exato de um procedimento, com <Highlight>colágeno cozido</Highlight> e elastose ao redor, é iatrogenia — não doença bolhosa.</>,
-};
-
-const queimaduraAguda: FocusedNote = {
-  title: "Queimadura aguda",
-  concept: [
-    <>Necrose por <Highlight>agressão térmica, química ou elétrica</Highlight>, com clivagem no nível atingido pelo calor.</>,
-    "A profundidade da necrose define o grau e o prognóstico.",
-  ],
-  clinical: [
-    "Eritema doloroso com bolhas tensas de aparecimento rápido, com limites correspondentes ao agente.",
-    "Segundo grau superficial: bolha e dor intensa; profundo: hipoestesia e base pálida.",
-    "História de exposição é evidente na maioria dos casos.",
-  ],
-  histology: [
-    <><Highlight>Necrose coagulativa</Highlight> da epiderme com queratinócitos eosinofílicos e núcleos alongados, “em paliçada”.</>,
-    "Bolha subepidérmica ou intraepidérmica conforme a profundidade; colágeno dérmico homogeneizado nas formas profundas.",
-    "Inflamação escassa nas primeiras horas; neutrófilos aparecem depois.",
-  ],
-  evaluation: [
-    <><Highlight>NET:</Highlight> necrose de espessura total sem alteração térmica do colágeno, com contexto medicamentoso.</>,
-    "Dermatite fototóxica: necrose parcial, restrita à área fotoexposta.",
-    "Queimadura química segue a distribuição do contato.",
-  ],
-  highlight: {
-    title: "Núcleos alongados",
-    bullets: [
-      <>Queratinócitos e fibroblastos com núcleos <Highlight>estirados e paralelos</Highlight> = dano térmico.</>,
-      "Colágeno homogeneizado indica queimadura profunda.",
-    ],
-    footer: "A profundidade da homogeneização estima o grau.",
-  },
-  pearl: <>o que separa queimadura de necrólise não é a necrose, e sim a <Highlight>alteração térmica do colágeno e dos núcleos</Highlight>.</>,
-};
-
 const blisterSuccao: FocusedNote = {
   title: "Bolha por sucção",
   concept: [
@@ -1530,38 +1433,6 @@ const blisterSuccao: FocusedNote = {
     footer: "Contexto e formato da lesão valem mais que a lâmina.",
   },
   pearl: <>bolha subepidérmica <Highlight>sem uma única célula inflamatória</Highlight> é mecânica, porfírica ou hereditária — a lâmina sozinha não decide.</>,
-};
-
-const hipoxemiaPressao: FocusedNote = {
-  title: "Bolha por hipoxemia e pressão (bolha do coma)",
-  concept: [
-    <>Necrose isquêmica por <Highlight>pressão prolongada</Highlight> somada a hipoperfusão, típica de pacientes em coma ou imobilizados.</>,
-    "Classicamente associada a intoxicação por barbitúricos, opioides e monóxido de carbono.",
-  ],
-  clinical: [
-    <>Bolhas tensas sobre <Highlight>proeminências ósseas</Highlight> e áreas de apoio, surgindo 24–72 h após o evento.</>,
-    "Paciente com rebaixamento de consciência ou imobilidade prolongada.",
-    "Cura em 1 a 2 semanas, podendo deixar cicatriz.",
-  ],
-  histology: [
-    <>Bolha subepidérmica com <Highlight>necrose de queratinócitos</Highlight> e, caracteristicamente, <Highlight>necrose das glândulas écrinas</Highlight>.</>,
-    "Trombos de fibrina em vasos dérmicos e infiltrado escasso.",
-    "Necrose pode estender-se ao subcutâneo nas formas graves.",
-  ],
-  evaluation: [
-    <>A <Highlight>necrose écrina</Highlight> é o achado que fecha o diagnóstico e não existe nas bolhas autoimunes.</>,
-    "Queimadura e NET não têm o padrão de necrose glandular isolada.",
-    "Correlacionar com o sítio de apoio e o tempo de imobilidade.",
-  ],
-  highlight: {
-    title: "Necrose écrina",
-    bullets: [
-      <>Glândulas écrinas necróticas com <Highlight>núcleos picnóticos</Highlight> sob bolha pauci-inflamatória.</>,
-      "Trombos dérmicos reforçam o componente isquêmico.",
-    ],
-    footer: "Achado que direciona à investigação toxicológica.",
-  },
-  pearl: <>bolha em proeminência óssea de paciente comatoso com <Highlight>necrose das glândulas écrinas</Highlight> é a bolha do coma — praticamente patognomônica.</>,
 };
 
 // ---------------------------------------------------------------------------
@@ -1840,7 +1711,8 @@ export const VESICOBULLOUS_NOTES: Record<string, FocusedNote> = {
   // Subepidérmicas imunomediadas
   "group-vesico-espongiose-eos-sem-vesicula": espongioseEosinofilicaGrupo,
   "group-subepi-neutrofilos-superior-eos": penfigoideEHerpesGestationis,
-  "group-subepi-poucos-neutro-eos": penfigoidePobreEmCelulas,
+  "dx-subepi-poucos-penfigoide-bolhoso": penfigoidePobreEmCelulas,
+  "dx-subepi-poucos-herpes-gestacional": penfigoidePobreEmCelulas,
   "dx-subepi-penfigoide-bolhoso": penfigoideBolhoso,
   "dx-subepi-herpes-gestacional": herpesGestacional,
   "dx-subepi-eba": epidermoliseBolhosaAdquirida,
@@ -1848,8 +1720,10 @@ export const VESICOBULLOUS_NOTES: Record<string, FocusedNote> = {
   "group-subepi-misto-papilar-bolha": penfigoideEEba,
   "group-subepi-neutrofilos-bandas-sem-mucina": dermatiteHerpetiformeGrupo,
   "group-subepi-misto-bandas-sem-mucina": dermatiteHerpetiformeGrupo,
-  "group-subepi-sem-infiltrado-eb": epidermoliseBolhosaGrupo,
-  "group-subepi-porfirias": porfirias,
+  "dx-subepi-pouco-eb-hereditaria": epidermoliseBolhosaGrupo,
+  "dx-subepi-pouco-eb-adquirida": epidermoliseBolhosaAdquirida,
+  "dx-subepi-porfiria-cutanea-tarda": porfirias,
+  "dx-subepi-pseudoporfiria": porfirias,
   "dx-lupus-eritematoso-sistemico-bolhoso": lupusBolhoso,
 
   // Subepidérmicas não imunomediadas e de vizinhança
@@ -1861,11 +1735,7 @@ export const VESICOBULLOUS_NOTES: Record<string, FocusedNote> = {
   "dx-subepi-celulite": celuliteBolhosa,
   "dx-urticaria-pigmentosa": urticariaPigmentosa,
   "dx-amiloidose-bolhosa": amiloidoseBolhosa,
-  "dx-bolha-sobre-cicatriz": bolhaSobreCicatriz,
-  "dx-bolha-ceratose-actinica-eletrodissecada": bolhaEletrodissecacao,
-  "dx-queimadura-aguda": queimaduraAguda,
   "dx-blister-por-succao": blisterSuccao,
-  "dx-hipoxemia-plus-pressure": hipoxemiaPressao,
 
   // Grupos morfológicos
   "group-vesico-espongiose-eczemas-precoces": eczemasPrecoces,
