@@ -134,11 +134,13 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   const prevColumnCountRef = useRef<number>(0);
   const columnEnterTimerRef = useRef<number | null>(null);
   const isFirstColumnRunRef = useRef<boolean>(true);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const previousVisibleLineKeysRef = useRef<Set<string>>(new Set());
   // Mantém o emblema montado enquanto a bússola gira e o bloco esmaece.
+  const [emblemEntering, setEmblemEntering] = useState(false);
   const [emblemExiting, setEmblemExiting] = useState(false);
   const [emblemExitTop, setEmblemExitTop] = useState<number | null>(null);
+  const emblemEnterTimerRef = useRef<number | null>(null);
   const emblemExitTimerRef = useRef<number | null>(null);
 
   const { columns, selectedPathIds, focusedMapId } = useMemo(
@@ -175,6 +177,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   };
 
   useEffect(() => () => {
+    if (emblemEnterTimerRef.current) window.clearTimeout(emblemEnterTimerRef.current);
     if (emblemExitTimerRef.current) window.clearTimeout(emblemExitTimerRef.current);
   }, []);
 
@@ -195,6 +198,24 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
       mediaQuery.removeEventListener("change", syncPreference);
     };
   }, []);
+
+  // Inicia o giro depois da primeira pintura, para que ele seja visível
+  // toda vez que a rota /mapa-da-arvore monta o estado inicial.
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      setEmblemEntering(true);
+      emblemEnterTimerRef.current = window.setTimeout(() => {
+        setEmblemEntering(false);
+      }, 760);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      if (emblemEnterTimerRef.current) window.clearTimeout(emblemEnterTimerRef.current);
+    };
+  }, [prefersReducedMotion]);
 
   // Aplica translateY na última coluna antes da medição das linhas para que
   // o `getBoundingClientRect()` leia a posição já alinhada. Executar em um
@@ -391,7 +412,10 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
               ref={emblemContentRef}
               className={`max-w-md text-center${emblemExiting ? " dermpath-emblem-exit" : ""}`}
             >
-              <DiagnosticNavigationEmblem className="mx-auto h-[276px] w-[396px]" spinning={emblemExiting} />
+              <DiagnosticNavigationEmblem
+                className="mx-auto h-[276px] w-[396px]"
+                spinning={emblemEntering || emblemExiting}
+              />
               <span
                 aria-hidden="true"
                 className="mx-auto mt-[18px] block h-px w-[78px] bg-[linear-gradient(90deg,transparent,#d6b766,transparent)]"
