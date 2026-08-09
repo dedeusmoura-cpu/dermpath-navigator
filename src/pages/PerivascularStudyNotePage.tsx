@@ -1352,7 +1352,7 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
       <><Highlight>Infiltrado dérmico difuso de neutrófilos</Highlight> com leucocitoclasia e edema papilar.</>,
       <>Pode haver tumefação endotelial e hemácias extravasadas, mas não vasculite primária.</>,
     ],
-    pearl: <>Leucocitoclasia não basta para chamar vasculite: em Sweet, falta dano parietal primário. Exclua infecção e considere variante <Highlight>histiocitoide</Highlight> com MPO se o infiltrado parecer mononuclear.</>,
+    pearl: <>Exclua infecção antes de firmar dermatose neutrofílica. Se o infiltrado parecer mononuclear, considere a variante <Highlight>histiocitoide</Highlight> e confirme a linhagem neutrofílica com MPO.</>,
   },
   {
     match: /^sarcoidose(?: subcutânea)?(?:\s|\||$)/i,
