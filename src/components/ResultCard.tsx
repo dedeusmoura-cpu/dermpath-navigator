@@ -61,6 +61,10 @@ const IGM_IGG_TARGET_ID = "dx-chapel-hill-vasculite-cutanea-igm-igg";
 const TROMBOFLEBITE_TARGET_ID = "dx-grandes-vasos-veia-nao-leucocitoclastica";
 const PAN_VASCULITE_TARGET_ID = "dx-grandes-vasos-arteria-leucocitoclastica";
 const VASCULITE_NODULAR_TARGET_ID = "dx-grandes-vasos-arteria-nao-leucocitoclastica";
+const EOSINOPHILIC_SPONGIOSIS_TOME_NOTA_TARGET_IDS = [
+  "group-vesico-acantolitica-suprabasal-coesa",
+  "dx-penfigo-foliaceo",
+];
 
 export function ResultCard({
   node,
@@ -112,6 +116,7 @@ export function ResultCard({
   const showTromboflebiteButton = node.id === TROMBOFLEBITE_TARGET_ID;
   const showPanVasculiteButton = node.id === PAN_VASCULITE_TARGET_ID;
   const showVasculiteNodularButton = node.id === VASCULITE_NODULAR_TARGET_ID;
+  const showEosinophilicSpongiosisTomeNotaButton = EOSINOPHILIC_SPONGIOSIS_TOME_NOTA_TARGET_IDS.includes(node.id);
   const showPorokeratosisVariants = node.id === POROKERATOSIS_HISTOPATHOLOGY_TARGET_ID;
   const possibilities = translateList(node.result?.possibilities, language);
 
@@ -207,6 +212,13 @@ export function ResultCard({
             to={`/tome-nota/dermatites/${encodeURIComponent(node.id)}`}
             nodeId={node.id}
             title={resultTitle}
+          />
+        ) : null}
+        {showEosinophilicSpongiosisTomeNotaButton ? (
+          <TomeNotaLink
+            to="/tome-nota/espongiose-eosinofilica"
+            nodeId={node.id}
+            title="Espongiose eosinofílica"
           />
         ) : null}
         {showVasculiteLcTomeNotaButton ? (

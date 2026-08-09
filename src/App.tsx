@@ -228,6 +228,10 @@ export default function App() {
           <Route path="/tome-nota/tromboflebite" element={<TromboflebiteGoldTipsPage />} />
           <Route path="/tome-nota/poliarterite-nodosa-vasculite" element={<PoliarteriteNodosaVasculiteGoldTipsPage />} />
           <Route path="/tome-nota/vasculite-nodular" element={<VasculiteNodularGoldTipsPage />} />
+          <Route
+            path="/tome-nota/espongiose-eosinofilica"
+            element={<PerivascularStudyNotePage nodeIdOverride="group-vesico-espongiose-eos-sem-vesicula" />}
+          />
           <Route path="/tome-nota/dermatites-perivasculares/:nodeId" element={<PerivascularStudyNotePage />} />
           <Route path="/tome-nota/dermatites/:nodeId" element={<PerivascularStudyNotePage />} />
           <Route

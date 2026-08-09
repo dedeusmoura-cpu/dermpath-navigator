@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import espongioseEosinofilicaHaappie from "../assets/espongiose-eosinofilica-haappie.png";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
@@ -1803,8 +1804,9 @@ function getFamilyHistology(pathIds: string[]): string[] {
   ];
 }
 
-export function PerivascularStudyNotePage() {
-  const { nodeId = "" } = useParams();
+export function PerivascularStudyNotePage({ nodeIdOverride }: { nodeIdOverride?: string } = {}) {
+  const { nodeId: routeNodeId = "" } = useParams();
+  const nodeId = nodeIdOverride ?? routeNodeId;
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useLanguage();
@@ -1834,6 +1836,7 @@ export function PerivascularStudyNotePage() {
   // Os nós vésico-bolhosos têm nota fechada, escrita por nó; os demais continuam sendo montados
   // pela mesclagem das ENRICHMENT_RULES.
   const focused = VESICOBULLOUS_NOTES[node.id];
+  const showEosinophilicSpongiosisImage = node.id === "group-vesico-espongiose-eos-sem-vesicula";
   const noteTitle = focused?.title ?? enrichment.noteTitle ?? node.title;
   const highlight = focused?.highlight ?? enrichment.highlight;
   const pearl = focused?.pearl ?? enrichment.pearl;
@@ -1843,7 +1846,7 @@ export function PerivascularStudyNotePage() {
       id: "conceito",
       number: "1",
       color: "green",
-      title: "Conceito",
+      title: focused?.sectionTitles?.concept ?? "Conceito",
       icon: <BookIcon />,
       bullets: focused?.concept ?? (enrichment.concept.length ? enrichment.concept : getPatternConcept(pathIds)),
     },
@@ -1851,7 +1854,7 @@ export function PerivascularStudyNotePage() {
       id: "histopatologia",
       number: "3",
       color: "purple",
-      title: "Histopatologia",
+      title: focused?.sectionTitles?.histology ?? "Histopatologia",
       icon: <MicroscopeIcon />,
       bullets: focused?.histology ?? (enrichment.histology.length ? enrichment.histology : getFamilyHistology(pathIds)),
     },
@@ -1862,7 +1865,7 @@ export function PerivascularStudyNotePage() {
       id: "pistas-clinicas",
       number: "2",
       color: "blue",
-      title: "Pistas clínicas",
+      title: focused?.sectionTitles?.clinical ?? "Pistas clínicas",
       icon: <StethoscopeIcon />,
       bullets: focused?.clinical ?? enrichment.clinical,
     },
@@ -1870,7 +1873,7 @@ export function PerivascularStudyNotePage() {
       id: "avaliacao",
       number: "4",
       color: "orange",
-      title: "Diagnóstico Diferencial",
+      title: focused?.sectionTitles?.evaluation ?? "Diagnóstico Diferencial",
       icon: <ClipboardIcon />,
       bullets: focused?.evaluation ?? enrichment.evaluation,
     },
@@ -1894,7 +1897,24 @@ export function PerivascularStudyNotePage() {
 
       <StudyNoteCard
         title={noteTitle}
-        subtitle="Resumo prático para dermatopatologia"
+        subtitle={focused?.subtitle ?? "Resumo prático para dermatopatologia"}
+        media={
+          showEosinophilicSpongiosisImage ? (
+            <a
+              href={espongioseEosinofilicaHaappie}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Abrir a imagem HAAPPIE em tamanho completo"
+              className="block bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6b766]"
+            >
+              <img
+                src={espongioseEosinofilicaHaappie}
+                alt="HAAPPIE: causas de espongiose eosinofílica, incluindo hipersensibilidade e doenças imunobolhosas, dermatite de contato alérgica, picada de artrópode, PUPPP, pênfigo e penfigoide, incontinentia pigmenti, foliculite eosinofílica, eritema tóxico neonatal e erupções medicamentosas."
+                className="block h-auto w-full"
+              />
+            </a>
+          ) : undefined
+        }
         sectionsLeft={sectionsLeft}
         sectionsRight={sectionsRight}
         aside={

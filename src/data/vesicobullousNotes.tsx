@@ -10,6 +10,8 @@ import { Highlight } from "../components/StudyNoteCard";
  */
 export type FocusedNote = {
   title: string;
+  subtitle?: string;
+  sectionTitles?: Partial<Record<"concept" | "clinical" | "histology" | "evaluation", string>>;
   concept: ReactNode[];
   clinical: ReactNode[];
   histology: ReactNode[];
@@ -1635,36 +1637,46 @@ const espongioseBalonizacaoRuptura: FocusedNote = {
 };
 
 const espongioseEosinofilicaGrupo: FocusedNote = {
-  title: "Espongiose eosinofílica sem vesiculação marcante",
+  title: "Espongiose eosinofílica",
+  subtitle: "HAAPPIE: eos na epiderme",
+  sectionTitles: {
+    histology: "Na lâmina",
+    evaluation: "Diferencial",
+  },
   concept: [
-    <>A <Highlight>espongiose eosinofílica</Highlight> pode ser a primeira lesão do penfigoide bolhoso, do herpes gestationis e do pênfigo vulgar, antes de qualquer bolha.</>,
-    "É um padrão de alerta: a doença autoimune ainda não mostrou o nível da clivagem.",
+    <>Presença de <Highlight>eosinófilos migrando para uma epiderme espongiótica</Highlight> — pequenos eosinófilos entre os queratinócitos.</>,
+    <>É um <Highlight>padrão histológico, não um diagnóstico</Highlight>; o mnemônico HAAPPIE organiza suas principais causas.</>,
+    "Pode anteceder a clivagem ou a acantólise das dermatoses bolhosas autoimunes.",
   ],
   clinical: [
-    <>Penfigoide em <Highlight>fase não bolhosa</Highlight>: idoso com prurido intenso e lesões eczematosas ou urticariformes.</>,
-    "Herpes gestationis: gestante com placas urticadas periumbilicais.",
-    "Pênfigo vulgar inicial: erosões orais dolorosas antes das lesões cutâneas.",
+    <><Highlight>H — hipersensibilidade e doenças imunobolhosas:</Highlight> sobretudo penfigoide bolhoso e penfigoide gestacional; eventualmente, pênfigo.</>,
+    <><Highlight>A — dermatite de contato alérgica:</Highlight> incluir também as reações fotoalérgicas.</>,
+    <><Highlight>A — picada de artrópode:</Highlight> correlacionar com lesões pruriginosas e a exposição.</>,
+    <><Highlight>P — PUPPP:</Highlight> atualmente denominada erupção polimórfica da gravidez.</>,
   ],
   histology: [
-    <>Espongiose com <Highlight>eosinófilos dentro da epiderme</Highlight>, sem bolha franca.</>,
-    "Infiltrado dérmico superficial rico em eosinófilos, por vezes com edema papilar.",
-    "Procurar ativamente acantólise discreta e fendas incipientes na junção.",
+    <>Espongiose com <Highlight>eosinófilos dentro da epiderme</Highlight>, com ou sem vesiculação evidente.</>,
+    <>Na <Highlight>incontinentia pigmenti</Highlight>, a fase vesicular pode exibir eosinofilia epidérmica exuberante.</>,
+    "Procurar pistas acompanhantes: acantólise, clivagem incipiente, alteração de interface ou padrão foliculocêntrico.",
   ],
   evaluation: [
-    "A lista curta da espongiose eosinofílica inclui ainda picada de artrópode, contato alérgico e incontinentia pigmenti.",
-    "A morfologia não define qual doença autoimune está começando.",
-    "Repetir a biópsia em lesão mais desenvolvida se a IFD for inconclusiva.",
+    <><Highlight>P — pênfigo/penfigoide:</Highlight> doenças bolhosas autoimunes, especialmente o penfigoide.</>,
+    <><Highlight>E — outras causas:</Highlight> foliculite eosinofílica, eritema tóxico neonatal e erupção medicamentosa.</>,
+    "Idade, gravidez, distribuição, exposição de contato, picada e uso de fármacos direcionam o diferencial.",
+    <>Se houver suspeita de doença bolhosa autoimune, realizar <Highlight>IFD em pele perilesional</Highlight>.</>,
   ],
   highlight: {
-    title: "IFD",
+    title: "HAAPPIE",
     bullets: [
-      <>Espongiose eosinofílica em adulto <Highlight>obriga IFD de pele perilesional</Highlight>.</>,
-      <><Highlight>Linear</Highlight> na junção = penfigoide/herpes gestationis; <Highlight>intercelular</Highlight> = pênfigo vulgar.</>,
-      "ELISA (anti-BP180, anti-Dsg3) completa a caracterização.",
+      <><Highlight>H</Highlight> — hipersensibilidade e imunobolhosas.</>,
+      <><Highlight>AA</Highlight> — contato alérgico/fotoalérgico e artrópode.</>,
+      <><Highlight>PP</Highlight> — PUPPP e pênfigo/penfigoide.</>,
+      <><Highlight>I</Highlight> — incontinentia pigmenti.</>,
+      <><Highlight>E</Highlight> — foliculite eosinofílica, eritema tóxico e erupção por droga.</>,
     ],
-    footer: "É o achado que antecipa o diagnóstico em semanas ou meses.",
+    footer: "Eos in epithelium: lembre HAAPPIE.",
   },
-  pearl: <>espongiose eosinofílica é a <Highlight>fase pré-bolhosa</Highlight> das doenças autoimunes: a IFD dá o diagnóstico antes de a bolha aparecer.</>,
+  pearl: <>espongiose eosinofílica é um <Highlight>sinal de alerta</Highlight>: em adulto com prurido ou suspeita de doença bolhosa, a IFD pode revelar o diagnóstico antes da bolha.</>,
 };
 
 // ---------------------------------------------------------------------------

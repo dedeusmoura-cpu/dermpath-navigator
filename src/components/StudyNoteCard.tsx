@@ -16,6 +16,7 @@ interface StudyNoteCardProps {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  media?: ReactNode;
   sectionsLeft: StudyNoteSectionData[];
   sectionsRight: StudyNoteSectionData[];
   note?: ReactNode;
@@ -85,12 +86,21 @@ export function StudyNoteCard({
   eyebrow = "Tome nota!",
   title,
   subtitle,
+  media,
   sectionsLeft,
   sectionsRight,
   note,
   aside,
   pearl,
 }: StudyNoteCardProps) {
+  if (media) {
+    return (
+      <div className="study-note-sheet relative overflow-hidden rounded-[18px] border border-[#d1c9bb] bg-[#fffdf6] shadow-[0_28px_65px_-34px_rgba(39,31,22,0.34)] sm:rounded-[22px]">
+        {media}
+      </div>
+    );
+  }
+
   const sections = [sectionsLeft[0], sectionsRight[0], sectionsLeft[1], sectionsRight[1]].filter(
     (section): section is StudyNoteSectionData => Boolean(section),
   );
