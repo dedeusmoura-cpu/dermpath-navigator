@@ -458,45 +458,49 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Eosinófilos predominam", nextNodeId: "placeholder-nodular-eosinofilico" },
     { label: "Histiócitos predominam", nextNodeId: "nodular-histiocitos" },
   ], tags: ["nodular", "difusa"] }),
-  node({ id: "pustulosas", title: "Dermatites pustulosas", type: "decision", parentId: "dermatite", description: "Classifique o tipo principal de pústula para navegar no algoritmo.", options: [
-    { label: "pústula", nextNodeId: "pustula" },
-  ], tags: ["pustulosa", "pústula", "pustula"] }),
-  node({ id: "pustula", title: "pústula", type: "decision", parentId: "pustulosas", description: "Subdivida conforme o compartimento principal envolvido pela pústula.", options: [
+  node({ id: "pustulosas", title: "Dermatites pustulosas", type: "decision", parentId: "dermatite", description: "Subdivida conforme o compartimento principal envolvido pela pústula.", options: [
     { label: "Epiderme", nextNodeId: "pustulas-intraepidermicas" },
     { label: "Epiderme infundibular (infundibulite pustular)", nextNodeId: "placeholder-pustulas-foliculares" },
     { label: "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", nextNodeId: "placeholder-pustulas-acrosiringicas" },
-  ], tags: ["pústula", "pustula", "pustulosa"] }),
-  node({ id: "pustulas-intraepidermicas", title: "Epiderme", type: "decision", parentId: "pustula", description: "Classifique a pústula epidérmica pelo plano e pelos achados acompanhantes.", options: [
+  ], tags: ["pustulosa", "pústula", "pustula"] }),
+  node({ id: "pustulas-intraepidermicas", title: "Epiderme", type: "decision", parentId: "pustulosas", description: "Classifique a pústula epidérmica pelo plano e pelos achados acompanhantes.", options: [
     { label: "Intracórnea, subcórnea e/ou intraespinhosa", nextNodeId: "pustulas-epiderme-intra-sub-intraespinhosa" },
-    { label: "Subcórnea com células acantolticas", nextNodeId: "pustulas-epiderme-subcornea-acantolitica" },
-    { label: "Vescula espongiótica", nextNodeId: "pustulas-epiderme-vesicula-espongiotica" },
+    { label: "Subcórnea com células acantolíticas", nextNodeId: "pustulas-epiderme-subcornea-acantolitica" },
+    { label: "Vesícula espongiótica", nextNodeId: "pustulas-epiderme-vesicula-espongiotica" },
   ], tags: ["epiderme", "pústula", "intracórnea", "subcórnea", "intraespinhosa", "vesícula espongiótica"], synonyms: ["intracornea", "subcornea", "vesicula espongiotica"] }),
   node({ id: "pustulas-epiderme-intra-sub-intraespinhosa", title: "Intracórnea, subcórnea e/ou intraespinhosa", type: "decision", parentId: "pustulas-intraepidermicas", description: "Use fungos, tipo de infiltrado e a ausência de achados adicionais para o fechamento.", options: [
     { label: "Hifas", nextNodeId: "dx-pustula-dermatofitose" },
     { label: "Pseudo-hifas", nextNodeId: "dx-pustula-candidiase" },
     { label: "Histiócitos e plasmócitos", nextNodeId: "dx-pustula-sifilis-rupioide" },
     { label: "Eosinófilos", nextNodeId: "dx-pustula-pega" },
-    { label: "Ausência de achados adicionais", nextNodeId: "group-pustula-psoriase-pemfigo-iga" },
+    { label: "IFD+ para IgA", nextNodeId: "dx-pustula-penfigo-iga" },
+    { label: "Ausência de achados adicionais", nextNodeId: "dx-pustula-psoriase-pustulosa" },
   ], tags: ["intracórnea", "subcórnea", "intraespinhosa", "pústula"], synonyms: ["intracornea", "subcornea"] }),
   terminal("dx-pustula-dermatofitose", "Dermatofitose", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com hifas, compatível com dermatofitose.", blocks("Mantida como diagnóstico final específico deste braço pustuloso."), ["dermatofitose", "pústula", "hifas"]),
   terminal("dx-pustula-candidiase", "Candidíase", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com pseudo-hifas, compatível com candidíase.", blocks("Mantida como diagnóstico final específico deste braço pustuloso."), ["candidíase", "pseudo-hifas", "pústula"], ["candidiase"]),
   terminal("dx-pustula-sifilis-rupioide", "Sífilis rupioide", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com Histiócitos e plasmócitos, compatível com sífilis rupioide.", blocks("Mantida como diagnóstico final específico deste braço pustuloso."), ["sífilis rupioide", "plasmócitos", "histiócitos"], ["sifilis rupioide", "hisítiocitos"]),
   terminal("dx-pustula-pega", "PEGA", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com eosinófilos, compatível com PEGA.", blocks("A correlação clínico-medicamentosa segue importante."), ["pega", "pústula", "eosinófilos"], ["pustulose exantematica generalizada aguda"]),
-  diagnosisGroup("group-pustula-psoriase-pemfigo-iga", "Ausência de achados adicionais", "pustulas-epiderme-intra-sub-intraespinhosa", "Na ausência de achados adicionais especficos, este ponto do algoritmo rene duas possibilidades principais.", ["psoríase pustulosa e variantes", "Pênfigo por IgA"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["psoríase pustulosa", "pênfigo por IgA", "pustulosa"], ["psoriase pustulosa", "penfigo por iga"]),
-  node({ id: "pustulas-epiderme-subcornea-acantolitica", title: "Subcórnea com células acantolíticas", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se h bactérias dentro da pústula subcórnea acantolítica.", options: [
+  terminal("dx-pustula-penfigo-iga", "Pênfigo por IgA", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com IFD positiva para IgA, compatível com pênfigo por IgA.", blocks("O padrão intercelular na IFD diferencia o pênfigo por IgA da dermatose bolhosa por IgA linear, que marca a zona da membrana basal."), ["pênfigo por IgA", "IgA intercelular", "pústula"], ["penfigo por iga", "iga pemphigus"]),
+  terminal("dx-pustula-psoriase-pustulosa", "Psoríase pustulosa e variantes", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa sem achados adicionais específicos, compatível com psoríase pustulosa e variantes.", blocks("Mantido como diagnóstico final específico deste braço pustuloso."), ["psoríase pustulosa", "pustulosa"], ["psoriase pustulosa"]),
+  node({ id: "pustulas-epiderme-subcornea-acantolitica", title: "Subcórnea com células acantolíticas", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se há bactérias dentro da pústula subcórnea acantolítica.", options: [
     { label: "Bactérias na pústula", nextNodeId: "dx-pustula-impetigo-bolhoso" },
-    { label: "Sem bactérias na pústula", nextNodeId: "group-pustula-penfigo-foliaceo-ssss" },
+    { label: "Sem bactérias na pústula", nextNodeId: "pustulas-epiderme-subcornea-sem-bacterias" },
   ], tags: ["subcórnea", "acantolítica", "pústula"], synonyms: ["subcornea", "acantolitica"] }),
   terminal("dx-pustula-impetigo-bolhoso", "Impetigo bolhoso", "diagnosis", "pustulas-epiderme-subcornea-acantolitica", "pústula subcórnea com células acantolíticas e bactérias na cavidade, compatível com impetigo bolhoso.", blocks("Mantido como diagnóstico final específico deste braço pustuloso."), ["impetigo bolhoso", "bactérias", "pústula"], ["bacterias"]),
-  diagnosisGroup("group-pustula-penfigo-foliaceo-ssss", "Sem bactérias na pústula", "pustulas-epiderme-subcornea-acantolitica", "Na ausência de bactérias na pústula subcórnea acantolítica, este ponto do algoritmo rene duas possibilidades principais.", ["Pênfigo foliáceo", "síndrome da pele escaldada estafilocócica (SSSS)"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["pênfigo foliáceo", "ssss", "síndrome da pele escaldada estafilocócica"], ["penfigo foliaceo"]),
-  node({ id: "pustulas-epiderme-vesicula-espongiotica", title: "Vesícula espongiótica", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se h hifas na vesícula espongiótica pustulosa.", options: [
+  node({ id: "pustulas-epiderme-subcornea-sem-bacterias", title: "Sem bactérias na pústula", type: "decision", parentId: "pustulas-epiderme-subcornea-acantolitica", description: "Defina se a IFD é positiva para IgG intercelular.", options: [
+    { label: "IFD+ para IgG intercelular", nextNodeId: "dx-pustula-penfigo-foliaceo" },
+    { label: "IFD negativa", nextNodeId: "dx-pustula-ssss" },
+  ], tags: ["subcórnea", "acantolítica", "pústula", "sem bactérias"] }),
+  terminal("dx-pustula-penfigo-foliaceo", "Pênfigo foliáceo", "diagnosis", "pustulas-epiderme-subcornea-sem-bacterias", "pústula subcórnea com células acantolíticas, sem bactérias e IFD positiva para IgG intercelular, compatível com pênfigo foliáceo.", blocks("Acentuação da fluorescência nas camadas superiores e ELISA anti-Dsg1 apoiam o diagnóstico."), ["pênfigo foliáceo", "IgG intercelular", "pústula"], ["penfigo foliaceo", "fogo selvagem"]),
+  terminal("dx-pustula-ssss", "Síndrome da pele escaldada estafilocócica (SSSS)", "diagnosis", "pustulas-epiderme-subcornea-sem-bacterias", "pústula subcórnea com células acantolíticas, sem bactérias e IFD negativa, compatível com síndrome da pele escaldada estafilocócica (SSSS).", blocks("Mediada por toxina esfoliativa estafilocócica, sem depósitos imunes; mais comum em crianças pequenas."), ["ssss", "síndrome da pele escaldada estafilocócica", "pústula"], ["staphylococcal scalded skin syndrome"]),
+  node({ id: "pustulas-epiderme-vesicula-espongiotica", title: "Vesícula espongiótica", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se há hifas na vesícula espongiótica pustulosa.", options: [
     { label: "Hifas", nextNodeId: "dx-pustula-vesicula-dermatofitose" },
     { label: "Sem hifas", nextNodeId: "dx-pustula-eczematosa-impetiginizada" },
   ], tags: ["vesícula espongiótica", "pústula", "hifas"], synonyms: ["vesicula espongiotica"] }),
   terminal("dx-pustula-vesicula-dermatofitose", "Dermatofitose", "diagnosis", "pustulas-epiderme-vesicula-espongiotica", "Vesícula espongiótica pustulosa com hifas, compatível com dermatofitose.", blocks("Mantida também neste braço por coerência dermatopatológica."), ["dermatofitose", "vesícula espongiótica", "pústula"], ["vesicula espongiotica"]),
   terminal("dx-pustula-eczematosa-impetiginizada", "Dermatites eczematosas impetiginizadas", "diagnosis", "pustulas-epiderme-vesicula-espongiotica", "Vesícula espongiótica pustulosa sem hifas, compatível com dermatites eczematosas impetiginizadas.", blocks("Mantido como desfecho diagnóstico agrupado conforme o algoritmo fornecido."), ["dermatite eczematosa impetiginizada", "eczematosa", "impetiginizada", "pústula"], ["dermatites eczematosas impetiginizadas"]),
-  terminal("placeholder-pustulas-foliculares", "Epiderme infundibular (infundibulite pustular)", "placeholder", "pustula", "Ramo de infundibulite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite pustular", "epiderme infundibular"], ["folicular"]),
-  terminal("placeholder-pustulas-acrosiringicas", "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", "placeholder", "pustula", "Ramo de infundibulite e foliculite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite", "foliculite pustular", "epiderme infundibular e folicular"], ["acrosiringica", "acrosiríngica"]),
+  terminal("placeholder-pustulas-foliculares", "Epiderme infundibular (infundibulite pustular)", "placeholder", "pustulosas", "Ramo de infundibulite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite pustular", "epiderme infundibular"], ["folicular"]),
+  terminal("placeholder-pustulas-acrosiringicas", "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", "placeholder", "pustulosas", "Ramo de infundibulite e foliculite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite", "foliculite pustular", "epiderme infundibular e folicular"], ["acrosiringica", "acrosiríngica"]),
   node({ id: "foliculite-perifoliculite", title: "Foliculite / perifoliculite", type: "decision", parentId: "dermatite", description: "Algoritmo de alopecias inflamatórias e não inflamatórias com ou sem peri-infundibulite/perifoliculite.", options: [
     { label: "Alopécia sem infiltração inflamatória", nextNodeId: "alopecia-sem-inflamacao" },
     { label: "Alopécia com infiltração inflamatória", nextNodeId: "alopecia-com-inflamacao" },
