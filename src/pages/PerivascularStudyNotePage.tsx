@@ -1004,14 +1004,26 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /eflúvio telógeno/i,
+    match: /^eflúvio telógeno$/i,
     exclusive: true,
+    replaceDefaults: true,
     data: {
-      concept: ["Transição sincronizada de um grande número de folículos da fase anágena para a telógena, em resposta a um gatilho sistêmico (three months antes do achado clínico)."],
-      clinical: ["Afinamento difuso de todo o couro cabeludo; gatilhos incluem febre alta, parto, doença sistêmica, deficiências nutricionais, estresse emocional intenso e diversos medicamentos; forma crônica sem gatilho identificável é comum em mulheres."],
-      histology: ["Número total de fios normal, incluindo número normal de fios terminais; aumento da contagem de telógenos para >20% (raramente excede 50%; >80% é incompatível com eflúvio telógeno); ausência de inflamação e de fibrose."],
-      evaluation: ["Tricograma com >20% de fios em telógeno é diagnóstico; investigar função tireoidiana, hemograma, ferritina sérica quando o gatilho não for evidente; a razão terminal:vellus no istmo diferencia de alopecia androgenética, com a qual frequentemente coexiste."],
-      pearl: "contagem de telógenos aumentada (>20%) com número normal de fios terminais e ausência de inflamação define o eflúvio telógeno — miniaturização folicular aponta para androgenética associada.",
+      concept: [
+        <>Transição <Highlight>sincronizada</Highlight> de um grande número de folículos da fase anágena para a telógena, em resposta a um gatilho sistêmico cerca de <Highlight>três meses</Highlight> antes do achado clínico.</>,
+      ],
+      clinical: [
+        <><Highlight>Afinamento difuso</Highlight> de todo o couro cabeludo; gatilhos incluem febre alta, parto, doença sistêmica, deficiências nutricionais e estresse emocional intenso.</>,
+        <>Forma crônica sem gatilho identificável é comum em mulheres.</>,
+      ],
+      histology: [
+        <>Número total de fios <Highlight>normal</Highlight>, incluindo número normal de fios terminais; aumento da contagem de telógenos para <Highlight>&gt;20%</Highlight> (raramente excede 50%; &gt;80% é incompatível com eflúvio telógeno).</>,
+        <>Ausência de inflamação e de fibrose.</>,
+      ],
+      evaluation: [
+        <><Highlight>Tricograma</Highlight> com &gt;20% de fios em telógeno é diagnóstico; investigar função tireoidiana, hemograma e ferritina sérica quando o gatilho não for evidente.</>,
+        <>A <Highlight>razão terminal:vellus</Highlight> no istmo diferencia de alopecia androgenética, com a qual frequentemente coexiste.</>,
+      ],
+      pearl: <>Contagem de telógenos aumentada (&gt;20%) com <Highlight>número normal de fios terminais</Highlight> e ausência de inflamação define o eflúvio telógeno — miniaturização folicular aponta para androgenética associada.</>,
     },
   },
   {
