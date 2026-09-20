@@ -460,8 +460,8 @@ const nodesArray: AlgorithmNode[] = [
   ], tags: ["nodular", "difusa"] }),
   node({ id: "pustulosas", title: "Dermatites pustulosas", type: "decision", parentId: "dermatite", description: "Subdivida conforme o compartimento principal envolvido pela pústula.", options: [
     { label: "Epiderme", nextNodeId: "pustulas-intraepidermicas" },
-    { label: "Epiderme infundibular (infundibulite pustular)", nextNodeId: "placeholder-pustulas-foliculares" },
-    { label: "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", nextNodeId: "placeholder-pustulas-acrosiringicas" },
+    { label: "Epitélio folicular (foliculite pustular)", nextNodeId: "placeholder-pustulas-foliculares" },
+    { label: "Ducto Écrino (miliária pustulosa)", nextNodeId: "placeholder-pustulas-acrosiringicas" },
   ], tags: ["pustulosa", "pústula", "pustula"] }),
   node({ id: "pustulas-intraepidermicas", title: "Epiderme", type: "decision", parentId: "pustulosas", description: "Classifique a pústula epidérmica pelo plano e pelos achados acompanhantes.", options: [
     { label: "Intracórnea, subcórnea e/ou intraespinhosa", nextNodeId: "pustulas-epiderme-intra-sub-intraespinhosa" },
@@ -499,12 +499,133 @@ const nodesArray: AlgorithmNode[] = [
   ], tags: ["vesícula espongiótica", "pústula", "hifas"], synonyms: ["vesicula espongiotica"] }),
   terminal("dx-pustula-vesicula-dermatofitose", "Dermatofitose", "diagnosis", "pustulas-epiderme-vesicula-espongiotica", "Vesícula espongiótica pustulosa com hifas, compatível com dermatofitose.", blocks("Mantida também neste braço por coerência dermatopatológica."), ["dermatofitose", "vesícula espongiótica", "pústula"], ["vesicula espongiotica"]),
   terminal("dx-pustula-eczematosa-impetiginizada", "Dermatites eczematosas impetiginizadas", "diagnosis", "pustulas-epiderme-vesicula-espongiotica", "Vesícula espongiótica pustulosa sem hifas, compatível com dermatites eczematosas impetiginizadas.", blocks("Mantido como desfecho diagnóstico agrupado conforme o algoritmo fornecido."), ["dermatite eczematosa impetiginizada", "eczematosa", "impetiginizada", "pústula"], ["dermatites eczematosas impetiginizadas"]),
-  terminal("placeholder-pustulas-foliculares", "Epiderme infundibular (infundibulite pustular)", "placeholder", "pustulosas", "Ramo de infundibulite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite pustular", "epiderme infundibular"], ["folicular"]),
-  terminal("placeholder-pustulas-acrosiringicas", "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", "placeholder", "pustulosas", "Ramo de infundibulite e foliculite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite", "foliculite pustular", "epiderme infundibular e folicular"], ["acrosiringica", "acrosiríngica"]),
-  node({ id: "foliculite-perifoliculite", title: "Foliculite / perifoliculite", type: "decision", parentId: "dermatite", description: "Algoritmo de alopecias inflamatórias e não inflamatórias com ou sem peri-infundibulite/perifoliculite.", options: [
-    { label: "Alopécia sem infiltração inflamatória", nextNodeId: "alopecia-sem-inflamacao" },
-    { label: "Alopécia com infiltração inflamatória", nextNodeId: "alopecia-com-inflamacao" },
+  terminal("placeholder-pustulas-foliculares", "Epitélio folicular (foliculite pustular)", "placeholder", "pustulosas", "Ramo de foliculite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "foliculite pustular", "epitélio folicular"], ["folicular"]),
+  terminal("placeholder-pustulas-acrosiringicas", "Ducto Écrino (miliária pustulosa)", "placeholder", "pustulosas", "Ramo de miliária pustulosa ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "miliária pustulosa", "ducto écrino"], ["miliaria pustulosa", "ducto ecrino", "acrosiringica", "acrosiríngica"]),
+  node({ id: "foliculite-perifoliculite", title: "Foliculite / perifoliculite", type: "decision", parentId: "dermatite", description: "Selecione o grande grupo: foliculite, perifoliculite ou alopecia.", options: [
+    { label: "Foliculite", nextNodeId: "foliculite-raiz" },
+    { label: "Perifoliculite", nextNodeId: "perifoliculite-raiz" },
+    { label: "Alopécia", nextNodeId: "alopecia-raiz" },
   ], tags: ["foliculite", "perifoliculite", "alopecia"] }),
+
+  node({ id: "foliculite-raiz", title: "Foliculite", type: "decision", parentId: "foliculite-perifoliculite", description: "Classifique a foliculite pelo padrão inflamatório predominante.", options: [
+    { label: "Supurativa", nextNodeId: "foliculite-supurativa" },
+    { label: "Espongiótica", nextNodeId: "foliculite-espongiotica" },
+    { label: "Linfocítica", nextNodeId: "foliculite-linfocitica" },
+  ], tags: ["foliculite", "supurativa", "espongiótica", "linfocítica"], synonyms: ["foliculite supurativa", "foliculite espongiotica", "foliculite linfocitica"] }),
+
+  node({ id: "foliculite-supurativa", title: "Foliculite supurativa", type: "decision", parentId: "foliculite-raiz", description: "Classifique pela profundidade do acometimento folicular.", options: [
+    { label: "Superficial", nextNodeId: "foliculite-supurativa-superficial" },
+    { label: "Profunda", nextNodeId: "foliculite-supurativa-profunda" },
+  ], tags: ["foliculite supurativa", "superficial", "profunda"] }),
+
+  node({ id: "foliculite-supurativa-superficial", title: "Foliculite supurativa superficial", type: "decision", parentId: "foliculite-supurativa", description: "Defina se há sinais de causa infecciosa identificável.", options: [
+    { label: "Sinais de causa infecciosa identificável", nextNodeId: "foliculite-supurativa-superficial-infecciosa" },
+    { label: "Sem sinais de causa infecciosa", nextNodeId: "foliculite-supurativa-superficial-nao-infecciosa" },
+  ], tags: ["foliculite supurativa superficial", "infecciosa"] }),
+
+  node({ id: "foliculite-supurativa-superficial-infecciosa", title: "Sinais de causa infecciosa identificável", type: "decision", parentId: "foliculite-supurativa-superficial", description: "Classifique pelo agente etiológico e pela coloração empregada.", options: [
+    { label: "Bacteriana (H&E)", nextNodeId: "group-foliculite-superficial-bacteriana" },
+    { label: "Fúngica (H&E)", nextNodeId: "dx-foliculite-superficial-dermatofitose" },
+    { label: "Leveduriforme (H&E)", nextNodeId: "dx-foliculite-superficial-candidiase" },
+    { label: "Viral (H&E — núcleos em vidro fosco, marginação da cromatina)", nextNodeId: "dx-foliculite-superficial-herpesvirus" },
+    { label: "Espiroquetose (prata)", nextNodeId: "dx-foliculite-superficial-sifilis" },
+  ], tags: ["foliculite superficial", "infecciosa", "bacteriana", "fúngica", "viral", "espiroquetose"] }),
+  diagnosisGroup("group-foliculite-superficial-bacteriana", "Bacteriana (H&E)", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial de causa infecciosa bacteriana identificável à H&E.", ["Foliculite estafilocócica", "Foliculite por Pseudomonas"], blocks("A cultura e a clínica (ex.: exposição a banheiras/piscinas) auxiliam a diferenciação etiológica."), ["foliculite estafilocócica", "foliculite por pseudomonas", "bacteriana"], ["foliculite estafilococica"]),
+  terminal("dx-foliculite-superficial-dermatofitose", "Dermatofitose", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com hifas à H&E, compatível com dermatofitose.", blocks("A pesquisa de fungos (PAS/Grocott) confirma o diagnóstico."), ["dermatofitose", "foliculite fúngica"], ["foliculite fungica"]),
+  terminal("dx-foliculite-superficial-candidiase", "Candidíase", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com leveduras/pseudo-hifas à H&E, compatível com candidíase.", blocks("A coloração especial para fungos reforça o diagnóstico."), ["candidíase", "foliculite leveduriforme"], ["candidiase"]),
+  terminal("dx-foliculite-superficial-herpesvirus", "Infecção por herpesvírus", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com núcleos em vidro fosco e marginação da cromatina, compatível com infecção por herpesvírus.", blocks("Multinucleação e moldagem nuclear reforçam o diagnóstico."), ["infecção por herpesvírus", "herpesvirus", "foliculite viral"], ["infeccao por herpesvirus"]),
+  terminal("dx-foliculite-superficial-sifilis", "Sífilis secundária", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com espiroquetas evidenciadas pela impregnação argêntica, compatível com sífilis secundária.", blocks("A sorologia confirma o diagnóstico."), ["sífilis secundária", "espiroquetose", "foliculite"], ["sifilis secundaria"]),
+
+  node({ id: "foliculite-supurativa-superficial-nao-infecciosa", title: "Sem sinais de causa infecciosa", type: "decision", parentId: "foliculite-supurativa-superficial", description: "Classifique pela célula inflamatória predominante.", options: [
+    { label: "Neutrófilos", nextNodeId: "foliculite-supurativa-superficial-neutrofilos" },
+    { label: "Eosinófilos", nextNodeId: "foliculite-supurativa-superficial-eosinofilos" },
+  ], tags: ["foliculite superficial não infecciosa", "neutrófilos", "eosinófilos"] }),
+
+  node({ id: "foliculite-supurativa-superficial-neutrofilos", title: "Neutrófilos", type: "decision", parentId: "foliculite-supurativa-superficial-nao-infecciosa", description: "Utilize a presença de comedões e achados acompanhantes para o fechamento diagnóstico.", options: [
+    { label: "Comedões", nextNodeId: "dx-foliculite-acne-vulgar" },
+    { label: "Sem comedões", nextNodeId: "group-foliculite-sem-comedoes" },
+    { label: "Sem comedões, infiltrado perifolicular de linfócitos e histiócitos", nextNodeId: "group-foliculite-rosacea-perioral" },
+    { label: "Sem comedões, fibras elásticas alteradas em canais intraepidérmicos", nextNodeId: "dx-foliculite-elastose-perfurante" },
+  ], tags: ["foliculite neutrofílica", "comedões"], synonyms: ["foliculite neutrofilica", "comedoes"] }),
+  terminal("dx-foliculite-acne-vulgar", "Acne vulgar", "diagnosis", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica superficial com comedões, compatível com acne vulgar.", blocks("Correlacionar com a topografia e a clínica."), ["acne vulgar", "comedões"], ["comedoes"]),
+  diagnosisGroup("group-foliculite-sem-comedoes", "Sem comedões", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica sem comedões, associada a agentes sistêmicos ou exógenos.", ["Foliculite da diálise renal", "Medicações sistêmicas (corticosteroides, hidantoína, halogênios)", "Agentes exógenos (óleos de corte, petrolato, adesivos)"], blocks("A história clínica e de exposição é fundamental para o diagnóstico."), ["foliculite da diálise renal", "medicações sistêmicas", "agentes exógenos"], ["foliculite da dialise renal", "medicacoes sistemicas"]),
+  diagnosisGroup("group-foliculite-rosacea-perioral", "Sem comedões, infiltrado perifolicular de linfócitos e histiócitos", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica sem comedões com infiltrado perifolicular linfo-histiocitário.", ["Rosácea", "Dermatite perioral", "Dermatite periocular"], blocks("A topografia centrofacial e periorificial ajuda na diferenciação clínica."), ["rosácea", "dermatite perioral", "dermatite periocular"], ["rosacea"]),
+  terminal("dx-foliculite-elastose-perfurante", "Elastose perfurante serpiginosa", "diagnosis", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica sem comedões com fibras elásticas alteradas em canais intraepidérmicos, compatível com elastose perfurante serpiginosa.", blocks("Pode associar-se a doenças do tecido conjuntivo e à penicilamina."), ["elastose perfurante serpiginosa"]),
+
+  node({ id: "foliculite-supurativa-superficial-eosinofilos", title: "Eosinófilos", type: "decision", parentId: "foliculite-supurativa-superficial-nao-infecciosa", description: "Localize as coleções de eosinófilos para o fechamento diagnóstico.", options: [
+    { label: "Coleções de eosinófilos na epiderme", nextNodeId: "dx-foliculite-eritema-toxico-neonato" },
+    { label: "Coleções de eosinófilos nos infundíbulos", nextNodeId: "group-foliculite-pustulosa-eosinofilica" },
+  ], tags: ["foliculite eosinofílica"], synonyms: ["foliculite eosinofilica"] }),
+  terminal("dx-foliculite-eritema-toxico-neonato", "Eritema tóxico do neonato", "diagnosis", "foliculite-supurativa-superficial-eosinofilos", "Coleções de eosinófilos na epiderme/infundíbulo em recém-nascido, compatível com eritema tóxico do neonato.", blocks("Achado autolimitado e benigno do período neonatal."), ["eritema tóxico do neonato"], ["eritema toxico do neonato"]),
+  diagnosisGroup("group-foliculite-pustulosa-eosinofilica", "Coleções de eosinófilos nos infundíbulos", "foliculite-supurativa-superficial-eosinofilos", "Coleções de eosinófilos nos infundíbulos foliculares.", ["Foliculite pustulosa eosinofílica", "Síndrome de Ofuji"], blocks("A correlação clínica com o padrão de recorrência e a topografia auxilia o diagnóstico."), ["foliculite pustulosa eosinofílica", "síndrome de ofuji"], ["foliculite pustulosa eosinofilica", "sindrome de ofuji"]),
+
+  node({ id: "foliculite-supurativa-profunda", title: "Foliculite supurativa profunda", type: "decision", parentId: "foliculite-supurativa", description: "Defina se há sinal de causa infecciosa identificável.", options: [
+    { label: "Sinal de causa infecciosa identificável", nextNodeId: "foliculite-supurativa-profunda-infecciosa" },
+    { label: "Sem sinal de causa infecciosa", nextNodeId: "foliculite-supurativa-profunda-nao-infecciosa" },
+  ], tags: ["foliculite supurativa profunda", "infecciosa"] }),
+
+  node({ id: "foliculite-supurativa-profunda-infecciosa", title: "Sinal de causa infecciosa identificável", type: "decision", parentId: "foliculite-supurativa-profunda", description: "Classifique pelo agente etiológico.", options: [
+    { label: "Bacteriana", nextNodeId: "group-foliculite-profunda-bacteriana" },
+    { label: "Fúngica", nextNodeId: "group-foliculite-profunda-fungica" },
+    { label: "Viral", nextNodeId: "dx-foliculite-profunda-herpesvirus" },
+  ], tags: ["foliculite profunda infecciosa"] }),
+  diagnosisGroup("group-foliculite-profunda-bacteriana", "Bacteriana", "foliculite-supurativa-profunda-infecciosa", "Foliculite supurativa profunda de causa bacteriana identificável.", ["Furúnculo", "Carbúnculo", "Ectima", "Foliculite decalvante", "Foliculite de banheira de hidromassagem (Pseudomonas)"], blocks("A cultura e a clínica (padrão de exposição, evolução) ajudam a diferenciar as entidades."), ["furúnculo", "carbúnculo", "ectima", "foliculite decalvante", "foliculite de banheira de hidromassagem"], ["furunculo", "carbunculo", "hot tub folliculitis"]),
+  diagnosisGroup("group-foliculite-profunda-fungica", "Fúngica", "foliculite-supurativa-profunda-infecciosa", "Foliculite supurativa profunda de causa fúngica identificável.", ["Granuloma de Majocchi", "Favo"], blocks("A pesquisa de fungos (PAS/Grocott) confirma o agente etiológico."), ["granuloma de majocchi", "favo"]),
+  terminal("dx-foliculite-profunda-herpesvirus", "Infecção por herpesvírus", "diagnosis", "foliculite-supurativa-profunda-infecciosa", "Foliculite supurativa profunda com citopatia viral, compatível com infecção por herpesvírus.", blocks("Multinucleação e moldagem nuclear reforçam o diagnóstico."), ["infecção por herpesvírus", "foliculite viral"], ["infeccao por herpesvirus"]),
+
+  node({ id: "foliculite-supurativa-profunda-nao-infecciosa", title: "Sem sinal de causa infecciosa", type: "decision", parentId: "foliculite-supurativa-profunda", description: "Utilize os trajetos sinusais, a ausência de outros achados ou a hiperplasia pseudocarcinomatosa para o fechamento.", options: [
+    { label: "Trajetos sinusais do epitélio infundibular", nextNodeId: "group-foliculite-trajetos-sinusais" },
+    { label: "Sem outros achados", nextNodeId: "group-foliculite-sem-outros-achados" },
+    { label: "Hiperplasia pseudocarcinomatosa", nextNodeId: "dx-foliculite-halogenodermas" },
+  ], tags: ["foliculite profunda não infecciosa"], synonyms: ["foliculite profunda nao infecciosa"] }),
+  diagnosisGroup("group-foliculite-trajetos-sinusais", "Trajetos sinusais do epitélio infundibular", "foliculite-supurativa-profunda-nao-infecciosa", "Trajetos sinusais revestidos por epitélio infundibular.", ["Acne conglobata", "Acne queloidiana", "Celulite dissecante do couro cabeludo", "Hidradenite supurativa"], blocks("A tétrade de oclusão folicular compartilha esse substrato histopatológico."), ["acne conglobata", "acne queloidiana", "celulite dissecante do couro cabeludo", "hidradenite supurativa"]),
+  diagnosisGroup("group-foliculite-sem-outros-achados", "Sem outros achados", "foliculite-supurativa-profunda-nao-infecciosa", "Foliculite supurativa profunda sem outros achados específicos.", ["Pioderma gangrenoso (fase inicial)", "Doença de Crohn (fase inicial)"], blocks("A correlação clínica e a evolução são fundamentais para o diagnóstico neste estágio inicial."), ["pioderma gangrenoso", "doença de crohn"], ["doenca de crohn"]),
+  terminal("dx-foliculite-halogenodermas", "Halogenodermas", "diagnosis", "foliculite-supurativa-profunda-nao-infecciosa", "Foliculite supurativa profunda com hiperplasia pseudocarcinomatosa, compatível com halogenodermas.", blocks("Relacionada à exposição a halogênios (iodo, bromo)."), ["halogenodermas"]),
+
+  node({ id: "foliculite-espongiotica", title: "Foliculite espongiótica", type: "decision", parentId: "foliculite-raiz", description: "Utilize o estado do óstio infundibular e a presença de mucina para o fechamento diagnóstico.", options: [
+    { label: "Infundíbulo obstruído por corneócitos", nextNodeId: "dx-foliculite-fox-fordyce" },
+    { label: "Infundíbulo não obstruído por corneócitos", nextNodeId: "dx-foliculite-infundibulofoliculite" },
+    { label: "Mucina nos infundíbulos (e por vezes no epitélio sebáceo)", nextNodeId: "foliculite-espongiotica-mucina" },
+  ], tags: ["foliculite espongiótica"], synonyms: ["foliculite espongiotica"] }),
+  terminal("dx-foliculite-fox-fordyce", "Doença de Fox-Fordyce", "diagnosis", "foliculite-espongiotica", "Foliculite espongiótica com infundíbulo obstruído por corneócitos, compatível com doença de Fox-Fordyce.", blocks("Acomete áreas ricas em glândulas apócrinas."), ["doença de fox-fordyce"], ["doenca de fox-fordyce"]),
+  terminal("dx-foliculite-infundibulofoliculite", "Infundibulofoliculite", "diagnosis", "foliculite-espongiotica", "Foliculite espongiótica com infundíbulo não obstruído por corneócitos, compatível com infundibulofoliculite.", blocks("Também chamada de doença infundibular disseminada e recorrente."), ["infundibulofoliculite"]),
+  node({ id: "foliculite-espongiotica-mucina", title: "Mucina nos infundíbulos", type: "decision", parentId: "foliculite-espongiotica", description: "Defina se os linfócitos presentes são normais ou atípicos.", options: [
+    { label: "Linfócitos normais", nextNodeId: "dx-foliculite-alopecia-mucinosa" },
+    { label: "Linfócitos atípicos", nextNodeId: "dx-foliculite-micose-fungoide" },
+  ], tags: ["mucina folicular"] }),
+  terminal("dx-foliculite-alopecia-mucinosa", "Alopecia mucinosa", "diagnosis", "foliculite-espongiotica-mucina", "Mucina nos infundíbulos com linfócitos normais, compatível com alopecia mucinosa.", blocks("Forma idiopática, sem associação linfoproliferativa."), ["alopecia mucinosa", "mucinose folicular"]),
+  terminal("dx-foliculite-micose-fungoide", "Micose fungoide", "diagnosis", "foliculite-espongiotica-mucina", "Mucina nos infundíbulos com linfócitos atípicos, compatível com micose fungoide (variante foliculotrópica).", blocks("Correlacionar com imunofenotipagem e rearranjo do TCR quando indicado."), ["micose fungoide foliculotrópica", "micose fungoide"], ["micose fungoide foliculotropica"]),
+
+  node({ id: "foliculite-linfocitica", title: "Foliculite linfocítica", type: "decision", parentId: "foliculite-raiz", description: "Utilize o estado do óstio infundibular e a arquitetura acompanhante para o fechamento diagnóstico.", options: [
+    { label: "Infundíbulo obstruído por corneócitos", nextNodeId: "group-foliculite-linfocitica-ceratose-pilar" },
+    { label: "Infundíbulo obstruído por corneócitos, pelo espiralado; hipergranulose em cunha dos infundíbulos", nextNodeId: "group-foliculite-linfocitica-escorbuto-lpp" },
+    { label: "Membrana basal da epiderme e anexos espessada, epiderme afilada focalmente", nextNodeId: "dx-foliculite-lupus-discoide" },
+  ], tags: ["foliculite linfocítica"], synonyms: ["foliculite linfocitica"] }),
+  diagnosisGroup("group-foliculite-linfocitica-ceratose-pilar", "Infundíbulo obstruído por corneócitos", "foliculite-linfocitica", "Infundíbulo obstruído por corneócitos, sem espiralamento do pelo.", ["Ceratose pilar", "Líquen espinuloso", "Fridoderma (deficiência de vitamina A)"], blocks("A topografia (face extensora dos membros) e a clínica ajudam na diferenciação."), ["ceratose pilar", "líquen espinuloso", "fridoderma"], ["queratose pilar", "liquen espinuloso", "phrynoderma"]),
+  diagnosisGroup("group-foliculite-linfocitica-escorbuto-lpp", "Infundíbulo obstruído, pelo espiralado; hipergranulose em cunha", "foliculite-linfocitica", "Infundíbulo obstruído por corneócitos com pelo espiralado e hipergranulose em cunha dos infundíbulos.", ["Escorbuto", "Líquen plano pilar"], blocks("A correlação clínica (dieta, distribuição perifolicular das lesões) auxilia o diagnóstico final."), ["escorbuto", "líquen plano pilar"], ["liquen plano pilar", "lpp"]),
+  terminal("dx-foliculite-lupus-discoide", "Lúpus eritematoso discoide", "diagnosis", "foliculite-linfocitica", "Espessamento da membrana basal da epiderme e dos anexos, com afilamento focal da epiderme, compatível com lúpus eritematoso discoide.", blocks("A IFD (banda lúpica) e a clínica reforçam o diagnóstico."), ["lúpus eritematoso discoide", "lúpus discoide"], ["lupus eritematoso discoide", "lupus discoide"]),
+
+  node({ id: "perifoliculite-raiz", title: "Perifoliculite", type: "decision", parentId: "foliculite-perifoliculite", description: "Classifique a perifoliculite pela população predominante.", options: [
+    { label: "Histiócitos (granulomatosa)", nextNodeId: "perifoliculite-histiocitos" },
+    { label: "Fibrócitos (fibrosante)", nextNodeId: "perifoliculite-fibrocitos" },
+  ], tags: ["perifoliculite", "granulomatosa", "fibrosante"] }),
+  node({ id: "perifoliculite-histiocitos", title: "Histiócitos (granulomatosa)", type: "decision", parentId: "perifoliculite-raiz", description: "Defina se há acometimento epidérmico associado.", options: [
+    { label: "Sem acometimento epidérmico", nextNodeId: "group-perifoliculite-rosacea-perioral" },
+    { label: "Acometimento epidérmico, plasmócitos no infiltrado", nextNodeId: "dx-perifoliculite-sifilis" },
+  ], tags: ["perifoliculite granulomatosa"] }),
+  diagnosisGroup("group-perifoliculite-rosacea-perioral", "Sem acometimento epidérmico", "perifoliculite-histiocitos", "Perifoliculite granulomatosa sem acometimento epidérmico.", ["Rosácea", "Dermatite perioral", "Dermatite periocular"], blocks("A topografia centrofacial e periorificial ajuda na diferenciação clínica."), ["rosácea", "dermatite perioral", "dermatite periocular"], ["rosacea"]),
+  terminal("dx-perifoliculite-sifilis", "Sífilis secundária (acneiforme)", "diagnosis", "perifoliculite-histiocitos", "Perifoliculite granulomatosa com acometimento epidérmico e plasmócitos no infiltrado, compatível com sífilis secundária (variante acneiforme).", blocks("A sorologia confirma o diagnóstico."), ["sífilis secundária acneiforme", "sífilis secundária"], ["sifilis secundaria acneiforme"]),
+  node({ id: "perifoliculite-fibrocitos", title: "Fibrócitos (fibrosante)", type: "decision", parentId: "perifoliculite-raiz", description: "Defina a presença de hipergranulose em cunha do infundíbulo.", options: [
+    { label: "Hipergranulose em cunha do infundíbulo", nextNodeId: "dx-perifoliculite-lpp" },
+    { label: "Sem hipergranulose do infundíbulo", nextNodeId: "group-perifoliculite-ceratose-pilar" },
+  ], tags: ["perifoliculite fibrosante"] }),
+  terminal("dx-perifoliculite-lpp", "Líquen plano pilar", "diagnosis", "perifoliculite-fibrocitos", "Perifoliculite fibrosante com hipergranulose em cunha do infundíbulo, compatível com líquen plano pilar.", blocks("A correlação clínica (padrão cicatricial, distribuição perifolicular) reforça o diagnóstico."), ["líquen plano pilar"], ["liquen plano pilar", "lpp"]),
+  diagnosisGroup("group-perifoliculite-ceratose-pilar", "Sem hipergranulose do infundíbulo", "perifoliculite-fibrocitos", "Perifoliculite fibrosante sem hipergranulose do infundíbulo.", ["Ceratose pilar", "Líquen espinuloso"], blocks("A topografia (face extensora dos membros) e a clínica ajudam na diferenciação."), ["ceratose pilar", "líquen espinuloso"], ["queratose pilar", "liquen espinuloso"]),
+
+  node({ id: "alopecia-raiz", title: "Alopécia", type: "decision", parentId: "foliculite-perifoliculite", description: "Classifique a alopecia quanto à presença de infiltrado inflamatório significativo.", options: [
+    { label: "Alopécia sem infiltrado inflamatório", nextNodeId: "alopecia-sem-inflamacao" },
+    { label: "Alopécia com infiltrado inflamatório", nextNodeId: "alopecia-com-inflamacao" },
+  ], tags: ["alopecia"] }),
   node({ id: "fibrosantes", title: "Dermatites fibrosantes", type: "decision", parentId: "dermatite", description: "Classifique conforme o número de fibroblastos e a presença de esclerose.", notes: [{ text: "Fibrose = condição de tecido fibroso anormal que inicialmente tende a cursar com aumento de fibroblastos e colágeno alterado; tardiamente pode assumir forma de esclerose, com redução de fibroblastos e homogeneização do colágeno." }], options: [
     { label: "Fibroblastos em número aumentado", nextNodeId: "fibroblastos-aumentados" },
     { label: "Fibroblastos em número reduzido", nextNodeId: "fibroblastos-reduzidos" },
@@ -800,7 +921,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("group-intersticial-outros", "Dermatite Neutrofílica e Granulomatosa de Paliçada (Dermatite Granulomatosa Intersticial com Cordões e Artrite)", "diagnosis", "intersticial-granulomatoso", "Clinicamente se apresenta como pápulas umbilicadas ou lesões infiltradas e mais lineares, formando cordões clinicamente.", blocks("Clinicamente se apresenta como pápulas umbilicadas ou lesões infiltradas e mais lineares, formando cordões clinicamente."), ["dermatite neutrofílica e granulomatosa de paliçada", "dermatite granulomatosa intersticial com cordões e artrite", "dermatite granulomatosa intersticial", "cordões", "artrite"], ["dermatite neutrofilica e granulomatosa de palicada", "dermatite granulomatosa intersticial com cordoes e artrite"]),
   terminal("placeholder-granulomatoso-supurativo", "Supurativo", "placeholder", "nodular-histiocitos", "Ramo supurativo granulomatoso ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "supurativo granulomatoso"]),
 
-  node({ id: "alopecia-sem-inflamacao", title: "Alopécia sem infiltração inflamatória", type: "decision", parentId: "foliculite-perifoliculite", description: "Alopecias sem infiltrado inflamatório significativo.", options: [
+  node({ id: "alopecia-sem-inflamacao", title: "Alopécia sem infiltrado inflamatório", type: "decision", parentId: "alopecia-raiz", description: "Alopecias sem infiltrado inflamatório significativo.", options: [
     { label: "Alopécia androgenética", nextNodeId: "dx-alopecia-androgenetica" },
     { label: "Eflúvio telógeno", nextNodeId: "dx-efluvio-telogeno" },
     { label: "Tricotilomania", nextNodeId: "dx-tricotilomania" },
@@ -808,7 +929,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-alopecia-androgenetica", "Alopécia androgenética", "diagnosis", "alopecia-sem-inflamacao", "padrão de alopecia sem infiltrado inflamatório compatível com alopécia androgenética.", blocks("Correlacionar com miniaturização folicular."), ["alopécia androgenética", "alopécia androgenética"]),
   terminal("dx-efluvio-telogeno", "Eflúvio telógeno", "diagnosis", "alopecia-sem-inflamacao", "Alopecia sem infiltrado inflamatório compatível com eflúvio telógeno.", blocks("A correlação clínica e o pull test podem ajudar."), ["eflúvio telógeno", "eflúvio telógeno"]),
   terminal("dx-tricotilomania", "Tricotilomania", "diagnosis", "alopecia-sem-inflamacao", "Alopecia sem infiltrado inflamatório compatível com tricotilomania.", blocks("Correlacionar com alterações traumáticas da haste e do folículo."), ["tricotilomania"]),
-  node({ id: "alopecia-com-inflamacao", title: "Alopécia com infiltração inflamatória", type: "decision", parentId: "foliculite-perifoliculite", description: "Subdivida pela população inflamatória predominante.", options: [
+  node({ id: "alopecia-com-inflamacao", title: "Alopécia com infiltrado inflamatório", type: "decision", parentId: "alopecia-raiz", description: "Subdivida pela população inflamatória predominante.", options: [
     { label: "Linfócitos predominam", nextNodeId: "alopecia-linfocitica" },
     { label: "Neutrófilos predominam", nextNodeId: "alopecia-neutrofilica" },
     { label: "Histiócitos e plasmócitos predominam", nextNodeId: "dx-sifilis-secundaria-alopecia" },
