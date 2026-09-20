@@ -981,14 +981,26 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /alopécia androgenética/i,
+    match: /^alopécia androgenética$/i,
     exclusive: true,
+    replaceDefaults: true,
     data: {
-      concept: ["Distúrbio andrógeno-dependente com conversão progressiva de fios terminais em fios miniaturizados (vellus), mediada pela di-hidrotestosterona (DHT) via 5α-redutase."],
-      clinical: ["Afinamento não sincronizado dos fios; nos homens, recuo frontotemporal e rarefação do vértice; nas mulheres, poupança da linha de implantação frontal com alargamento da risca central (padrão em \"árvore de Natal\")."],
-      histology: ["Número total de folículos normal na derme superficial, mas reduzido na junção derme-subcutâneo (\"miniaturização\"); ausência de inflamação significativa; \"streamers\" fibrosos aumentados abaixo dos folículos miniaturizados; discreto aumento da contagem de telógenos; couro cabeludo não envolvido (ex.: occipital) normal."],
-      evaluation: ["Tricoscopia mostra heterogeneidade da espessura dos fios e predomínio de unidades foliculares com um único fio terminal; biópsia raramente necessária, mas útil em apresentações confusas — a razão terminal:vellus no nível do istmo ajuda a diferenciar de eflúvio telógeno."],
-      pearl: "miniaturização folicular (redução de folículos na junção derme-subcutâneo) sem inflamação, com folículos normais na derme superficial, define a alopecia androgenética.",
+      concept: [
+        <>Distúrbio <Highlight>andrógeno-dependente</Highlight> com conversão progressiva de fios terminais em fios <Highlight>miniaturizados (vellus)</Highlight>, mediada pela di-hidrotestosterona (DHT) via 5α-redutase.</>,
+      ],
+      clinical: [
+        <>Afinamento <Highlight>não sincronizado</Highlight> dos fios; nos homens, recuo frontotemporal e rarefação do vértice.</>,
+        <>Nas mulheres, poupança da linha de implantação frontal com alargamento da risca central (<Highlight>padrão em "árvore de Natal"</Highlight>).</>,
+      ],
+      histology: [
+        <>Número total de folículos normal na derme superficial, mas <Highlight>reduzido na junção derme-subcutâneo</Highlight> ("miniaturização"); ausência de inflamação significativa.</>,
+        <>"Streamers" fibrosos aumentados abaixo dos folículos miniaturizados; discreto aumento da contagem de telógenos.</>,
+      ],
+      evaluation: [
+        <><Highlight>Tricoscopia</Highlight> mostra heterogeneidade da espessura dos fios e predomínio de unidades foliculares com um único fio terminal.</>,
+        <>Biópsia raramente necessária, mas útil em apresentações confusas — a <Highlight>razão terminal:vellus</Highlight> no nível do istmo ajuda a diferenciar de eflúvio telógeno.</>,
+      ],
+      pearl: <>Miniaturização folicular (redução de folículos na junção derme-subcutâneo) <Highlight>sem inflamação</Highlight>, com folículos normais na derme superficial, define a alopecia androgenética.</>,
     },
   },
   {
