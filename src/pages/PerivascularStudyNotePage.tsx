@@ -1014,14 +1014,26 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /alopécia areata/i,
+    match: /^alopécia areata$/i,
     exclusive: true,
+    replaceDefaults: true,
     data: {
-      concept: ["Doença autoimune mediada por células T (padrão Th1/IFN-γ, linfócitos T CD8+NKG2D+) que provoca colapso do privilégio imune do folículo piloso."],
-      clinical: ["Placas bem demarcadas de alopecia não cicatricial; \"cabelos em ponto de exclamação\", pontos pretos e pontos amarelos à tricoscopia; pode evoluir para perda total do couro cabeludo (alopecia total) ou de todo o corpo (universal)."],
-      histology: ["Fase aguda/subaguda: infiltrado linfomononuclear peribulbar (por vezes com eosinófilos) afetando bulbos de fios terminais em anágeno/catágeno, com alterações degenerativas da matriz, aumento de fios em catágeno/telógeno e miniaturizados, tricomalácia e \"pigment casts\". Fase crônica/estável: predomínio de fios em catágeno/telógeno com miniaturização difusa (fios \"nanógenos\"), infiltrado peribulbar mais discreto."],
-      evaluation: ["O infiltrado peribulbar (não perifolicular superior) é a chave para diferenciar de alopecias cicatriciais; correlacionar com tricoscopia e considerar rastreio de outras doenças autoimunes associadas (tireoidopatia)."],
-      pearl: "infiltrado linfocitário peribulbar ao redor de fios terminais/catágenos, com miniaturização folicular difusa na fase crônica, define a alopecia areata.",
+      concept: [
+        <>Doença autoimune mediada por <Highlight>linfócitos T</Highlight> (padrão Th1/IFN-γ, CD8+NKG2D+) que provoca <Highlight>colapso do privilégio imune</Highlight> do folículo piloso, sem destruir seu nicho de células-tronco — por isso é <Highlight>não cicatricial</Highlight>.</>,
+      ],
+      clinical: [
+        <>Placas bem demarcadas de alopecia <Highlight>não cicatricial</Highlight>; "cabelos em ponto de exclamação", pontos pretos e pontos amarelos à tricoscopia.</>,
+        <>Pode evoluir para perda total do couro cabeludo (<Highlight>alopecia total</Highlight>) ou de todo o corpo (<Highlight>universal</Highlight>).</>,
+      ],
+      histology: [
+        <>Fase aguda: infiltrado linfomononuclear <Highlight>peribulbar em "enxame de abelhas"</Highlight> ao redor de bulbos em anágeno/catágeno, com tricomalácia e "pigment casts".</>,
+        <>Fase crônica: infiltrado peribulbar mais discreto, com <Highlight>miniaturização folicular difusa</Highlight> (fios "nanógenos") e aumento de catágenos/telógenos.</>,
+      ],
+      evaluation: [
+        <>O <Highlight>infiltrado peribulbar</Highlight> (não perifolicular superior) é a chave para diferenciar das alopecias cicatriciais; correlacionar com tricoscopia.</>,
+        <>Considerar rastreio de outras doenças autoimunes associadas (<Highlight>tireoidopatia</Highlight>); plasmócitos no infiltrado exigem excluir sífilis secundária.</>,
+      ],
+      pearl: <>Infiltrado linfocitário <Highlight>peribulbar</Highlight>, com miniaturização folicular difusa na fase crônica — número total de folículos preservado é o que separa a alopecia areata das alopecias cicatriciais.</>,
     },
   },
   {
