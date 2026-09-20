@@ -1665,7 +1665,7 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
       <>Número folicular normal ou quase normal, com redução de terminais e aumento de <Highlight>fios miniaturizados</Highlight>.</>,
       <>Tratos fibrosos abaixo dos folículos miniaturizados e infiltrado perifolicular discreto; glândulas sebáceas preservadas e proeminentes.</>,
     ],
-    pearl: <>Miniaturização sem infiltrado peribulbar favorece alopecia androgenética. <Highlight>Enxame de abelhas e tratos pigmentados</Highlight> apontam para alopecia areata.</>,
+    pearl: <><Highlight>Miniaturização sem infiltrado peribulbar</Highlight> favorece alopecia androgenética. Enxame de abelhas e tratos pigmentados apontam para alopecia areata.</>,
   },
   {
     match: /^alopécia areata(?:\s|\||$)/i,
