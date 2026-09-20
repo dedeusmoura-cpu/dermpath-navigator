@@ -1146,14 +1146,26 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /foliculite decalvante/i,
+    match: /^foliculite decalvante$/i,
     exclusive: true,
+    replaceDefaults: true,
     data: {
-      concept: ["Alopecia cicatricial neutrofílica primária, provavelmente relacionada a uma resposta imune exagerada ao Staphylococcus aureus."],
-      clinical: ["Pústulas foliculares dolorosas com tufos de múltiplos fios por óstio (\"tufted hair folliculitis\" — mais de 5 fios por unidade folicular à tricoscopia), evoluindo para alopecia cicatricial."],
-      histology: ["Foliculite pustulosa neutrofílica rica em linfócitos e plasmócitos; fases iniciais com infiltrado perifolicular misto de predomínio neutrofílico e abscessos foliculares; ruptura folicular com inflamação parcialmente granulomatosa; fragmentos de haste \"nua\" dentro de células gigantes; cocos Gram-positivos frequentemente presentes; fases tardias com cicatriz perifolicular e tufting, além de cicatriz dérmica interfolicular."],
-      evaluation: ["Cultura bacteriana da pústula para confirmar S. aureus; diferenciar de tinea capitis (hifas/artroconídios na haste, sem os tufos característicos)."],
-      pearl: "tufos de múltiplos fios por óstio folicular, com foliculite pustulosa neutrofílica e cocos Gram-positivos, definem a foliculite decalvante.",
+      concept: [
+        <>Alopecia cicatricial <Highlight>neutrofílica primária</Highlight>, provavelmente relacionada a uma resposta imune exagerada ao <Highlight>Staphylococcus aureus</Highlight>.</>,
+      ],
+      clinical: [
+        <>Pústulas foliculares dolorosas com <Highlight>tufos de múltiplos fios por óstio</Highlight> ("tufted hair folliculitis" — mais de 5 fios por unidade folicular à tricoscopia), evoluindo para alopecia cicatricial.</>,
+      ],
+      histology: [
+        <>Foliculite pustulosa <Highlight>neutrofílica rica em linfócitos e plasmócitos</Highlight>; fases iniciais com infiltrado perifolicular misto e abscessos foliculares.</>,
+        <>Ruptura folicular com inflamação parcialmente granulomatosa e fragmentos de haste "nua" dentro de células gigantes; <Highlight>cocos Gram-positivos</Highlight> frequentemente presentes.</>,
+        <>Fases tardias: cicatriz perifolicular com <Highlight>tufting</Highlight>, além de cicatriz dérmica interfolicular.</>,
+      ],
+      evaluation: [
+        <><Highlight>Cultura bacteriana</Highlight> da pústula para confirmar S. aureus.</>,
+        <>Diferenciar de <Highlight>tinea capitis</Highlight> (hifas/artroconídios na haste, sem os tufos característicos).</>,
+      ],
+      pearl: <><Highlight>Tufos de múltiplos fios por óstio folicular</Highlight>, com foliculite pustulosa neutrofílica e cocos Gram-positivos, definem a foliculite decalvante.</>,
     },
   },
   {
