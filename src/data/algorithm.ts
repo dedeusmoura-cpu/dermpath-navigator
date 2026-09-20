@@ -922,9 +922,9 @@ const nodesArray: AlgorithmNode[] = [
   terminal("placeholder-granulomatoso-supurativo", "Supurativo", "placeholder", "nodular-histiocitos", "Ramo supurativo granulomatoso ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "supurativo granulomatoso"]),
 
   node({ id: "alopecia-sem-inflamacao", title: "Alopécia sem infiltrado inflamatório", type: "decision", parentId: "alopecia-raiz", description: "Alopecias sem infiltrado inflamatório significativo.", options: [
-    { label: "Alopécia androgenética", nextNodeId: "dx-alopecia-androgenetica" },
-    { label: "Eflúvio telógeno", nextNodeId: "dx-efluvio-telogeno" },
-    { label: "Tricotilomania", nextNodeId: "dx-tricotilomania" },
+    { label: "Aumento de velus", nextNodeId: "dx-alopecia-androgenetica" },
+    { label: "Leve aumento de catágenos e telógenos", nextNodeId: "dx-efluvio-telogeno" },
+    { label: "Tricomalácia", nextNodeId: "dx-tricotilomania" },
   ]}),
   terminal("dx-alopecia-androgenetica", "Alopécia androgenética", "diagnosis", "alopecia-sem-inflamacao", "padrão de alopecia sem infiltrado inflamatório compatível com alopécia androgenética.", blocks("Correlacionar com miniaturização folicular."), ["alopécia androgenética", "alopécia androgenética"]),
   terminal("dx-efluvio-telogeno", "Eflúvio telógeno", "diagnosis", "alopecia-sem-inflamacao", "Alopecia sem infiltrado inflamatório compatível com eflúvio telógeno.", blocks("A correlação clínica e o pull test podem ajudar."), ["eflúvio telógeno", "eflúvio telógeno"]),
