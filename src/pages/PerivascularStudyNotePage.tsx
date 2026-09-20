@@ -1022,6 +1022,7 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
       evaluation: [
         <><Highlight>Tricograma</Highlight> com &gt;20% de fios em telógeno é diagnóstico; investigar função tireoidiana, hemograma e ferritina sérica quando o gatilho não for evidente.</>,
         <>A <Highlight>razão terminal:vellus</Highlight> no istmo diferencia de alopecia androgenética, com a qual frequentemente coexiste.</>,
+        <>Catágenos/telógenos <Highlight>próximos de 50%</Highlight> associados a miniaturização favorecem alopecia areata (fase crônica) em vez de eflúvio telógeno.</>,
       ],
       pearl: <>Contagem de telógenos aumentada (&gt;20%) com <Highlight>número normal de fios terminais</Highlight> e ausência de inflamação define o eflúvio telógeno — miniaturização folicular aponta para androgenética associada.</>,
     },
