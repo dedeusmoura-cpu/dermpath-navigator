@@ -1072,6 +1072,32 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
+    match: /^líquen planopilar$/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      noteTitle: "Líquen plano pilar (alopecia cicatricial)",
+      concept: [
+        <>Variante folicular do <Highlight>líquen plano</Highlight>: infiltrado linfocitário citotóxico ataca o epitélio do <Highlight>infundíbulo/istmo</Highlight>, destruindo o nicho de células-tronco foliculares — alopecia cicatricial irreversível.</>,
+        <>Espectro inclui a forma clássica multifocal, a <Highlight>alopecia frontal fibrosante (AFF)</Highlight> e a síndrome de Graham-Little-Piccardi-Lassueur.</>,
+      ],
+      clinical: [
+        <>Placas multifocais de alopecia no <Highlight>vértice/occipital</Highlight>, com eritema e descamação perifolicular na borda ativa; centro liso, sem óstios foliculares.</>,
+        <>Na AFF, recessão da <Highlight>linha frontotemporal e sobrancelhas</Highlight>; prurido, ardor ou sensibilidade no couro cabeludo são comuns na borda ativa.</>,
+      ],
+      histology: [
+        <>Infiltrado linfocitário liquenoide <Highlight>em faixa</Highlight> que envolve o epitélio do infundíbulo/istmo, poupando relativamente a <Highlight>epiderme interfolicular</Highlight> — diferente do lúpus discoide.</>,
+        <>Alteração vacuolar e hipergranulose no infundíbulo, fendas de Max-Joseph e <Highlight>perda precoce das glândulas sebáceas</Highlight>.</>,
+        <>Fase tardia: <Highlight>fibrose concêntrica perifolicular</Highlight> substitui o folículo destruído; tufting folicular (agrupamento de fios remanescentes).</>,
+      ],
+      evaluation: [
+        <><Highlight>IFD</Highlight>: corpos coloides (IgM) e faixa "desgrenhada" de fibrinogênio na junção dermoepidérmica quando há epiderme envolvida — padrão diferente do granular do lúpus.</>,
+        <>Principal diferencial é o <Highlight>lúpus discoide</Highlight>: interface também na epiderme interfolicular, mais mucina dérmica e IFD granular; a alopecia de tração não tem inflamação significativa.</>,
+      ],
+      pearl: <>Infiltrado liquenoide <Highlight>restrito ao epitélio folicular</Highlight>, perda das sebáceas e fibrose concêntrica definem a LPP; interface na epiderme interfolicular com mucina aponta para lúpus discoide.</>,
+    },
+  },
+  {
     match: /foliculite decalvante/i,
     exclusive: true,
     data: {
