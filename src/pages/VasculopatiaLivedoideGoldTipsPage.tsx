@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
+import { StudyNoteAsideFrame } from "../components/StudyNoteAsideFrame";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
@@ -78,7 +79,7 @@ export function VasculopatiaLivedoideGoldTipsPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-7xl space-y-4">
+      <div className="mx-auto max-w-[100rem] space-y-4">
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
@@ -116,12 +117,11 @@ export function VasculopatiaLivedoideGoldTipsPage() {
 
 function LivedoidThrombosisDiagram() {
   return (
-    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
-      <h3 className="mx-auto mb-3 max-w-[14rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
-        Esquema: trombose intraluminal
-      </h3>
-
-      <svg viewBox="0 0 320 330" className="mx-auto min-h-0 w-full max-w-[22rem] flex-1" role="img" aria-label="Trombo ocluindo um vaso dérmico">
+    <StudyNoteAsideFrame
+      title="Esquema: trombose intraluminal"
+      footer={<>Trombo intraluminal com <Highlight>oclusão</Highlight> do vaso dérmico.</>}
+    >
+      <svg viewBox="0 0 320 330" className="mx-auto min-h-0 w-full max-w-[22rem] flex-1 rounded-xl border border-[#d9b9aa] bg-[#fff8f3]/70 p-1" role="img" aria-label="Trombo ocluindo um vaso dérmico">
         <defs>
           <linearGradient id="livedoid-skin" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#ffd9d1" />
@@ -160,9 +160,6 @@ function LivedoidThrombosisDiagram() {
         </g>
       </svg>
 
-      <p className="mt-2 text-center font-hand text-base leading-6 text-[#1c2b45]">
-        Trombo intraluminal com <Highlight>oclusão</Highlight> do vaso dérmico.
-      </p>
-    </div>
+    </StudyNoteAsideFrame>
   );
 }

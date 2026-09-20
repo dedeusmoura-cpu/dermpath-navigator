@@ -458,49 +458,174 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Eosinófilos predominam", nextNodeId: "placeholder-nodular-eosinofilico" },
     { label: "Histiócitos predominam", nextNodeId: "nodular-histiocitos" },
   ], tags: ["nodular", "difusa"] }),
-  node({ id: "pustulosas", title: "Dermatites pustulosas", type: "decision", parentId: "dermatite", description: "Classifique o tipo principal de pústula para navegar no algoritmo.", options: [
-    { label: "pústula", nextNodeId: "pustula" },
-  ], tags: ["pustulosa", "pústula", "pustula"] }),
-  node({ id: "pustula", title: "pústula", type: "decision", parentId: "pustulosas", description: "Subdivida conforme o compartimento principal envolvido pela pústula.", options: [
+  node({ id: "pustulosas", title: "Dermatites pustulosas", type: "decision", parentId: "dermatite", description: "Subdivida conforme o compartimento principal envolvido pela pústula.", options: [
     { label: "Epiderme", nextNodeId: "pustulas-intraepidermicas" },
-    { label: "Epiderme infundibular (infundibulite pustular)", nextNodeId: "placeholder-pustulas-foliculares" },
-    { label: "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", nextNodeId: "placeholder-pustulas-acrosiringicas" },
-  ], tags: ["pústula", "pustula", "pustulosa"] }),
-  node({ id: "pustulas-intraepidermicas", title: "Epiderme", type: "decision", parentId: "pustula", description: "Classifique a pústula epidérmica pelo plano e pelos achados acompanhantes.", options: [
+    { label: "Epitélio folicular (foliculite pustular)", nextNodeId: "placeholder-pustulas-foliculares" },
+    { label: "Ducto Écrino (miliária pustulosa)", nextNodeId: "placeholder-pustulas-acrosiringicas" },
+  ], tags: ["pustulosa", "pústula", "pustula"] }),
+  node({ id: "pustulas-intraepidermicas", title: "Epiderme", type: "decision", parentId: "pustulosas", description: "Classifique a pústula epidérmica pelo plano e pelos achados acompanhantes.", options: [
     { label: "Intracórnea, subcórnea e/ou intraespinhosa", nextNodeId: "pustulas-epiderme-intra-sub-intraespinhosa" },
-    { label: "Subcórnea com células acantolticas", nextNodeId: "pustulas-epiderme-subcornea-acantolitica" },
-    { label: "Vescula espongiótica", nextNodeId: "pustulas-epiderme-vesicula-espongiotica" },
+    { label: "Subcórnea com células acantolíticas", nextNodeId: "pustulas-epiderme-subcornea-acantolitica" },
+    { label: "Vesícula espongiótica", nextNodeId: "pustulas-epiderme-vesicula-espongiotica" },
   ], tags: ["epiderme", "pústula", "intracórnea", "subcórnea", "intraespinhosa", "vesícula espongiótica"], synonyms: ["intracornea", "subcornea", "vesicula espongiotica"] }),
   node({ id: "pustulas-epiderme-intra-sub-intraespinhosa", title: "Intracórnea, subcórnea e/ou intraespinhosa", type: "decision", parentId: "pustulas-intraepidermicas", description: "Use fungos, tipo de infiltrado e a ausência de achados adicionais para o fechamento.", options: [
     { label: "Hifas", nextNodeId: "dx-pustula-dermatofitose" },
     { label: "Pseudo-hifas", nextNodeId: "dx-pustula-candidiase" },
     { label: "Histiócitos e plasmócitos", nextNodeId: "dx-pustula-sifilis-rupioide" },
     { label: "Eosinófilos", nextNodeId: "dx-pustula-pega" },
-    { label: "Ausência de achados adicionais", nextNodeId: "group-pustula-psoriase-pemfigo-iga" },
+    { label: "IFD+ para IgA", nextNodeId: "dx-pustula-penfigo-iga" },
+    { label: "Ausência de achados adicionais", nextNodeId: "dx-pustula-psoriase-pustulosa" },
   ], tags: ["intracórnea", "subcórnea", "intraespinhosa", "pústula"], synonyms: ["intracornea", "subcornea"] }),
   terminal("dx-pustula-dermatofitose", "Dermatofitose", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com hifas, compatível com dermatofitose.", blocks("Mantida como diagnóstico final específico deste braço pustuloso."), ["dermatofitose", "pústula", "hifas"]),
   terminal("dx-pustula-candidiase", "Candidíase", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com pseudo-hifas, compatível com candidíase.", blocks("Mantida como diagnóstico final específico deste braço pustuloso."), ["candidíase", "pseudo-hifas", "pústula"], ["candidiase"]),
   terminal("dx-pustula-sifilis-rupioide", "Sífilis rupioide", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com Histiócitos e plasmócitos, compatível com sífilis rupioide.", blocks("Mantida como diagnóstico final específico deste braço pustuloso."), ["sífilis rupioide", "plasmócitos", "histiócitos"], ["sifilis rupioide", "hisítiocitos"]),
   terminal("dx-pustula-pega", "PEGA", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com eosinófilos, compatível com PEGA.", blocks("A correlação clínico-medicamentosa segue importante."), ["pega", "pústula", "eosinófilos"], ["pustulose exantematica generalizada aguda"]),
-  diagnosisGroup("group-pustula-psoriase-pemfigo-iga", "Ausência de achados adicionais", "pustulas-epiderme-intra-sub-intraespinhosa", "Na ausência de achados adicionais especficos, este ponto do algoritmo rene duas possibilidades principais.", ["psoríase pustulosa e variantes", "Pênfigo por IgA"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["psoríase pustulosa", "pênfigo por IgA", "pustulosa"], ["psoriase pustulosa", "penfigo por iga"]),
-  node({ id: "pustulas-epiderme-subcornea-acantolitica", title: "Subcórnea com células acantolíticas", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se h bactérias dentro da pústula subcórnea acantolítica.", options: [
+  terminal("dx-pustula-penfigo-iga", "Pênfigo por IgA", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa com IFD positiva para IgA, compatível com pênfigo por IgA.", blocks("O padrão intercelular na IFD diferencia o pênfigo por IgA da dermatose bolhosa por IgA linear, que marca a zona da membrana basal."), ["pênfigo por IgA", "IgA intercelular", "pústula"], ["penfigo por iga", "iga pemphigus"]),
+  terminal("dx-pustula-psoriase-pustulosa", "Psoríase pustulosa e variantes", "diagnosis", "pustulas-epiderme-intra-sub-intraespinhosa", "pústula intracórnea, subcórnea e/ou intraespinhosa sem achados adicionais específicos, compatível com psoríase pustulosa e variantes.", blocks("Mantido como diagnóstico final específico deste braço pustuloso."), ["psoríase pustulosa", "pustulosa"], ["psoriase pustulosa"]),
+  node({ id: "pustulas-epiderme-subcornea-acantolitica", title: "Subcórnea com células acantolíticas", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se há bactérias dentro da pústula subcórnea acantolítica.", options: [
     { label: "Bactérias na pústula", nextNodeId: "dx-pustula-impetigo-bolhoso" },
-    { label: "Sem bactérias na pústula", nextNodeId: "group-pustula-penfigo-foliaceo-ssss" },
+    { label: "Sem bactérias na pústula", nextNodeId: "pustulas-epiderme-subcornea-sem-bacterias" },
   ], tags: ["subcórnea", "acantolítica", "pústula"], synonyms: ["subcornea", "acantolitica"] }),
   terminal("dx-pustula-impetigo-bolhoso", "Impetigo bolhoso", "diagnosis", "pustulas-epiderme-subcornea-acantolitica", "pústula subcórnea com células acantolíticas e bactérias na cavidade, compatível com impetigo bolhoso.", blocks("Mantido como diagnóstico final específico deste braço pustuloso."), ["impetigo bolhoso", "bactérias", "pústula"], ["bacterias"]),
-  diagnosisGroup("group-pustula-penfigo-foliaceo-ssss", "Sem bactérias na pústula", "pustulas-epiderme-subcornea-acantolitica", "Na ausência de bactérias na pústula subcórnea acantolítica, este ponto do algoritmo rene duas possibilidades principais.", ["Pênfigo foliáceo", "síndrome da pele escaldada estafilocócica (SSSS)"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["pênfigo foliáceo", "ssss", "síndrome da pele escaldada estafilocócica"], ["penfigo foliaceo"]),
-  node({ id: "pustulas-epiderme-vesicula-espongiotica", title: "Vesícula espongiótica", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se h hifas na vesícula espongiótica pustulosa.", options: [
+  node({ id: "pustulas-epiderme-subcornea-sem-bacterias", title: "Sem bactérias na pústula", type: "decision", parentId: "pustulas-epiderme-subcornea-acantolitica", description: "Defina se a IFD é positiva para IgG intercelular.", options: [
+    { label: "IFD+ para IgG intercelular", nextNodeId: "dx-pustula-penfigo-foliaceo" },
+    { label: "IFD negativa", nextNodeId: "dx-pustula-ssss" },
+  ], tags: ["subcórnea", "acantolítica", "pústula", "sem bactérias"] }),
+  terminal("dx-pustula-penfigo-foliaceo", "Pênfigo foliáceo", "diagnosis", "pustulas-epiderme-subcornea-sem-bacterias", "pústula subcórnea com células acantolíticas, sem bactérias e IFD positiva para IgG intercelular, compatível com pênfigo foliáceo.", blocks("Acentuação da fluorescência nas camadas superiores e ELISA anti-Dsg1 apoiam o diagnóstico."), ["pênfigo foliáceo", "IgG intercelular", "pústula"], ["penfigo foliaceo", "fogo selvagem"]),
+  terminal("dx-pustula-ssss", "Síndrome da pele escaldada estafilocócica (SSSS)", "diagnosis", "pustulas-epiderme-subcornea-sem-bacterias", "pústula subcórnea com células acantolíticas, sem bactérias e IFD negativa, compatível com síndrome da pele escaldada estafilocócica (SSSS).", blocks("Mediada por toxina esfoliativa estafilocócica, sem depósitos imunes; mais comum em crianças pequenas."), ["ssss", "síndrome da pele escaldada estafilocócica", "pústula"], ["staphylococcal scalded skin syndrome"]),
+  node({ id: "pustulas-epiderme-vesicula-espongiotica", title: "Vesícula espongiótica", type: "decision", parentId: "pustulas-intraepidermicas", description: "Defina se há hifas na vesícula espongiótica pustulosa.", options: [
     { label: "Hifas", nextNodeId: "dx-pustula-vesicula-dermatofitose" },
     { label: "Sem hifas", nextNodeId: "dx-pustula-eczematosa-impetiginizada" },
   ], tags: ["vesícula espongiótica", "pústula", "hifas"], synonyms: ["vesicula espongiotica"] }),
   terminal("dx-pustula-vesicula-dermatofitose", "Dermatofitose", "diagnosis", "pustulas-epiderme-vesicula-espongiotica", "Vesícula espongiótica pustulosa com hifas, compatível com dermatofitose.", blocks("Mantida também neste braço por coerência dermatopatológica."), ["dermatofitose", "vesícula espongiótica", "pústula"], ["vesicula espongiotica"]),
   terminal("dx-pustula-eczematosa-impetiginizada", "Dermatites eczematosas impetiginizadas", "diagnosis", "pustulas-epiderme-vesicula-espongiotica", "Vesícula espongiótica pustulosa sem hifas, compatível com dermatites eczematosas impetiginizadas.", blocks("Mantido como desfecho diagnóstico agrupado conforme o algoritmo fornecido."), ["dermatite eczematosa impetiginizada", "eczematosa", "impetiginizada", "pústula"], ["dermatites eczematosas impetiginizadas"]),
-  terminal("placeholder-pustulas-foliculares", "Epiderme infundibular (infundibulite pustular)", "placeholder", "pustula", "Ramo de infundibulite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite pustular", "epiderme infundibular"], ["folicular"]),
-  terminal("placeholder-pustulas-acrosiringicas", "Epiderme infundibular e folicular (infundibulite e foliculite pustular)", "placeholder", "pustula", "Ramo de infundibulite e foliculite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "infundibulite", "foliculite pustular", "epiderme infundibular e folicular"], ["acrosiringica", "acrosiríngica"]),
-  node({ id: "foliculite-perifoliculite", title: "Foliculite / perifoliculite", type: "decision", parentId: "dermatite", description: "Algoritmo de alopecias inflamatórias e não inflamatórias com ou sem peri-infundibulite/perifoliculite.", options: [
-    { label: "Alopécia sem infiltração inflamatória", nextNodeId: "alopecia-sem-inflamacao" },
-    { label: "Alopécia com infiltração inflamatória", nextNodeId: "alopecia-com-inflamacao" },
+  terminal("placeholder-pustulas-foliculares", "Epitélio folicular (foliculite pustular)", "placeholder", "pustulosas", "Ramo de foliculite pustular ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "foliculite pustular", "epitélio folicular"], ["folicular"]),
+  terminal("placeholder-pustulas-acrosiringicas", "Ducto Écrino (miliária pustulosa)", "placeholder", "pustulosas", "Ramo de miliária pustulosa ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "pústula", "miliária pustulosa", "ducto écrino"], ["miliaria pustulosa", "ducto ecrino", "acrosiringica", "acrosiríngica"]),
+  node({ id: "foliculite-perifoliculite", title: "Foliculite / perifoliculite", type: "decision", parentId: "dermatite", description: "Selecione o grande grupo: foliculite, perifoliculite ou alopecia.", options: [
+    { label: "Foliculite", nextNodeId: "foliculite-raiz" },
+    { label: "Perifoliculite", nextNodeId: "perifoliculite-raiz" },
+    { label: "Alopécia", nextNodeId: "alopecia-raiz" },
   ], tags: ["foliculite", "perifoliculite", "alopecia"] }),
+
+  node({ id: "foliculite-raiz", title: "Foliculite", type: "decision", parentId: "foliculite-perifoliculite", description: "Classifique a foliculite pelo padrão inflamatório predominante.", options: [
+    { label: "Supurativa", nextNodeId: "foliculite-supurativa" },
+    { label: "Espongiótica", nextNodeId: "foliculite-espongiotica" },
+    { label: "Linfocítica", nextNodeId: "foliculite-linfocitica" },
+  ], tags: ["foliculite", "supurativa", "espongiótica", "linfocítica"], synonyms: ["foliculite supurativa", "foliculite espongiotica", "foliculite linfocitica"] }),
+
+  node({ id: "foliculite-supurativa", title: "Foliculite supurativa", type: "decision", parentId: "foliculite-raiz", description: "Classifique pela profundidade do acometimento folicular.", options: [
+    { label: "Superficial", nextNodeId: "foliculite-supurativa-superficial" },
+    { label: "Profunda", nextNodeId: "foliculite-supurativa-profunda" },
+  ], tags: ["foliculite supurativa", "superficial", "profunda"] }),
+
+  node({ id: "foliculite-supurativa-superficial", title: "Foliculite supurativa superficial", type: "decision", parentId: "foliculite-supurativa", description: "Defina se há sinais de causa infecciosa identificável.", options: [
+    { label: "Sinais de causa infecciosa identificável", nextNodeId: "foliculite-supurativa-superficial-infecciosa" },
+    { label: "Sem sinais de causa infecciosa", nextNodeId: "foliculite-supurativa-superficial-nao-infecciosa" },
+  ], tags: ["foliculite supurativa superficial", "infecciosa"] }),
+
+  node({ id: "foliculite-supurativa-superficial-infecciosa", title: "Sinais de causa infecciosa identificável", type: "decision", parentId: "foliculite-supurativa-superficial", description: "Classifique pelo agente etiológico e pela coloração empregada.", options: [
+    { label: "Bacteriana (H&E)", nextNodeId: "group-foliculite-superficial-bacteriana" },
+    { label: "Fúngica (H&E)", nextNodeId: "dx-foliculite-superficial-dermatofitose" },
+    { label: "Leveduriforme (H&E)", nextNodeId: "dx-foliculite-superficial-candidiase" },
+    { label: "Viral (H&E — núcleos em vidro fosco, marginação da cromatina)", nextNodeId: "dx-foliculite-superficial-herpesvirus" },
+    { label: "Espiroquetose (prata)", nextNodeId: "dx-foliculite-superficial-sifilis" },
+  ], tags: ["foliculite superficial", "infecciosa", "bacteriana", "fúngica", "viral", "espiroquetose"] }),
+  diagnosisGroup("group-foliculite-superficial-bacteriana", "Bacteriana (H&E)", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial de causa infecciosa bacteriana identificável à H&E.", ["Foliculite estafilocócica", "Foliculite por Pseudomonas"], blocks("A cultura e a clínica (ex.: exposição a banheiras/piscinas) auxiliam a diferenciação etiológica."), ["foliculite estafilocócica", "foliculite por pseudomonas", "bacteriana"], ["foliculite estafilococica"]),
+  terminal("dx-foliculite-superficial-dermatofitose", "Dermatofitose", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com hifas à H&E, compatível com dermatofitose.", blocks("A pesquisa de fungos (PAS/Grocott) confirma o diagnóstico."), ["dermatofitose", "foliculite fúngica"], ["foliculite fungica"]),
+  terminal("dx-foliculite-superficial-candidiase", "Candidíase", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com leveduras/pseudo-hifas à H&E, compatível com candidíase.", blocks("A coloração especial para fungos reforça o diagnóstico."), ["candidíase", "foliculite leveduriforme"], ["candidiase"]),
+  terminal("dx-foliculite-superficial-herpesvirus", "Infecção por herpesvírus", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com núcleos em vidro fosco e marginação da cromatina, compatível com infecção por herpesvírus.", blocks("Multinucleação e moldagem nuclear reforçam o diagnóstico."), ["infecção por herpesvírus", "herpesvirus", "foliculite viral"], ["infeccao por herpesvirus"]),
+  terminal("dx-foliculite-superficial-sifilis", "Sífilis secundária", "diagnosis", "foliculite-supurativa-superficial-infecciosa", "Foliculite supurativa superficial com espiroquetas evidenciadas pela impregnação argêntica, compatível com sífilis secundária.", blocks("A sorologia confirma o diagnóstico."), ["sífilis secundária", "espiroquetose", "foliculite"], ["sifilis secundaria"]),
+
+  node({ id: "foliculite-supurativa-superficial-nao-infecciosa", title: "Sem sinais de causa infecciosa", type: "decision", parentId: "foliculite-supurativa-superficial", description: "Classifique pela célula inflamatória predominante.", options: [
+    { label: "Neutrófilos", nextNodeId: "foliculite-supurativa-superficial-neutrofilos" },
+    { label: "Eosinófilos", nextNodeId: "foliculite-supurativa-superficial-eosinofilos" },
+  ], tags: ["foliculite superficial não infecciosa", "neutrófilos", "eosinófilos"] }),
+
+  node({ id: "foliculite-supurativa-superficial-neutrofilos", title: "Neutrófilos", type: "decision", parentId: "foliculite-supurativa-superficial-nao-infecciosa", description: "Utilize a presença de comedões e achados acompanhantes para o fechamento diagnóstico.", options: [
+    { label: "Comedões", nextNodeId: "dx-foliculite-acne-vulgar" },
+    { label: "Sem comedões", nextNodeId: "group-foliculite-sem-comedoes" },
+    { label: "Sem comedões, infiltrado perifolicular de linfócitos e histiócitos", nextNodeId: "group-foliculite-rosacea-perioral" },
+    { label: "Sem comedões, fibras elásticas alteradas em canais intraepidérmicos", nextNodeId: "dx-foliculite-elastose-perfurante" },
+  ], tags: ["foliculite neutrofílica", "comedões"], synonyms: ["foliculite neutrofilica", "comedoes"] }),
+  terminal("dx-foliculite-acne-vulgar", "Acne vulgar", "diagnosis", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica superficial com comedões, compatível com acne vulgar.", blocks("Correlacionar com a topografia e a clínica."), ["acne vulgar", "comedões"], ["comedoes"]),
+  diagnosisGroup("group-foliculite-sem-comedoes", "Sem comedões", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica sem comedões, associada a agentes sistêmicos ou exógenos.", ["Foliculite da diálise renal", "Medicações sistêmicas (corticosteroides, hidantoína, halogênios)", "Agentes exógenos (óleos de corte, petrolato, adesivos)"], blocks("A história clínica e de exposição é fundamental para o diagnóstico."), ["foliculite da diálise renal", "medicações sistêmicas", "agentes exógenos"], ["foliculite da dialise renal", "medicacoes sistemicas"]),
+  diagnosisGroup("group-foliculite-rosacea-perioral", "Sem comedões, infiltrado perifolicular de linfócitos e histiócitos", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica sem comedões com infiltrado perifolicular linfo-histiocitário.", ["Rosácea", "Dermatite perioral", "Dermatite periocular"], blocks("A topografia centrofacial e periorificial ajuda na diferenciação clínica."), ["rosácea", "dermatite perioral", "dermatite periocular"], ["rosacea"]),
+  terminal("dx-foliculite-elastose-perfurante", "Elastose perfurante serpiginosa", "diagnosis", "foliculite-supurativa-superficial-neutrofilos", "Foliculite neutrofílica sem comedões com fibras elásticas alteradas em canais intraepidérmicos, compatível com elastose perfurante serpiginosa.", blocks("Pode associar-se a doenças do tecido conjuntivo e à penicilamina."), ["elastose perfurante serpiginosa"]),
+
+  node({ id: "foliculite-supurativa-superficial-eosinofilos", title: "Eosinófilos", type: "decision", parentId: "foliculite-supurativa-superficial-nao-infecciosa", description: "Localize as coleções de eosinófilos para o fechamento diagnóstico.", options: [
+    { label: "Coleções de eosinófilos na epiderme", nextNodeId: "dx-foliculite-eritema-toxico-neonato" },
+    { label: "Coleções de eosinófilos nos infundíbulos", nextNodeId: "group-foliculite-pustulosa-eosinofilica" },
+  ], tags: ["foliculite eosinofílica"], synonyms: ["foliculite eosinofilica"] }),
+  terminal("dx-foliculite-eritema-toxico-neonato", "Eritema tóxico do neonato", "diagnosis", "foliculite-supurativa-superficial-eosinofilos", "Coleções de eosinófilos na epiderme/infundíbulo em recém-nascido, compatível com eritema tóxico do neonato.", blocks("Achado autolimitado e benigno do período neonatal."), ["eritema tóxico do neonato"], ["eritema toxico do neonato"]),
+  diagnosisGroup("group-foliculite-pustulosa-eosinofilica", "Coleções de eosinófilos nos infundíbulos", "foliculite-supurativa-superficial-eosinofilos", "Coleções de eosinófilos nos infundíbulos foliculares.", ["Foliculite pustulosa eosinofílica", "Síndrome de Ofuji"], blocks("A correlação clínica com o padrão de recorrência e a topografia auxilia o diagnóstico."), ["foliculite pustulosa eosinofílica", "síndrome de ofuji"], ["foliculite pustulosa eosinofilica", "sindrome de ofuji"]),
+
+  node({ id: "foliculite-supurativa-profunda", title: "Foliculite supurativa profunda", type: "decision", parentId: "foliculite-supurativa", description: "Defina se há sinal de causa infecciosa identificável.", options: [
+    { label: "Sinal de causa infecciosa identificável", nextNodeId: "foliculite-supurativa-profunda-infecciosa" },
+    { label: "Sem sinal de causa infecciosa", nextNodeId: "foliculite-supurativa-profunda-nao-infecciosa" },
+  ], tags: ["foliculite supurativa profunda", "infecciosa"] }),
+
+  node({ id: "foliculite-supurativa-profunda-infecciosa", title: "Sinal de causa infecciosa identificável", type: "decision", parentId: "foliculite-supurativa-profunda", description: "Classifique pelo agente etiológico.", options: [
+    { label: "Bacteriana", nextNodeId: "group-foliculite-profunda-bacteriana" },
+    { label: "Fúngica", nextNodeId: "group-foliculite-profunda-fungica" },
+    { label: "Viral", nextNodeId: "dx-foliculite-profunda-herpesvirus" },
+  ], tags: ["foliculite profunda infecciosa"] }),
+  diagnosisGroup("group-foliculite-profunda-bacteriana", "Bacteriana", "foliculite-supurativa-profunda-infecciosa", "Foliculite supurativa profunda de causa bacteriana identificável.", ["Furúnculo", "Carbúnculo", "Ectima", "Foliculite decalvante", "Foliculite de banheira de hidromassagem (Pseudomonas)"], blocks("A cultura e a clínica (padrão de exposição, evolução) ajudam a diferenciar as entidades."), ["furúnculo", "carbúnculo", "ectima", "foliculite decalvante", "foliculite de banheira de hidromassagem"], ["furunculo", "carbunculo", "hot tub folliculitis"]),
+  diagnosisGroup("group-foliculite-profunda-fungica", "Fúngica", "foliculite-supurativa-profunda-infecciosa", "Foliculite supurativa profunda de causa fúngica identificável.", ["Granuloma de Majocchi", "Favo"], blocks("A pesquisa de fungos (PAS/Grocott) confirma o agente etiológico."), ["granuloma de majocchi", "favo"]),
+  terminal("dx-foliculite-profunda-herpesvirus", "Infecção por herpesvírus", "diagnosis", "foliculite-supurativa-profunda-infecciosa", "Foliculite supurativa profunda com citopatia viral, compatível com infecção por herpesvírus.", blocks("Multinucleação e moldagem nuclear reforçam o diagnóstico."), ["infecção por herpesvírus", "foliculite viral"], ["infeccao por herpesvirus"]),
+
+  node({ id: "foliculite-supurativa-profunda-nao-infecciosa", title: "Sem sinal de causa infecciosa", type: "decision", parentId: "foliculite-supurativa-profunda", description: "Utilize os trajetos sinusais, a ausência de outros achados ou a hiperplasia pseudocarcinomatosa para o fechamento.", options: [
+    { label: "Trajetos sinusais do epitélio infundibular", nextNodeId: "group-foliculite-trajetos-sinusais" },
+    { label: "Sem outros achados", nextNodeId: "group-foliculite-sem-outros-achados" },
+    { label: "Hiperplasia pseudocarcinomatosa", nextNodeId: "dx-foliculite-halogenodermas" },
+  ], tags: ["foliculite profunda não infecciosa"], synonyms: ["foliculite profunda nao infecciosa"] }),
+  diagnosisGroup("group-foliculite-trajetos-sinusais", "Trajetos sinusais do epitélio infundibular", "foliculite-supurativa-profunda-nao-infecciosa", "Trajetos sinusais revestidos por epitélio infundibular.", ["Acne conglobata", "Acne queloidiana", "Celulite dissecante do couro cabeludo", "Hidradenite supurativa"], blocks("A tétrade de oclusão folicular compartilha esse substrato histopatológico."), ["acne conglobata", "acne queloidiana", "celulite dissecante do couro cabeludo", "hidradenite supurativa"]),
+  diagnosisGroup("group-foliculite-sem-outros-achados", "Sem outros achados", "foliculite-supurativa-profunda-nao-infecciosa", "Foliculite supurativa profunda sem outros achados específicos.", ["Pioderma gangrenoso (fase inicial)", "Doença de Crohn (fase inicial)"], blocks("A correlação clínica e a evolução são fundamentais para o diagnóstico neste estágio inicial."), ["pioderma gangrenoso", "doença de crohn"], ["doenca de crohn"]),
+  terminal("dx-foliculite-halogenodermas", "Halogenodermas", "diagnosis", "foliculite-supurativa-profunda-nao-infecciosa", "Foliculite supurativa profunda com hiperplasia pseudocarcinomatosa, compatível com halogenodermas.", blocks("Relacionada à exposição a halogênios (iodo, bromo)."), ["halogenodermas"]),
+
+  node({ id: "foliculite-espongiotica", title: "Foliculite espongiótica", type: "decision", parentId: "foliculite-raiz", description: "Utilize o estado do óstio infundibular e a presença de mucina para o fechamento diagnóstico.", options: [
+    { label: "Infundíbulo obstruído por corneócitos", nextNodeId: "dx-foliculite-fox-fordyce" },
+    { label: "Infundíbulo não obstruído por corneócitos", nextNodeId: "dx-foliculite-infundibulofoliculite" },
+    { label: "Mucina nos infundíbulos (e por vezes no epitélio sebáceo)", nextNodeId: "foliculite-espongiotica-mucina" },
+  ], tags: ["foliculite espongiótica"], synonyms: ["foliculite espongiotica"] }),
+  terminal("dx-foliculite-fox-fordyce", "Doença de Fox-Fordyce", "diagnosis", "foliculite-espongiotica", "Foliculite espongiótica com infundíbulo obstruído por corneócitos, compatível com doença de Fox-Fordyce.", blocks("Acomete áreas ricas em glândulas apócrinas."), ["doença de fox-fordyce"], ["doenca de fox-fordyce"]),
+  terminal("dx-foliculite-infundibulofoliculite", "Infundibulofoliculite", "diagnosis", "foliculite-espongiotica", "Foliculite espongiótica com infundíbulo não obstruído por corneócitos, compatível com infundibulofoliculite.", blocks("Também chamada de doença infundibular disseminada e recorrente."), ["infundibulofoliculite"]),
+  node({ id: "foliculite-espongiotica-mucina", title: "Mucina nos infundíbulos", type: "decision", parentId: "foliculite-espongiotica", description: "Defina se os linfócitos presentes são normais ou atípicos.", options: [
+    { label: "Linfócitos normais", nextNodeId: "dx-foliculite-alopecia-mucinosa" },
+    { label: "Linfócitos atípicos", nextNodeId: "dx-foliculite-micose-fungoide" },
+  ], tags: ["mucina folicular"] }),
+  terminal("dx-foliculite-alopecia-mucinosa", "Alopecia mucinosa", "diagnosis", "foliculite-espongiotica-mucina", "Mucina nos infundíbulos com linfócitos normais, compatível com alopecia mucinosa.", blocks("Forma idiopática, sem associação linfoproliferativa."), ["alopecia mucinosa", "mucinose folicular"]),
+  terminal("dx-foliculite-micose-fungoide", "Micose fungoide", "diagnosis", "foliculite-espongiotica-mucina", "Mucina nos infundíbulos com linfócitos atípicos, compatível com micose fungoide (variante foliculotrópica).", blocks("Correlacionar com imunofenotipagem e rearranjo do TCR quando indicado."), ["micose fungoide foliculotrópica", "micose fungoide"], ["micose fungoide foliculotropica"]),
+
+  node({ id: "foliculite-linfocitica", title: "Foliculite linfocítica", type: "decision", parentId: "foliculite-raiz", description: "Utilize o estado do óstio infundibular e a arquitetura acompanhante para o fechamento diagnóstico.", options: [
+    { label: "Infundíbulo obstruído por corneócitos", nextNodeId: "group-foliculite-linfocitica-ceratose-pilar" },
+    { label: "Infundíbulo obstruído por corneócitos, pelo espiralado; hipergranulose em cunha dos infundíbulos", nextNodeId: "group-foliculite-linfocitica-escorbuto-lpp" },
+    { label: "Membrana basal da epiderme e anexos espessada, epiderme afilada focalmente", nextNodeId: "dx-foliculite-lupus-discoide" },
+  ], tags: ["foliculite linfocítica"], synonyms: ["foliculite linfocitica"] }),
+  diagnosisGroup("group-foliculite-linfocitica-ceratose-pilar", "Infundíbulo obstruído por corneócitos", "foliculite-linfocitica", "Infundíbulo obstruído por corneócitos, sem espiralamento do pelo.", ["Ceratose pilar", "Líquen espinuloso", "Fridoderma (deficiência de vitamina A)"], blocks("A topografia (face extensora dos membros) e a clínica ajudam na diferenciação."), ["ceratose pilar", "líquen espinuloso", "fridoderma"], ["queratose pilar", "liquen espinuloso", "phrynoderma"]),
+  diagnosisGroup("group-foliculite-linfocitica-escorbuto-lpp", "Infundíbulo obstruído, pelo espiralado; hipergranulose em cunha", "foliculite-linfocitica", "Infundíbulo obstruído por corneócitos com pelo espiralado e hipergranulose em cunha dos infundíbulos.", ["Escorbuto", "Líquen plano pilar"], blocks("A correlação clínica (dieta, distribuição perifolicular das lesões) auxilia o diagnóstico final."), ["escorbuto", "líquen plano pilar"], ["liquen plano pilar", "lpp"]),
+  terminal("dx-foliculite-lupus-discoide", "Lúpus eritematoso discoide", "diagnosis", "foliculite-linfocitica", "Espessamento da membrana basal da epiderme e dos anexos, com afilamento focal da epiderme, compatível com lúpus eritematoso discoide.", blocks("A IFD (banda lúpica) e a clínica reforçam o diagnóstico."), ["lúpus eritematoso discoide", "lúpus discoide"], ["lupus eritematoso discoide", "lupus discoide"]),
+
+  node({ id: "perifoliculite-raiz", title: "Perifoliculite", type: "decision", parentId: "foliculite-perifoliculite", description: "Classifique a perifoliculite pela população predominante.", options: [
+    { label: "Histiócitos (granulomatosa)", nextNodeId: "perifoliculite-histiocitos" },
+    { label: "Fibrócitos (fibrosante)", nextNodeId: "perifoliculite-fibrocitos" },
+  ], tags: ["perifoliculite", "granulomatosa", "fibrosante"] }),
+  node({ id: "perifoliculite-histiocitos", title: "Histiócitos (granulomatosa)", type: "decision", parentId: "perifoliculite-raiz", description: "Defina se há acometimento epidérmico associado.", options: [
+    { label: "Sem acometimento epidérmico", nextNodeId: "group-perifoliculite-rosacea-perioral" },
+    { label: "Acometimento epidérmico, plasmócitos no infiltrado", nextNodeId: "dx-perifoliculite-sifilis" },
+  ], tags: ["perifoliculite granulomatosa"] }),
+  diagnosisGroup("group-perifoliculite-rosacea-perioral", "Sem acometimento epidérmico", "perifoliculite-histiocitos", "Perifoliculite granulomatosa sem acometimento epidérmico.", ["Rosácea", "Dermatite perioral", "Dermatite periocular"], blocks("A topografia centrofacial e periorificial ajuda na diferenciação clínica."), ["rosácea", "dermatite perioral", "dermatite periocular"], ["rosacea"]),
+  terminal("dx-perifoliculite-sifilis", "Sífilis secundária (acneiforme)", "diagnosis", "perifoliculite-histiocitos", "Perifoliculite granulomatosa com acometimento epidérmico e plasmócitos no infiltrado, compatível com sífilis secundária (variante acneiforme).", blocks("A sorologia confirma o diagnóstico."), ["sífilis secundária acneiforme", "sífilis secundária"], ["sifilis secundaria acneiforme"]),
+  node({ id: "perifoliculite-fibrocitos", title: "Fibrócitos (fibrosante)", type: "decision", parentId: "perifoliculite-raiz", description: "Defina a presença de hipergranulose em cunha do infundíbulo.", options: [
+    { label: "Hipergranulose em cunha do infundíbulo", nextNodeId: "dx-perifoliculite-lpp" },
+    { label: "Sem hipergranulose do infundíbulo", nextNodeId: "group-perifoliculite-ceratose-pilar" },
+  ], tags: ["perifoliculite fibrosante"] }),
+  terminal("dx-perifoliculite-lpp", "Líquen plano pilar", "diagnosis", "perifoliculite-fibrocitos", "Perifoliculite fibrosante com hipergranulose em cunha do infundíbulo, compatível com líquen plano pilar.", blocks("A correlação clínica (padrão cicatricial, distribuição perifolicular) reforça o diagnóstico."), ["líquen plano pilar"], ["liquen plano pilar", "lpp"]),
+  diagnosisGroup("group-perifoliculite-ceratose-pilar", "Sem hipergranulose do infundíbulo", "perifoliculite-fibrocitos", "Perifoliculite fibrosante sem hipergranulose do infundíbulo.", ["Ceratose pilar", "Líquen espinuloso"], blocks("A topografia (face extensora dos membros) e a clínica ajudam na diferenciação."), ["ceratose pilar", "líquen espinuloso"], ["queratose pilar", "liquen espinuloso"]),
+
+  node({ id: "alopecia-raiz", title: "Alopécia", type: "decision", parentId: "foliculite-perifoliculite", description: "Classifique a alopecia quanto à presença de infiltrado inflamatório significativo.", options: [
+    { label: "Alopécia sem infiltrado inflamatório", nextNodeId: "alopecia-sem-inflamacao" },
+    { label: "Alopécia com infiltrado inflamatório", nextNodeId: "alopecia-com-inflamacao" },
+  ], tags: ["alopecia"] }),
   node({ id: "fibrosantes", title: "Dermatites fibrosantes", type: "decision", parentId: "dermatite", description: "Classifique conforme o número de fibroblastos e a presença de esclerose.", notes: [{ text: "Fibrose = condição de tecido fibroso anormal que inicialmente tende a cursar com aumento de fibroblastos e colágeno alterado; tardiamente pode assumir forma de esclerose, com redução de fibroblastos e homogeneização do colágeno." }], options: [
     { label: "Fibroblastos em número aumentado", nextNodeId: "fibroblastos-aumentados" },
     { label: "Fibroblastos em número reduzido", nextNodeId: "fibroblastos-reduzidos" },
@@ -742,10 +867,10 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Supurativo", nextNodeId: "group-nodular-neutrofilos-supurativo" },
   ]}),
   node({ id: "nodular-neutrofilos-nao-supurativo", title: "não supurativo", type: "decision", parentId: "nodular-neutrofilos", description: "Avalie a presença de fibrina em parede de vênulas.", options: [
-    { label: "Ausência de fibrina em parede de vênulas", nextNodeId: "group-sweet-pioderma-reumatoide" },
+    { label: "Ausência de fibrina em parede de vênulas", nextNodeId: "dx-sindrome-de-sweet" },
     { label: "Fibrina em parede de vênulas", nextNodeId: "group-vasculites-lc-cronicas" },
   ]}),
-  diagnosisGroup("group-sweet-pioderma-reumatoide", "Ausência de fibrina em parede de vênulas", "nodular-neutrofilos-nao-supurativo", "Este ponto do algoritmo abre trs possibilidades principais.", ["síndrome de Sweet", "Pioderma gangrenoso", "Dermatite neutrofílica reumatoide"], blocks("A correlação clínica e sistêmica central para a definição."), ["síndrome de Sweet", "pioderma gangrenoso", "dermatite neutrofílica reumatoide"], ["sweet"]),
+  terminal("dx-sindrome-de-sweet", "Síndrome de Sweet", "diagnosis", "nodular-neutrofilos-nao-supurativo", "Dermatose neutrofílica febril aguda, com infiltrado dérmico neutrofílico denso e ausência de fibrina na parede das vênulas.", blocks("Diagnóstico final deste ramo; correlacionar com o contexto clínico e sistêmico."), ["síndrome de Sweet", "dermatose neutrofílica", "ausência de fibrina"], ["sweet"]),
   diagnosisGroup("group-vasculites-lc-cronicas", "Vasculites Tórpidas (fases iniciais)", "nodular-neutrofilos-nao-supurativo", "Este ponto do algoritmo inclui fases iniciais de formas vasculites tórpidas, de evoluão lenta e progressiva.", ["Granuloma facial (precoce)", "Eritema elevatum diutinum (precoce)"], blocks("O ramo segue a formulaão da aula, mantendo o agrupamento diagnóstico."), ["granuloma facial", "eritema elevatum diutinum", "vasculites torpidas"]),
   diagnosisGroup("group-nodular-neutrofilos-supurativo", "Dermatite nodular/difusa supurativa", "nodular-neutrofilos", "Este ponto do algoritmo abre um grupo de dermatoses supurativas.", ["Cistos rotos", "Acne conglobata", "Acne queloidiana", "Celulite dissecante", "Hidradenite supurativa"], blocks("Correlacionar com topografia, anexos e presença de material cístico."), ["cistos rotos", "acne conglobata", "acne queloidiana", "celulite dissecante", "hidradenite supurativa"]),
   node({ id: "group-nodular-misto-cariofagocitose", title: "Vasculites Tórpidas", type: "decision", parentId: "nodular-difusa", description: "Este ponto do algoritmo inclui vasculites tórpidas, de evoluão lenta e progressiva.", options: [
@@ -796,7 +921,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("group-intersticial-outros", "Dermatite Neutrofílica e Granulomatosa de Paliçada (Dermatite Granulomatosa Intersticial com Cordões e Artrite)", "diagnosis", "intersticial-granulomatoso", "Clinicamente se apresenta como pápulas umbilicadas ou lesões infiltradas e mais lineares, formando cordões clinicamente.", blocks("Clinicamente se apresenta como pápulas umbilicadas ou lesões infiltradas e mais lineares, formando cordões clinicamente."), ["dermatite neutrofílica e granulomatosa de paliçada", "dermatite granulomatosa intersticial com cordões e artrite", "dermatite granulomatosa intersticial", "cordões", "artrite"], ["dermatite neutrofilica e granulomatosa de palicada", "dermatite granulomatosa intersticial com cordoes e artrite"]),
   terminal("placeholder-granulomatoso-supurativo", "Supurativo", "placeholder", "nodular-histiocitos", "Ramo supurativo granulomatoso ainda não completado nesta versão.", blocks("Marcado intencionalmente como ramo ainda não completado nesta versão."), ["placeholder", "supurativo granulomatoso"]),
 
-  node({ id: "alopecia-sem-inflamacao", title: "Alopécia sem infiltração inflamatória", type: "decision", parentId: "foliculite-perifoliculite", description: "Alopecias sem infiltrado inflamatório significativo.", options: [
+  node({ id: "alopecia-sem-inflamacao", title: "Alopécia sem infiltrado inflamatório", type: "decision", parentId: "alopecia-raiz", description: "Alopecias sem infiltrado inflamatório significativo.", options: [
     { label: "Alopécia androgenética", nextNodeId: "dx-alopecia-androgenetica" },
     { label: "Eflúvio telógeno", nextNodeId: "dx-efluvio-telogeno" },
     { label: "Tricotilomania", nextNodeId: "dx-tricotilomania" },
@@ -804,7 +929,7 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-alopecia-androgenetica", "Alopécia androgenética", "diagnosis", "alopecia-sem-inflamacao", "padrão de alopecia sem infiltrado inflamatório compatível com alopécia androgenética.", blocks("Correlacionar com miniaturização folicular."), ["alopécia androgenética", "alopécia androgenética"]),
   terminal("dx-efluvio-telogeno", "Eflúvio telógeno", "diagnosis", "alopecia-sem-inflamacao", "Alopecia sem infiltrado inflamatório compatível com eflúvio telógeno.", blocks("A correlação clínica e o pull test podem ajudar."), ["eflúvio telógeno", "eflúvio telógeno"]),
   terminal("dx-tricotilomania", "Tricotilomania", "diagnosis", "alopecia-sem-inflamacao", "Alopecia sem infiltrado inflamatório compatível com tricotilomania.", blocks("Correlacionar com alterações traumáticas da haste e do folículo."), ["tricotilomania"]),
-  node({ id: "alopecia-com-inflamacao", title: "Alopécia com infiltração inflamatória", type: "decision", parentId: "foliculite-perifoliculite", description: "Subdivida pela população inflamatória predominante.", options: [
+  node({ id: "alopecia-com-inflamacao", title: "Alopécia com infiltrado inflamatório", type: "decision", parentId: "alopecia-raiz", description: "Subdivida pela população inflamatória predominante.", options: [
     { label: "Linfócitos predominam", nextNodeId: "alopecia-linfocitica" },
     { label: "Neutrófilos predominam", nextNodeId: "alopecia-neutrofilica" },
     { label: "Histiócitos e plasmócitos predominam", nextNodeId: "dx-sifilis-secundaria-alopecia" },
@@ -900,7 +1025,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Melanófagos proeminentes", nextNodeId: "group-pv-melanofagos" },
     { label: "Siderófagos proeminentes", nextNodeId: "dx-estase" },
   ]}),
-  terminal("dx-schamberg-2", "Dermatose Púrprica Pigmentada", "diagnosis", "pv-intersticial", "padrão sugestivo de Dermatose Púrprica Pigmentada, a ser corroborado por correlação clínica (especialmente em membros inferiores) e pela identificaão de Hemácias extravasadas e/ou hemossiderina (coloraão de Perls).", blocks("Buscar hemossiderina e clínica correspondente."), ["schamberg", "doença de schamberg", "dermatose purpúrica pigmentada", "dermatose purpurica pigmentada"]),
+  terminal("dx-schamberg-2", "Dermatose Purpúrica Pigmentada", "diagnosis", "pv-intersticial", "padrão sugestivo de Dermatose Purpúrica Pigmentada, a ser corroborado por correlação clínica (especialmente em membros inferiores) e pela identificaão de Hemácias extravasadas e/ou hemossiderina (coloraão de Perls).", blocks("Buscar hemossiderina e clínica correspondente."), ["schamberg", "doença de schamberg", "dermatose purpúrica pigmentada", "dermatose purpurica pigmentada"]),
   node({ id: "group-pv-neutrofilos", title: "Neutrófilos proeminentes", type: "decision", parentId: "pv-intersticial", description: "Avalie os diagnósticos diferenciais com neutrófilos proeminentes.", options: [
     { label: "Lúpus eritematoso cutâneo agudo", nextNodeId: "dx-pvi-lupus" },
     { label: "Dermatite herpetiforme", nextNodeId: "dx-pvi-dh" },
@@ -1291,16 +1416,20 @@ const nodesArray: AlgorithmNode[] = [
   ]}),
   terminal("dx-vesico-erupcao-fixa-droga", "Erupção fixa por droga / Eritema pigmentar fixo", "diagnosis", "vesico-espongiose-neutrofilos-eosinofilos", "Espongiose intraepidérmica com neutrófilos e eosinófilos, associada a alterações de interface, balonização e queratinócitos Necróticos, compatível com erupção fixa por droga / eritema pigmentar fixo.", blocks("Também indexado por fixed drug eruption."), ["eritema pigmentar fixo", "fixed drug eruption"], ["erupcao fixa por droga"]),
   node({ id: "vesico-acantolitica", title: "Acantólise", type: "decision", parentId: "vesico-intraepidermica", description: "Classifique conforme o nível predominante da acantólise.", options: [
-    { label: "Espinhosa superior / granular", nextNodeId: "vesico-acantolitica-superior" },
+    { label: "Clivagem/acantólise superficial", nextNodeId: "vesico-acantolitica-superior" },
     { label: "Espinhosa média", nextNodeId: "vesico-acantolitica-media" },
     { label: "Suprabasal", nextNodeId: "vesico-acantolitica-suprabasal" },
   ]}),
-  node({ id: "vesico-acantolitica-superior", title: "Espinhosa superior / granular", type: "decision", parentId: "vesico-acantolitica", description: "Subdivida conforme haja ou não bactária na bolha.", options: [
-    { label: "Bactária na bolha", nextNodeId: "dx-impetigo-bolhoso" },
-    { label: "Sem bactária na bolha", nextNodeId: "group-vesico-acantolitica-superior-sem-bacteria" },
+  node({ id: "vesico-acantolitica-superior", title: "Clivagem/acantólise superficial", type: "decision", parentId: "vesico-acantolitica", description: "Integre a pesquisa de cocos Gram-positivos na bolha, a IFD e o contexto clinicopatológico.", options: [
+    { label: "Cocos Gram-positivos na bolha", nextNodeId: "dx-impetigo-bolhoso" },
+    { label: "IFD intercelular com IgG ± C3", nextNodeId: "dx-penfigo-foliaceo" },
+    { label: "IFD intercelular com IgA", nextNodeId: "dx-penfigo-iga" },
+    { label: "IFD negativa + inflamação mínima + clínica compatível", nextNodeId: "dx-sindrome-pele-escaldada-estafilococica" },
   ]}),
-  terminal("dx-impetigo-bolhoso", "Impetigo bolhoso", "diagnosis", "vesico-acantolitica-superior", "Acantólise em espinhosa superior / granular com bactária na bolha, compatível com impetigo bolhoso.", blocks("Mantido como desfecho específico deste braço."), ["impetigo bolhoso"]),
-  diagnosisGroup("group-vesico-acantolitica-superior-sem-bacteria", "Sem bactária na bolha", "vesico-acantolitica-superior", "Este ponto do algoritmo abre trs possibilidades principais.", ["Pênfigo foliáceo", "Pênfigo foliáceo induzido por droga", "síndrome da pele escaldada estafilocócica"], blocks("Mantido como lista terminal conforme o algoritmo fornecido."), ["pênfigo foliáceo", "síndrome da pele escaldada estafilocócica", "ssss"], ["penfigo foliaceo", "penicilamina", "rifampina"]),
+  terminal("dx-impetigo-bolhoso", "Impetigo bolhoso", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com cocos Gram-positivos na bolha, compatível com impetigo bolhoso.", blocks("A presença de bactérias na bolha favorece impetigo bolhoso sobre pênfigo foliáceo e síndrome da pele escaldada estafilocócica."), ["impetigo bolhoso", "cocos Gram-positivos", "bactéria na bolha"], ["bacterias na bolha"]),
+  terminal("dx-penfigo-foliaceo", "Pênfigo foliáceo", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com IFD intercelular para IgG, com ou sem C3, compatível com pênfigo foliáceo.", blocks("Acentuação da fluorescência nas camadas superiores e ELISA anti-Dsg1 apoiam o diagnóstico; revisar medicamentos associados."), ["pênfigo foliáceo", "IgG intercelular", "C3", "desmogleína 1"], ["penfigo foliaceo", "fogo selvagem"]),
+  terminal("dx-penfigo-iga", "Pênfigo por IgA", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com IFD intercelular para IgA, compatível com pênfigo por IgA.", blocks("O padrão intercelular diferencia o pênfigo por IgA da dermatose bolhosa por IgA linear, que marca a zona da membrana basal."), ["pênfigo por IgA", "IgA intercelular", "pústula intraepidérmica"], ["penfigo por iga", "iga pemphigus"]),
+  terminal("dx-sindrome-pele-escaldada-estafilococica", "Síndrome da pele escaldada estafilocócica", "diagnosis", "vesico-acantolitica-superior", "Clivagem/acantólise superficial com IFD negativa, inflamação mínima e clínica compatível com síndrome da pele escaldada estafilocócica.", blocks("A toxina estafilocócica circulante causa clivagem na camada granulosa; as bolhas tendem a ser estéreis e a correlação clínica é indispensável."), ["síndrome da pele escaldada estafilocócica", "ssss", "IFD negativa", "inflamação mínima", "toxina esfoliativa"], ["pele escaldada", "staphylococcal scalded skin syndrome"]),
   node({ id: "vesico-acantolitica-media", title: "Espinhosa média", type: "decision", parentId: "vesico-acantolitica", description: "Subdivida conforme haja ou não núcleos em aço-cinza.", options: [
     { label: "Núcleos em aço-cinza", nextNodeId: "dx-vesico-acantolitica-herpesvirus" },
     { label: "Sem núcleos em aço-cinza", nextNodeId: "dx-dermatite-cantharidina" },
@@ -1308,15 +1437,23 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-vesico-acantolitica-herpesvirus", "infecções por herpesvírus", "diagnosis", "vesico-acantolitica-media", "Acantólise em espinhosa média com núcleos em aço-cinza, compatível com infecções por herpesvírus.", blocks("Também indexado por herpesvirus infection."), ["herpesvírus", "herpesvirus infection"], ["herpesvirus"]),
   terminal("dx-dermatite-cantharidina", "Dermatite por cantharidina / blister beetle dermatitis", "diagnosis", "vesico-acantolitica-media", "Acantólise em espinhosa média sem núcleos em aço-cinza, compatível com dermatite por cantharidina / blister beetle dermatitis.", blocks("Mantido como desfecho específico do algoritmo."), ["cantharidin dermatitis", "blister beetle dermatitis", "cantharidina"]),
   node({ id: "vesico-acantolitica-suprabasal", title: "Suprabasal", type: "decision", parentId: "vesico-acantolitica", description: "Subdivida conforme a acantólise suprabasal seja focal ou difusa.", options: [
-    { label: "Focal", nextNodeId: "vesico-acantolitica-suprabasal-focal" },
+    { label: "Diqueratose Acantolítica Focal", nextNodeId: "vesico-acantolitica-suprabasal-focal" },
     { label: "Difusa", nextNodeId: "vesico-acantolitica-suprabasal-difusa" },
   ]}),
-  node({ id: "vesico-acantolitica-suprabasal-focal", title: "Focal", type: "decision", parentId: "vesico-acantolitica-suprabasal", description: "Use a presença de eosinófilos, espongiose e crostas para o fechamento.", options: [
-    { label: "Eosinófilos, sem espongiose, sem crostas", nextNodeId: "dx-doenca-darier" },
-    { label: "Eosinófilos, com espongiose, frequentemente com crostas", nextNodeId: "dx-doenca-grover" },
+  node({ id: "vesico-acantolitica-suprabasal-focal", title: "Diqueratose Acantolítica Focal", type: "decision", parentId: "vesico-acantolitica-suprabasal", description: "Use a correlação clinicopatológica para definir o diagnóstico ou reconhecer um achado incidental.", options: [
+    { label: "Pápulas ceratósicas, áreas seborreicas, 2ª década", nextNodeId: "dx-doenca-darier" },
+    { label: "Seropápulas pruriginosas, V do tronco, >50 anos", nextNodeId: "dx-doenca-grover" },
+    { label: "Pápulas em arranjo linear, superfície verrucosa, ao nascimento", nextNodeId: "dx-nevo-epidermico-verrucoso" },
+    { label: "Ceratose solitária", nextNodeId: "dx-acantoma-acantolitico" },
+    { label: "Pápula ou nódulo solitário, com centro umbilicado", nextNodeId: "dx-disceratoma-verrucoso-focal" },
+    { label: "Incidental (margens de ampliação)", nextNodeId: "finding-disqueratose-acantolitica-incidental" },
   ]}),
-  terminal("dx-doenca-darier", "Doença de Darier", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Acantólise suprabasal focal com eosinófilos, sem espongiose e sem crostas, compatível com doença de Darier.", blocks("Mantido como desfecho específico deste braço."), ["doença de Darier", "darier"], ["doenca de darier"]),
-  terminal("dx-doenca-grover", "Doença de Grover", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Acantólise suprabasal focal com eosinófilos, espongiose e crostas frequentes, compatível com doença de Grover.", blocks("Mantido como desfecho específico deste braço."), ["doença de Grover", "grover"], ["doenca de grover"]),
+  terminal("dx-doenca-darier", "Doença de Darier", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Acantólise suprabasal focal com eosinófilos, sem espongiose e sem crostas, em paciente com pápulas ceratósicas em áreas seborreicas desde a 2ª década, compatível com doença de Darier.", blocks("Mantido como desfecho específico deste braço."), ["doença de Darier", "darier"], ["doenca de darier"]),
+  terminal("dx-doenca-grover", "Doença de Grover", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Acantólise suprabasal focal com eosinófilos, espongiose e crostas frequentes, em paciente com mais de 50 anos e seropápulas pruriginosas no V do tronco, compatível com doença de Grover.", blocks("Mantido como desfecho específico deste braço."), ["doença de Grover", "grover"], ["doenca de grover"]),
+  terminal("dx-nevo-epidermico-verrucoso", "Nevo epidérmico verrucoso", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Pápulas lineares de superfície verrucosa presentes ao nascimento, com disqueratose acantolítica focal, compatíveis com nevo epidérmico verrucoso.", blocks("Correlacione com a distribuição linear e a apresentação congênita."), ["nevo epidérmico verrucoso", "verrucoso", "congênito"], ["nevo epidermico verrucoso"]),
+  terminal("dx-acantoma-acantolitico", "Acantoma acantolítico", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Ceratose solitária com disqueratose acantolítica focal, compatível com acantoma acantolítico.", blocks("A apresentação solitária favorece acantoma acantolítico."), ["acantoma acantolítico", "ceratose solitária"], ["acantoma acantolitico"]),
+  terminal("dx-disceratoma-verrucoso-focal", "DIsqueratoma Verrucoso", "diagnosis", "vesico-acantolitica-suprabasal-focal", "Pápula ou nódulo solitário com centro umbilicado e disqueratose acantolítica focal, compatível com disqueratoma verrucoso.", blocks("A arquitetura crateriforme/umbilicada orienta o diagnóstico."), ["disqueratoma verrucoso", "umbilicação"], ["disceratoma verrucoso"]),
+  terminal("finding-disqueratose-acantolitica-incidental", "Achado incidental", "morphologic_terminal", "vesico-acantolitica-suprabasal-focal", "Disqueratose acantolítica focal incidental, observada em margens de ampliação sem correlação com uma lesão clínica específica.", blocks("Registrar como achado incidental no contexto apropriado."), ["achado incidental", "disqueratose acantolítica focal", "margem de ampliação"], ["disqueratose acantolitica incidental"]),
   node({ id: "vesico-acantolitica-suprabasal-difusa", title: "Difusa", type: "decision", parentId: "vesico-acantolitica-suprabasal", description: "Subdivida conforme a epiderme permaneça coesa ou seja amplamente acantolítica.", options: [
     { label: "Epiderme predominantemente coesa", nextNodeId: "group-vesico-acantolitica-suprabasal-coesa" },
     { label: "Epiderme predominantemente acantolítica (ao menos focalmente), com disqueratose", nextNodeId: "dx-hailey-hailey" },
@@ -1335,26 +1472,33 @@ const nodesArray: AlgorithmNode[] = [
   ]}),
   node({ id: "vesico-subepidermica-pouco-infiltrado", title: "Pouco ou nenhum infiltrado", type: "decision", parentId: "vesico-subepidermica", description: "Use os achados estruturais e Necróticos associados para o fechamento do algoritmo.", options: [
     { label: "Sem outros achados", nextNodeId: "group-subepi-sem-infiltrado-eb" },
-    { label: "Necrose de epitélio anexial", nextNodeId: "dx-hipoxemia-plus-pressure" },
-    { label: "Necrose da epiderme sem infiltrado", nextNodeId: "dx-queimadura-aguda" },
     { label: "Necrose da epiderme com infiltrado escasso", nextNodeId: "dx-eritema-multiforme-grave" },
     { label: "Poucos neutrófilos e eosinófilos", nextNodeId: "group-subepi-poucos-neutro-eos" },
     { label: "Papilas dérmicas preservadas, bainhas perivenulares de material homogêneo, elastose solar extensa", nextNodeId: "group-subepi-porfirias" },
     { label: "Papilas preservadas", nextNodeId: "dx-blister-por-succao" },
     { label: "Glóbulos de amiloide na derme superior", nextNodeId: "dx-amiloidose-bolhosa" },
-    { label: "Fibrose subepidérmica", nextNodeId: "dx-bolha-sobre-cicatriz" },
-    { label: "Franja de células basais, núcleos finos alongados de células espinhosas perpendiculares superfície", nextNodeId: "dx-bolha-ceratose-actinica-eletrodissecada" },
   ]}),
-  diagnosisGroup("group-subepi-sem-infiltrado-eb", "Sem outros achados", "vesico-subepidermica-pouco-infiltrado", "Este ponto do algoritmo abre um grupo de dermatoses bolhosas com pouco ou nenhum infiltrado.", ["Epidermólise bolhosa, juncional", "Epidermólise bolhosa, dermoltica", "Epidermólise bolhosa, adquirida", "síndrome de Bart"], blocks("A correlação clínica e, quando necessário, estudos ultraestruturais ou imunomapeamento ajudam na definição."), ["epidermólise bolhosa juncional", "epidermólise bolhosa dermolítica", "epidermólise bolhosa adquirida", "síndrome de Bart"], ["epidermolise bolhosa juncional", "epidermolise bolhosa dermolitica", "sindrome de bart"]),
-  terminal("dx-hipoxemia-plus-pressure", "Hipoxemia plus pressure", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com necrose de epitélio anexial e pouco ou nenhum infiltrado, compatível com hipoxemia plus pressure.", blocks("Mantido como desfecho específico deste braço."), ["hipoxemia plus pressure"]),
-  terminal("dx-queimadura-aguda", "Queimadura aguda", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com necrose da epiderme sem infiltrado, compatível com queimadura aguda.", blocks("Mantido como diagnóstico final específico deste braço."), ["queimadura aguda"]),
+  node({ id: "group-subepi-sem-infiltrado-eb", title: "Sem outros achados", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre um grupo de dermatoses bolhosas com pouco ou nenhum infiltrado.", groupBridge: true, options: [
+    { label: "Epidermólise bolhosa hereditária", nextNodeId: "dx-subepi-pouco-eb-hereditaria" },
+    { label: "Epidermólise bolhosa adquirida", nextNodeId: "dx-subepi-pouco-eb-adquirida" },
+  ]}),
+  terminal("dx-subepi-pouco-eb-hereditaria", "Epidermólise bolhosa hereditária", "diagnosis", "group-subepi-sem-infiltrado-eb", "Bolha subepidérmica quase sem infiltrado, hereditária, com clivagem na lâmina lúcida ou sublâmina densa, compatível com epidermólise bolhosa hereditária.", blocks("A correlação clínica e, quando necessário, estudos ultraestruturais ou imunomapeamento ajudam na definição do subtipo (juncional ou dermolítica)."), ["epidermólise bolhosa hereditária", "epidermólise bolhosa juncional", "epidermólise bolhosa dermolítica"], ["epidermolise bolhosa hereditaria", "epidermolise bolhosa juncional", "epidermolise bolhosa dermolitica"]),
+  terminal("dx-subepi-pouco-eb-adquirida", "Epidermólise bolhosa adquirida", "diagnosis", "group-subepi-sem-infiltrado-eb", "Bolha subepidérmica quase sem infiltrado, adquirida, por autoanticorpos anti-colágeno VII, compatível com epidermólise bolhosa adquirida.", blocks("A correlação clínica e, quando necessário, estudos ultraestruturais ou imunomapeamento ajudam na definição."), ["epidermólise bolhosa adquirida"], ["epidermolise bolhosa adquirida"]),
   terminal("dx-eritema-multiforme-grave", "Eritema multiforme, grave", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com necrose da epiderme e infiltrado escasso, compatível com eritema multiforme grave.", blocks("Mantido separado do eritema multiforme de outros ramos para preservar o caminho específico."), ["eritema multiforme grave"]),
-  diagnosisGroup("group-subepi-poucos-neutro-eos", "Poucos neutrófilos e eosinófilos", "vesico-subepidermica-pouco-infiltrado", "Este ponto do algoritmo abre duas possibilidades principais.", ["Penfigoide bolhoso", "Herpes gestationis, pobre em células"], blocks("A clínica e a imunopatologia ajudam a separar as possibilidades."), ["penfigoide bolhoso", "herpes gestationis", "herpes gestacional"]),
-  diagnosisGroup("group-subepi-porfirias", "Papilas dérmicas preservadas com material homogêneo perivenular e elastose solar extensa", "vesico-subepidermica-pouco-infiltrado", "Este ponto do algoritmo abre um grupo de porfirias e afins.", ["Porfiria cutânea tarda", "Porfiria variegata", "Porfiria eritropoiética", "Porfiria induzida por droga", "Porfiria induzida por diálise", "Porfiria eritropoiética hepatoeritrode"], blocks("A correlação laboratorial e clínica ajuda na definição específica."), ["porfiria cutânea tarda", "porfiria variegata", "porfiria eritropoiética", "porfiria induzida por droga", "porfiria induzida por diálise", "porfiria eritropoiética hepatoeritrode"], ["porfiria cutanea tarda", "porfiria eritropoietica"]),
-  terminal("dx-blister-por-succao", "Blister por sucção", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com papilas dérmicas preservadas, compatível com blister por sucção.", blocks("Mantido como diagnóstico final específico deste braço."), ["blister por sucção"], ["blister por succao"]),
+  node({ id: "group-subepi-poucos-neutro-eos", title: "Poucos neutrófilos e eosinófilos", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre duas possibilidades principais.", groupBridge: true, options: [
+    { label: "Penfigoide bolhoso", nextNodeId: "dx-subepi-poucos-penfigoide-bolhoso" },
+    { label: "Herpes gestationis, pobre em células", nextNodeId: "dx-subepi-poucos-herpes-gestacional" },
+  ]}),
+  terminal("dx-subepi-poucos-penfigoide-bolhoso", "Penfigoide bolhoso", "diagnosis", "group-subepi-poucos-neutro-eos", "Bolha subepidérmica com poucos neutrófilos e eosinófilos, papilas preservadas, compatível com penfigoide bolhoso (forma pobre em células).", blocks("A clínica e a imunopatologia ajudam a separar as possibilidades."), ["penfigoide bolhoso"]),
+  terminal("dx-subepi-poucos-herpes-gestacional", "Herpes gestationis, pobre em células", "diagnosis", "group-subepi-poucos-neutro-eos", "Bolha subepidérmica com poucos neutrófilos e eosinófilos, papilas preservadas, compatível com herpes gestationis pobre em células.", blocks("A clínica e a imunopatologia ajudam a separar as possibilidades."), ["herpes gestationis", "herpes gestacional"]),
+  node({ id: "group-subepi-porfirias", title: "Papilas dérmicas preservadas com material homogêneo perivenular e elastose solar extensa", type: "decision", parentId: "vesico-subepidermica-pouco-infiltrado", description: "Este ponto do algoritmo abre duas possibilidades principais.", groupBridge: true, options: [
+    { label: "Porfiria cutânea tarda", nextNodeId: "dx-subepi-porfiria-cutanea-tarda" },
+    { label: "Pseudoporfiria", nextNodeId: "dx-subepi-pseudoporfiria" },
+  ]}),
+  terminal("dx-subepi-porfiria-cutanea-tarda", "Porfiria cutânea tarda", "diagnosis", "group-subepi-porfirias", "Bolha subepidérmica pauci-inflamatória com papilas em festão e material hialino PAS-positivo perivascular, compatível com porfiria cutânea tarda.", blocks("A correlação laboratorial e clínica ajuda na definição específica."), ["porfiria cutânea tarda"], ["porfiria cutanea tarda"]),
+  terminal("dx-subepi-pseudoporfiria", "Pseudoporfiria", "diagnosis", "group-subepi-porfirias", "Bolha subepidérmica pauci-inflamatória histologicamente idêntica à porfiria cutânea tarda, porém com porfirinas normais, compatível com pseudoporfiria.", blocks("A correlação laboratorial e clínica ajuda na definição específica."), ["pseudoporfiria"]),
+  terminal("dx-blister-por-succao", "Bolha por sucção", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com papilas dérmicas preservadas, compatível com bolha por sucção.", blocks("Mantido como diagnóstico final específico deste braço."), ["bolha por sucção"], ["bolha por succao"]),
   terminal("dx-amiloidose-bolhosa", "Amiloidose bolhosa", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com glóbulos de amiloide na derme superior, compatível com amiloidose bolhosa.", blocks("Mantido como desfecho específico do algoritmo."), ["amiloidose bolhosa"]),
-  terminal("dx-bolha-sobre-cicatriz", "Bolha sobre cicatriz", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica associada a fibrose subepidérmica, compatível com bolha sobre cicatriz.", blocks("Mantido como desfecho específico deste braço."), ["bolha sobre cicatriz"]),
-  terminal("dx-bolha-ceratose-actinica-eletrodissecada", "Bolha secundária a ceratose actínica eletrodissecada", "diagnosis", "vesico-subepidermica-pouco-infiltrado", "Bolha subepidérmica com franja de células basais e núcleos finos alongados de células espinhosas perpendiculares superfície, compatível com bolha secundária a ceratose actínica eletrodissecada.", blocks("Mantido como diagnóstico final específico deste braço."), ["ceratose actínica eletrodissecada", "bolha secundária a ceratose actínica eletrodissecada"], ["ceratose actinica eletrodissecada"]),
   node({ id: "vesico-subepidermica-linfocitos", title: "Linfócitos", type: "decision", parentId: "vesico-subepidermica", description: "Use balonização, necrose queratinocitária, esclerose e hipergranulose para o fechamento.", options: [
     { label: "Balonização e queratinócitos Necróticos individuais", nextNodeId: "dx-subepi-linf-eritema-multiforme" },
     { label: "Esclerose de papilas dérmicas espessadas, feixes colágenos espessos na derme reticular superior, por vezes Hemácias na bolha", nextNodeId: "dx-liquen-escleroso-atrofico-morfeia" },
@@ -1365,30 +1509,30 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-liquen-escleroso-atrofico-morfeia", "Líquen escleroso e atrófico (morfeia)", "diagnosis", "vesico-subepidermica-linfocitos", "Bolha subepidérmica com esclerose de papilas dérmicas espessadas e feixes colágenos espessos na derme reticular superior, compatível com líquen escleroso e atrófico (morfeia).", blocks("Mantido como diagnóstico final específico deste braço."), ["líquen escleroso e atrófico", "morfeia"], ["liquen escleroso e atrofico"]),
   terminal("dx-subepi-linf-pleva", "PLEVA / Doença de Mucha-Habermann", "diagnosis", "vesico-subepidermica-linfocitos", "Bolha subepidérmica com Linfócitos, balonização e queratinócitos Necróticos individuais, compatível com PLEVA / Doença de Mucha-Habermann.", blocks("Mantida a mesma padronização nominal usada nos demais ramos."), ["pleva", "doença de mucha-habermann", "pitiríase liquenoide"], ["mucha-habermann", "doenca de mucha-habermann", "pitiriase liquenoide"]),
   terminal("dx-liquen-plano-bolhoso", "Líquen plano bolhoso", "diagnosis", "vesico-subepidermica-linfocitos", "Bolha subepidérmica com hipergranulose em cunha nas laterais da bolha, compatível com líquen plano bolhoso.", blocks("Mantido como diagnóstico final específico deste braço."), ["líquen plano bolhoso"], ["liquen plano bolhoso"]),
-  node({ id: "vesico-subepidermica-eosinofilos", title: "Eosinófilos predominam", type: "decision", parentId: "vesico-subepidermica", description: "Use a distribuição dos eosinófilos e sua associação com infiltrado reticular para o fechamento.", options: [
-    { label: "Eosinófilos na derme papilar e na bolha", nextNodeId: "group-subepi-eosinofilos-papilar-bolha" },
-    { label: "Eosinófilos no interstício da derme reticular acompanhados por Linfócitos", nextNodeId: "dx-subepi-insulto-artropode-simuladores" },
+  node({ id: "vesico-subepidermica-eosinofilos", title: "Eosinófilos predominam", type: "decision", parentId: "vesico-subepidermica", description: "Correlacione clínica e imunopatologia para separar as causas de bolha subepidérmica rica em eosinófilos.", options: [
+    { label: "Penfigoide bolhoso", nextNodeId: "dx-subepi-penfigoide-bolhoso" },
+    { label: "Herpes gestacional", nextNodeId: "dx-subepi-herpes-gestacional" },
+    { label: "Epidermólise bolhosa adquirida", nextNodeId: "dx-subepi-eba" },
+    { label: "Farmacodermia", nextNodeId: "dx-subepi-farmacodermia" },
+    { label: "Insulto por artrópodes", nextNodeId: "dx-subepi-insulto-artropode-simuladores" },
   ]}),
-  diagnosisGroup("group-subepi-eosinofilos-papilar-bolha", "Eosinófilos na derme papilar e na bolha", "vesico-subepidermica-eosinofilos", "Este ponto do algoritmo abre trs possibilidades principais.", ["Penfigoide bolhoso", "Herpes gestationis", "Epidermólise bolhosa adquirida"], blocks("A clínica e a imunopatologia ajudam a separar essas possibilidades."), ["penfigoide bolhoso", "herpes gestationis", "herpes gestacional", "epidermólise bolhosa adquirida"], ["epidermolise bolhosa adquirida"]),
+  terminal("dx-subepi-penfigoide-bolhoso", "Penfigoide bolhoso", "diagnosis", "vesico-subepidermica-eosinofilos", "Bolha subepidérmica com eosinófilos predominantes na derme papilar e na cavidade, compatível com penfigoide bolhoso.", blocks("Mantido como desfecho específico deste braço."), ["penfigoide bolhoso"], ["penfigoide bolhoso"]),
+  terminal("dx-subepi-herpes-gestacional", "Herpes gestacional", "diagnosis", "vesico-subepidermica-eosinofilos", "Bolha subepidérmica rica em eosinófilos em gestante, compatível com herpes gestacional (herpes gestationis).", blocks("Mantido como desfecho específico deste braço."), ["herpes gestacional", "herpes gestationis"], ["herpes gestationis"]),
+  terminal("dx-subepi-eba", "Epidermólise bolhosa adquirida", "diagnosis", "vesico-subepidermica-eosinofilos", "Bolha subepidérmica com eosinófilos, por vezes com fibrose e milia em lesões antigas, compatível com epidermólise bolhosa adquirida.", blocks("Mantido como desfecho específico deste braço."), ["epidermólise bolhosa adquirida", "eba"], ["epidermolise bolhosa adquirida"]),
+  terminal("dx-subepi-farmacodermia", "Farmacodermia", "diagnosis", "vesico-subepidermica-eosinofilos", "Bolha subepidérmica rica em eosinófilos associada a fármaco desencadeante, compatível com farmacodermia bolhosa (penfigoide induzido por droga).", blocks("Mantido como desfecho específico deste braço."), ["farmacodermia", "penfigoide induzido por droga", "farmacodermia bolhosa"], ["farmacodermia bolhosa"]),
   terminal("dx-subepi-insulto-artropode-simuladores", "Insulto por artrópode e simuladores", "diagnosis", "vesico-subepidermica-eosinofilos", "Eosinófilos no interstício da derme reticular acompanhados por Linfócitos, geralmente em associação com vesícula intraepidérmica, compatíveis com insulto por artrópode e simuladores.", blocks("Mantido como desfecho específico deste braço."), ["insulto por artrópode", "simuladores"], ["artropode"]),
-  node({ id: "vesico-subepidermica-neutrofilos", title: "Neutrófilos predominam", type: "decision", parentId: "vesico-subepidermica", description: "Use poeira nuclear, mucina, fibrina, trombos e topografia do infiltrado para o fechamento.", options: [
-    { label: "Bandas nucleares e poeira de neutrófilos, sem mucina abundante na derme reticular", nextNodeId: "group-subepi-neutrofilos-bandas-sem-mucina" },
-    { label: "Bandas nucleares e poeira de neutrófilos, mucina abundante na derme reticular", nextNodeId: "dx-lupus-eritematoso-sistemico-bolhoso" },
-    { label: "Poeira nuclear de neutrófilos, fibrina em paredes de vênulas", nextNodeId: "dx-subepi-vasculite-leucocitoclastica" },
-    { label: "Trombos em pequenos vasos dérmicos", nextNodeId: "dx-subepi-vasculite-septica" },
-    { label: "Infiltrado dérmico difuso de neutrófilos", nextNodeId: "dx-subepi-pioderma-gangrenoso" },
-    { label: "Infiltrado intersticial esparso de neutrófilos na derme reticular", nextNodeId: "dx-subepi-celulite" },
-    { label: "Infiltrado intersticial esparso de neutrófilos na derme superior com alguns eosinófilos", nextNodeId: "group-subepi-neutrofilos-superior-eos" },
-    { label: "Bolhas também ao longo de epitélio anexial", nextNodeId: "dx-penfigo-cicatricial" },
+  node({ id: "vesico-subepidermica-neutrofilos", title: "Neutrófilos predominam", type: "decision", parentId: "vesico-subepidermica", description: "Correlacione clínica e imunopatologia para separar as causas de bolha subepidérmica rica em neutrófilos.", options: [
+    { label: "Dermatite herpetiforme", nextNodeId: "dx-subepi-neutro-dermatite-herpetiforme" },
+    { label: "Dermatose por IgA linear", nextNodeId: "dx-subepi-neutro-iga-linear" },
+    { label: "Lúpus bolhoso", nextNodeId: "dx-subepi-neutro-lupus-bolhoso" },
+    { label: "Penfigoide bolhoso", nextNodeId: "dx-subepi-neutro-penfigoide-bolhoso" },
+    { label: "Farmacodermia", nextNodeId: "dx-subepi-neutro-farmacodermia" },
   ]}),
-  diagnosisGroup("group-subepi-neutrofilos-bandas-sem-mucina", "Bandas nucleares e poeira de neutrófilos, sem mucina abundante na derme reticular", "vesico-subepidermica-neutrofilos", "Este ponto do algoritmo abre quatro possibilidades principais.", ["Dermatite herpetiforme", "Erupção farmacológica tipo dermatite herpetiforme", "Dermatose por IgA linear", "Epidermólise bolhosa adquirida"], blocks("A IFD e a correlação clínica ajudam a separar essas possibilidades."), ["dermatite herpetiforme", "dermatite herpetiforme-like drug eruption", "dermatose por IgA linear", "epidermólise bolhosa adquirida"], ["iga linear", "epidermolise bolhosa adquirida"]),
-  terminal("dx-lupus-eritematoso-sistemico-bolhoso", "Lúpus eritematoso sistêmico", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com bandas nucleares e poeira de neutrófilos associadas a mucina abundante na derme reticular, compatível com Lúpus eritematoso sistêmico.", blocks("Mantido como desfecho específico deste braço."), ["lúpus eritematoso sistêmico"], ["lupus eritematoso sistemico"]),
-  terminal("dx-subepi-vasculite-leucocitoclastica", "Vasculite leucocitoclástica", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com poeira nuclear de neutrófilos e fibrina em paredes de vênulas, compatível com vasculite leucocitoclástica.", blocks("Mantido separado do módulo de vasculites para preservar o caminho subepidérmico."), ["vasculite leucocitoclástica"]),
-  terminal("dx-subepi-vasculite-septica", "Vasculite séptica", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com trombos em pequenos vasos dérmicos, compatível com vasculite séptica.", blocks("Mantido separado do módulo de vasculites para preservar o caminho subepidérmico."), ["vasculite séptica", "séptica"]),
-  terminal("dx-subepi-pioderma-gangrenoso", "Pioderma gangrenoso", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com infiltrado dérmico difuso de neutrófilos, compatível com pioderma gangrenoso.", blocks("Mantido como desfecho específico deste braço."), ["pioderma gangrenoso"]),
-  terminal("dx-subepi-celulite", "Celulite", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com infiltrado intersticial esparso de neutrófilos na derme reticular, compatível com celulite.", blocks("Mantido como diagnóstico final específico deste braço."), ["celulite"]),
-  diagnosisGroup("group-subepi-neutrofilos-superior-eos", "Infiltrado intersticial esparso de neutrófilos na derme superior com alguns eosinófilos", "vesico-subepidermica-neutrofilos", "Este ponto do algoritmo abre duas possibilidades principais.", ["Penfigoide bolhoso", "Herpes gestationis"], blocks("Representa uma manifestação menos típica, mas prevista no algoritmo."), ["penfigoide bolhoso", "herpes gestationis", "herpes gestacional"]),
-  terminal("dx-penfigo-cicatricial", "Pênfigo cicatricial", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolhas subepidérmicas também ao longo de epitélio anexial, compatíveis com pênfigo cicatricial.", blocks("Mantido como desfecho específico deste braço."), ["pênfigo cicatricial"], ["penfigo cicatricial"]),
+  terminal("dx-subepi-neutro-dermatite-herpetiforme", "Dermatite herpetiforme", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com neutrófilos predominantes, compatível com dermatite herpetiforme.", blocks("Mantido como desfecho específico deste braço."), ["dermatite herpetiforme"]),
+  terminal("dx-subepi-neutro-iga-linear", "Dermatose por IgA linear", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com neutrófilos predominantes, compatível com dermatose por IgA linear.", blocks("Mantido como desfecho específico deste braço."), ["dermatose por iga linear", "iga linear"]),
+  terminal("dx-subepi-neutro-lupus-bolhoso", "Lúpus bolhoso", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com neutrófilos predominantes, compatível com lúpus bolhoso.", blocks("Mantido como desfecho específico deste braço."), ["lúpus bolhoso"], ["lupus bolhoso"]),
+  terminal("dx-subepi-neutro-penfigoide-bolhoso", "Penfigoide bolhoso", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com neutrófilos predominantes, compatível com penfigoide bolhoso.", blocks("Mantido como desfecho específico deste braço."), ["penfigoide bolhoso"]),
+  terminal("dx-subepi-neutro-farmacodermia", "Farmacodermia", "diagnosis", "vesico-subepidermica-neutrofilos", "Bolha subepidérmica com neutrófilos predominantes associada a fármaco desencadeante, compatível com farmacodermia.", blocks("Mantido como desfecho específico deste braço."), ["farmacodermia"]),
   node({ id: "vesico-subepidermica-misto", title: "Eosinófilos e neutrófilos predominam", type: "decision", parentId: "vesico-subepidermica", description: "Use poeira nuclear, mucina e a distribuição celular papilar para o fechamento.", options: [
     { label: "Bandas nucleares e poeira de neutrófilos, sem mucina abundante na derme reticular", nextNodeId: "group-subepi-misto-bandas-sem-mucina" },
     { label: "Eosinófilos e neutrófilos na derme papilar e na bolha", nextNodeId: "group-subepi-misto-papilar-bolha" },
@@ -1581,4 +1725,3 @@ export const algorithmTree: AlgorithmTree = {
   rootId: "root",
   nodes: Object.fromEntries(nodesArray.map((entry) => [entry.id, entry])),
 };
-

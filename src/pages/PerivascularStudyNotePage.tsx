@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import espongioseEosinofilicaHaappie from "../assets/espongiose-eosinofilica-haappie.png";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
@@ -272,7 +273,10 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     data: {
       clinical: ["Distribuição, idade, prurido e configuração das vesículas ajudam a separar as dermatoses bolhosas por IgA."],
       histology: ["Neutrófilos papilares e clivagem subepidérmica podem ser sutis em lesões muito precoces."],
-      evaluation: ["A imunofluorescência direta perilesional é essencial: IgA granular nas papilas favorece dermatite herpetiforme; IgA linear favorece doença por IgA linear."],
+      evaluation: [
+        <>A imunofluorescência direta perilesional é essencial: <Highlight>IgA granular nas papilas favorece dermatite herpetiforme; IgA linear favorece doença por IgA linear</Highlight>.</>,
+        <>No lúpus bolhoso, a IFD mostra <Highlight>padrão "full house"</Highlight> (IgG, IgM, IgA e C3, às vezes C1q, na membrana basal, linear ou granular), diferente do IgA isolado da dermatite herpetiforme e da doença por IgA linear.</>,
+      ],
       pearl: "na suspeita de dermatose bolhosa por IgA, a biópsia perilesional para imunofluorescência é tão importante quanto a biópsia da lesão.",
     },
   },
@@ -1348,7 +1352,7 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
       <><Highlight>Infiltrado dérmico difuso de neutrófilos</Highlight> com leucocitoclasia e edema papilar.</>,
       <>Pode haver tumefação endotelial e hemácias extravasadas, mas não vasculite primária.</>,
     ],
-    pearl: <>Leucocitoclasia não basta para chamar vasculite: em Sweet, falta dano parietal primário. Exclua infecção e considere variante <Highlight>histiocitoide</Highlight> com MPO se o infiltrado parecer mononuclear.</>,
+    pearl: <>Exclua infecção antes de firmar dermatose neutrofílica. Se o infiltrado parecer mononuclear, considere a variante <Highlight>histiocitoide</Highlight> e confirme a linhagem neutrofílica com MPO.</>,
   },
   {
     match: /^sarcoidose(?: subcutânea)?(?:\s|\||$)/i,
@@ -1445,6 +1449,14 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
       <><Highlight>Lesão desenvolvida:</Highlight> vesícula subepidérmica com neutrófilos; IFD mostra IgA granular, acentuada nas papilas.</>,
     ],
     pearl: <>A histologia se sobrepõe a IgA linear, lúpus bolhoso e EBA inflamatória. Sem <Highlight>imunofluorescência direta</Highlight>, prefira diagnóstico descritivo.</>,
+  },
+  {
+    match: /^l(ú|u)pus bolhoso(?:\s|\||$)/i,
+    histology: [
+      <>Vesícula subepidérmica com neutrófilos e poeira nuclear, por vezes com mucina dérmica aumentada, podendo mimetizar dermatite herpetiforme.</>,
+      <>IFD perilesional mostra <Highlight>padrão "full house"</Highlight>: depósito de IgG, IgM, IgA e C3 (às vezes C1q) na membrana basal, em padrão linear ou granular.</>,
+    ],
+    pearl: <>O <Highlight>"full house"</Highlight> (IgG, IgA, IgM, C3, C1q) na IFD separa lúpus bolhoso da dermatite herpetiforme (IgA granular papilar isolado) e da doença por IgA linear (IgA linear isolado); soma-se à sorologia e clínica de lúpus.</>,
   },
   {
     match: /^iga linear(?:\s|\||$)/i,
@@ -1792,8 +1804,9 @@ function getFamilyHistology(pathIds: string[]): string[] {
   ];
 }
 
-export function PerivascularStudyNotePage() {
-  const { nodeId = "" } = useParams();
+export function PerivascularStudyNotePage({ nodeIdOverride }: { nodeIdOverride?: string } = {}) {
+  const { nodeId: routeNodeId = "" } = useParams();
+  const nodeId = nodeIdOverride ?? routeNodeId;
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useLanguage();
@@ -1823,6 +1836,7 @@ export function PerivascularStudyNotePage() {
   // Os nós vésico-bolhosos têm nota fechada, escrita por nó; os demais continuam sendo montados
   // pela mesclagem das ENRICHMENT_RULES.
   const focused = VESICOBULLOUS_NOTES[node.id];
+  const showEosinophilicSpongiosisImage = node.id === "group-vesico-espongiose-eos-sem-vesicula";
   const noteTitle = focused?.title ?? enrichment.noteTitle ?? node.title;
   const highlight = focused?.highlight ?? enrichment.highlight;
   const pearl = focused?.pearl ?? enrichment.pearl;
@@ -1832,7 +1846,7 @@ export function PerivascularStudyNotePage() {
       id: "conceito",
       number: "1",
       color: "green",
-      title: "Conceito",
+      title: focused?.sectionTitles?.concept ?? "Conceito",
       icon: <BookIcon />,
       bullets: focused?.concept ?? (enrichment.concept.length ? enrichment.concept : getPatternConcept(pathIds)),
     },
@@ -1840,7 +1854,7 @@ export function PerivascularStudyNotePage() {
       id: "histopatologia",
       number: "3",
       color: "purple",
-      title: "Histopatologia",
+      title: focused?.sectionTitles?.histology ?? "Histopatologia",
       icon: <MicroscopeIcon />,
       bullets: focused?.histology ?? (enrichment.histology.length ? enrichment.histology : getFamilyHistology(pathIds)),
     },
@@ -1851,7 +1865,7 @@ export function PerivascularStudyNotePage() {
       id: "pistas-clinicas",
       number: "2",
       color: "blue",
-      title: "Pistas clínicas",
+      title: focused?.sectionTitles?.clinical ?? "Pistas clínicas",
       icon: <StethoscopeIcon />,
       bullets: focused?.clinical ?? enrichment.clinical,
     },
@@ -1859,7 +1873,7 @@ export function PerivascularStudyNotePage() {
       id: "avaliacao",
       number: "4",
       color: "orange",
-      title: "Avaliação / diferenciais",
+      title: focused?.sectionTitles?.evaluation ?? "Diagnóstico Diferencial",
       icon: <ClipboardIcon />,
       bullets: focused?.evaluation ?? enrichment.evaluation,
     },
@@ -1883,7 +1897,24 @@ export function PerivascularStudyNotePage() {
 
       <StudyNoteCard
         title={noteTitle}
-        subtitle="Resumo prático para dermatopatologia"
+        subtitle={focused?.subtitle ?? "Resumo prático para dermatopatologia"}
+        media={
+          showEosinophilicSpongiosisImage ? (
+            <a
+              href={espongioseEosinofilicaHaappie}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Abrir a imagem HAAPPIE em tamanho completo"
+              className="block bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d6b766]"
+            >
+              <img
+                src={espongioseEosinofilicaHaappie}
+                alt="HAAPPIE: causas de espongiose eosinofílica, incluindo hipersensibilidade e doenças imunobolhosas, dermatite de contato alérgica, picada de artrópode, PUPPP, pênfigo e penfigoide, incontinentia pigmenti, foliculite eosinofílica, eritema tóxico neonatal e erupções medicamentosas."
+                className="block h-auto w-full"
+              />
+            </a>
+          ) : undefined
+        }
         sectionsLeft={sectionsLeft}
         sectionsRight={sectionsRight}
         aside={

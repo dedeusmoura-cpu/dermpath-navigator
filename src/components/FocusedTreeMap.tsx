@@ -4,10 +4,7 @@ import { algorithmTree } from "../data/algorithm";
 import { useLanguage } from "../context/LanguageContext";
 import { translateNodeTitle, translateOptionLabel } from "../i18n/translations";
 import { buildPathToNode, getChildMap } from "../utils/tree";
-import {
-  createHorizontalEdgeIds,
-  useQuizTreeLines,
-} from "../hooks/useQuizTreeLines";
+import { useQuizTreeLines } from "../hooks/useQuizTreeLines";
 import { DiagnosticNavigationEmblem } from "./icons/DiagnosticNavigationEmblem";
 
 interface FocusedTreeMapProps {
@@ -15,13 +12,17 @@ interface FocusedTreeMapProps {
   openedFinalNodeIds: string[];
   onSelectNode: (item: ColumnItem, level: number) => void;
   extraControls?: React.ReactNode;
+  // Quando true, o painel ocupa 100% da altura do contêiner pai em vez de
+  // encolher para a altura do conteúdo, e perde o cartão arredondado/margem
+  // — usado no modo tela cheia, onde sobrava um vão vazio abaixo do painel.
+  fullBleed?: boolean;
 }
 
 interface ColumnItem {
   mapId: string;
   nodeId: string;
   displayLabel: string;
-  kind: "branch" | "terminal-bridge" | "result";
+  kind: "branch" | "terminal-bridge" | "group-bridge" | "result";
   sameAsResult?: boolean;
 }
 
@@ -115,7 +116,7 @@ const ZOOM_STEPS = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
 const ZOOM_MIN = 0.4;
 const ZOOM_MAX = 1.0;
 
-export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode, extraControls }: FocusedTreeMapProps) {
+export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode, extraControls, fullBleed }: FocusedTreeMapProps) {
   const { language } = useLanguage();
   const childMap = useMemo(() => getChildMap(), []);
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
@@ -133,11 +134,13 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   const prevColumnCountRef = useRef<number>(0);
   const columnEnterTimerRef = useRef<number | null>(null);
   const isFirstColumnRunRef = useRef<boolean>(true);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const previousVisibleLineKeysRef = useRef<Set<string>>(new Set());
   // Mantém o emblema montado enquanto a bússola gira e o bloco esmaece.
+  const [emblemEntering, setEmblemEntering] = useState(false);
   const [emblemExiting, setEmblemExiting] = useState(false);
   const [emblemExitTop, setEmblemExitTop] = useState<number | null>(null);
+  const emblemEnterTimerRef = useRef<number | null>(null);
   const emblemExitTimerRef = useRef<number | null>(null);
 
   const { columns, selectedPathIds, focusedMapId } = useMemo(
@@ -174,6 +177,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   };
 
   useEffect(() => () => {
+    if (emblemEnterTimerRef.current) window.clearTimeout(emblemEnterTimerRef.current);
     if (emblemExitTimerRef.current) window.clearTimeout(emblemExitTimerRef.current);
   }, []);
 
@@ -182,15 +186,6 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
     if (!first?.startsWith("node:")) return null;
     return CATEGORY_CONFIG[first.slice(5)] ?? null;
   })();
-
-  // Pares penúltima → última coluna (terminal-bridge → result). São
-  // posicionados via `applyFinalColumnAlignment` para casar alturas, então
-  // a linha deve ter inclinação zero — padrão descrito em
-  // docs/QUIZ_TREE_LINE_PATTERN.md.
-  const horizontalEdgeIds = useMemo(
-    () => createHorizontalEdgeIds(collectFinalColumnPairs(columns)),
-    [columns],
-  );
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -204,21 +199,37 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
     };
   }, []);
 
+  // Inicia o giro depois da primeira pintura, para que ele seja visível
+  // toda vez que a rota /mapa-da-arvore monta o estado inicial.
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      setEmblemEntering(true);
+      emblemEnterTimerRef.current = window.setTimeout(() => {
+        setEmblemEntering(false);
+      }, 760);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      if (emblemEnterTimerRef.current) window.clearTimeout(emblemEnterTimerRef.current);
+    };
+  }, [prefersReducedMotion]);
+
   // Aplica translateY na última coluna antes da medição das linhas para que
   // o `getBoundingClientRect()` leia a posição já alinhada. Executar em um
   // useLayoutEffect separado garante que o transform esteja no DOM antes
   // do hook `useQuizTreeLines` medir.
   useLayoutEffect(() => {
-    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current, columnRefs.current);
-  }, [columns]);
+    applyFinalColumnAlignment(columns, nodeRefs.current, nodeWrapperRefs.current, columnRefs.current, childMap);
+  }, [columns, childMap]);
 
   const lines = useQuizTreeLines({
     containerRef,
     nodeRefs,
     edges,
-    horizontalEdgeIds,
   });
-
   useEffect(() => {
     const visibleLineKeys = new Set(lines.map((line) => line.id));
     const previousVisibleLineKeys = previousVisibleLineKeysRef.current;
@@ -337,8 +348,15 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
   }
 
   return (
-    <section>
-      <div ref={scrollAreaRef} className={`relative overflow-auto rounded-[32px] border border-sand bg-white shadow-panel ${isInitialState ? "p-4 sm:p-5" : "p-5"}`}>
+    <section className={fullBleed ? "flex h-full flex-col" : undefined}>
+      <div
+        ref={scrollAreaRef}
+        className={
+          fullBleed
+            ? `relative flex-1 min-h-0 overflow-auto bg-white ${isInitialState ? "p-4 sm:p-5" : "p-5"}`
+            : `relative overflow-auto rounded-[32px] border border-sand bg-white shadow-panel ${isInitialState ? "p-4 sm:p-5" : "p-5"}`
+        }
+      >
         <div className="relative z-30 mb-2 flex flex-wrap items-center justify-between gap-3 border-b border-[#d8c8a3]/45 pb-3">
           <div className="flex items-center gap-3">
             <span className="h-px w-7 bg-[#d6b766]" aria-hidden="true" />
@@ -394,7 +412,10 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
               ref={emblemContentRef}
               className={`max-w-md text-center${emblemExiting ? " dermpath-emblem-exit" : ""}`}
             >
-              <DiagnosticNavigationEmblem className="mx-auto h-[276px] w-[396px]" spinning={emblemExiting} />
+              <DiagnosticNavigationEmblem
+                className="mx-auto h-[276px] w-[396px]"
+                spinning={emblemEntering || emblemExiting}
+              />
               <span
                 aria-hidden="true"
                 className="mx-auto mt-[18px] block h-px w-[78px] bg-[linear-gradient(90deg,transparent,#d6b766,transparent)]"
@@ -611,7 +632,7 @@ function buildFocusedTreeColumns(
       break;
     }
 
-    if (selectedItem.kind === "terminal-bridge") {
+    if (selectedItem.kind === "terminal-bridge" || selectedItem.kind === "group-bridge") {
       pendingTerminalParentId = currentParentId;
       continue;
     }
@@ -663,14 +684,51 @@ function buildColumnItems(parentId: string, childMap: Map<string, string[]>, lan
     const isTerminalChild = isTerminalTreeNode(childNode);
     const optionLabel = optionLabelMap.get(childId);
     const resultLabel = translateNodeTitle(childNode, language);
+
+    if (isTerminalChild) {
+      return {
+        mapId: buildTerminalBridgeId(parentId, childId),
+        nodeId: childId,
+        displayLabel: optionLabel ?? resultLabel,
+        kind: "terminal-bridge" as const,
+        sameAsResult: (optionLabel ?? resultLabel) === resultLabel,
+      };
+    }
+
+    // Um nó de decisão cujos filhos são todos diagnósticos finais funciona,
+    // na árvore expandível, como um "grupo" de diagnósticos irmãos: um clique
+    // abre todos de uma vez na coluna final, ao lado de outros diagnósticos já
+    // abertos no mesmo nível — em vez de descer para uma coluna própria, o que
+    // faria os resultados já abertos desaparecerem (ver buildResultItems).
+    if (isPureTerminalGroup(childId, childMap)) {
+      return {
+        mapId: buildTerminalBridgeId(parentId, childId),
+        nodeId: childId,
+        displayLabel: optionLabel ?? resultLabel,
+        kind: "group-bridge" as const,
+      };
+    }
+
     return {
-      mapId: isTerminalChild ? buildTerminalBridgeId(parentId, childId) : buildNodeMapId(childId),
+      mapId: buildNodeMapId(childId),
       nodeId: childId,
       displayLabel: optionLabel ?? resultLabel,
-      kind: isTerminalChild ? "terminal-bridge" : "branch",
-      sameAsResult: isTerminalChild ? (optionLabel ?? resultLabel) === resultLabel : undefined,
+      kind: "branch" as const,
     };
   });
+}
+
+export function isPureTerminalGroup(nodeId: string, childMap: Map<string, string[]>): boolean {
+  const node = algorithmTree.nodes[nodeId];
+  if (node?.type !== "decision") return false;
+  // Só achatamos quando o próprio nó de dados pede isso explicitamente
+  // (groupBridge: true). Sem essa marcação, um nó de decisão com filhos só-
+  // diagnóstico é um branch normal como qualquer outro: seus filhos aparecem
+  // como cartões próprios em outra coluna, preservando o rótulo do achado.
+  if (!node.groupBridge) return false;
+  const children = childMap.get(nodeId) ?? [];
+  if (!children.length) return false;
+  return children.every((childId) => isTerminalTreeNode(algorithmTree.nodes[childId]));
 }
 
 function buildResultItem(nodeId: string, language: "pt" | "en"): ColumnItem {
@@ -689,30 +747,18 @@ function buildResultItems(
   childMap: Map<string, string[]>,
   language: "pt" | "en",
 ) {
-  const allowedNodeIds = new Set((childMap.get(parentId) ?? []).filter((childId) => isTerminalTreeNode(algorithmTree.nodes[childId])));
+  const directChildren = childMap.get(parentId) ?? [];
+  const allowedNodeIds = new Set(directChildren.filter((childId) => isTerminalTreeNode(algorithmTree.nodes[childId])));
+  // Diagnósticos que moram um nível abaixo de um "grupo" (group-bridge) também
+  // contam como abertos neste mesmo nível, para que apareçam cumulativamente
+  // ao lado dos diagnósticos diretos já abertos por outros irmãos.
+  directChildren
+    .filter((childId) => isPureTerminalGroup(childId, childMap))
+    .forEach((groupId) => (childMap.get(groupId) ?? []).forEach((grandChildId) => allowedNodeIds.add(grandChildId)));
+
   return openedFinalNodeIds
     .filter((nodeId) => allowedNodeIds.has(nodeId))
     .map((nodeId) => buildResultItem(nodeId, language));
-}
-
-function collectFinalColumnPairs(columns: ColumnItem[][]): Array<{ from: string; to: string }> {
-  if (columns.length < 2) return [];
-
-  const lastColumn = columns[columns.length - 1];
-  const sourceColumn = columns[columns.length - 2];
-  const pairs: Array<{ from: string; to: string }> = [];
-
-  lastColumn.forEach((item) => {
-    if (item.kind !== "result") return;
-    const source = sourceColumn.find(
-      (entry) => entry.kind === "terminal-bridge" && entry.nodeId === item.nodeId,
-    );
-    if (source) {
-      pairs.push({ from: source.mapId, to: item.mapId });
-    }
-  });
-
-  return pairs;
 }
 
 function applyFinalColumnAlignment(
@@ -720,6 +766,7 @@ function applyFinalColumnAlignment(
   nodeElements: Record<string, HTMLElement | null>,
   wrapperElements: Record<string, HTMLDivElement | null>,
   columnElements: Array<HTMLDivElement | null>,
+  childMap: Map<string, string[]>,
 ) {
   // Reset last column paddingTop on every call so stale values don't persist.
   const lastColumnEl = columnElements[columns.length - 1];
@@ -739,6 +786,15 @@ function applyFinalColumnAlignment(
       wrapper.style.transform = "";
     }
   });
+  // Reset any previous source repositioning too, so a stale value doesn't
+  // linger once results close or a different card opens.
+  sourceColumn.forEach((item) => {
+    const wrapper = wrapperElements[item.mapId];
+    if (wrapper) {
+      wrapper.style.marginTop = "";
+      wrapper.style.transform = "";
+    }
+  });
 
   // Each result card wants to center on its own source bridge, but when
   // several bridges under the same parent are opened at once (e.g. clicking
@@ -747,10 +803,21 @@ function applyFinalColumnAlignment(
   // centering overlap the cards. Compute every desired position first, then
   // sweep top-to-bottom enforcing a minimum gap between them.
   const RESULT_GAP = 12; // matches the last column's `gap-3` (0.75rem)
-  const alignmentEntries: Array<{ wrapper: HTMLDivElement; naturalTop: number; height: number; desiredTop: number }> = [];
+  const alignmentEntries: Array<{
+    wrapper: HTMLDivElement;
+    naturalTop: number;
+    height: number;
+    desiredTop: number;
+    finalTop?: number;
+    sourceMapId: string;
+  }> = [];
 
   resultItems.forEach((item) => {
-    const sourceMapId = sourceColumn.find((sourceItem) => sourceItem.kind === "terminal-bridge" && sourceItem.nodeId === item.nodeId)?.mapId;
+    const sourceMapId = sourceColumn.find(
+      (sourceItem) =>
+        (sourceItem.kind === "terminal-bridge" && sourceItem.nodeId === item.nodeId) ||
+        (sourceItem.kind === "group-bridge" && (childMap.get(sourceItem.nodeId) ?? []).includes(item.nodeId)),
+    )?.mapId;
     if (!sourceMapId) {
       return;
     }
@@ -771,6 +838,7 @@ function applyFinalColumnAlignment(
       naturalTop: targetRect.top,
       height: targetRect.height,
       desiredTop: sourceCenter - targetRect.height / 2,
+      sourceMapId,
     });
   });
 
@@ -780,6 +848,7 @@ function applyFinalColumnAlignment(
   alignmentEntries.forEach((entry) => {
     const top = Math.max(entry.desiredTop, prevBottom + RESULT_GAP);
     prevBottom = top + entry.height;
+    entry.finalTop = top;
 
     const offsetY = top - entry.naturalTop;
     if (!Number.isFinite(offsetY)) {
@@ -789,12 +858,90 @@ function applyFinalColumnAlignment(
     entry.wrapper.style.transform = Math.abs(offsetY) < 1 ? "" : `translateY(${offsetY}px)`;
   });
 
+  // Cada par (card de origem + seus próprios diagnósticos) "quer" ficar no
+  // mesmo nível. Só fazemos isso quando TODOS os cards-bridge da coluna estão
+  // abertos: nesse caso nenhum vizinho fica parado na posição natural, então
+  // um sweep completo pode reposicionar tudo sem sobrepor ninguém. Com apenas
+  // alguns abertos, mexer nisso poderia empurrar um card por cima de um
+  // vizinho ainda na posição original — nesse caso parcial não mexemos em
+  // nada (o comportamento default já é razoável).
+  //
+  // Cada par vira um "bloco" cuja altura é o MAIOR entre a altura do card de
+  // origem e a altura somada dos seus diagnósticos (com o gap entre eles).
+  // Sem isso, um card de origem bem mais alto que a pilha de diagnósticos que
+  // ele abre (ex.: um rótulo de 6 linhas com só 1-2 diagnósticos curtos)
+  // "invade" o espaço do próximo bloco durante o sweep e empurra o próximo
+  // par pra baixo do que seria seu alinhamento ideal — mesmo que aquele par
+  // sozinho coubesse perfeitamente alinhado.
+  const sourceBridgeItems = sourceColumn.filter((item) => item.kind === "terminal-bridge" || item.kind === "group-bridge");
+  const allSourceBridgesOpen =
+    sourceBridgeItems.length > 0 &&
+    sourceBridgeItems.every((item) => alignmentEntries.some((entry) => entry.sourceMapId === item.mapId));
+
+  if (allSourceBridgesOpen) {
+    type GroupBlock = {
+      sourceWrapper: HTMLDivElement;
+      sourceNaturalTop: number;
+      sourceHeight: number;
+      results: Array<{ wrapper: HTMLDivElement; height: number; naturalTop: number }>;
+      resultsHeight: number;
+      desiredCenter: number;
+      blockHeight: number;
+    };
+
+    const blocks: GroupBlock[] = [];
+
+    sourceBridgeItems.forEach((item) => {
+      const sourceWrapper = wrapperElements[item.mapId];
+      const sourceElement = nodeElements[item.mapId];
+      const ownResultEntries = alignmentEntries.filter((entry) => entry.sourceMapId === item.mapId);
+      if (!sourceWrapper || !sourceElement || !ownResultEntries.length) {
+        return;
+      }
+
+      const sourceRect = sourceElement.getBoundingClientRect();
+      const results = ownResultEntries.map((entry) => ({ wrapper: entry.wrapper, height: entry.height, naturalTop: entry.naturalTop }));
+      const resultsHeight = results.reduce((sum, r) => sum + r.height, 0) + RESULT_GAP * (results.length - 1);
+
+      blocks.push({
+        sourceWrapper,
+        sourceNaturalTop: sourceRect.top,
+        sourceHeight: sourceRect.height,
+        results,
+        resultsHeight,
+        desiredCenter: sourceRect.top + sourceRect.height / 2,
+        blockHeight: Math.max(sourceRect.height, resultsHeight),
+      });
+    });
+
+    blocks.sort((a, b) => a.desiredCenter - b.desiredCenter);
+
+    let prevBlockBottom = -Infinity;
+    blocks.forEach((block) => {
+      const desiredTop = block.desiredCenter - block.blockHeight / 2;
+      const top = Math.max(desiredTop, prevBlockBottom + RESULT_GAP);
+      prevBlockBottom = top + block.blockHeight;
+      const blockCenter = top + block.blockHeight / 2;
+
+      const sourceTop = blockCenter - block.sourceHeight / 2;
+      const sourceOffsetY = sourceTop - block.sourceNaturalTop;
+      block.sourceWrapper.style.transform = Math.abs(sourceOffsetY) < 1 ? "" : `translateY(${sourceOffsetY}px)`;
+
+      let resultTop = blockCenter - block.resultsHeight / 2;
+      block.results.forEach((result) => {
+        const resultOffsetY = resultTop - result.naturalTop;
+        result.wrapper.style.transform = Math.abs(resultOffsetY) < 1 ? "" : `translateY(${resultOffsetY}px)`;
+        resultTop += result.height + RESULT_GAP;
+      });
+    });
+  }
+
   // When the last column contains only terminal-bridge items (decision node whose
   // ALL children are terminals), push the column down with paddingTop so the
   // group is vertically centered on the parent card in the previous column.
   // Using paddingTop (layout space) instead of translateY (paint-only) keeps
   // content inside the scroll container and avoids overflow clipping.
-  const terminalBridgeItems = lastColumn.filter((item) => item.kind === "terminal-bridge");
+  const terminalBridgeItems = lastColumn.filter((item) => item.kind === "terminal-bridge" || item.kind === "group-bridge");
   if (terminalBridgeItems.length === 0 || resultItems.length > 0) return;
   if (!lastColumnEl) return;
 
@@ -841,8 +988,24 @@ export function buildSelectedMapPath(nodeId: string) {
     return [];
   }
 
+  const childMap = getChildMap();
+
   return buildPathToNode(nodeId).flatMap((node) => {
+    // Nós "grupo" (decisão cujos filhos são todos diagnósticos finais) não têm
+    // coluna própria na árvore expandível — seus diagnósticos aparecem
+    // diretamente na coluna do pai (ver isPureTerminalGroup/group-bridge em
+    // buildColumnItems). Por isso não emitem seu próprio "node:" na trilha.
+    if (isPureTerminalGroup(node.id, childMap)) {
+      return node.parentId ? [buildTerminalBridgeId(node.parentId, node.id)] : [];
+    }
+
     if (!isTerminalTreeNode(node)) {
+      return [buildNodeMapId(node.id)];
+    }
+
+    if (node.parentId && isPureTerminalGroup(node.parentId, childMap)) {
+      // Alcançado através de um grupo achatado: sem etapa de "bridge" própria,
+      // o resultado aparece direto ao lado dos demais diagnósticos do grupo.
       return [buildNodeMapId(node.id)];
     }
 

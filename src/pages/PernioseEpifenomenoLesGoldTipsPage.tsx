@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
+import { StudyNoteAsideFrame } from "../components/StudyNoteAsideFrame";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
@@ -81,7 +82,7 @@ export function PernioseEpifenomenoLesGoldTipsPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-7xl space-y-4">
+      <div className="mx-auto max-w-[100rem] space-y-4">
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
@@ -119,12 +120,8 @@ export function PernioseEpifenomenoLesGoldTipsPage() {
 
 function LymphocyticPatternDiagram() {
   return (
-    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
-      <h3 className="mx-auto mb-3 max-w-[15rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
-        Esquema: padrão linfocítico
-      </h3>
-
-      <figure className="overflow-hidden rounded-xl border border-rose-100 bg-[#fff8f3]">
+    <StudyNoteAsideFrame title="Esquema: padrão linfocítico" footer="Padrão histológico, não entidade específica.">
+      <figure className="overflow-hidden rounded-xl border border-[#d9b9aa] bg-[#fff8f3]">
         <img
           src={lymphocyticPatternImage}
           alt="Corte da pele com infiltrado linfocítico perivascular e hemácias extravasadas"
@@ -132,15 +129,12 @@ function LymphocyticPatternDiagram() {
         />
       </figure>
 
-      <div className="mt-3 grid gap-1.5 font-hand text-sm font-semibold leading-5 text-[#1c2b45]">
+      <div className="mt-3 grid gap-1.5 rounded-xl border border-[#8d603e]/25 bg-white/45 px-3 py-2 font-hand text-sm font-semibold leading-5 text-[#1c2b45]">
         <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-violet-700" />Infiltrado linfocítico perivascular</p>
         <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-rose-400" />Edema endotelial</p>
         <p className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-red-500" />Hemácias extravasadas</p>
       </div>
 
-      <p className="mt-2 text-center font-hand text-lg font-semibold leading-6 text-[#173f78]">
-        Padrão histológico, não entidade específica.
-      </p>
-    </div>
+    </StudyNoteAsideFrame>
   );
 }

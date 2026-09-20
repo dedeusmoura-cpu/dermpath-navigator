@@ -10,6 +10,8 @@ import { Highlight } from "../components/StudyNoteCard";
  */
 export type FocusedNote = {
   title: string;
+  subtitle?: string;
+  sectionTitles?: Partial<Record<"concept" | "clinical" | "histology" | "evaluation", string>>;
   concept: ReactNode[];
   clinical: ReactNode[];
   histology: ReactNode[];
@@ -123,32 +125,31 @@ const maoPeBoca: FocusedNote = {
 const impetigoBolhoso: FocusedNote = {
   title: "Impetigo bolhoso",
   concept: [
-    <>Infecção superficial por <Highlight>S. aureus</Highlight> produtor de toxina esfoliativa, que cliva a <Highlight>desmogleína 1</Highlight>.</>,
-    "É a forma localizada do mesmo mecanismo que gera a síndrome da pele escaldada estafilocócica.",
+    <>Infecção superficial por <Highlight>S. aureus</Highlight> produtor das toxinas esfoliativas ETA/ETB, que clivam a <Highlight>desmogleína 1</Highlight>.</>,
+    "É a expressão localizada do mesmo mecanismo que, quando disseminado pela circulação, causa a síndrome da pele escaldada estafilocócica.",
   ],
   clinical: [
-    "Bolhas flácidas superficiais que rompem e deixam colarete e crosta melicérica.",
-    "Predomina em crianças, em face e áreas intertriginosas; sem sintomas sistêmicos.",
+    <>Vesículas evoluem para <Highlight>bolhas flácidas e transparentes</Highlight>; a ruptura deixa erosão rasa com colarete de escamas e pouca inflamação ao redor.</>,
+    "Predomina em crianças e pode acometer face, tronco, nádegas, períneo, axilas e extremidades; sintomas sistêmicos costumam faltar.",
   ],
   histology: [
-    <>Clivagem <Highlight>subcórnea ou na granulosa</Highlight>, com poucas células acantolíticas.</>,
-    <>Neutrófilos na cavidade e, tipicamente, <Highlight>cocos gram-positivos dentro da bolha</Highlight>.</>,
-    "Infiltrado dérmico superficial misto, discreto.",
+    <>Clivagem acantolítica <Highlight>na camada granulosa</Highlight>, morfologicamente semelhante ao pênfigo foliáceo.</>,
+    <>Há pouca inflamação na cavidade; neutrófilos superficiais e <Highlight>cocos gram-positivos</Highlight> podem ser vistos.</>,
   ],
   evaluation: [
-    <>Clivagem idêntica à do <Highlight>pênfigo foliáceo</Highlight> e da SSSS — todas têm a Dsg1 como alvo.</>,
-    "A presença de bactérias na bolha e a IFD negativa resolvem o diferencial com o pênfigo foliáceo.",
-    "Na SSSS não há bactéria na pele: a toxina é hematogênica, a partir de foco a distância.",
+    <>Colher cultura do exsudato sob a crosta ou de <Highlight>bolha íntegra</Highlight>; a IFD é negativa.</>,
+    "Cocos favorecem impetigo no contexto agudo e localizado, mas não são absolutos: uma lesão de pênfigo pode sofrer infecção secundária.",
+    "Na SSSS, a bolha é estéril e a bactéria deve ser procurada no foco primário à distância.",
   ],
   highlight: {
-    title: "Bactéria na bolha",
+    title: "Cocos na bolha",
     bullets: [
-      <>Cocos no interior da bolha favorecem <Highlight>impetigo</Highlight> sobre pênfigo foliáceo e SSSS.</>,
-      <><Highlight>IFD negativa</Highlight> é obrigatória para sustentar o diagnóstico.</>,
+      <>Favorecem <Highlight>impetigo bolhoso</Highlight> quando a lesão é aguda e localizada.</>,
+      <>Não dispensam correlação com a clínica e a <Highlight>IFD</Highlight> se houver suspeita de pênfigo.</>,
     ],
-    footer: "Gram e cultura da bolha íntegra fecham o caso.",
+    footer: "Gram e cultura documentam o agente e orientam a suscetibilidade.",
   },
-  pearl: <>três doenças partilham a clivagem alta por lesão da Dsg1 — pênfigo foliáceo, SSSS e impetigo bolhoso; só o <Highlight>impetigo tem bactéria na bolha</Highlight>, e só o pênfigo tem IFD positiva.</>,
+  pearl: <>clivagem granulosa com <Highlight>cocos na bolha</Highlight> favorece impetigo; se a clínica não for típica, exclua pênfigo foliáceo com IFD.</>,
 };
 
 const orfOrdenhadores: FocusedNote = {
@@ -520,7 +521,7 @@ const darier: FocusedNote = {
   ],
   clinical: [
     <>Pápulas ceratósicas e crostosas em <Highlight>áreas seborreicas</Highlight>, com odor característico.</>,
-    <>Piora com <Highlight>calor, suor, luz UV e lítio</Highlight>; curso crônico desde a adolescência.</>,
+    <>Início típico na <Highlight>2ª década</Highlight>; piora com calor, suor, luz UV e lítio; curso crônico e familiar.</>,
     "Pápulas palmares puntiformes, sulcos e faixas alternadas nas unhas (“V” distal).",
   ],
   histology: [
@@ -552,7 +553,7 @@ const grover: FocusedNote = {
     "Não é hereditária nem autoimune; costuma resolver em semanas a meses.",
   ],
   clinical: [
-    <>Pápulas e pápulo-vesículas <Highlight>muito pruriginosas</Highlight> no tronco de homens de meia-idade ou idosos.</>,
+    <>Seropápulas <Highlight>muito pruriginosas</Highlight> no <Highlight>V do tronco</Highlight> de homens idosos.</>,
     "Surtos após febre, internação, exposição solar ou calor intenso.",
     "Lesões escoriadas e crostosas dominam o exame.",
   ],
@@ -575,7 +576,7 @@ const grover: FocusedNote = {
     ],
     footer: "Corte seriado ajuda: o foco pode ser único em toda a lâmina.",
   },
-  pearl: <>vários focos <Highlight>minúsculos</Highlight> de acantólise e disqueratose, com espongiose e crostas, em tronco de homem idoso pruriginoso — Grover.</>,
+  pearl: <>vários focos <Highlight>minúsculos</Highlight> de acantólise e disqueratose, com espongiose e crostas, em seropápulas pruriginosas no V do tronco de homem idoso — Grover.</>,
 };
 
 const haileyHailey: FocusedNote = {
@@ -646,37 +647,101 @@ const penfigoVulgar: FocusedNote = {
   pearl: <>acantólise suprabasal em <Highlight>“fileira de lápides”</Highlight>, sem disqueratose e estendendo-se ao epitélio folicular, com <Highlight>IFD intercelular positiva</Highlight>, define o pênfigo vulgar.</>,
 };
 
-const penfigoFoliaceoGrupo: FocusedNote = {
-  title: "Pênfigo foliáceo, forma induzida por droga e SSSS",
+const penfigoFoliaceo: FocusedNote = {
+  title: "Pênfigo foliáceo",
   concept: [
-    <>Três doenças com o mesmo alvo — a <Highlight>desmogleína 1</Highlight> — e, portanto, a mesma clivagem alta.</>,
-    <>No pênfigo foliáceo o alvo é atacado por <Highlight>IgG</Highlight>; na SSSS, por <Highlight>toxina esfoliativa</Highlight> estafilocócica.</>,
+    <>Doença bolhosa autoimune superficial causada por autoanticorpos <Highlight>IgG contra a desmogleína 1</Highlight>.</>,
+    <>A perda de adesão produz <Highlight>acantólise na epiderme superior</Highlight>, dentro ou junto à camada granulosa.</>,
   ],
   clinical: [
-    <>Pênfigo foliáceo: erosões escamocrostosas em <Highlight>distribuição seborreica</Highlight>, <Highlight>sem lesão mucosa</Highlight>, podendo eritrodermizar.</>,
-    "Formas induzidas por droga associam-se a fármacos com grupo tiol (penicilamina, captopril) e a rifampicina.",
-    "SSSS: criança ou nefropata, com febre, dor cutânea, eritema flexural e descamação em lençol, sem mucosa.",
+    <>Erosões escamocrostosas bem delimitadas em <Highlight>face, couro cabeludo e tronco superior</Highlight>; a bolha é tão frágil que raramente permanece íntegra.</>,
+    <><Highlight>Não há acometimento mucoso clínico</Highlight>; Nikolsky pode ser positivo, e casos extensos podem evoluir para eritrodermia esfoliativa.</>,
+    "O início pode simular impetigo ou dermatite seborreica; revisar medicamentos, especialmente penicilamina e captopril.",
   ],
   histology: [
-    <>Acantólise <Highlight>subcórnea ou na granulosa</Highlight>, com poucas células acantolíticas, muitas vezes fusiformes ou em amêndoa.</>,
-    "A córnea pode simplesmente estar “ausente”, único vestígio da clivagem superficial.",
-    "Neutrófilos na cavidade e eosinófilos dérmicos são variáveis; espongiose eosinofílica pode ser a lesão inicial.",
+    <>Acantólise <Highlight>dentro ou junto à granulosa</Highlight>; o teto pode se perder, deixando apenas a camada córnea “ausente”.</>,
+    "Poucos queratinócitos acantolíticos, fusiformes ou em amêndoa, podem aderir ao teto ou ao assoalho.",
+    "Neutrófilos na bolha e eosinófilos dérmicos são variáveis; espongiose eosinofílica pode preceder a clivagem.",
   ],
   evaluation: [
-    "As três são histologicamente indistinguíveis — a morfologia não decide.",
-    "SSSS não tem bactéria na pele (toxina hematogênica) e a IFD é negativa.",
-    "Impetigo bolhoso mostra cocos dentro da bolha e IFD negativa.",
+    <>A IFD de pele perilesional mostra <Highlight>IgG intercelular</Highlight>; o C3 pode faltar, e a intensidade não precisa se restringir à epiderme superior.</>,
+    <>ELISA com <Highlight>anti-Dsg1 positivo</Highlight> e anti-Dsg3 negativo sustenta o fenótipo foliáceo.</>,
+    "IFD negativa põe o diagnóstico em séria dúvida. Cocos podem representar infecção secundária e, isoladamente, não confirmam impetigo.",
   ],
   highlight: {
     title: "IFD",
     bullets: [
-      <>IgG/C3 <Highlight>intercelular</Highlight> na epiderme, mais intenso nas camadas superiores = pênfigo foliáceo.</>,
-      <><Highlight>IFD negativa</Highlight> aponta SSSS ou impetigo bolhoso.</>,
-      "ELISA: anti-Dsg1 positivo e anti-Dsg3 negativo caracteriza o pênfigo foliáceo.",
+      <><Highlight>IgG intercelular</Highlight> em rede de pesca é o achado principal.</>,
+      <>O <Highlight>C3 pode estar presente ou ausente</Highlight>.</>,
+      "Amostra perilesional reduz o risco de falso-negativo.",
     ],
-    footer: "Revisão medicamentosa é obrigatória antes de rotular como idiopático.",
+    footer: "Amostra perilesional evita falso-negativo por degeneração antigênica na erosão.",
   },
-  pearl: <>clivagem alta é apenas o ponto de partida: <Highlight>IFD positiva</Highlight> = pênfigo foliáceo; negativa, procure a toxina (SSSS) ou a bactéria na bolha (impetigo).</>,
+  pearl: <>erosão escamocrostosa seborreica, sem mucosite, com acantólise granulosa e <Highlight>IgG intercelular</Highlight> define o eixo do pênfigo foliáceo.</>,
+};
+
+const penfigoIga: FocusedNote = {
+  title: "Pênfigo por IgA",
+  concept: [
+    <>Grupo raro de dermatoses vesicopustulosas definido por <Highlight>IgA1 intercelular</Highlight> contra a superfície dos queratinócitos, sem autoanticorpos IgG.</>,
+    "Tem dois subtipos: dermatose pustular subcórnea (SPD) e dermatose neutrofílica intraepidérmica (IEN).",
+  ],
+  clinical: [
+    <>Vesículas e pústulas flácidas, muito pruriginosas, que formam desenhos <Highlight>anulares ou circinados</Highlight>; o padrão em “girassol” favorece o subtipo IEN.</>,
+    "Axilas e virilhas são os locais mais comuns, seguidos de tronco e extremidades proximais; mucosa raramente é acometida.",
+    "Pode coexistir com mieloma por IgA ou retocolite ulcerativa.",
+  ],
+  histology: [
+    <>Pústulas <Highlight>subcórneas ou intraepidérmicas</Highlight> ricas em neutrófilos.</>,
+    <><Highlight>Acantólise geralmente não é vista</Highlight>.</>,
+    "No subtipo SPD, a pústula é alta; no IEN, pode ser suprabasal, baixa ou ocupar toda a espessura epidérmica.",
+  ],
+  evaluation: [
+    <>IFD com <Highlight>IgA intercelular</Highlight> confirma o diagnóstico: predomina no alto da epiderme no SPD e pode ocupar toda a espessura no IEN.</>,
+    "A desmocolina 1 é o principal alvo do subtipo SPD; o alvo do IEN permanece menos definido.",
+    "IgA linear na zona da membrana basal indica outro diagnóstico: dermatose bolhosa por IgA linear.",
+  ],
+  highlight: {
+    title: "IFD intercelular",
+    bullets: [
+      <><Highlight>IgA entre os queratinócitos</Highlight>, e não na membrana basal.</>,
+      "A distribuição pode ser superficial ou envolver maior espessura da epiderme.",
+    ],
+    footer: "A demonstração da IgA intercelular é essencial para separar os mimetizadores pustulosos.",
+  },
+  pearl: <>pústula intraepidérmica neutrofílica, geralmente sem acantólise, com <Highlight>IgA intercelular</Highlight> aponta para pênfigo por IgA.</>,
+};
+
+const sindromePeleEscaldada: FocusedNote = {
+  title: "Síndrome da pele escaldada estafilocócica",
+  concept: [
+    <>Doença sistêmica mediada pelas toxinas esfoliativas ETA/ETB de <Highlight>S. aureus</Highlight>, proteases que clivam a desmogleína 1.</>,
+    <>A toxina circulante produz <Highlight>clivagem superficial generalizada</Highlight>, sem bactéria na bolha.</>,
+  ],
+  clinical: [
+    "Predomina em neonatos e crianças; em adultos, procurar insuficiência renal, diabetes, neoplasia ou imunossupressão.",
+    <>Pródromo febril e dor cutânea precedem eritema que começa na <Highlight>face e nas flexuras</Highlight>, forma bolhas flácidas e evolui para descamação com Nikolsky positivo.</>,
+    <>Crosta e fissuras periorais ou perioculares são características; a <Highlight>mucosa oral é poupada</Highlight>.</>,
+  ],
+  histology: [
+    <>Clivagem bem delimitada <Highlight>na camada granulosa ou logo abaixo dela</Highlight>.</>,
+    <><Highlight>Inflamação mínima ou ausente</Highlight> na bolha e na derme superficial, sem organismos ao Gram.</>,
+  ],
+  evaluation: [
+    <><Highlight>IFD negativa</Highlight>; a combinação com inflamação mínima e clínica compatível sustenta o diagnóstico.</>,
+    "A bolha íntegra é estéril: cultivar conjuntiva, nasofaringe, região perianal ou outro foco purulento. Hemocultura costuma ser negativa na criança.",
+    "Cocos na bolha favorecem impetigo bolhoso; IgG intercelular favorece pênfigo foliáceo; necrose epidérmica total e mucosite apontam para NET.",
+  ],
+  highlight: {
+    title: "IFD negativa",
+    bullets: [
+      "Não há depósito autoimune intercelular.",
+      <><Highlight>Inflamação mínima</Highlight> e bolha estéril reforçam o mecanismo por toxina circulante.</>,
+      "Cultive o foco distante, não a bolha.",
+    ],
+    footer: "IFD negativa isoladamente não fecha o diagnóstico.",
+  },
+  pearl: <>criança com dor cutânea, eritema flexural, fissuras periorificiais e mucosa poupada, somados a clivagem granulosa estéril e <Highlight>IFD negativa</Highlight>, compõe o quadro da SSSS.</>,
 };
 
 const penfigoideMembranasMucosas: FocusedNote = {
@@ -715,6 +780,138 @@ const penfigoideMembranasMucosas: FocusedNote = {
 // ---------------------------------------------------------------------------
 // Bolhas subepidérmicas — imunomediadas
 // ---------------------------------------------------------------------------
+
+const penfigoideBolhoso: FocusedNote = {
+  title: "Penfigoide bolhoso",
+  concept: [
+    <>Doença bolhosa autoimune subepidérmica por IgG contra <Highlight>BP180 (colágeno XVII)</Highlight> e BP230, hemidesmossomais, com clivagem na lâmina lúcida.</>,
+    "É a dermatose bolhosa autoimune mais comum, típica do idoso.",
+  ],
+  clinical: [
+    <>Idoso com prurido intenso e <Highlight>bolhas tensas</Highlight> sobre base urticada ou eritematosa; mucosa pouco ou nada acometida.</>,
+    <>A <Highlight>fase não bolhosa</Highlight> — eczematosa, urticariforme ou só prurido — pode preceder as bolhas em semanas a meses.</>,
+    "Distribuição simétrica em flexuras, abdome inferior e face interna das coxas.",
+  ],
+  histology: [
+    <>Bolha subepidérmica com <Highlight>infiltrado rico em eosinófilos</Highlight> na derme superior e dentro da cavidade.</>,
+    <>Na fase inicial pode haver apenas <Highlight>espongiose eosinofílica</Highlight>, sem bolha franca.</>,
+    "Papilas dérmicas preservadas; ausência de acantólise e de necrose de queratinócitos.",
+  ],
+  evaluation: [
+    <>Penfigoide bolhoso, herpes gestacional, epidermólise bolhosa adquirida, farmacodermia e insulto por artrópode podem <Highlight>simular-se mutuamente</Highlight> como bolha subepidérmica rica em eosinófilos — a morfologia isolada não fecha o caso.</>,
+    "Herpes gestacional é o mesmo padrão histológico e imunológico, na gestante.",
+  ],
+  highlight: {
+    title: "IFD",
+    bullets: [
+      <>Depósito <Highlight>linear e contínuo de IgG e/ou C3</Highlight> ao longo da membrana basal, em pele perilesional.</>,
+      <>Padrão <Highlight>“n-serrilhado”</Highlight> — o “u-serrilhado” pertence à epidermólise bolhosa adquirida.</>,
+      <>Na pele clivada por sal, os depósitos ficam no <Highlight>teto</Highlight> (lado epidérmico).</>,
+    ],
+    footer: "ELISA anti-BP180 (NC16A) confirma e acompanha a atividade.",
+  },
+  pearl: <>bolha tensa de idoso com <Highlight>eosinófilos</Highlight> e IgG/C3 linear n-serrilhado no teto da clivagem salina define o penfigoide bolhoso.</>,
+};
+
+const herpesGestacional: FocusedNote = {
+  title: "Herpes gestacional",
+  concept: [
+    <>Variante do penfigoide bolhoso <Highlight>deflagrada na gestação</Highlight> (ou pós-parto imediato), por IgG anti-BP180 com forte ativação do complemento.</>,
+    "Apesar do nome, não tem relação com infecção herpética.",
+  ],
+  clinical: [
+    <>Placas urticadas e <Highlight>vesicobolhas periumbilicais</Highlight> que se disseminam pelo tronco e membros, geralmente no 2º ou 3º trimestre.</>,
+    "Prurido intenso; a face e as mucosas costumam ser poupadas.",
+    "Recidiva em gestações seguintes, com início mais precoce e maior gravidade, e no pós-parto imediato.",
+  ],
+  histology: [
+    <>Bolha subepidérmica com <Highlight>infiltrado rico em eosinófilos</Highlight> na derme papilar e na cavidade — indistinguível do penfigoide bolhoso.</>,
+    <>Fase urticada precoce mostra apenas <Highlight>espongiose eosinofílica</Highlight> e edema papilar.</>,
+    "Papilas preservadas, sem acantólise nem necrose de queratinócitos.",
+  ],
+  evaluation: [
+    <>A histologia é idêntica ao penfigoide bolhoso — o contexto gestacional e a IFD fecham o diagnóstico. <Highlight>Farmacodermia, EBA e insulto por artrópode</Highlight> também podem simular esse mesmo padrão rico em eosinófilos.</>,
+    "Erupção polimórfica da gravidez (PUPPP): poupa a região periumbilical e a IFD é negativa.",
+    "Farmacodermia: relação temporal com fármaco e ausência de depósito linear contínuo específico.",
+  ],
+  highlight: {
+    title: "IFD",
+    bullets: [
+      <>Depósito <Highlight>linear de C3</Highlight> ao longo da membrana basal, quase sempre presente (mais sensível que o IgG).</>,
+      "IgG linear presente em minoria dos casos, mas de alto valor quando positivo.",
+      <>Padrão <Highlight>“n-serrilhado”</Highlight>, igual ao penfigoide bolhoso.</>,
+    ],
+    footer: "ELISA anti-BP180 (NC16A) confirma; risco de recorrência neonatal transitória.",
+  },
+  pearl: <>vesicobolhas periumbilicais pruriginosas na gestante, com <Highlight>C3 linear</Highlight> na IFD, definem o herpes gestacional — histologicamente idêntico ao penfigoide bolhoso.</>,
+};
+
+const epidermoliseBolhosaAdquirida: FocusedNote = {
+  title: "Epidermólise bolhosa adquirida",
+  concept: [
+    <>Doença bolhosa autoimune subepidérmica por IgG contra o <Highlight>colágeno VII</Highlight>, componente das fibrilas de ancoragem.</>,
+    "Existe uma forma mecanobolhosa clássica e formas inflamatórias que imitam outras bolhoses.",
+  ],
+  clinical: [
+    <>Forma clássica: bolhas em <Highlight>áreas de trauma</Highlight> (dorso das mãos, cotovelos, joelhos) que curam com <Highlight>milia e cicatriz</Highlight>.</>,
+    "Formas inflamatórias: bolhas tensas pruriginosas generalizadas, indistinguíveis clinicamente do penfigoide.",
+    "Pode acometer mucosas, simulando penfigoide de membranas mucosas.",
+  ],
+  histology: [
+    <>Bolha subepidérmica com infiltrado <Highlight>geralmente escasso</Highlight> na forma mecanobolhosa clássica.</>,
+    "Nas formas inflamatórias, o infiltrado é misto, com neutrófilos e eosinófilos, podendo mimetizar penfigoide.",
+    <>Fibrose e <Highlight>milia</Highlight> nas lesões antigas favorecem EBA sobre penfigoide bolhoso.</>,
+  ],
+  evaluation: [
+    <>A morfologia isolada não distingue de penfigoide, herpes gestacional ou farmacodermia nas formas inflamatórias ricas em eosinófilos — a <Highlight>imunopatologia é obrigatória</Highlight>.</>,
+    <>Atenção: a EBA pode se apresentar com padrão <Highlight>pauci-inflamatório e predominantemente neutrofílico</Highlight>, fugindo do eosinófilo esperado nesse ramo do algoritmo.</>,
+    "Cicatriz e milia direcionam para EBA; sua ausência, para penfigoide.",
+    "Porfiria cutânea tarda entra no diferencial da forma mecanobolhosa (papilas em festão, material hialino perivascular).",
+  ],
+  highlight: {
+    title: "IFD",
+    bullets: [
+      <>IgG/C3 linear na junção, com padrão <Highlight>“u-serrilhado”</Highlight> (versus n-serrilhado do penfigoide).</>,
+      <>Na pele clivada por sal, os depósitos ficam no <Highlight>assoalho</Highlight> (lado dérmico) — oposto ao penfigoide.</>,
+      "ELISA/imunoblot anti-colágeno VII confirma.",
+    ],
+    footer: "Sem clivagem salina ou análise de serrilhado, o caso fica indefinido.",
+  },
+  pearl: <>bolha subepidérmica que cicatriza com <Highlight>milia</Highlight>, com depósitos no <Highlight>assoalho</Highlight> da clivagem salina em padrão u-serrilhado, define a epidermólise bolhosa adquirida.</>,
+};
+
+const farmacodermia: FocusedNote = {
+  title: "Farmacodermia (penfigoide induzido por droga)",
+  concept: [
+    <>Reação bolhosa subepidérmica <Highlight>deflagrada por fármaco</Highlight>, clínica e histologicamente sobreponível ao penfigoide bolhoso.</>,
+    <>Antagonistas de <Highlight>DPP-4 (gliptinas)</Highlight>, diuréticos, furosemida e alguns antibióticos são os gatilhos mais descritos.</>,
+  ],
+  clinical: [
+    "Bolhas tensas pruriginosas que surgem semanas a meses após o início do fármaco suspeito.",
+    <>Pode ter <Highlight>menos base urticada</Highlight> e distribuição mais atípica que o penfigoide idiopático.</>,
+    "Tende a melhorar com a suspensão do fármaco, embora a resposta possa ser lenta.",
+  ],
+  histology: [
+    <>Bolha subepidérmica com <Highlight>eosinófilos</Highlight>, indistinguível do penfigoide bolhoso clássico.</>,
+    "Pode haver componente neutrofílico mais proeminente em alguns casos induzidos por gliptina.",
+    "Papilas preservadas, sem acantólise.",
+  ],
+  evaluation: [
+    <>A histologia não separa de penfigoide bolhoso, herpes gestacional ou EBA — todos podem <Highlight>simular-se</Highlight> como bolha subepidérmica eosinofílica; a anamnese farmacológica cuidadosa é decisiva.</>,
+    "IFD costuma ser positiva como no penfigoide idiopático (IgG/C3 lineares).",
+    "Melhora após a suspensão do fármaco reforça a causalidade, mas não é imediata.",
+  ],
+  highlight: {
+    title: "Anamnese",
+    bullets: [
+      <>Revisar <Highlight>fármacos iniciados nos últimos meses</Highlight>, com atenção especial às gliptinas.</>,
+      "IFD segue o mesmo padrão do penfigoide bolhoso — não diferencia por si só.",
+      "Suspender o agente suspeito é parte do diagnóstico e do tratamento.",
+    ],
+    footer: "Quando a IFD é idêntica ao penfigoide, é a história medicamentosa que fecha o caso.",
+  },
+  pearl: <>bolha subepidérmica eosinofílica <Highlight>idêntica ao penfigoide</Highlight>, mas iniciada após novo fármaco (sobretudo gliptina), aponta para farmacodermia bolhosa.</>,
+};
 
 const penfigoideEHerpesGestationis: FocusedNote = {
   title: "Penfigoide bolhoso e herpes gestationis",
@@ -858,7 +1055,6 @@ const epidermoliseBolhosaGrupo: FocusedNote = {
   clinical: [
     "Bolhas desencadeadas por trauma mínimo, desde o nascimento nas formas hereditárias.",
     <>Juncional: tecido de granulação periorificial, distrofia ungueal e defeitos de esmalte. <Highlight>Distrófica</Highlight>: cicatriz, milia, sindactilia e risco de carcinoma espinocelular.</>,
-    <>Síndrome de Bart: <Highlight>aplasia cutânea congênita</Highlight> nos membros associada a epidermólise bolhosa.</>,
   ],
   histology: [
     <>Bolha subepidérmica <Highlight>quase sem infiltrado</Highlight> nas formas mecanobolhosas.</>,
@@ -918,7 +1114,7 @@ const porfirias: FocusedNote = {
   title: "Porfirias cutâneas",
   concept: [
     <>Bolha por <Highlight>fotossensibilização de porfirinas</Highlight> acumuladas, com fragilidade da junção dermoepidérmica.</>,
-    "Porfiria cutânea tarda é a mais comum; formas variegata, eritropoiética, induzida por droga ou por diálise repetem o padrão.",
+    "Porfiria cutânea tarda é a mais comum; a pseudoporfiria repete a mesma histologia, com porfirinas normais.",
   ],
   clinical: [
     <>Bolhas e erosões em <Highlight>dorso das mãos</Highlight>, com <Highlight>fragilidade cutânea</Highlight>, milia e cicatrizes.</>,
@@ -1209,102 +1405,6 @@ const amiloidoseBolhosa: FocusedNote = {
   pearl: <>bolha hemorrágica ao trauma mínimo, com material amorfo perivascular <Highlight>Congo-positivo</Highlight>, é amiloidose sistêmica até prova em contrário.</>,
 };
 
-const bolhaSobreCicatriz: FocusedNote = {
-  title: "Bolha sobre cicatriz",
-  concept: [
-    <>Clivagem por <Highlight>fragilidade mecânica</Highlight> na junção alterada da pele cicatricial, sem mecanismo imunológico.</>,
-    "Fenômeno local, geralmente após trauma, atrito ou edema.",
-  ],
-  clinical: [
-    "Bolha tensa restrita ao território de uma cicatriz prévia.",
-    "Ausência de lesões a distância e de prurido generalizado.",
-    "Resolve com a proteção da área.",
-  ],
-  histology: [
-    <>Bolha subepidérmica sobre <Highlight>derme fibrótica</Highlight>, com colágeno em feixes paralelos e anexos ausentes.</>,
-    "Infiltrado escasso, desproporcional ao tamanho da bolha.",
-    "Epiderme adelgaçada, com apagamento das cristas.",
-  ],
-  evaluation: [
-    <>A <Highlight>EBA</Highlight> também deixa cicatriz e milia — a IFD é obrigatória se houver lesões fora da cicatriz.</>,
-    "Penfigoide pode ter fenômeno de Koebner sobre cicatriz.",
-    "Porfiria e trauma repetido completam o diferencial.",
-  ],
-  highlight: {
-    title: "IFD",
-    bullets: [
-      <>Negativa: confirma a natureza <Highlight>puramente mecânica</Highlight>.</>,
-      "Positiva: reclassifica o caso como doença bolhosa autoimune localizada.",
-    ],
-    footer: "Bolha restrita à cicatriz + IFD negativa = fenômeno local.",
-  },
-  pearl: <>a fibrose da cicatriz é um <Highlight>plano de clivagem pronto</Highlight>; só a ausência de lesões fora dela e a IFD negativa autorizam o diagnóstico mecânico.</>,
-};
-
-const bolhaEletrodissecacao: FocusedNote = {
-  title: "Bolha secundária a ceratose actínica eletrodissecada",
-  concept: [
-    <>Bolha <Highlight>iatrogênica</Highlight>, por dano térmico da eletrodissecação sobre pele fotodanificada e frágil.</>,
-    "É um artefato terapêutico, não uma doença bolhosa.",
-  ],
-  clinical: [
-    "Bolha localizada exatamente no sítio tratado, surgindo em horas a dias.",
-    "Base com elastose e outras ceratoses actínicas ao redor.",
-    "Evolui para crosta e reepitelização.",
-  ],
-  histology: [
-    <>Clivagem subepidérmica com <Highlight>alteração térmica</Highlight> — colágeno homogeneizado e núcleos alongados “em fila”.</>,
-    <><Highlight>Elastose solar</Highlight> acentuada e atipia queratinocítica residual nas bordas.</>,
-    "Infiltrado escasso; necrose superficial coagulativa.",
-  ],
-  evaluation: [
-    "Reconhecer o artefato térmico evita interpretar o quadro como doença bolhosa.",
-    "Porfiria e penfigoide devem ser lembrados se houver bolhas fora da área tratada.",
-    "Confirmar que a atipia residual não representa carcinoma invasivo.",
-  ],
-  highlight: {
-    title: "Artefato térmico",
-    bullets: [
-      <>Colágeno <Highlight>homogeneizado</Highlight> e núcleos alinhados denunciam a cauterização.</>,
-      "A história do procedimento é indispensável para o laudo.",
-    ],
-    footer: "Bolhas fora do sítio tratado exigem investigação autoimune.",
-  },
-  pearl: <>bolha no sítio exato de um procedimento, com <Highlight>colágeno cozido</Highlight> e elastose ao redor, é iatrogenia — não doença bolhosa.</>,
-};
-
-const queimaduraAguda: FocusedNote = {
-  title: "Queimadura aguda",
-  concept: [
-    <>Necrose por <Highlight>agressão térmica, química ou elétrica</Highlight>, com clivagem no nível atingido pelo calor.</>,
-    "A profundidade da necrose define o grau e o prognóstico.",
-  ],
-  clinical: [
-    "Eritema doloroso com bolhas tensas de aparecimento rápido, com limites correspondentes ao agente.",
-    "Segundo grau superficial: bolha e dor intensa; profundo: hipoestesia e base pálida.",
-    "História de exposição é evidente na maioria dos casos.",
-  ],
-  histology: [
-    <><Highlight>Necrose coagulativa</Highlight> da epiderme com queratinócitos eosinofílicos e núcleos alongados, “em paliçada”.</>,
-    "Bolha subepidérmica ou intraepidérmica conforme a profundidade; colágeno dérmico homogeneizado nas formas profundas.",
-    "Inflamação escassa nas primeiras horas; neutrófilos aparecem depois.",
-  ],
-  evaluation: [
-    <><Highlight>NET:</Highlight> necrose de espessura total sem alteração térmica do colágeno, com contexto medicamentoso.</>,
-    "Dermatite fototóxica: necrose parcial, restrita à área fotoexposta.",
-    "Queimadura química segue a distribuição do contato.",
-  ],
-  highlight: {
-    title: "Núcleos alongados",
-    bullets: [
-      <>Queratinócitos e fibroblastos com núcleos <Highlight>estirados e paralelos</Highlight> = dano térmico.</>,
-      "Colágeno homogeneizado indica queimadura profunda.",
-    ],
-    footer: "A profundidade da homogeneização estima o grau.",
-  },
-  pearl: <>o que separa queimadura de necrólise não é a necrose, e sim a <Highlight>alteração térmica do colágeno e dos núcleos</Highlight>.</>,
-};
-
 const blisterSuccao: FocusedNote = {
   title: "Bolha por sucção",
   concept: [
@@ -1335,38 +1435,6 @@ const blisterSuccao: FocusedNote = {
     footer: "Contexto e formato da lesão valem mais que a lâmina.",
   },
   pearl: <>bolha subepidérmica <Highlight>sem uma única célula inflamatória</Highlight> é mecânica, porfírica ou hereditária — a lâmina sozinha não decide.</>,
-};
-
-const hipoxemiaPressao: FocusedNote = {
-  title: "Bolha por hipoxemia e pressão (bolha do coma)",
-  concept: [
-    <>Necrose isquêmica por <Highlight>pressão prolongada</Highlight> somada a hipoperfusão, típica de pacientes em coma ou imobilizados.</>,
-    "Classicamente associada a intoxicação por barbitúricos, opioides e monóxido de carbono.",
-  ],
-  clinical: [
-    <>Bolhas tensas sobre <Highlight>proeminências ósseas</Highlight> e áreas de apoio, surgindo 24–72 h após o evento.</>,
-    "Paciente com rebaixamento de consciência ou imobilidade prolongada.",
-    "Cura em 1 a 2 semanas, podendo deixar cicatriz.",
-  ],
-  histology: [
-    <>Bolha subepidérmica com <Highlight>necrose de queratinócitos</Highlight> e, caracteristicamente, <Highlight>necrose das glândulas écrinas</Highlight>.</>,
-    "Trombos de fibrina em vasos dérmicos e infiltrado escasso.",
-    "Necrose pode estender-se ao subcutâneo nas formas graves.",
-  ],
-  evaluation: [
-    <>A <Highlight>necrose écrina</Highlight> é o achado que fecha o diagnóstico e não existe nas bolhas autoimunes.</>,
-    "Queimadura e NET não têm o padrão de necrose glandular isolada.",
-    "Correlacionar com o sítio de apoio e o tempo de imobilidade.",
-  ],
-  highlight: {
-    title: "Necrose écrina",
-    bullets: [
-      <>Glândulas écrinas necróticas com <Highlight>núcleos picnóticos</Highlight> sob bolha pauci-inflamatória.</>,
-      "Trombos dérmicos reforçam o componente isquêmico.",
-    ],
-    footer: "Achado que direciona à investigação toxicológica.",
-  },
-  pearl: <>bolha em proeminência óssea de paciente comatoso com <Highlight>necrose das glândulas écrinas</Highlight> é a bolha do coma — praticamente patognomônica.</>,
 };
 
 // ---------------------------------------------------------------------------
@@ -1569,36 +1637,46 @@ const espongioseBalonizacaoRuptura: FocusedNote = {
 };
 
 const espongioseEosinofilicaGrupo: FocusedNote = {
-  title: "Espongiose eosinofílica sem vesiculação marcante",
+  title: "Espongiose eosinofílica",
+  subtitle: "HAAPPIE: eos na epiderme",
+  sectionTitles: {
+    histology: "Na lâmina",
+    evaluation: "Diferencial",
+  },
   concept: [
-    <>A <Highlight>espongiose eosinofílica</Highlight> pode ser a primeira lesão do penfigoide bolhoso, do herpes gestationis e do pênfigo vulgar, antes de qualquer bolha.</>,
-    "É um padrão de alerta: a doença autoimune ainda não mostrou o nível da clivagem.",
+    <>Presença de <Highlight>eosinófilos migrando para uma epiderme espongiótica</Highlight> — pequenos eosinófilos entre os queratinócitos.</>,
+    <>É um <Highlight>padrão histológico, não um diagnóstico</Highlight>; o mnemônico HAAPPIE organiza suas principais causas.</>,
+    "Pode anteceder a clivagem ou a acantólise das dermatoses bolhosas autoimunes.",
   ],
   clinical: [
-    <>Penfigoide em <Highlight>fase não bolhosa</Highlight>: idoso com prurido intenso e lesões eczematosas ou urticariformes.</>,
-    "Herpes gestationis: gestante com placas urticadas periumbilicais.",
-    "Pênfigo vulgar inicial: erosões orais dolorosas antes das lesões cutâneas.",
+    <><Highlight>H — hipersensibilidade e doenças imunobolhosas:</Highlight> sobretudo penfigoide bolhoso e penfigoide gestacional; eventualmente, pênfigo.</>,
+    <><Highlight>A — dermatite de contato alérgica:</Highlight> incluir também as reações fotoalérgicas.</>,
+    <><Highlight>A — picada de artrópode:</Highlight> correlacionar com lesões pruriginosas e a exposição.</>,
+    <><Highlight>P — PUPPP:</Highlight> atualmente denominada erupção polimórfica da gravidez.</>,
   ],
   histology: [
-    <>Espongiose com <Highlight>eosinófilos dentro da epiderme</Highlight>, sem bolha franca.</>,
-    "Infiltrado dérmico superficial rico em eosinófilos, por vezes com edema papilar.",
-    "Procurar ativamente acantólise discreta e fendas incipientes na junção.",
+    <>Espongiose com <Highlight>eosinófilos dentro da epiderme</Highlight>, com ou sem vesiculação evidente.</>,
+    <>Na <Highlight>incontinentia pigmenti</Highlight>, a fase vesicular pode exibir eosinofilia epidérmica exuberante.</>,
+    "Procurar pistas acompanhantes: acantólise, clivagem incipiente, alteração de interface ou padrão foliculocêntrico.",
   ],
   evaluation: [
-    "A lista curta da espongiose eosinofílica inclui ainda picada de artrópode, contato alérgico e incontinentia pigmenti.",
-    "A morfologia não define qual doença autoimune está começando.",
-    "Repetir a biópsia em lesão mais desenvolvida se a IFD for inconclusiva.",
+    <><Highlight>P — pênfigo/penfigoide:</Highlight> doenças bolhosas autoimunes, especialmente o penfigoide.</>,
+    <><Highlight>E — outras causas:</Highlight> foliculite eosinofílica, eritema tóxico neonatal e erupção medicamentosa.</>,
+    "Idade, gravidez, distribuição, exposição de contato, picada e uso de fármacos direcionam o diferencial.",
+    <>Se houver suspeita de doença bolhosa autoimune, realizar <Highlight>IFD em pele perilesional</Highlight>.</>,
   ],
   highlight: {
-    title: "IFD",
+    title: "HAAPPIE",
     bullets: [
-      <>Espongiose eosinofílica em adulto <Highlight>obriga IFD de pele perilesional</Highlight>.</>,
-      <><Highlight>Linear</Highlight> na junção = penfigoide/herpes gestationis; <Highlight>intercelular</Highlight> = pênfigo vulgar.</>,
-      "ELISA (anti-BP180, anti-Dsg3) completa a caracterização.",
+      <><Highlight>H</Highlight> — hipersensibilidade e imunobolhosas.</>,
+      <><Highlight>AA</Highlight> — contato alérgico/fotoalérgico e artrópode.</>,
+      <><Highlight>PP</Highlight> — PUPPP e pênfigo/penfigoide.</>,
+      <><Highlight>I</Highlight> — incontinentia pigmenti.</>,
+      <><Highlight>E</Highlight> — foliculite eosinofílica, eritema tóxico e erupção por droga.</>,
     ],
-    footer: "É o achado que antecipa o diagnóstico em semanas ou meses.",
+    footer: "Eos in epithelium: lembre HAAPPIE.",
   },
-  pearl: <>espongiose eosinofílica é a <Highlight>fase pré-bolhosa</Highlight> das doenças autoimunes: a IFD dá o diagnóstico antes de a bolha aparecer.</>,
+  pearl: <>espongiose eosinofílica é um <Highlight>sinal de alerta</Highlight>: em adulto com prurido ou suspeita de doença bolhosa, a IFD pode revelar o diagnóstico antes da bolha.</>,
 };
 
 // ---------------------------------------------------------------------------
@@ -1637,19 +1715,27 @@ export const VESICOBULLOUS_NOTES: Record<string, FocusedNote> = {
   "dx-doenca-grover": grover,
   "dx-hailey-hailey": haileyHailey,
   "group-vesico-acantolitica-suprabasal-coesa": penfigoVulgar,
-  "group-vesico-acantolitica-superior-sem-bacteria": penfigoFoliaceoGrupo,
+  "dx-penfigo-foliaceo": penfigoFoliaceo,
+  "dx-penfigo-iga": penfigoIga,
+  "dx-sindrome-pele-escaldada-estafilococica": sindromePeleEscaldada,
   "dx-penfigo-cicatricial": penfigoideMembranasMucosas,
 
   // Subepidérmicas imunomediadas
   "group-vesico-espongiose-eos-sem-vesicula": espongioseEosinofilicaGrupo,
   "group-subepi-neutrofilos-superior-eos": penfigoideEHerpesGestationis,
-  "group-subepi-poucos-neutro-eos": penfigoidePobreEmCelulas,
-  "group-subepi-eosinofilos-papilar-bolha": penfigoideEEba,
+  "dx-subepi-poucos-penfigoide-bolhoso": penfigoidePobreEmCelulas,
+  "dx-subepi-poucos-herpes-gestacional": penfigoidePobreEmCelulas,
+  "dx-subepi-penfigoide-bolhoso": penfigoideBolhoso,
+  "dx-subepi-herpes-gestacional": herpesGestacional,
+  "dx-subepi-eba": epidermoliseBolhosaAdquirida,
+  "dx-subepi-farmacodermia": farmacodermia,
   "group-subepi-misto-papilar-bolha": penfigoideEEba,
   "group-subepi-neutrofilos-bandas-sem-mucina": dermatiteHerpetiformeGrupo,
   "group-subepi-misto-bandas-sem-mucina": dermatiteHerpetiformeGrupo,
-  "group-subepi-sem-infiltrado-eb": epidermoliseBolhosaGrupo,
-  "group-subepi-porfirias": porfirias,
+  "dx-subepi-pouco-eb-hereditaria": epidermoliseBolhosaGrupo,
+  "dx-subepi-pouco-eb-adquirida": epidermoliseBolhosaAdquirida,
+  "dx-subepi-porfiria-cutanea-tarda": porfirias,
+  "dx-subepi-pseudoporfiria": porfirias,
   "dx-lupus-eritematoso-sistemico-bolhoso": lupusBolhoso,
 
   // Subepidérmicas não imunomediadas e de vizinhança
@@ -1661,11 +1747,7 @@ export const VESICOBULLOUS_NOTES: Record<string, FocusedNote> = {
   "dx-subepi-celulite": celuliteBolhosa,
   "dx-urticaria-pigmentosa": urticariaPigmentosa,
   "dx-amiloidose-bolhosa": amiloidoseBolhosa,
-  "dx-bolha-sobre-cicatriz": bolhaSobreCicatriz,
-  "dx-bolha-ceratose-actinica-eletrodissecada": bolhaEletrodissecacao,
-  "dx-queimadura-aguda": queimaduraAguda,
   "dx-blister-por-succao": blisterSuccao,
-  "dx-hipoxemia-plus-pressure": hipoxemiaPressao,
 
   // Grupos morfológicos
   "group-vesico-espongiose-eczemas-precoces": eczemasPrecoces,

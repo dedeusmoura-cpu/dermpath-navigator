@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FavoriteToggleButton } from "../components/FavoriteToggleButton";
 import { Layout } from "../components/Layout";
+import { StudyNoteAsideFrame } from "../components/StudyNoteAsideFrame";
 import { Highlight, StudyNoteCard } from "../components/StudyNoteCard";
 import type { StudyNoteSectionData } from "../components/StudyNoteCard";
 import { BookIcon, ClipboardIcon, MicroscopeIcon, StethoscopeIcon } from "../components/icons/SectionIcons";
@@ -78,7 +79,7 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
 
   return (
     <Layout>
-      <div className="mx-auto max-w-7xl space-y-4">
+      <div className="mx-auto max-w-[100rem] space-y-4">
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
@@ -116,12 +117,11 @@ export function VasculiteIgaHenochSchonleinGoldTipsPage() {
 
 function IgAVascularDiagram() {
   return (
-    <div className="flex h-full flex-col rounded-[20px] border-2 border-sky-400 bg-white/90 p-4 shadow-sm">
-      <h3 className="mx-auto mb-3 max-w-[15rem] -rotate-1 rounded bg-sky-200/80 px-3 py-1 text-center font-hand text-xl font-bold leading-6 text-[#1c2b45]">
-        Esquema: depósito vascular de IgA
-      </h3>
-
-      <svg viewBox="0 0 320 330" className="mx-auto min-h-0 w-full max-w-[22rem] flex-1" role="img" aria-label="Depósitos de IgA em vaso dérmico">
+    <StudyNoteAsideFrame
+      title="Esquema: depósito vascular de IgA"
+      footer={<><span className="font-bold">DIF:</span> <Highlight>IgA</Highlight> nas paredes vasculares — achado patológico definidor.</>}
+    >
+      <svg viewBox="0 0 320 330" className="mx-auto min-h-0 w-full max-w-[22rem] flex-1 rounded-xl border border-[#d9b9aa] bg-[#fff8f3]/70 p-1" role="img" aria-label="Depósitos de IgA em vaso dérmico">
         <defs>
           <linearGradient id="iga-skin" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#ffd6cf" />
@@ -156,9 +156,6 @@ function IgAVascularDiagram() {
         {[206,226,247,268,290].map((x, index) => <circle key={index} cx={x} cy={index % 2 ? 242 : 236} r="6" fill="#55a65a" stroke="#236c39" strokeWidth="1.5" />)}
       </svg>
 
-      <p className="mt-2 text-center font-hand text-base leading-6 text-[#1c2b45]">
-        <span className="font-bold">DIF:</span> <Highlight>IgA</Highlight> nas paredes vasculares — achado patológico definidor.
-      </p>
-    </div>
+    </StudyNoteAsideFrame>
   );
 }

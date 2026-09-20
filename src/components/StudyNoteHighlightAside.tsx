@@ -9,11 +9,11 @@ interface StudyNoteHighlightAsideProps {
 
 export function StudyNoteHighlightAside({ eyebrow, title, bullets, footer }: StudyNoteHighlightAsideProps) {
   return (
-    <div className="flex h-full flex-col rounded-[22px] border-2 border-[#0e8f86] bg-[linear-gradient(140deg,rgba(228,250,247,0.97),rgba(255,255,255,0.94))] px-4 py-3.5 shadow-[0_10px_24px_-20px_rgba(9,74,70,0.6)]">
+    <div className="flex h-full flex-col rounded-[18px] border-2 border-dashed border-[#8d603e] bg-[rgba(255,252,240,0.84)] px-4 py-3.5 [&_mark]:!bg-[#fff36d]">
       <div className="mb-2.5 flex items-start justify-between gap-3">
         <div className="min-w-0">
           {eyebrow ? <p className="font-hand text-[0.72rem] font-bold uppercase tracking-[0.2em] text-[#0e8f86]">{eyebrow}</p> : null}
-          <h3 className="min-w-0 font-hand text-[1.35rem] font-bold leading-tight text-[#0b6f68] underline decoration-[#33a79f] decoration-2 underline-offset-[7px] sm:text-[1.5rem]">
+          <h3 className="min-w-0 font-hand text-[1.35rem] font-bold italic leading-tight text-[#0b6f68] underline decoration-[#2f948b] decoration-2 underline-offset-[7px] sm:text-[1.5rem]">
             {title}
           </h3>
         </div>
@@ -22,7 +22,7 @@ export function StudyNoteHighlightAside({ eyebrow, title, bullets, footer }: Stu
         </span>
       </div>
 
-      <ul className="space-y-1.5 font-hand text-[0.96rem] leading-[1.38rem] text-[#182238] [&_mark]:!bg-[#c6f1ea] lg:text-[1.03rem]">
+      <ul className="space-y-1.5 font-hand font-medium text-[0.96rem] leading-[1.38rem] text-[#191b21] lg:text-[1.03rem]">
         {bullets.map((bullet, index) => (
           <li key={index} className="flex items-start gap-2">
             <span className="mt-[0.55rem] h-2.5 w-2.5 flex-none rounded-full bg-[#0e8f86]" />
@@ -32,7 +32,7 @@ export function StudyNoteHighlightAside({ eyebrow, title, bullets, footer }: Stu
       </ul>
 
       {footer ? (
-        <p className="mt-3 rounded-xl border border-[#0e8f86]/40 bg-white/70 px-3 py-2 text-center font-hand text-base font-semibold leading-6 text-[#0b6f68]">
+        <p className="mt-3 rounded-xl border border-[#8d603e]/55 bg-[#fffaf0]/80 px-3 py-2 text-center font-hand text-base font-semibold leading-6 text-[#0b6f68]">
           {footer}
         </p>
       ) : null}

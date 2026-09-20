@@ -40,6 +40,13 @@ export interface AlgorithmNode {
   parentId?: string;
   image?: string;
   references?: ContentLink[];
+  // Marca um nó de decisão cujos filhos são diagnósticos que compartilham um
+  // mesmo achado e devem abrir juntos, de uma vez, na coluna de resultados
+  // (ex.: "Papilas dérmicas preservadas..." -> Porfiria cutânea tarda /
+  // Pseudoporfiria). Sem essa marcação, o nó é tratado como um branch normal
+  // e seus filhos aparecem como cartões próprios em outra coluna, mesmo que
+  // todos sejam diagnósticos finais — ver isPureTerminalGroup.
+  groupBridge?: boolean;
 }
 
 export interface AlgorithmTree {
