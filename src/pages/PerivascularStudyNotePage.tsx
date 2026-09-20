@@ -1028,14 +1028,25 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /tricotilomania/i,
+    match: /^tricotilomania$/i,
     exclusive: true,
+    replaceDefaults: true,
     data: {
-      concept: ["Alopecia por arrancamento mecânico repetitivo dos fios, geralmente relacionada a transtorno do controle de impulsos."],
-      clinical: ["Placa de alopecia de contorno bizarro/geométrico com fios de comprimentos variados; couro cabeludo sem eritema ou descamação significativos."],
-      histology: ["Folículos de tamanho normal; número total de fios (terminais e vellus) normal; arquitetura folicular incompleta/rota; aumento de fios em catágeno/telógeno; tricomalácia (hastes pregueadas ou torcidas dentro do infundíbulo) e \"pigment casts\"; ausência de inflamação significativa."],
-      evaluation: ["Tricomalácia sem inflamação é o achado histológico mais discriminativo; diferenciar de alopecia areata (que tem infiltrado peribulbar) e de tinea capitis (hifas, inflamação)."],
-      pearl: "tricomalácia com arquitetura folicular rota e ausência de inflamação, em folículos de número e tamanho normais, define a tricotilomania.",
+      concept: [
+        <>Alopecia por <Highlight>arrancamento mecânico repetitivo</Highlight> dos fios, geralmente relacionada a transtorno do controle de impulsos.</>,
+      ],
+      clinical: [
+        <>Placa de alopecia de <Highlight>contorno bizarro/geométrico</Highlight> com fios de comprimentos variados; couro cabeludo sem eritema ou descamação significativos.</>,
+      ],
+      histology: [
+        <>Folículos de tamanho normal; número total de fios (terminais e vellus) normal; <Highlight>arquitetura folicular incompleta/rota</Highlight>; aumento de fios em catágeno/telógeno.</>,
+        <><Highlight>Tricomalácia</Highlight> (hastes pregueadas ou torcidas dentro do infundíbulo) e "pigment casts"; ausência de inflamação significativa.</>,
+      ],
+      evaluation: [
+        <>Tricomalácia <Highlight>sem inflamação</Highlight> é o achado histológico mais discriminativo.</>,
+        <>Diferenciar de <Highlight>alopecia areata</Highlight> (infiltrado peribulbar) e de <Highlight>tinea capitis</Highlight> (hifas, inflamação).</>,
+      ],
+      pearl: <>Tricomalácia com <Highlight>arquitetura folicular rota</Highlight> e ausência de inflamação, em folículos de número e tamanho normais, define a tricotilomania.</>,
     },
   },
   {
