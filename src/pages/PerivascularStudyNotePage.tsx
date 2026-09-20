@@ -1050,7 +1050,7 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     exclusive: true,
     replaceDefaults: true,
     data: {
-      noteTitle: "Lúpus discoide (alopecia cicatricial)",
+      noteTitle: "Lúpus discoide",
       concept: [
         <>Forma mais comum de <Highlight>lúpus cutâneo crônico</Highlight> e causa clássica de <Highlight>alopecia cicatricial linfocítica primária</Highlight>: dermatite de interface vacuolar destrói o nicho de células-tronco do <Highlight>bulge/istmo</Highlight>, com fibrose de substituição irreversível.</>,
         <>Pode ser isolada ou associada a LES; a maioria dos casos limitados ao couro cabeludo não preenche critérios para doença sistêmica.</>,
@@ -1076,7 +1076,7 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     exclusive: true,
     replaceDefaults: true,
     data: {
-      noteTitle: "Líquen plano pilar (alopecia cicatricial)",
+      noteTitle: "Líquen plano pilar",
       concept: [
         <>Variante folicular do <Highlight>líquen plano</Highlight>: infiltrado linfocitário citotóxico ataca o epitélio do <Highlight>infundíbulo/istmo</Highlight>, destruindo o nicho de células-tronco foliculares — alopecia cicatricial irreversível.</>,
         <>Espectro inclui a forma clássica multifocal, a <Highlight>alopecia frontal fibrosante (AFF)</Highlight> e a síndrome de Graham-Little-Piccardi-Lassueur.</>,
