@@ -606,6 +606,33 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
+    match: /síndrome da pele escaldada estafilocócica|\bssss\b/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      concept: [
+        <>Doença mediada por <Highlight>toxinas esfoliativas</Highlight> de <em>S. aureus</em>, que clivam a <Highlight>desmogleína 1</Highlight> na camada granulosa.</>,
+        <>A toxina parte de um foco infeccioso à distância e circula pelo sangue; por isso, as <Highlight>bolhas são estéreis</Highlight>.</>,
+      ],
+      clinical: [
+        <>Predomina em <Highlight>neonatos e crianças pequenas</Highlight>; em adultos, sugere insuficiência renal, imunossupressão ou outra condição predisponente.</>,
+        <>Pródromo de febre, irritabilidade e dor cutânea, seguido por eritema difuso, bolhas flácidas e descamação com <Highlight>sinal de Nikolsky positivo</Highlight>.</>,
+        <>Erosões e fissuras <Highlight>periorificiais</Highlight> são típicas, mas a <Highlight>mucosa oral é poupada</Highlight>.</>,
+      ],
+      histology: [
+        <>Clivagem nítida <Highlight>na ou logo abaixo da camada granulosa</Highlight>, com acantólise superficial.</>,
+        <>A cavidade da bolha e a derme superficial têm <Highlight>pouca ou nenhuma inflamação</Highlight>.</>,
+        <>Não há organismos no Gram da biópsia da bolha e não há necrose epidérmica confluente.</>,
+      ],
+      evaluation: [
+        <>A SSSS é sobretudo um diagnóstico clínico; cultive o <Highlight>foco primário</Highlight> — nasofaringe, conjuntiva, períneo ou outra área purulenta —, e não a bolha íntegra.</>,
+        <>Diferencie de impetigo bolhoso: na SSSS, a toxina circulante causa comprometimento difuso; no impetigo, há <Highlight>bactérias na bolha</Highlight> e doença localizada.</>,
+        <>Diferencie de pênfigo foliáceo pela <Highlight>IFD negativa</Highlight> na SSSS e de SJS/NET pela ausência de acometimento mucoso e de necrose epidérmica extensa.</>,
+      ],
+      pearl: <><Highlight>Bolha flácida estéril + mucosas poupadas + clivagem granulosa sem necrose</Highlight> em lactente ou criança febril aponta para SSSS. <Highlight>Cultive o foco à distância, não a bolha.</Highlight></>,
+    },
+  },
+  {
     match: /doença de darier/i,
     exclusive: true,
     data: {
@@ -1019,6 +1046,39 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
+    match: /^lúpus discoide$/i,
+    exclusive: true,
+    replaceDefaults: true,
+    data: {
+      noteTitle: "Lúpus discoide (alopecia cicatricial)",
+      concept: [
+        <>Forma mais comum de <Highlight>lúpus eritematoso cutâneo crônico</Highlight> e causa clássica de <Highlight>alopecia cicatricial linfocítica primária</Highlight> do couro cabeludo.</>,
+        <>Dermatite de interface autoimune dirigida ao epitélio folicular (predominantemente <Highlight>vacuolar</Highlight>), que destrói o nicho de células-tronco do <Highlight>bulge/istmo</Highlight> e é seguida por fibrose de substituição — a cicatriz é, portanto, irreversível.</>,
+        <>Pode ocorrer isolado ou associado a lúpus eritematoso sistêmico (LES); a maioria dos pacientes com DLE limitado ao couro cabeludo não preenche critérios para doença sistêmica.</>,
+      ],
+      clinical: [
+        <>Placas bem demarcadas, <Highlight>eritemato-violáceas</Highlight>, com <Highlight>escama aderente</Highlight> e <Highlight>plugs foliculares</Highlight> — ao remover a escama, os plugs ficam visíveis na face inferior ("sinal do tapete de pregos"/carpet tack sign).</>,
+        <>No couro cabeludo, formam placas de <Highlight>alopecia irregulares e multifocais</Highlight>, que podem coalescer; o centro fica <Highlight>atrófico, liso e com perda dos óstios foliculares</Highlight>, enquanto a borda ativa mantém eritema e descamação.</>,
+        <><Highlight>Discromia</Highlight> (hipopigmentação central com halo hiperpigmentado) e telangiectasias são comuns nas lesões antigas.</>,
+        <>Fotossensibilidade e outros estigmas de lúpus cutâneo podem coexistir; correlacionar sempre com sorologia (FAN, anti-dsDNA) quando houver suspeita de acometimento sistêmico.</>,
+      ],
+      histology: [
+        <>Dermatite de <Highlight>interface vacuolar</Highlight> (não em faixa/liquenoide) acometendo o epitélio folicular <Highlight>e também a epiderme interfolicular</Highlight> — diferente da LPP, que tende a poupar a epiderme entre os folículos.</>,
+        <><Highlight>Espessamento da membrana basal</Highlight> (folicular e epidérmica), bem evidenciado pelo PAS — achado mais proeminente que na LPP.</>,
+        <>Infiltrado linfocitário <Highlight>perivascular superficial e profundo</Highlight>, com padrão característico <Highlight>periecrino e perineural</Highlight>; perda precoce das glândulas sebáceas.</>,
+        <><Highlight>Mucina intersticial aumentada</Highlight> na derme reticular, bem demonstrada pelo Alcian blue ou colloidal iron.</>,
+        <>Plugs córneos infundibulares; nas fases tardias/"queimadas", destruição completa do folículo com substituição por trato fibroso colunar e atrofia epidérmica residual na borda ativa.</>,
+      ],
+      evaluation: [
+        <>Biópsia na <Highlight>margem ativa</Highlight> (com cabelo, eritema e descamação), com pelo menos 4 mm e alcançando o subcutâneo — idealmente um espécime vertical e outro transversal (horizontal).</>,
+        <><Highlight>Imunofluorescência direta (banda lúpica)</Highlight>: depósitos granulares de IgG, IgM e/ou C3 na junção dermoepidérmica e ao redor dos folículos, positiva na maioria das lesões ativas — inclusive lesionais, ao contrário do LES onde o interesse recai sobre a pele sã perilesional.</>,
+        <>Principal diferencial é a <Highlight>líquen plano pilar</Highlight>: infiltrado liquenoide que "abraça" o epitélio folicular poupando a interfolicular, menor espessamento da membrana basal, pouca ou nenhuma mucina, e IFD com corpos coloides/faixa "desgrenhada" de fibrinogênio em vez do padrão granular do lúpus.</>,
+        <>Alopecia de tração e fase inicial da esclerodermia não cursam com interface, membrana basal espessada ou mucina significativa, o que ajuda a excluí-las quando a inflamação é discreta.</>,
+      ],
+      pearl: <>A tríade <Highlight>interface vacuolar envolvendo também a epiderme interfolicular + membrana basal espessada + mucina dérmica</Highlight>, com infiltrado periecrino/perineural, fecha o diagnóstico de lúpus discoide e o separa da LPP, cujo infiltrado liquenoide fica restrito ao epitélio folicular.</>,
+    },
+  },
+  {
     match: /foliculite decalvante/i,
     exclusive: true,
     data: {
@@ -1070,13 +1130,30 @@ const ENRICHMENT_RULES: Array<{ match: RegExp; data: Partial<Enrichment>; exclus
     },
   },
   {
-    match: /psoríase pustulosa|pênfigo por iga/i,
+    match: /psoríase pustulosa/i,
+    replaceDefaults: true,
     data: {
-      concept: ["Padrão de pústula estéril subcórnea/intraespinhosa compartilhado por diversas entidades (ver Tabela 8.4 de Bolognia); a composição do infiltrado, a presença de acantólise e a imunofluorescência direta (IFD) discriminam entre elas."],
-      clinical: ["Psoríase pustulosa: pode ser generalizada (von Zumbusch, com febre e toxicidade sistêmica) ou localizada (palmoplantar, acrodermatite contínua); pênfigo por IgA: vesicopústulas flácidas sobre pele eritematosa ou normal, frequentemente em padrão anular/circinado com crostas centrais, predileção por axilas e virilha."],
-      histology: ["Psoríase pustulosa: acúmulo maciço de neutrófilos entre ceratinócitos eosinofílicos, formando pústulas espongiformes de Kogoj exageradas e microabscessos de Munro na camada córnea. Pênfigo por IgA: pústula intraepidérmica de conteúdo predominantemente neutrofílico, geralmente sem acantólise; tipo dermatose pustulosa subcórnea (IgA nas camadas superiores) vs. tipo neutrofílico intraepidérmico (IgA em toda a espessura da epiderme)."],
-      evaluation: ["IFD é o principal discriminador: IgA intercelular na pênfigo por IgA (ausente na psoríase pustulosa e na dermatose pustulosa subcórnea de Sneddon-Wilkinson, que é clinicamente/histologicamente semelhante mas com IFD negativa)."],
-      pearl: "pústula subcórnea estéril sem acantólise pode ser psoríase pustulosa, Sneddon-Wilkinson ou pênfigo por IgA — a IFD (IgA intercelular positiva apenas no pênfigo por IgA) é o critério decisivo.",
+      noteTitle: "Psoríase pustulosa",
+      concept: [
+        <>Dermatose inflamatória com <Highlight>pústulas estéreis não foliculares</Highlight>, formadas pelo acúmulo de neutrófilos na epiderme.</>,
+        <>Pode ser localizada — palmoplantar ou acrodermatite contínua — ou generalizada; esta última pode cursar com <Highlight>repercussão sistêmica importante</Highlight>.</>,
+      ],
+      clinical: [
+        <>Na forma generalizada, surtos de pústulas sobre eritema difuso associam-se a <Highlight>febre, mal-estar e dor cutânea</Highlight>; avaliar gravidade e sintomas sistêmicos.</>,
+        <>A forma palmoplantar predomina em palmas e plantas; a acrodermatite contínua acomete a ponta dos dedos e o aparelho ungueal.</>,
+        <>Investigue psoríase prévia, infecção, uso recente de medicamentos e retirada de corticosteroide sistêmico como possíveis gatilhos.</>,
+      ],
+      histology: [
+        <><Highlight>Pústulas espongiformes de Kogoj</Highlight>: agregados de neutrófilos entre queratinócitos, habitualmente nas camadas superiores da epiderme.</>,
+        <><Highlight>Microabscessos de Munro</Highlight> na camada córnea podem acompanhar paraceratose e hiperplasia psoriasiforme.</>,
+        <>A ausência de eosinófilos e de edema papilar exuberante favorece psoríase pustulosa em relação à PEGA.</>,
+      ],
+      evaluation: [
+        <>Exclua fungos com <Highlight>PAS ou Grocott</Highlight> quando houver suspeita clínica ou histológica de infecção.</>,
+        <>PEGA costuma ter início mais abrupto após fármaco, com edema papilar e eosinófilos; correlacione sempre com a cronologia medicamentosa.</>,
+        <>Na pústula intraepidérmica com acantólise, a IFD ajuda a afastar pênfigo por IgA.</>,
+      ],
+      pearl: <><Highlight>Nas variantes de início rápido — pustulosa e gutata —, a hiperplasia psoriasiforme clássica pode ainda não estar plenamente desenvolvida.</Highlight> Pústulas estéreis não foliculares, Kogoj/Munro e ausência de eosinófilos sustentam psoríase pustulosa; eosinófilos e edema papilar favorecem PEGA.</>,
     },
   },
   {
@@ -1228,10 +1305,11 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
   {
     match: /^psoríase pustulosa(?:\s|\||$)/i,
     histology: [
-      <><Highlight>Grandes coleções de neutrófilos</Highlight> subcórneas ou intraepidérmicas.</>,
-      <>Pouca alteração epidérmica em lesões rápidas, com camada granulosa parcialmente preservada e <Highlight>ausência de eosinófilos</Highlight>.</>,
+      <><Highlight>Pústulas espongiformes de Kogoj</Highlight>: agregados de neutrófilos entre queratinócitos, habitualmente nas camadas superiores da epiderme.</>,
+      <><Highlight>Microabscessos de Munro</Highlight> na camada córnea podem acompanhar paraceratose e hiperplasia psoriasiforme.</>,
+      <>A ausência de eosinófilos e de edema papilar exuberante favorece psoríase pustulosa em relação à PEGA.</>,
     ],
-    pearl: <>Antes de concluir psoríase pustulosa, exclua fungos. <Highlight>Eosinófilos</Highlight> favorecem PEGA/erupção pustulosa por droga ou infecção fúngica.</>,
+    pearl: <><Highlight>Nas variantes de início rápido — pustulosa e gutata —, a hiperplasia psoriasiforme clássica pode ainda não estar plenamente desenvolvida.</Highlight> Pústulas estéreis não foliculares, Kogoj/Munro e ausência de eosinófilos sustentam psoríase pustulosa; eosinófilos e edema papilar favorecem PEGA.</>,
   },
   {
     match: /^pitiríase rubra pilar(?:\s|\||$)/i,
