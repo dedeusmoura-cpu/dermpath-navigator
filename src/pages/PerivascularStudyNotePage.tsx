@@ -1702,7 +1702,7 @@ const SURVIVAL_GUIDE_OVERRIDES: SurvivalGuideOverride[] = [
   {
     match: /^tricotilomania(?:\s|\||$)/i,
     histology: [
-      <>Número e calibre folicular globalmente preservados, com aumento de catágenos/telógenos.</>,
+      <>Número e calibre folicular globalmente preservados, com <Highlight>aumento da proporção de fios em catágeno/telógeno</Highlight>.</>,
       <><Highlight>Moldes pigmentares, fios deformados</Highlight> e apoptose da bainha radicular externa, sem inflamação significativa.</>,
     ],
     pearl: <>Moldes pigmentares e fios traumatizados sem infiltrado são a combinação mais útil; miniaturização importante favorece alopecia androgenética ou areata.</>,
