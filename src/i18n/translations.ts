@@ -460,7 +460,27 @@ const nodeFieldTranslationsEn: Record<
   },
   "placeholder-neoplasia": {
     title: "Neoplasia",
-    description: "Select the neoplastic group implemented in this branch.",
+    description: "Select the broad neoplastic group.",
+  },
+  "neoplasia-tumores-epiteliais": {
+    title: "Epithelial tumors",
+    description: "Classify epithelial tumors as epidermal/keratinocytic or adnexal.",
+  },
+  "neoplasia-melanociticas": {
+    title: "Melanocytic neoplasms",
+    description: "Melanocytic neoplasm branch under development.",
+  },
+  "neoplasia-tumores-unidade-ungueal": {
+    title: "Nail unit tumors",
+    description: "Nail unit tumor branch under development.",
+  },
+  "neoplasia-tumores-partes-moles": {
+    title: "Soft-tissue tumors",
+    description: "Soft-tissue tumor branch under development.",
+  },
+  "neoplasia-tumores-hematolinfoides": {
+    title: "Hematolymphoid tumors",
+    description: "Hematolymphoid tumor branch under development.",
   },
   "neoplasia-tumores-anexiais": {
     title: "Adnexal tumors",
@@ -819,7 +839,13 @@ const optionLabelTranslationsEn: Record<string, string> = {
   "dermatite::pustulosas": "Pustular dermatitis",
   "dermatite::fibrosantes": "Fibrosing dermatitis",
   "dermatite::paniculites": "Panniculitis",
-  "placeholder-neoplasia::neoplasia-tumores-anexiais": "Adnexal tumors",
+  "placeholder-neoplasia::neoplasia-tumores-epiteliais": "Epithelial tumors",
+  "placeholder-neoplasia::neoplasia-melanociticas": "Melanocytic neoplasms",
+  "placeholder-neoplasia::neoplasia-tumores-unidade-ungueal": "Nail unit tumors",
+  "placeholder-neoplasia::neoplasia-tumores-partes-moles": "Soft-tissue tumors",
+  "placeholder-neoplasia::neoplasia-tumores-hematolinfoides": "Hematolymphoid tumors",
+  "neoplasia-tumores-epiteliais::neoplasia-epidermicos-queratinociticos": "Epidermal / keratinocytic tumors",
+  "neoplasia-tumores-epiteliais::neoplasia-tumores-anexiais": "Adnexal tumors",
   "neoplasia-tumores-anexiais::neoplasia-anexial-foliculares": "Follicular",
   "neoplasia-tumores-anexiais::neoplasia-anexial-ecrinos-apocrinos": "Eccrine and apocrine",
   "neoplasia-tumores-anexiais::neoplasia-anexial-sebaceos": "Sebaceous",
@@ -1572,4 +1598,3 @@ export function getTranslatedTerminalLabel(type: NodeType, language: Language): 
       return "Decision";
   }
 }
-

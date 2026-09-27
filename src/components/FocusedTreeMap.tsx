@@ -26,6 +26,14 @@ interface ColumnItem {
   sameAsResult?: boolean;
 }
 
+function formatTreeLabel(label: string) {
+  if (label === "Carcinomas epidérmicos/queratinocíticos") {
+    return <>Carcinomas epidérmicos/<wbr />queratinocíticos</>;
+  }
+
+  return label;
+}
+
 const CATEGORY_CONFIG: Record<string, {
   gradient: string;
   border: string;
@@ -548,7 +556,7 @@ export function FocusedTreeMap({ selectedPath, openedFinalNodeIds, onSelectNode,
                           className={`block ${isFocusNode ? "drop-shadow-[0_1px_0_rgba(0,0,0,0.08)]" : ""}`}
                           style={isCategoryTile ? { color: catConfig.textColor } : undefined}
                         >
-                          {item.displayLabel || translateNodeTitle(node, language)}
+                          {formatTreeLabel(item.displayLabel || translateNodeTitle(node, language))}
                         </span>
                       </span>
                       {isSelectedPath ? (
