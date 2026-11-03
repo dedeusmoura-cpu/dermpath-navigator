@@ -761,14 +761,14 @@ const nodesArray: AlgorithmNode[] = [
   // ============================================================
   // PANICULITES
   // ============================================================
-  node({ id: "paniculites", title: "Paniculites", type: "decision", parentId: "dermatite",
+  node({ id: "paniculites", title: "Paniculite", type: "decision", parentId: "dermatite",
     description: "Classifique o padrão da paniculite como predominantemente septal ou lobular.", options: [
-    { label: "Predominantemente septal", nextNodeId: "paniculite-septal" },
-    { label: "Predominantemente lobular", nextNodeId: "paniculite-lobular" },
+    { label: "Septal", nextNodeId: "paniculite-septal" },
+    { label: "Lobular", nextNodeId: "paniculite-lobular" },
   ], tags: ["panniculitis", "septal", "lobular"] }),
 
   // ── PREDOMINANTEMENTE SEPTAL ───────────────────────────────────
-  node({ id: "paniculite-septal", title: "Predominantemente septal", type: "decision", parentId: "paniculites",
+  node({ id: "paniculite-septal", title: "Septal", type: "decision", parentId: "paniculites",
     description: "Há vasculite nos septos fibrosos?", options: [
     { label: "Com vasculite", nextNodeId: "paniculite-septal-com-vasculite" },
     { label: "Sem vasculite", nextNodeId: "paniculite-septal-sem-vasculite" },
@@ -776,56 +776,32 @@ const nodesArray: AlgorithmNode[] = [
 
   // Septal · Com vasculite
   node({ id: "paniculite-septal-com-vasculite", title: "Septal — com vasculite", type: "decision", parentId: "paniculite-septal",
-    description: "Identifique o calibre do vaso acometido nos septos.", options: [
-    { label: "Vasos de grande calibre", nextNodeId: "pan-septal-cv-large-vessel" },
-  ], tags: ["panniculitis", "septal", "vasculitis"] }),
-  node({ id: "pan-septal-cv-large-vessel", title: "Vasos de grande calibre", type: "decision", parentId: "paniculite-septal-com-vasculite",
-    description: "Identifique o tipo de vaso envolvido.", options: [
+    description: "Identifique o tipo de vaso acometido nos septos.", options: [
     { label: "Veias", nextNodeId: "dx-pan-thrombophlebitis" },
     { label: "Artérias", nextNodeId: "dx-pan-cutaneous-pan-septal" },
-  ], tags: ["panniculitis", "septal", "large vessels", "vasculitis"] }),
-  terminal("dx-pan-thrombophlebitis", "Tromboflebite superficial", "diagnosis", "pan-septal-cv-large-vessel",
+  ], tags: ["panniculitis", "septal", "vasculitis"] }),
+  terminal("dx-pan-thrombophlebitis", "Tromboflebite superficial", "diagnosis", "paniculite-septal-com-vasculite",
     "Paniculite septal com vasculite envolvendo veias, compatível com tromboflebite superficial.",
     blocks("Correlacionar com cordão eritematoso palpável e insuficiência venosa."), ["superficial thrombophlebitis", "septal panniculitis", "veins"], ["tromboflebite superficial"]),
-  terminal("dx-pan-cutaneous-pan-septal", "PAN cutânea", "diagnosis", "pan-septal-cv-large-vessel",
+  terminal("dx-pan-cutaneous-pan-septal", "PAN cutânea", "diagnosis", "paniculite-septal-com-vasculite",
     "Paniculite septal com vasculite envolvendo artérias, compatível com poliarterite nodosa cutânea.",
     blocks("Correlacionar com livedo reticular e acometimento sistêmico."), ["cutaneous PAN", "polyarteritis nodosa", "septal panniculitis", "arteries"], ["poliarterite nodosa cutanea"]),
 
   // Septal · Sem vasculite
-  node({ id: "paniculite-septal-sem-vasculite", title: "Septal — sem vasculite", type: "decision", parentId: "paniculite-septal",
+  node({ id: "paniculite-septal-sem-vasculite", title: "Sem vasculite", type: "decision", parentId: "paniculite-septal",
     description: "Classifique o tipo celular inflamatório predominante nos septos fibrosos.", options: [
-    { label: "Linfócitos e plasmócitos", nextNodeId: "pan-septal-sv-lympho" },
-    { label: "Histiócitos", nextNodeId: "pan-septal-sv-histio" },
+    { label: "Linfócitos e plasmócitos", nextNodeId: "dx-pan-deep-morphea" },
+    { label: "Linfócitos, plasmócitos, histiócitos intersticiais em derme e septos SC", nextNodeId: "dx-pan-necrobiosis-lipoidica" },
+    { label: "Histiócitos, com linfócitos, eosinófilos e neutrófilos", nextNodeId: "dx-pan-erythema-nodosum" },
   ], tags: ["panniculitis", "septal", "without vasculitis"] }),
-  node({ id: "pan-septal-sv-lympho", title: "Linfócitos e plasmócitos", type: "decision", parentId: "paniculite-septal-sem-vasculite",
-    description: "Há granulomas nos septos?", options: [
-    { label: "Com granulomas", nextNodeId: "dx-pan-necrobiosis-lipoidica" },
-    { label: "Sem granulomas", nextNodeId: "dx-pan-deep-morphea" },
-  ], tags: ["panniculitis", "septal", "lymphocytes", "plasma cells"] }),
-  terminal("dx-pan-necrobiosis-lipoidica", "Necrobiose lipoidica", "diagnosis", "pan-septal-sv-lympho",
-    "Paniculite septal sem vasculite com linfócitos, plasmócitos e granulomas, compatível com necrobiose lipoidica.",
+  terminal("dx-pan-necrobiosis-lipoidica", "Necrobiose lipoídica", "diagnosis", "paniculite-septal-sem-vasculite",
+    "Paniculite septal sem vasculite, com linfócitos, plasmócitos e histiócitos intersticiais na derme e nos septos subcutâneos, compatível com necrobiose lipoídica.",
     blocks("Associação clássica com diabetes mellitus; correlação clinicopatológica é essencial."), ["necrobiosis lipoidica", "septal panniculitis"], ["necrobiose lipoidica"]),
-  terminal("dx-pan-deep-morphea", "Morfea profunda", "diagnosis", "pan-septal-sv-lympho",
-    "Paniculite septal sem vasculite com linfócitos e plasmócitos, sem granulomas, compatível com morfea profunda.",
+  terminal("dx-pan-deep-morphea", "Morfeia", "diagnosis", "paniculite-septal-sem-vasculite",
+    "Paniculite septal sem vasculite com linfócitos e plasmócitos, compatível com morfeia.",
     blocks("Correlacionar com placas escleróticas e características sistêmicas de morfea/esclerodermia."), ["deep morphea", "morphea profunda", "septal panniculitis"], ["morfea profunda"]),
-  node({ id: "pan-septal-sv-histio", title: "Histiócitos", type: "decision", parentId: "paniculite-septal-sem-vasculite",
-    description: "Identifique o material nos granulomas histiocíticos dos septos.", options: [
-    { label: "Mucina", nextNodeId: "dx-pan-subcutaneous-ga" },
-    { label: "Fibrina", nextNodeId: "dx-pan-rheumatoid-nodule" },
-    { label: "Fendas de colesterol", nextNodeId: "dx-pan-necrobiotic-xanthogranuloma" },
-    { label: "Granulomas de Miescher nos septos", nextNodeId: "dx-pan-erythema-nodosum" },
-  ], tags: ["panniculitis", "septal", "histiocytes", "granulomas"] }),
-  terminal("dx-pan-subcutaneous-ga", "Granuloma anular subcutâneo", "diagnosis", "pan-septal-sv-histio",
-    "Paniculite septal sem vasculite com histiócitos e mucina em granulomas em paliçada, compatível com granuloma anular subcutâneo.",
-    blocks("Forma subcutânea do granuloma anular; mais comum em crianças. Correlacionar com diabetes mellitus."), ["subcutaneous granuloma annulare", "GA subcutaneous", "septal panniculitis"], ["granuloma anular subcutaneo"]),
-  terminal("dx-pan-rheumatoid-nodule", "Nódulo reumatoide", "diagnosis", "pan-septal-sv-histio",
-    "Paniculite septal sem vasculite com fibrina em granulomas em paliçada, compatível com nódulo reumatoide.",
-    blocks("Correlacionar com artrite reumatoide e fator reumatoide."), ["rheumatoid nodule", "septal panniculitis"], ["nodulo reumatoide"]),
-  terminal("dx-pan-necrobiotic-xanthogranuloma", "Xantogranuloma necrobiótico", "diagnosis", "pan-septal-sv-histio",
-    "Paniculite septal sem vasculite com histiócitos e fendas de colesterol em granulomas em paliçada, compatível com xantogranuloma necrobiótico.",
-    blocks("A maioria dos casos está associada a gamapatia monoclonal."), ["necrobiotic xanthogranuloma", "septal panniculitis"], ["xantogranuloma necrobiotico"]),
-  terminal("dx-pan-erythema-nodosum", "Eritema nodoso", "diagnosis", "pan-septal-sv-histio",
-    "Paniculite septal sem vasculite com granulomas de Miescher (granulomas radiais) nos septos, compatível com eritema nodoso.",
+  terminal("dx-pan-erythema-nodosum", "Eritema nodoso", "diagnosis", "paniculite-septal-sem-vasculite",
+    "Paniculite septal sem vasculite com histiócitos, linfócitos, eosinófilos e neutrófilos, compatível com eritema nodoso.",
     blocks("Causa mais comum de paniculite septal. A correlação clinicopatológica é essencial para identificar a etiologia subjacente."), ["erythema nodosum", "Miescher granulomas", "septal panniculitis"], ["eritema nodoso"]),
 
   // ── PREDOMINANTEMENTE LOBULAR ──────────────────────────────────
@@ -921,7 +897,7 @@ const nodesArray: AlgorithmNode[] = [
   node({ id: "pan-lobular-sv-neutr-necrosis", title: "Necrose e saponificação de adipócitos", type: "decision", parentId: "paniculite-lobular-sv-neutrofilos",
     description: "Necrose e saponificação dos lóbulos gordurosos.", options: [
     { label: "Paniculite pancreática", nextNodeId: "dx-paniculite-pancreatica" },
-  ], tags: ["panniculitis", "lobular", "necrosis", "saponification"] }),
+  ], tags: ["panniculitis", "lobular", "necrosis", "saponification"], groupBridge: true }),
   terminal("dx-paniculite-pancreatica", "Paniculite pancreática", "diagnosis", "pan-lobular-sv-neutr-necrosis",
     "Paniculite lobular com necrose e saponificação de adipócitos, compatível com paniculite pancreática.",
     blocks("Correlacionar com doença pancreática (pancreatite, adenocarcinoma), lipase e amilase elevadas."), ["pancreatic panniculitis", "lobular panniculitis"], ["paniculite pancreatica"]),

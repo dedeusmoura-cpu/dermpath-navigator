@@ -585,16 +585,12 @@ const nodeFieldTranslationsEn: Record<
     description: "Classify the panniculitis pattern as mostly septal or mostly lobular.",
   },
   "paniculite-septal": {
-    title: "Mostly septal",
+    title: "Septal",
     description: "Is vasculitis present in the fibrous septa?",
   },
   "paniculite-septal-com-vasculite": {
     title: "Septal — with vasculitis",
-    description: "Identify the caliber of the affected vessel in the septa.",
-  },
-  "pan-septal-cv-large-vessel": {
-    title: "Large vessels",
-    description: "Identify the type of vessel involved.",
+    description: "Identify the type of vessel involved in the septa.",
   },
   "dx-pan-thrombophlebitis": {
     title: "Superficial thrombophlebitis",
@@ -607,7 +603,7 @@ const nodeFieldTranslationsEn: Record<
     description: "Septal panniculitis with vasculitis involving arteries, compatible with cutaneous polyarteritis nodosa.",
   },
   "paniculite-septal-sem-vasculite": {
-    title: "Septal — without vasculitis",
+    title: "Without vasculitis",
     description: "Classify the predominant inflammatory cell type in the fibrous septa.",
   },
   "pan-septal-sv-lympho": {
@@ -617,12 +613,12 @@ const nodeFieldTranslationsEn: Record<
   "dx-pan-necrobiosis-lipoidica": {
     title: "Necrobiosis lipoidica",
     resultTitle: "Necrobiosis lipoidica",
-    description: "Septal panniculitis without vasculitis with lymphocytes, plasma cells and granulomas, compatible with necrobiosis lipoidica.",
+    description: "Septal panniculitis without vasculitis, with lymphocytes, plasma cells and interstitial histiocytes in the dermis and subcutaneous septa, compatible with necrobiosis lipoidica.",
   },
   "dx-pan-deep-morphea": {
-    title: "Deep morphea",
-    resultTitle: "Deep morphea",
-    description: "Septal panniculitis without vasculitis with lymphocytes and plasma cells, without granulomas, compatible with deep morphea.",
+    title: "Morphea",
+    resultTitle: "Morphea",
+    description: "Septal panniculitis without vasculitis with lymphocytes and plasma cells, compatible with morphea.",
   },
   "pan-septal-sv-histio": {
     title: "Histiocytes",
@@ -646,7 +642,7 @@ const nodeFieldTranslationsEn: Record<
   "dx-pan-erythema-nodosum": {
     title: "Erythema nodosum",
     resultTitle: "Erythema nodosum",
-    description: "Septal panniculitis without vasculitis with Miescher granulomas (radial granulomas) in the septa, compatible with erythema nodosum.",
+    description: "Septal panniculitis without vasculitis with histiocytes, lymphocytes, eosinophils and neutrophils, compatible with erythema nodosum.",
   },
   "paniculite-lobular": {
     title: "Mostly lobular",
@@ -880,15 +876,15 @@ const optionLabelTranslationsEn: Record<string, string> = {
   "interface-liquenoide-histiocitos::dx-sarcoidose-liquenoide":
     "Discrete foci and sometimes confluent foci in the reticular dermis",
   // ── PANICULITES ──────────────────────────────────────────────
-  "paniculites::paniculite-septal": "Mostly septal",
-  "paniculites::paniculite-lobular": "Mostly lobular",
+  "paniculites::paniculite-septal": "Septal",
+  "paniculites::paniculite-lobular": "Lobular",
   "paniculite-septal::paniculite-septal-com-vasculite": "With vasculitis",
   "paniculite-septal::paniculite-septal-sem-vasculite": "Without vasculitis",
-  "paniculite-septal-com-vasculite::pan-septal-cv-large-vessel": "Large vessels",
-  "pan-septal-cv-large-vessel::dx-pan-thrombophlebitis": "Veins",
-  "pan-septal-cv-large-vessel::dx-pan-cutaneous-pan-septal": "Arteries",
-  "paniculite-septal-sem-vasculite::pan-septal-sv-lympho": "Lymphocytes and plasma cells",
-  "paniculite-septal-sem-vasculite::pan-septal-sv-histio": "Histiocytes",
+  "paniculite-septal-com-vasculite::dx-pan-thrombophlebitis": "Veins",
+  "paniculite-septal-com-vasculite::dx-pan-cutaneous-pan-septal": "Arteries",
+  "paniculite-septal-sem-vasculite::dx-pan-deep-morphea": "Lymphocytes and plasma cells",
+  "paniculite-septal-sem-vasculite::dx-pan-necrobiosis-lipoidica": "Lymphocytes, plasma cells and interstitial histiocytes in the dermis and subcutaneous septa",
+  "paniculite-septal-sem-vasculite::dx-pan-erythema-nodosum": "Histiocytes with lymphocytes, eosinophils and neutrophils",
   "pan-septal-sv-lympho::dx-pan-necrobiosis-lipoidica": "With granulomas",
   "pan-septal-sv-lympho::dx-pan-deep-morphea": "Without granulomas",
   "pan-septal-sv-histio::dx-pan-subcutaneous-ga": "Mucin",
