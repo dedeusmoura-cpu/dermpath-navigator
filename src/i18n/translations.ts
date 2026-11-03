@@ -671,11 +671,6 @@ const nodeFieldTranslationsEn: Record<
     resultTitle: "Lucio phenomenon",
     description: "Lobular panniculitis with small vessel vasculitis in lepromatous leprosy, compatible with Lucio phenomenon.",
   },
-  "dx-pan-erythema-induratum-small": {
-    title: "Erythema induratum",
-    resultTitle: "Erythema induratum",
-    description: "Lobular panniculitis with small vessel vasculitis, compatible with erythema induratum.",
-  },
   "paniculite-lobular-sem-vasculite": {
     title: "Lobular — without vasculitis",
     description: "Classify the predominant inflammatory pattern in the fat lobules.",
@@ -712,24 +707,15 @@ const nodeFieldTranslationsEn: Record<
     title: "Lymphocytes",
     description: "Evaluate the pattern of lymphocytic infiltrate in the lobules.",
   },
-  "dx-pan-cold-panniculitis": {
-    title: "Cold panniculitis",
-    resultTitle: "Cold panniculitis",
-    description: "Lobular panniculitis without vasculitis with superficial and deep perivascular lymphocytic infiltrate, compatible with cold panniculitis.",
-  },
-  "pan-lobular-sv-lymphoid-follicles": {
-    title: "Lymphoid follicles and plasma cells",
-    description: "Lymphocytic infiltrate with lymphoid follicles and plasma cells in the fat lobules.",
-  },
   "dx-lupus-eritematoso-profundo": {
     title: "Lupus panniculitis",
     resultTitle: "Lupus panniculitis",
-    description: "Lobular panniculitis without vasculitis with lymphoid follicles, plasma cells and deep perivascular infiltrate, compatible with lupus panniculitis (lupus profundus).",
+    description: "Lobular panniculitis without vasculitis with lymphocytes, plasma cells and hyaline fat necrosis, compatible with lupus panniculitis (lupus profundus).",
   },
-  "dx-paniculite-dermatomiosite": {
-    title: "Panniculitis of dermatomyositis",
-    resultTitle: "Panniculitis of dermatomyositis",
-    description: "Lobular panniculitis without vasculitis with lymphoid follicles and deep perivascular infiltrate in the context of dermatomyositis.",
+  "dx-linfoma-subcutaneo-celulas-t-paniculite-simile": {
+    title: "Subcutaneous panniculitis-like T-cell lymphoma",
+    resultTitle: "Subcutaneous panniculitis-like T-cell lymphoma",
+    description: "Lobular panniculitis without vasculitis with atypical lymphocytes, compatible with subcutaneous panniculitis-like T-cell lymphoma.",
   },
   "paniculite-lobular-sv-neutrofilos": {
     title: "Neutrophils",
@@ -758,11 +744,6 @@ const nodeFieldTranslationsEn: Record<
     title: "Facticial panniculitis",
     resultTitle: "Facticial panniculitis",
     description: "Lobular panniculitis with foreign bodies in the fat lobules, compatible with facticial panniculitis.",
-  },
-  "dx-pan-neutrophilic-lobular": {
-    title: "Neutrophilic lobular panniculitis",
-    resultTitle: "Neutrophilic lobular panniculitis",
-    description: "Lobular panniculitis with predominant neutrophilic infiltrate without other specific features, compatible with neutrophilic lobular panniculitis.",
   },
   "paniculite-lobular-sv-histiocitos": {
     title: "Histiocytes",
@@ -805,11 +786,6 @@ const nodeFieldTranslationsEn: Record<
     title: "Gout panniculitis",
     resultTitle: "Gout panniculitis",
     description: "Lobular panniculitis without vasculitis with urate crystals in histiocytes, compatible with gout panniculitis.",
-  },
-  "dx-pan-crystal-storing": {
-    title: "Crystal-storing histiocytosis",
-    resultTitle: "Crystal-storing histiocytosis",
-    description: "Lobular panniculitis without vasculitis with crystal-storing histiocytes in the fat lobules, compatible with crystal-storing histiocytosis.",
   },
   "pan-lobular-sv-hist-sclerosis": {
     title: "Sclerosis of the septa",
@@ -897,25 +873,21 @@ const optionLabelTranslationsEn: Record<string, string> = {
   "paniculite-lobular-com-vasculite::pan-lobular-cv-small-vessel": "Small vessels (venules)",
   "pan-lobular-cv-small-vessel::dx-pan-enl": "Erythema nodosum leprosum",
   "pan-lobular-cv-small-vessel::dx-pan-lucio": "Lucio phenomenon",
-  "pan-lobular-cv-small-vessel::dx-pan-erythema-induratum-small": "Erythema induratum",
   "paniculite-lobular-sem-vasculite::pan-lobular-sv-no-cells": "No inflammatory cells",
   "paniculite-lobular-sem-vasculite::paniculite-lobular-sv-linfocitos": "Lymphocytes",
   "paniculite-lobular-sem-vasculite::paniculite-lobular-sv-neutrofilos": "Neutrophils",
   "paniculite-lobular-sem-vasculite::paniculite-lobular-sv-histiocitos": "Histiocytes",
-  "pan-lobular-sv-no-cells::dx-pan-lipodermatosclerosis": "Necrosis at center of fat lobule, lipomembranous change",
+  "pan-lobular-sv-no-cells::dx-pan-lipodermatosclerosis": "Lipomembranous change",
   "pan-lobular-sv-no-cells::pan-lobular-sv-vasc-calc": "Vascular calcification",
-  "pan-lobular-sv-no-cells::dx-pan-sclerema-neonatorum": "Needle-shaped crystals in adipocytes",
+  "pan-lobular-sv-no-cells::dx-pan-sclerema-neonatorum": "Needle-shaped crystals",
   "pan-lobular-sv-vasc-calc::dx-pan-calciphylaxis": "Calciphylaxis",
   "pan-lobular-sv-vasc-calc::dx-pan-oxalosis": "Oxalosis",
-  "paniculite-lobular-sv-linfocitos::dx-pan-cold-panniculitis": "Superficial and deep perivascular infiltrate",
-  "paniculite-lobular-sv-linfocitos::pan-lobular-sv-lymphoid-follicles": "Lymphoid follicles and plasma cells",
-  "pan-lobular-sv-lymphoid-follicles::dx-lupus-eritematoso-profundo": "Lupus panniculitis",
-  "pan-lobular-sv-lymphoid-follicles::dx-paniculite-dermatomiosite": "Panniculitis of dermatomyositis",
+  "paniculite-lobular-sv-linfocitos::dx-lupus-eritematoso-profundo": "Lymphocytes, plasma cells and hyaline fat necrosis",
+  "paniculite-lobular-sv-linfocitos::dx-linfoma-subcutaneo-celulas-t-paniculite-simile": "Atypical lymphocytes",
   "paniculite-lobular-sv-neutrofilos::pan-lobular-sv-neutr-necrosis": "Necrosis and saponification of adipocytes",
   "paniculite-lobular-sv-neutrofilos::dx-pan-alpha1at": "Neutrophils between collagen bundles",
   "paniculite-lobular-sv-neutrofilos::dx-paniculite-infecciosa": "Bacteria, fungi or protozoa",
   "paniculite-lobular-sv-neutrofilos::dx-pan-facticial": "Foreign bodies",
-  "paniculite-lobular-sv-neutrofilos::dx-pan-neutrophilic-lobular": "Neutrophilic lobular panniculitis",
   "pan-lobular-sv-neutr-necrosis::dx-paniculite-pancreatica": "Pancreatic panniculitis",
   "paniculite-lobular-sv-histiocitos::dx-pan-subcutaneous-sarcoidosis": "Subcutaneous sarcoidosis",
   "paniculite-lobular-sv-histiocitos::dx-pan-traumatic": "Traumatic panniculitis",
@@ -926,7 +898,6 @@ const optionLabelTranslationsEn: Record<string, string> = {
   "pan-lobular-sv-hist-crystals::dx-paniculite-necrose-gordurosa-rn": "Fat necrosis of the newborn",
   "pan-lobular-sv-hist-crystals::dx-pan-post-steroid": "Post-steroid panniculitis",
   "pan-lobular-sv-hist-crystals::dx-paniculite-gota": "Gout panniculitis",
-  "pan-lobular-sv-hist-crystals::dx-pan-crystal-storing": "Crystal-storing histiocytosis",
   "pan-lobular-sv-hist-sclerosis::dx-paniculite-pos-radiacao": "Postirradiation panniculitis",
 };
 
