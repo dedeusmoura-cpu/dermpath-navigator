@@ -819,7 +819,7 @@ const optionLabelTranslationsEn: Record<string, string> = {
   "neoplasia-tumores-epiteliais::neoplasia-epidermicos-queratinociticos": "Epidermal / keratinocytic tumors",
   "neoplasia-tumores-epiteliais::neoplasia-tumores-anexiais": "Adnexal tumors",
   "neoplasia-tumores-anexiais::neoplasia-anexial-foliculares": "Follicular",
-  "neoplasia-tumores-anexiais::neoplasia-anexial-ecrinos-apocrinos": "Eccrine and apocrine",
+  "neoplasia-tumores-anexiais::neoplasia-anexial-ecrinos-apoécrinos": "Eccrine and apocrine",
   "neoplasia-tumores-anexiais::neoplasia-anexial-sebaceos": "Sebaceous",
   "neoplasia-anexial-foliculares::neoplasia-folicular-germinativa-tricoblasto": "Germinative (Trichoblast)",
   "neoplasia-anexial-foliculares::neoplasia-folicular-matrical": "Matrical",
