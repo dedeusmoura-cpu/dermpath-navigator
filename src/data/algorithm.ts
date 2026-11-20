@@ -201,7 +201,7 @@ const nodesArray: AlgorithmNode[] = [
     description: "Classifique os tumores anexiais em foliculares, crinos/apócrinos ou sebáceos.",
     options: [
       { label: "Foliculares", nextNodeId: "neoplasia-anexial-foliculares" },
-      { label: "écrinos e apóécrinos", nextNodeId: "neoplasia-anexial-ecrinos-apoécrinos" },
+      { label: "écrinos e apócrinos", nextNodeId: "neoplasia-anexial-ecrinos-apoécrinos" },
       { label: "Sebáceos", nextNodeId: "neoplasia-anexial-sebaceos" },
     ],
     tags: ["tumores anexiais", "anexial", "neoplasia"],
@@ -285,7 +285,7 @@ const nodesArray: AlgorithmNode[] = [
   annexialDiagnosis("dx-neoplasia-tricofoliculoma-panfolicular", "Tricofoliculoma", "neoplasia-folicular-panfolicular", ["tricofoliculoma", "panfolicular", "folicular"]),
   annexialDiagnosis("dx-neoplasia-panfoliculoma", "Panfoliculoma", "neoplasia-folicular-panfolicular", ["panfoliculoma", "panfolicular", "folicular"]),
   annexialDiagnosis("dx-neoplasia-papula-fibrosa", "Pápula fibrosa", "neoplasia-folicular-panfolicular", ["pápula fibrosa", "papula fibrosa", "panfolicular", "folicular"], ["papula fibrosa"]),
-  node({ id: "neoplasia-anexial-ecrinos-apoécrinos", title: "écrinos e apóécrinos", type: "decision", parentId: "neoplasia-tumores-anexiais", description: "Classifique os tumores anexiais écrinos e apócrinos pelo padrão estrutural predominante.", options: [
+  node({ id: "neoplasia-anexial-ecrinos-apoécrinos", title: "écrinos e apócrinos", type: "decision", parentId: "neoplasia-tumores-anexiais", description: "Classifique os tumores anexiais écrinos e apócrinos pelo padrão estrutural predominante.", options: [
     { label: "Ducto éécrino", nextNodeId: "neoplasia-ecrino-ducto-eécrino" },
     { label: "Células poroides e cuticulares", nextNodeId: "neoplasia-ecrino-celulas-poroides-cuticulares" },
     { label: "Nódulo slido-cístico", nextNodeId: "neoplasia-ecrino-nodulo-solido-cistico" },
@@ -293,7 +293,7 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Glândula apócrina (túbulos, cistos, micropapilas)", nextNodeId: "neoplasia-ecrino-glandula-apocrina-tubulos-cistos-micropapilas" },
     { label: "Glândula apócrina (formações papilares, conexão com epiderme, plasmócitos)", nextNodeId: "neoplasia-ecrino-glandula-apocrina-formacoes-papilares" },
     { label: "Componente estromal condromixoide", nextNodeId: "neoplasia-ecrino-componente-estromal-condromixoide" },
-  ], tags: ["éécrino", "apéécrino", "tumores anexiais"], synonyms: ["eécrino", "apoécrino"] }),
+  ], tags: ["éécrino", "apócrino", "tumores anexiais"], synonyms: ["eécrino", "apócrino"] }),
   node({ id: "neoplasia-ecrino-ducto-eécrino", title: "Ducto éécrino", type: "decision", parentId: "neoplasia-anexial-ecrinos-apoécrinos", description: "Selecione o diagnóstico do ducto écrino.", options: [
     { label: "Siringoma", nextNodeId: "dx-neoplasia-siringoma" },
   ], tags: ["ducto éécrino", "éécrino"], synonyms: ["ducto eécrino", "eécrino"] }),
@@ -330,15 +330,15 @@ const nodesArray: AlgorithmNode[] = [
     { label: "Células poroides e cuticulares", nextNodeId: "neoplasia-ecrino-hidradenoma-celulas-poroides-cuticulares" },
     { label: "Clulas claras, escamoides, plasmocitoides e/ou caliciformes", nextNodeId: "neoplasia-ecrino-hidradenoma-celulas-claras-escamoides" },
     { label: "padrão papilífero, vulva", nextNodeId: "neoplasia-ecrino-hidradenoma-papilifero-vulva" },
-  ], tags: ["hidradenoma", "éécrino", "apéécrino"], synonyms: ["hidradenomas", "eécrino", "apoécrino"] }),
+  ], tags: ["hidradenoma", "éécrino", "apócrino"], synonyms: ["hidradenomas", "eécrino", "apócrino"] }),
   node({ id: "neoplasia-ecrino-hidradenoma-celulas-poroides-cuticulares", title: "Células poroides e cuticulares", type: "decision", parentId: "neoplasia-ecrino-hidradenomas", description: "Feche o subtipo poroide/cuticular do hidradenoma.", options: [
     { label: "Hidradenoma poroide", nextNodeId: "dx-neoplasia-hidradenoma-poroide-hidradenoma" },
   ], tags: ["hidradenoma poroide", "poroide", "cuticular"] }),
   annexialDiagnosis("dx-neoplasia-hidradenoma-poroide-hidradenoma", "Hidradenoma poroide", "neoplasia-ecrino-hidradenoma-celulas-poroides-cuticulares", ["hidradenoma poroide", "poroide", "cuticular"]),
   node({ id: "neoplasia-ecrino-hidradenoma-celulas-claras-escamoides", title: "Células claras, escamoides, plasmocitoides e/ou caliciformes", type: "decision", parentId: "neoplasia-ecrino-hidradenomas", description: "Feche o subtipo apócrino nodular do hidradenoma.", options: [
     { label: "Hidradenoma apócrino (nodular)", nextNodeId: "dx-neoplasia-hidradenoma-apocrino-nodular" },
-  ], tags: ["hidradenoma", "apéécrino", "nodular"], synonyms: ["hidradenoma apocrino nodular"] }),
-  annexialDiagnosis("dx-neoplasia-hidradenoma-apocrino-nodular", "Hidradenoma apócrino (nodular)", "neoplasia-ecrino-hidradenoma-celulas-claras-escamoides", ["hidradenoma apéécrino", "hidradenoma apécrino nodular", "apéécrino", "nodular"], ["hidradenoma apoécrino", "hidradenoma apocrino nodular"]),
+  ], tags: ["hidradenoma", "apócrino", "nodular"], synonyms: ["hidradenoma apocrino nodular"] }),
+  annexialDiagnosis("dx-neoplasia-hidradenoma-apocrino-nodular", "Hidradenoma apócrino (nodular)", "neoplasia-ecrino-hidradenoma-celulas-claras-escamoides", ["hidradenoma apócrino", "hidradenoma apócrino nodular", "apócrino", "nodular"], ["hidradenoma apócrino", "hidradenoma apocrino nodular"]),
   node({ id: "neoplasia-ecrino-hidradenoma-papilifero-vulva", title: "padrão papilífero, vulva", type: "decision", parentId: "neoplasia-ecrino-hidradenomas", description: "Feche o subtipo papilífero do hidradenoma.", options: [
     { label: "Hidradenoma papilífero", nextNodeId: "dx-neoplasia-hidradenoma-papilifero" },
   ], tags: ["hidradenoma", "papilífero", "vulva"], synonyms: ["hidradenoma papilifero"] }),
@@ -351,12 +351,12 @@ const nodesArray: AlgorithmNode[] = [
   annexialDiagnosis("dx-neoplasia-cilindroma", "Cilindroma", "neoplasia-ecrino-glandula-sudoripara-brooke-spiegler", ["cilindroma", "brooke-spiegler"]),
   node({ id: "neoplasia-ecrino-glandula-apocrina-tubulos-cistos-micropapilas", title: "Glândula apócrina (túbulos, cistos, micropapilas)", type: "decision", parentId: "neoplasia-anexial-ecrinos-apoécrinos", description: "Selecione o diagnóstico apócrino com padrão de túbulos, cistos e micropapilas.", options: [
     { label: "Adenoma apócrino tubular", nextNodeId: "dx-neoplasia-adenoma-apocrino-tubular" },
-  ], tags: ["glândula apócrina", "adenoma apécrino tubular"], synonyms: ["glandula apocrina", "adenoma apocrino tubular"] }),
-  annexialDiagnosis("dx-neoplasia-adenoma-apocrino-tubular", "Adenoma apócrino tubular", "neoplasia-ecrino-glandula-apocrina-tubulos-cistos-micropapilas", ["adenoma apécrino tubular", "apéécrino"], ["adenoma apocrino tubular"]),
+  ], tags: ["glândula apócrina", "adenoma apócrino tubular"], synonyms: ["glandula apocrina", "adenoma apocrino tubular"] }),
+  annexialDiagnosis("dx-neoplasia-adenoma-apocrino-tubular", "Adenoma apócrino tubular", "neoplasia-ecrino-glandula-apocrina-tubulos-cistos-micropapilas", ["adenoma apócrino tubular", "apócrino"], ["adenoma apocrino tubular"]),
   node({ id: "neoplasia-ecrino-glandula-apocrina-formacoes-papilares", title: "Glândula apócrina (formações papilares, conexão com epiderme, plasmócitos)", type: "decision", parentId: "neoplasia-anexial-ecrinos-apoécrinos", description: "Selecione o diagnóstico apócrino com padrão papilar e conexão epidérmica.", options: [
     { label: "Siringocistadenoma papilífero", nextNodeId: "dx-neoplasia-siringocistadenoma-papilifero" },
   ], tags: ["glândula apócrina", "siringocistadenoma papilífero"], synonyms: ["glandula apocrina", "siringocistadenoma papilifero"] }),
-  annexialDiagnosis("dx-neoplasia-siringocistadenoma-papilifero", "Siringocistadenoma papilífero", "neoplasia-ecrino-glandula-apocrina-formacoes-papilares", ["siringocistadenoma papilífero", "apéécrino"], ["siringocistadenoma papilifero"]),
+  annexialDiagnosis("dx-neoplasia-siringocistadenoma-papilifero", "Siringocistadenoma papilífero", "neoplasia-ecrino-glandula-apocrina-formacoes-papilares", ["siringocistadenoma papilífero", "apócrino"], ["siringocistadenoma papilifero"]),
   node({ id: "neoplasia-ecrino-componente-estromal-condromixoide", title: "Componente estromal condromixoide", type: "decision", parentId: "neoplasia-anexial-ecrinos-apoécrinos", description: "Selecione o tumor misto dentro do padrão estromal condromixoide.", options: [
     { label: "Tumor misto (siringoma condroide)", nextNodeId: "dx-neoplasia-tumor-misto-siringoma-condroide" },
     { label: "Tumor misto (siringoma condroide) éécrino", nextNodeId: "dx-neoplasia-tumor-misto-siringoma-condroide-eécrino" },
@@ -405,8 +405,8 @@ const nodesArray: AlgorithmNode[] = [
   terminal("dx-cisto-milia", "Mlia", "diagnosis", "cisto-foliculares", "Mlia.", blocks("Mlia."), ["cisto", "folicular", "milia"], ["milia"]),
   node({ id: "cisto-apocrinos-eécrinos", title: "Cistos apócrinos / écrinos", type: "decision", parentId: "placeholder-cisto", description: "Selecione o Diagnóstico entre os cistos apócrinos ou crinos.", options: [
     { label: "Hidrocistoma / cistadenoma", nextNodeId: "dx-cisto-hidrocistoma-cistadenoma" },
-  ], tags: ["cisto", "apéécrino", "éécrino"], synonyms: ["cistos apoécrinos", "cistos eécrinos", "cistos apocrinos e eécrinos"] }),
-  terminal("dx-cisto-hidrocistoma-cistadenoma", "Hidrocistoma / cistadenoma", "diagnosis", "cisto-apocrinos-eécrinos", "Cisto apócrino/ecrino do espectro hidrocistoma-cistadenoma.", blocks("Cisto apócrino/ecrino do espectro hidrocistoma-cistadenoma."), ["cisto", "hidrocistoma", "cistadenoma", "apéécrino", "éécrino"], ["hidrocistoma", "cistadenoma", "apoécrino", "eécrino"]),
+  ], tags: ["cisto", "apócrino", "éécrino"], synonyms: ["cistos apócrinos", "cistos eécrinos", "cistos apócrinos e eécrinos"] }),
+  terminal("dx-cisto-hidrocistoma-cistadenoma", "Hidrocistoma / cistadenoma", "diagnosis", "cisto-apocrinos-eécrinos", "Cisto apócrino/ecrino do espectro hidrocistoma-cistadenoma.", blocks("Cisto apócrino/ecrino do espectro hidrocistoma-cistadenoma."), ["cisto", "hidrocistoma", "cistadenoma", "apócrino", "éécrino"], ["hidrocistoma", "cistadenoma", "apócrino", "eécrino"]),
   node({ id: "cisto-sebaceos", title: "Cistos sebáceos", type: "decision", parentId: "placeholder-cisto", description: "Selecione o Diagnóstico entre os cistos sebáceos.", options: [
     { label: "Esteatocistoma", nextNodeId: "dx-cisto-esteatocistoma" },
     { label: "Tumor sebáceo cístico", nextNodeId: "dx-cisto-tumor-sebaceo-cistico" },
